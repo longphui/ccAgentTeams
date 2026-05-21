@@ -71,7 +71,7 @@ ls "AgentTeams/inbox/architect/"*.msg.json 2>/dev/null
 - **QUERY 类型** → 回复（解答技术问题、给出选型建议）
 - **REVIEW 类型** → 审查设计方案
 - **TASK 类型** → 分派给 developer/qa/reviewer
-- **SYNC 类型** → 更新上下文
+- **SYNC 类型** → 更新上下文，**将本条 SYNC 重命名为 `.done`，并立即清理自己 inbox 中该功能相关的 `.done` 到 archive**
 
 ## 消息处理流程
 
@@ -250,17 +250,17 @@ ls "AgentTeams/inbox/architect/"*.msg.json 2>/dev/null
 
 1. 本轮处理了什么
 2. 当前各角色状态（Developer / Developer1 / QA / Reviewer 各自空闲/执行中/待处理）
-3. 根据分派目标写 trigger 文件：
-   - 分派给 Developer → `echo > AgentTeams/watcher/trigger-developer.txt`
-   - 分派给 Developer1 → `echo > AgentTeams/watcher/trigger-developer1.txt`
-   - 分派给 QA → `echo > AgentTeams/watcher/trigger-qa.txt`
-   - 分派给 Reviewer → `echo > AgentTeams/watcher/trigger-reviewer.txt`
-   - 同时分派多端 → 每个角色各写一个
+3. **【触发下游 — 通用铁律】** 向任何角色的 inbox 写入任何消息后，必须写对应的 trigger 文件。不论消息类型（TASK / SYNC / RESULT / QUERY），没有例外：
+   - 写入 `inbox/developer/` → `echo > AgentTeams/watcher/trigger-developer.txt`
+   - 写入 `inbox/developer1/` → `echo > AgentTeams/watcher/trigger-developer1.txt`
+   - 写入 `inbox/qa/` → `echo > AgentTeams/watcher/trigger-qa.txt`
+   - 写入 `inbox/reviewer/` → `echo > AgentTeams/watcher/trigger-reviewer.txt`
+   - 写入多个 inbox → 每个角色各写一个
 4. **【强制验证】** 写完后立即执行 `ls -la AgentTeams/watcher/`，逐项核对：
-   - 本轮分派给 Developer？→ 必须看到 `trigger-developer.txt`
-   - 本轮分派给 Developer1？→ 必须看到 `trigger-developer1.txt`
-   - 本轮分派给 QA？→ 必须看到 `trigger-qa.txt`
-   - 本轮分派给 Reviewer？→ 必须看到 `trigger-reviewer.txt`
+   - 本轮向 Developer 发过消息？→ 必须看到 `trigger-developer.txt`
+   - 本轮向 Developer1 发过消息？→ 必须看到 `trigger-developer1.txt`
+   - 本轮向 QA 发过消息？→ 必须看到 `trigger-qa.txt`
+   - 本轮向 Reviewer 发过消息？→ 必须看到 `trigger-reviewer.txt`
    - **缺任何一个 → 补写后再汇报，不得跳过**
 
 > ⚠️ 2026-05-18 事故：分派 #004 Round 1 后漏写 trigger-developer.txt，Developer 卡在 `.processing` 超过 1 天无信号唤醒。第 4 步强制验证就是针对此事故的防护。

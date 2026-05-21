@@ -205,29 +205,32 @@ test('IFRAME-01: 嵌入式模式 — token 提取和环境初始化', async ({ p
 // Test 2: API 请求 host 验证
 // ==========================================================================
 test('IFRAME-02: API 请求 host — 验证请求不指向错误地址', async ({ page }) => {
+  const useMock = test.info().project.use.useMock;
   const apiRequests = [];
 
-  await page.route('**/api/**', (route, request) => {
-    const url = new URL(request.url());
-    apiRequests.push({ host: url.host, pathname: url.pathname, method: request.method() });
-    route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({ success: true, result: { totalCount: 0, items: [] } })
+  if (useMock) {
+    await page.route('**/api/**', (route, request) => {
+      const url = new URL(request.url());
+      apiRequests.push({ host: url.host, pathname: url.pathname, method: request.method() });
+      route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ success: true, result: { totalCount: 0, items: [] } })
+      });
     });
-  });
 
-  // Mock 分路 API login 避免 401 错误
-  await page.route('**/api/Common/Account/Login', route => {
-    route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({ success: true, result: { token: HRM_TOKEN.replace('Bearer ', ''), userId: 1 } })
+    // Mock 分路 API login 避免 401 错误
+    await page.route('**/api/Common/Account/Login', route => {
+      route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ success: true, result: { token: HRM_TOKEN.replace('Bearer ', ''), userId: 1 } })
+      });
     });
-  });
 
-  // 放行非 API 资源
-  await page.route('**/*.html*', route => route.continue());
-  await page.route('**/*.js', route => route.continue());
-  await page.route('**/*.css', route => route.continue());
+    // 放行非 API 资源
+    await page.route('**/*.html*', route => route.continue());
+    await page.route('**/*.js', route => route.continue());
+    await page.route('**/*.css', route => route.continue());
+  }
 
   await page.addInitScript(injectEmbeddedEnv(HRM_TOKEN, MENU_BUTTONS));
 

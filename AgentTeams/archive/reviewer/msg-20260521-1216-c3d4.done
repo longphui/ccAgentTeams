@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1216-c3d4",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-21T12:16:00+08:00",
+  "payload": {
+    "subject": "审查请求：#007 Task 1 — Playwright 配置双模式支持",
+    "context": "#007",
+    "content": "## 改动\n`playwright.config.js` 在 `use` 配置中新增 `useMock: process.env.USE_MOCK !== 'false'`（默认 true，向后兼容）。\n\n## 审查重点\n- 环境变量读取方式是否正确\n- 默认值 true 是否合理\n- 是否有遗漏的配置项",
+    "files": ["AgentTeams/qa/playwright.config.js"]
+  }
+}

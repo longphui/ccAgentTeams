@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260521-1500-c5d6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-21T15:00:00+08:00",
+  "payload": {
+    "subject": "审查请求：test-dataclonefix.spec.js 移出 testDir",
+    "context": "#007",
+    "content": "## 审查重点\n- `playwright/test-dataclonefix.spec.js` 已删除\n- `tools/test-dataclonefix.verify.js` 已就位（语法正确）\n- `npx playwright test --list` 不再加载此文件\n\n## 备注\n`--list` 时发现 `test-getappcontext-stub.spec.js` 也是独立 IIFE，同样在模块加载时崩溃，建议单独处理。",
+    "files": [
+      "AgentTeams/qa/tools/test-dataclonefix.verify.js"
+    ]
+  }
+}

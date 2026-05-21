@@ -7,7 +7,7 @@
   "currentBranch": "main",
   "activeTasks": [],
   "features": {},
-  "notes": "#001~#006 全部已交付，详细历史已归档至 archive/features-001-004-history.md / archive/features-005-history.md / archive/features-006-history.md。#003 Task 3 数据库迁移需手动执行。",
+  "notes": "#001~#007 全部已交付，详细历史已归档至 archive/features-001-004-history.md / archive/features-005-history.md / archive/features-006-history.md / archive/features-007-history.md。#003 Task 3 数据库迁移需手动执行。#007 运行时验证待 dev server 启动后补跑。",
   "team": {
     "architect": "就绪",
     "developer": "空闲",
@@ -28,9 +28,10 @@
     "前端功能页面放在独立子目录下（如 generatorProductCodes/、ProductComponents/）",
     "outbox 只放 JSON 消息，代码通过 payload.files 指向实际路径",
     "收件箱清理：任务走完完整流水线后各角色自行清理相关 .done 到 archive；任一 inbox 超 20 个 .done 时强制清理兜底。保持收件箱只留 .msg.json 和 .processing",
-    "各角色完成工作后写 trigger 文件到 AgentTeams/watcher/trigger-{下游角色}.txt，由 /loop + /agent-trigger 自动检测接力，无需用户手动触发",
+    "【通用铁律】向任何角色的 inbox 写入任何消息后，必须写对应的 trigger 文件（不论消息类型 TASK/SYNC/RESULT/REVIEW/TEST/FEEDBACK/ALERT/QUERY），没有例外。写完立即 ls -la watcher/ 验证。由 /loop + /agent-trigger 自动检测接力，无需用户手动触发",
     "分派任务前必须参考 shared/conventions/frontend-tech-stack.md：.js/.html/CSS/localStorage/postMessage/DOM → Developer1；.cs/.csproj/SQL → Developer",
     "用户确认可交付的功能 → 详细历史移入 archive/features-XXX-history.md，context.json 仅保留一句话摘要 + 归档指针",
-    "交付 SYNC 通知必须用 *.msg.json 后缀（watcher 只匹配此格式），且内容中必须明确要求归档本条 SYNC 自身"
+    "交付 SYNC 通知必须用 *.msg.json 后缀（watcher 只匹配此格式），且内容中必须明确要求归档本条 SYNC 自身",
+    "收到 SYNC 消息后先将本条 SYNC 直接重命名为 .done（无需回复），再清理自己 inbox 中该功能相关的 .done 到 archive"
   ]
 }

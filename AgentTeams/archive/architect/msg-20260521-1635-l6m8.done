@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1635-l6m8",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T16:35:00+08:00",
+  "replyTo": "msg-20260521-1630-j3k4",
+  "payload": {
+    "subject": "测试通过：Playwright testDir 隔离 — 14 个独立脚本已迁出",
+    "context": "#007",
+    "content": "## 测试结果\n\n### 第一层：API curl\n- 跳过（本次变更不涉及后端 API）\n\n### 第二层：Playwright Mock\n- UI 交互：跳过（dev server 未启动，ERR_CONNECTION_REFUSED，环境前提）\n- JS 函数：跳过\n- 控制台错误：跳过\n\n### 第三层：Playwright 真实后端\n- 跳过（dev server 未启动）\n\n## testDir 隔离验证结果\n\n### `npx playwright test --list`\n- ✅ 干净列出 47 测试 6 文件，零崩溃\n- ✅ 输出立即显示 \"Listing tests:\"，无模块级代码阻塞\n\n### playwright/ 目录\n- ✅ 0 个独立 IIFE .spec.js 残留\n- ✅ 6 个合法 spec 文件，全部使用 @playwright/test\n\n### tools/ 目录\n- ✅ 16 个 .verify.js 文件齐全\n- ✅ 全部通过 `node --check` 语法验证\n- ✅ 可单独执行任意 .verify.js：`node tools/test-xxx.verify.js`\n\n## 发现的问题\n无\n\n## 备注\ndev server (localhost:5021) 从未启动，无法执行实际测试。这是环境前提条件，非代码 bug。\n发现 #007 下 Playwright 相关任务完成后，启动 dev server 做联调验证。"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260521-005",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-21T15:35:00+08:00",
+  "payload": {
+    "subject": "#007 修复: 批量迁移 14 个独立验证脚本到 tools/",
+    "context": "#007",
+    "content": "## 问题\n以下 14 个文件均为独立验证脚本（`require('playwright')` + 顶层 IIFE），非 `@playwright/test` 格式，残留在 `playwright/` 中会逐个阻塞 `npx playwright test --list`。\n\n## 修复\n全部移入 `AgentTeams/qa/tools/`，改名为 `.verify.js`：\n\n```bash\ncd AgentTeams/qa/playwright\n\nfor f in \\\n  test-applytheme-css-inject.spec.js \\\n  test-columnselector-restore.spec.js \\\n  test-config-security.spec.js \\\n  test-defaulttheme-css-vars.spec.js \\\n  test-getappcontext-stub.spec.js \\\n  test-getdefaulttheme-stub.spec.js \\\n  test-hrmtoken-loop.spec.js \\\n  test-https-http-fix.spec.js \\\n  test-menubuttons-passthrough.spec.js \\\n  test-newfenluapibase-fix.spec.js \\\n  test-openpage-stub.spec.js \\\n  test-port-fix.spec.js \\\n  test-postmessage.spec.js \\\n  test-states-shared.spec.js\ndo\n  newname=$(echo \"$f\" | sed 's/\.spec\.js$/.verify.js/')\n  mv \"$f\" \"../tools/$newname\"\ndone\n```\n\n## 涉及文件\n- 上述 14 个文件\n\n## 验证标准\n- `npx playwright test --list` 不崩溃，只列出真正的 Playwright 测试\n- 14 个文件从 `playwright/` 移除\n- `tools/` 目录下所有 `.verify.js` 语法正确",
+    "files": [
+      "AgentTeams/qa/playwright/"
+    ],
+    "actions": [
+      "确认 tools/ 目录存在，不存在则创建",
+      "批量移动 14 个文件并改名 .verify.js",
+      "确认 npx playwright test --list 不崩溃",
+      "完成后发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

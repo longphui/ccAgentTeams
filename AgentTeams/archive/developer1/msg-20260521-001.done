@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260521-001",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-21T11:45:00+08:00",
+  "payload": {
+    "subject": "#007 Task 1: Playwright 配置改造 — 双模式支持（USE_MOCK）",
+    "context": "#007",
+    "content": "## 目标\n改造 `playwright.config.js`，支持通过环境变量 `USE_MOCK` 控制 Mock/真实后端双模式。\n\n## 需求文档\n`AgentTeams/shared/requirements/007-分层测试体系.md`\n`AgentTeams/shared/requirements/007-plan-分层测试体系.md`\n\n## 实现要点\n\n1. **读取环境变量**：`USE_MOCK` 默认 `true`（向后兼容，当前所有 spec 都是 Mock 模式）\n2. **传递到 spec**：通过 Playwright `use` 配置项传递，spec 中通过 `test.info().project.use.useMock` 获取\n3. **不加 headed project**：需要可视时直接用 `--headed` CLI 参数\n\n## 配置改动示例\n\n```javascript\n// playwright.config.js\nconst useMock = process.env.USE_MOCK !== 'false'; // 默认 true\n\nmodule.exports = defineConfig({\n  testDir: './playwright',\n  timeout: 60000,\n  retries: 0,\n  workers: 1,\n  reporter: [\n    ['html', { outputFolder: './playwright/html-report' }],\n    ['list']\n  ],\n  use: {\n    baseURL: 'http://localhost:5021',\n    headless: true,\n    screenshot: 'only-on-failure',\n    ignoreHTTPSErrors: true,\n    actionTimeout: 10000,\n    useMock: useMock,  // ← 新增\n  },\n  projects: [\n    {\n      name: 'chromium',\n      use: { browserName: 'chromium' },\n    },\n  ],\n});\n```\n\n## 涉及文件\n- `AgentTeams/qa/playwright.config.js`\n\n## 验证标准\n- `USE_MOCK=false npx playwright test --list` 列出测试不报错\n- `npx playwright test --list`（默认 USE_MOCK=true）列出测试不报错",
+    "files": [
+      "AgentTeams/qa/playwright.config.js",
+      "AgentTeams/shared/requirements/007-plan-分层测试体系.md"
+    ],
+    "actions": [
+      "读取实施计划了解上下文",
+      "修改 playwright.config.js：在 use 中加 useMock 字段，读取 process.env.USE_MOCK",
+      "确认 USE_MOCK 默认 true（向后兼容）",
+      "完成后发 REVIEW → Reviewer，通过后发 RESULT 给 Architect"
+    ],
+    "deadline": null
+  }
+}

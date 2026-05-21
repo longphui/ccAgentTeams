@@ -16,7 +16,9 @@ const MOCK_USER = {
   errors: null, extras: null, statusCode: 200, timestamp: Date.now().toString()
 };
 
-async function setupRealDataPage(page) {
+async function setupRealDataPage(page, useMock) {
+  if (!useMock) return;
+
   // Only mock auth — let menu proxy use real backend
   await page.route('http://localhost:5000/api/context-user/current-user', route => {
     route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
@@ -27,7 +29,8 @@ async function setupRealDataPage(page) {
 
 // ===== Test 1: 菜单加载 (真实数据) =====
 test('E2E-01: 菜单加载 — 真实API数据，验证菜单树完整', async ({ page }) => {
-  await setupRealDataPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
   const errors = [];
   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 
@@ -65,7 +68,8 @@ test('E2E-01: 菜单加载 — 真实API数据，验证菜单树完整', async (
 
 // ===== Test 2: HRM iframe 代理路径 =====
 test('E2E-02: HRM页面路径 — 验证HRM菜单path指向hrm-proxy', async ({ page }) => {
-  await setupRealDataPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(5000);
@@ -95,16 +99,19 @@ test('E2E-02: HRM页面路径 — 验证HRM菜单path指向hrm-proxy', async ({ 
 
 // ===== Test 3: 菜单降级 (真实环境) =====
 test('E2E-03: 菜单降级 — 后端不可用时回退', async ({ page }) => {
+  const useMock = test.info().project.use.useMock;
   const errors = [];
   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 
-  // Mock menu proxy to fail (simulate backend down)
-  await page.route('http://localhost:5000/api/menu-proxy/get-list-by-role', route => {
-    route.abort('connectionrefused');
-  });
-  await page.route('http://localhost:5000/api/context-user/current-user', route => {
-    route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
-  });
+  if (useMock) {
+    // Mock menu proxy to fail (simulate backend down)
+    await page.route('http://localhost:5000/api/menu-proxy/get-list-by-role', route => {
+      route.abort('connectionrefused');
+    });
+    await page.route('http://localhost:5000/api/context-user/current-user', route => {
+      route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
+    });
+  }
   // menu.json doesn't exist — so the fallback itself will fail
   // We want to observe the error handling
 
@@ -129,7 +136,8 @@ test('E2E-03: 菜单降级 — 后端不可用时回退', async ({ page }) => {
 
 // ===== Test 4: 鸿冠原生模块路由 =====
 test('E2E-04: 鸿冠原生模块 — 验证原生页面路径正确', async ({ page }) => {
-  await setupRealDataPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(5000);
@@ -164,7 +172,8 @@ test('E2E-04: 鸿冠原生模块 — 验证原生页面路径正确', async ({ p
 
 // ===== Test 5: checkTabPermissions (真实数据) =====
 test('E2E-05: checkTabPermissions — 用真实菜单数据验证权限检查', async ({ page }) => {
-  await setupRealDataPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(5000);
@@ -219,9 +228,11 @@ test('E2E-05: checkTabPermissions — 用真实菜单数据验证权限检查', 
 
 // ===== Test 6: postMessage 流程 (需要登录态，使用 mock hrm-auth) =====
 test('E2E-06: postMessage — HRM_GET_CONTEXT → HRM_CONTEXT 消息流程', async ({ page }) => {
-  await setupRealDataPage(page);
-  // Mock hrm-auth (needs valid user token in localStorage, so we mock this one)
-  await page.route('http://localhost:5000/api/hrm-auth/get-fenlu-token', route => {
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
+  if (useMock) {
+    // Mock hrm-auth (needs valid user token in localStorage, so we mock this one)
+    await page.route('http://localhost:5000/api/hrm-auth/get-fenlu-token', route => {
     route.fulfill({
       contentType: 'application/json',
       body: JSON.stringify({
@@ -231,6 +242,7 @@ test('E2E-06: postMessage — HRM_GET_CONTEXT → HRM_CONTEXT 消息流程', asy
       })
     });
   });
+  }
 
   // Set a mock token so the API call is authorized
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
@@ -272,7 +284,8 @@ test('E2E-06: postMessage — HRM_GET_CONTEXT → HRM_CONTEXT 消息流程', asy
 
 // ===== Test 7: startup 首页加载 =====
 test('E2E-07: startup首页 — 验证默认标签页打开', async ({ page }) => {
-  await setupRealDataPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(5000);
@@ -296,7 +309,8 @@ test('E2E-07: startup首页 — 验证默认标签页打开', async ({ page }) =
 
 // ===== Test 8: Console 无 JS 异常 (真实数据) =====
 test('E2E-08: 无JS异常 — 真实数据加载无报错', async ({ page }) => {
-  await setupRealDataPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupRealDataPage(page, useMock);
 
   const jsErrors = [];
   page.on('pageerror', err => jsErrors.push(err.message));

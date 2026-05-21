@@ -1,0 +1,27 @@
+{
+  "id": "msg-20260521-002",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-21T12:40:00+08:00",
+  "payload": {
+    "subject": "#007 Task 2: Spec 文件 Mock 守卫改造 — 支持 USE_MOCK 双模式",
+    "context": "#007",
+    "content": "## 目标\n给 `AgentTeams/qa/playwright/*.spec.js` 中所有 `page.route()` Mock 注册加 `if (useMock)` 守卫，使同一套脚本在 Mock 和真实后端两种模式下都能正确运行。\n\n## 前置条件\nTask 1 已完成，`playwright.config.js` 已添加 `useMock: process.env.USE_MOCK !== 'false'`。spec 可通过 `test.info().project.use.useMock` 获取标志。\n\n## 实现要点\n\n### 1. 每个 spec 文件获取 useMock 标志\n在每个 `test()` 回调顶部获取：\n```javascript\ntest('用例名', async ({ page }) => {\n  const useMock = test.info().project.use.useMock;\n  // ...\n});\n```\n\n### 2. setupMockedPage 加守卫\n所有 `page.route()` 调用包上 `if (useMock)`：\n```javascript\nasync function setupMockedPage(page, useMock) {\n  if (!useMock) return;  // 真实后端模式，跳过所有 Mock\n\n  await page.route('**/api/context-user/current-user', route => {\n    route.fulfill({ ... });\n  });\n  // ...\n}\n```\n\n### 3. 独立 page.route() 也加守卫\n不在 setupMockedPage 内的 `page.route()` 同样需要保护。\n\n### 4. 不需要改的内容\n- `page.on('console', ...)` 事件监听 — 两种模式都需要\n- `page.evaluate()` 状态断言 — 两种模式都需要\n- `page.locator()` DOM 断言 — 两种模式都需要\n- `page.screenshot()` — 两种模式都需要\n\n### 5. 特殊文件注意\n`test-dataclonefix-v2.spec.js` — 该文件使用 `require('playwright')` 而非 `@playwright/test`，是独立脚本。QA 测试发现它在 `--list` 阶段就报 `ECONNREFUSED`。暂时跳过此文件（不改动），后续单独处理。\n\n## 涉及文件\n所有 `AgentTeams/qa/playwright/*.spec.js`（约 21 个可改造文件）：\n- menu-e2e.spec.js\n- e2e-real-data.spec.js\n- test-postmessage.spec.js\n- test-dataclonefix.spec.js\n- test-port-fix.spec.js\n- test-hrmtoken-loop.spec.js\n- test-config-security.spec.js\n- test-getappcontext-stub.spec.js\n- test-menubuttons-passthrough.spec.js\n- test-dataclonefix-v2.spec.js（跳过）\n- test-https-http-fix.spec.js\n- test-columnselector-restore.spec.js\n- test-getdefaulttheme-stub.spec.js\n- test-defaulttheme-css-vars.spec.js\n- test-openpage-stub.spec.js\n- test-applytheme-css-inject.spec.js\n- test-states-shared.spec.js\n- test-newfenluapibase-fix.spec.js\n- iframe-embedded-e2e.spec.js\n- netfix-tabv2-verification.spec.js\n- fixes-v3-verification.spec.js\n- supplierManage-ui-interaction.spec.js\n\n## 验证标准\n- `USE_MOCK=true npx playwright test` Mock 模式全部通过（向后兼容）\n- `USE_MOCK=false npx playwright test --list` 不报语法错误\n- 改造后 spec 文件代码逻辑不变（Mock 模式行为与改造前完全一致）",
+    "files": [
+      "AgentTeams/qa/playwright.config.js",
+      "AgentTeams/qa/playwright/",
+      "AgentTeams/shared/requirements/007-plan-分层测试体系.md"
+    ],
+    "actions": [
+      "读取实施计划了解上下文",
+      "逐个 spec 文件添加 useMock 守卫",
+      "改造 setupMockedPage 函数签名，接收 useMock 参数",
+      "独立 page.route() 调用也加守卫",
+      "USE_MOCK=true 验证 Mock 模式向后兼容",
+      "完成后发 REVIEW → Reviewer，通过后发 RESULT 给 Architect"
+    ],
+    "deadline": null
+  }
+}

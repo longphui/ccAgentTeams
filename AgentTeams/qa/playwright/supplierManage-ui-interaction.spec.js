@@ -58,7 +58,9 @@ function mockSupplierApi(page, overrides = {}) {
 }
 
 // ===== 通用 setup =====
-async function setupMockedPage(page) {
+async function setupMockedPage(page, useMock) {
+  if (!useMock) return;
+
   await page.route('**/api/context-user/current-user', route => {
     route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
   });
@@ -75,7 +77,8 @@ async function setupMockedPage(page) {
 // Test 1: 页面加载 — 供应商管理页正常渲染
 // ====================================================================
 test('供应商管理 — 页面加载 → iframe-tab 渲染成功', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   const errors = [];
   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 
@@ -101,7 +104,8 @@ test('供应商管理 — 页面加载 → iframe-tab 渲染成功', async ({ pa
 // Test 2: Tab 切换 — iframe-tab 标签切换功能
 // ====================================================================
 test('供应商管理 — Tab 切换 → 点击标签切换内容', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(3000);
 
@@ -121,7 +125,8 @@ test('供应商管理 — Tab 切换 → 点击标签切换内容', async ({ pag
 // Test 3: 按钮权限 — menuButtons 数据验证
 // ====================================================================
 test('供应商管理 — 按钮权限 → menuButtons 包含 search/add/edit/delete/export', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(3000);
 
@@ -149,7 +154,8 @@ test('供应商管理 — 按钮权限 → menuButtons 包含 search/add/edit/de
 // Test 4: 权限联动 — 无 add 权限时新增按钮应隐藏
 // ====================================================================
 test('供应商管理 — 权限联动 → 无 add 权限时新增按钮不可见', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(3000);
 
@@ -184,25 +190,28 @@ test('供应商管理 — 权限联动 → 无 add 权限时新增按钮不可�
 // Test 5: API Mock 验证 — 供应商列表 API 正常响应
 // ====================================================================
 test('供应商管理 — API Mock → 供应商列表返回正确数据结构', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   let capturedBody = null;
 
-  await page.route('**/api/services/app/Supplier/GetAll**', route => {
-    capturedBody = route.request().postDataJSON();
-    route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({
-        succeeded: true,
-        data: {
-          items: [
-            { id: 1, name: '供应商A', contact: '张三', phone: '13800138000' },
-            { id: 2, name: '供应商B', contact: '李四', phone: '13900139000' }
-          ],
-          totalCount: 2
-        }
-      })
+  if (useMock) {
+    await page.route('**/api/services/app/Supplier/GetAll**', route => {
+      capturedBody = route.request().postDataJSON();
+      route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({
+          succeeded: true,
+          data: {
+            items: [
+              { id: 1, name: '供应商A', contact: '张三', phone: '13800138000' },
+              { id: 2, name: '供应商B', contact: '李四', phone: '13900139000' }
+            ],
+            totalCount: 2
+          }
+        })
+      });
     });
-  });
+  }
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(3000);
@@ -231,15 +240,18 @@ test('供应商管理 — API Mock → 供应商列表返回正确数据结构',
 // Test 6: API Mock — 空列表返回
 // ====================================================================
 test('供应商管理 — API Mock 空列表 → 返回 items=[] 且 totalCount=0', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   // 覆盖供应商列表为空白
-  await page.route('**/api/services/app/Supplier/GetAll**', route => {
-    route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({ succeeded: true, data: { items: [], totalCount: 0 } })
+  if (useMock) {
+    await page.route('**/api/services/app/Supplier/GetAll**', route => {
+      route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ succeeded: true, data: { items: [], totalCount: 0 } })
+      });
     });
-  });
+  }
 
   const errors = [];
   page.on('pageerror', err => errors.push(err.message));
@@ -258,16 +270,19 @@ test('供应商管理 — API Mock 空列表 → 返回 items=[] 且 totalCount=
 // Test 7: API Mock — 错误响应不崩溃
 // ====================================================================
 test('供应商管理 — API 500 错误 → 页面不崩溃', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   // 模拟 API 500 错误
-  await page.route('**/api/services/app/Supplier/GetAll**', route => {
-    route.fulfill({
-      status: 500,
-      contentType: 'application/json',
-      body: JSON.stringify({ succeeded: false, errors: [{ message: '服务器内部错误' }] })
+  if (useMock) {
+    await page.route('**/api/services/app/Supplier/GetAll**', route => {
+      route.fulfill({
+        status: 500,
+        contentType: 'application/json',
+        body: JSON.stringify({ succeeded: false, errors: [{ message: '服务器内部错误' }] })
+      });
     });
-  });
+  }
 
   const errors = [];
   page.on('pageerror', err => errors.push(err.message));
@@ -286,7 +301,8 @@ test('供应商管理 — API 500 错误 → 页面不崩溃', async ({ page }) 
 // Test 8: 响应式 — 窗口缩放不崩溃
 // ====================================================================
 test('供应商管理 — 响应式 → 窗口缩放页面不崩溃', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   const errors = [];
   page.on('pageerror', err => errors.push(err.message));
 

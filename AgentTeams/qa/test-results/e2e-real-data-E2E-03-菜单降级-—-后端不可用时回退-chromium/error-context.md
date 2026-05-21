@@ -1,0 +1,226 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: e2e-real-data.spec.js >> E2E-03: 菜单降级 — 后端不可用时回退
+- Location: playwright\e2e-real-data.spec.js:101:1
+
+# Error details
+
+```
+Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5021/index.html
+Call log:
+  - navigating to "http://localhost:5021/index.html", waiting until "networkidle"
+
+```
+
+# Test source
+
+```ts
+  18  | 
+  19  | async function setupRealDataPage(page, useMock) {
+  20  |   if (!useMock) return;
+  21  | 
+  22  |   // Only mock auth — let menu proxy use real backend
+  23  |   await page.route('http://localhost:5000/api/context-user/current-user', route => {
+  24  |     route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
+  25  |   });
+  26  |   // DO NOT mock menu-proxy — use real data
+  27  |   // DO NOT mock hrm-auth — use real data
+  28  | }
+  29  | 
+  30  | // ===== Test 1: 菜单加载 (真实数据) =====
+  31  | test('E2E-01: 菜单加载 — 真实API数据，验证菜单树完整', async ({ page }) => {
+  32  |   const useMock = test.info().project.use.useMock;
+  33  |   await setupRealDataPage(page, useMock);
+  34  |   const errors = [];
+  35  |   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
+  36  | 
+  37  |   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
+  38  |   await page.waitForTimeout(5000);
+  39  |   await page.screenshot({ path: path.join(SCREENSHOTS, 'e2e-01-real-menu.png'), fullPage: true });
+  40  | 
+  41  |   // 验证菜单数据已加载
+  42  |   const menuCount = await page.evaluate(() => window.appContext?.menu?.items?.length || 0);
+  43  |   console.log('Real menu top-level items:', menuCount);
+  44  |   expect(menuCount, '应加载真实菜单数据(21个顶层模块)').toBeGreaterThanOrEqual(20);
+  45  | 
+  46  |   // 验证包含 HRM 模块
+  47  |   const hasHRM = await page.evaluate(() => {
+  48  |     const items = window.appContext?.menu?.items || [];
+  49  |     return items.some(i => (i.title || '').includes('人力') || (i.title || '').includes('HRM'));
+  50  |   });
+  51  |   expect(hasHRM, '菜单树应包含人力资源模块').toBe(true);
+  52  | 
+  53  |   // 验证包含鸿冠原生模块
+  54  |   const hasNative = await page.evaluate(() => {
+  55  |     const items = window.appContext?.menu?.items || [];
+  56  |     return items.some(i => (i.title || '').includes('采购') || (i.title || '').includes('产品'));
+  57  |   });
+  58  |   expect(hasNative, '菜单树应包含鸿冠原生模块').toBe(true);
+  59  | 
+  60  |   // 无 JS 异常
+  61  |   const realErrors = await page.evaluate(() => {
+  62  |     return (window.__consoleErrors || []).filter(e =>
+  63  |       !e.includes('404') && !e.includes('favicon')
+  64  |     );
+  65  |   });
+  66  |   if (realErrors.length > 0) console.log('JS errors:', realErrors);
+  67  | });
+  68  | 
+  69  | // ===== Test 2: HRM iframe 代理路径 =====
+  70  | test('E2E-02: HRM页面路径 — 验证HRM菜单path指向hrm-proxy', async ({ page }) => {
+  71  |   const useMock = test.info().project.use.useMock;
+  72  |   await setupRealDataPage(page, useMock);
+  73  | 
+  74  |   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
+  75  |   await page.waitForTimeout(5000);
+  76  | 
+  77  |   const hrmPaths = await page.evaluate(() => {
+  78  |     const result = [];
+  79  |     function find(items) {
+  80  |       (items || []).forEach(item => {
+  81  |         if ((item.path || '').includes('hrm-proxy')) {
+  82  |           result.push({ title: item.title, path: item.path, id: item.id });
+  83  |         }
+  84  |         if (item.children) find(item.children);
+  85  |       });
+  86  |     }
+  87  |     find(window.appContext?.menu?.items || []);
+  88  |     return result;
+  89  |   });
+  90  | 
+  91  |   console.log('HRM proxy paths found:', hrmPaths.length);
+  92  |   expect(hrmPaths.length, '应有HRM iframe代理菜单').toBeGreaterThan(0);
+  93  | 
+  94  |   // 验证所有 HRM 路径格式
+  95  |   const badPaths = hrmPaths.filter(p => !p.path.startsWith('/views/hrm-proxy/index.html?page='));
+  96  |   console.log('Bad HRM paths:', badPaths);
+  97  |   expect(badPaths.length, '所有HRM路径应符合 /views/hrm-proxy/index.html?page= 格式').toBe(0);
+  98  | });
+  99  | 
+  100 | // ===== Test 3: 菜单降级 (真实环境) =====
+  101 | test('E2E-03: 菜单降级 — 后端不可用时回退', async ({ page }) => {
+  102 |   const useMock = test.info().project.use.useMock;
+  103 |   const errors = [];
+  104 |   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
+  105 | 
+  106 |   if (useMock) {
+  107 |     // Mock menu proxy to fail (simulate backend down)
+  108 |     await page.route('http://localhost:5000/api/menu-proxy/get-list-by-role', route => {
+  109 |       route.abort('connectionrefused');
+  110 |     });
+  111 |     await page.route('http://localhost:5000/api/context-user/current-user', route => {
+  112 |       route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
+  113 |     });
+  114 |   }
+  115 |   // menu.json doesn't exist — so the fallback itself will fail
+  116 |   // We want to observe the error handling
+  117 | 
+> 118 |   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
+      |              ^ Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5021/index.html
+  119 |   await page.waitForTimeout(5000);
+  120 |   await page.screenshot({ path: path.join(SCREENSHOTS, 'e2e-03-fallback.png'), fullPage: true });
+  121 | 
+  122 |   // Check console for fallback message
+  123 |   const fallbackLogs = await page.evaluate(() => {
+  124 |     return (window.__consoleLogs || []).filter(l => l.includes('回退') || l.includes('fallback'));
+  125 |   });
+  126 |   console.log('Fallback related logs:', fallbackLogs);
+  127 | 
+  128 |   // Check if menu.json fallback was attempted
+  129 |   const menuJsonAttempted = await page.evaluate(() => {
+  130 |     return (window.__consoleLogs || []).some(l =>
+  131 |       l.includes('menu.json') || l.includes('回退')
+  132 |     );
+  133 |   });
+  134 |   console.log('menu.json fallback attempted:', menuJsonAttempted);
+  135 | });
+  136 | 
+  137 | // ===== Test 4: 鸿冠原生模块路由 =====
+  138 | test('E2E-04: 鸿冠原生模块 — 验证原生页面路径正确', async ({ page }) => {
+  139 |   const useMock = test.info().project.use.useMock;
+  140 |   await setupRealDataPage(page, useMock);
+  141 | 
+  142 |   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
+  143 |   await page.waitForTimeout(5000);
+  144 | 
+  145 |   const nativePaths = await page.evaluate(() => {
+  146 |     const result = [];
+  147 |     function find(items) {
+  148 |       (items || []).forEach(item => {
+  149 |         const p = item.path || '';
+  150 |         // 排除 HRM proxy 和空路径
+  151 |         if (p && !p.includes('hrm-proxy') && !p.startsWith('/v2/') && !p.startsWith('/environmentalMonitore') && !p.startsWith('/THDetection')) {
+  152 |           result.push({ title: item.title, path: p });
+  153 |         }
+  154 |         if (item.children) find(item.children);
+  155 |       });
+  156 |     }
+  157 |     find(window.appContext?.menu?.items || []);
+  158 |     return result;
+  159 |   });
+  160 | 
+  161 |   console.log('Native module paths:', nativePaths.length);
+  162 |   expect(nativePaths.length, '应有鸿冠原生模块菜单').toBeGreaterThan(0);
+  163 | 
+  164 |   // Check for bad paths (backslash, leading space)
+  165 |   const badPaths = nativePaths.filter(p => {
+  166 |     return p.path.includes('\\') || p.path.startsWith(' ') || p.path.includes('  ');
+  167 |   });
+  168 |   if (badPaths.length > 0) {
+  169 |     console.log('Warning: paths with issues:', badPaths.slice(0, 10));
+  170 |   }
+  171 | });
+  172 | 
+  173 | // ===== Test 5: checkTabPermissions (真实数据) =====
+  174 | test('E2E-05: checkTabPermissions — 用真实菜单数据验证权限检查', async ({ page }) => {
+  175 |   const useMock = test.info().project.use.useMock;
+  176 |   await setupRealDataPage(page, useMock);
+  177 | 
+  178 |   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
+  179 |   await page.waitForTimeout(5000);
+  180 | 
+  181 |   const results = await page.evaluate(() => {
+  182 |     const tests = [];
+  183 | 
+  184 |     // Test with native module path
+  185 |     const nativePath = 'views/purchase_management/index.html';
+  186 |     tests.push({
+  187 |       path: nativePath,
+  188 |       add: window.checkTabPermissions(nativePath, 'add'),
+  189 |       search: window.checkTabPermissions(nativePath, 'search'),
+  190 |       edit: window.checkTabPermissions(nativePath, 'edit'),
+  191 |       delete: window.checkTabPermissions(nativePath, 'delete'),
+  192 |     });
+  193 | 
+  194 |     // Test with HRM path
+  195 |     const hrmPath = '/views/hrm-proxy/index.html?page=staffManagement/staffInfo/index.html';
+  196 |     tests.push({
+  197 |       path: 'hrm-staffInfo',
+  198 |       add: window.checkTabPermissions(hrmPath, 'add'),
+  199 |       search: window.checkTabPermissions(hrmPath, 'search'),
+  200 |       nonexistent: window.checkTabPermissions(hrmPath, 'nonexistent_btn'),
+  201 |     });
+  202 | 
+  203 |     // Test with nonexistent path
+  204 |     tests.push({
+  205 |       path: 'nonexistent',
+  206 |       any: window.checkTabPermissions('nonexistent/path', 'add'),
+  207 |     });
+  208 | 
+  209 |     // Test with empty path (uses current route)
+  210 |     tests.push({
+  211 |       path: 'empty (currentRoute)',
+  212 |       any: window.checkTabPermissions('', 'add'),
+  213 |     });
+  214 | 
+  215 |     return tests;
+  216 |   });
+  217 | 
+  218 |   console.log('checkTabPermissions results:', JSON.stringify(results, null, 2));
+```

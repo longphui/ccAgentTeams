@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1440-t3u4",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-21T14:40:00+08:00",
+  "payload": {
+    "subject": "测试请求：test-dataclonefix-v2 独立验证脚本",
+    "context": "#007",
+    "content": "## 测试重点\n- 手动执行独立验证脚本：`node AgentTeams/qa/tools/test-dataclonefix-v2.verify.js`\n- 确认 `npx playwright test --list` 不再加载此文件\n- 确认其他 22 个 spec 文件正常列在 Playwright 测试清单中\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": ["AgentTeams/qa/tools/test-dataclonefix-v2.verify.js"]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "msg-20260521-1600-e7f8",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-21T16:00:00+08:00",
+  "payload": {
+    "subject": "审查请求：批量迁移 14 个独立验证脚本到 tools/",
+    "context": "#007",
+    "content": "## 审查重点\n- `playwright/` 中 14 个独立 IIFE 脚本全部移入 `tools/`，改为 `.verify.js`\n- `playwright/` 仅剩 6 个真正的 @playwright/test spec 文件\n- `npx playwright test --list` 干净：47 测试 6 文件，无崩溃\n- `tools/` 现有 16 个 `.verify.js`（14 新 + 2 旧），全部语法正确\n\n## 完整清单\n移动的文件：test-applytheme-css-inject、test-columnselector-restore、test-config-security、test-defaulttheme-css-vars、test-getappcontext-stub、test-getdefaulttheme-stub、test-hrmtoken-loop、test-https-http-fix、test-menubuttons-passthrough、test-newfenluapibase-fix、test-openpage-stub、test-port-fix、test-postmessage、test-states-shared",
+    "files": [
+      "AgentTeams/qa/tools/test-applytheme-css-inject.verify.js",
+      "AgentTeams/qa/tools/test-columnselector-restore.verify.js",
+      "AgentTeams/qa/tools/test-config-security.verify.js",
+      "AgentTeams/qa/tools/test-defaulttheme-css-vars.verify.js",
+      "AgentTeams/qa/tools/test-getappcontext-stub.verify.js",
+      "AgentTeams/qa/tools/test-getdefaulttheme-stub.verify.js",
+      "AgentTeams/qa/tools/test-hrmtoken-loop.verify.js",
+      "AgentTeams/qa/tools/test-https-http-fix.verify.js",
+      "AgentTeams/qa/tools/test-menubuttons-passthrough.verify.js",
+      "AgentTeams/qa/tools/test-newfenluapibase-fix.verify.js",
+      "AgentTeams/qa/tools/test-openpage-stub.verify.js",
+      "AgentTeams/qa/tools/test-port-fix.verify.js",
+      "AgentTeams/qa/tools/test-postmessage.verify.js",
+      "AgentTeams/qa/tools/test-states-shared.verify.js"
+    ]
+  }
+}

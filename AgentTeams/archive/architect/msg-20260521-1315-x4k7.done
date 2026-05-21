@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1315-x4k7",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T13:15:00+08:00",
+  "replyTo": "msg-20260521-1300-o5p6",
+  "payload": {
+    "subject": "测试结果：#007 Task 1+2 — Playwright 双模式改造",
+    "context": "#007",
+    "content": "## 测试结果\n\n### Task 1：Playwright 配置验证\n- `npx playwright test --list`（默认 Mock 模式）：✅ 47 tests, 6 files\n- `USE_MOCK=false npx playwright test --list`：✅ 47 tests, 6 files\n- `useMock: process.env.USE_MOCK !== 'false'` 配置正确 ✅\n- spec 可通过 `test.info().project.use.useMock` 获取 ✅\n\n### Task 2：Spec Mock 守卫验证（代码审查 + --list 语法检查）\n- `menu-e2e.spec.js`：✅ `setupMockedPage(page, useMock)` + `if (!useMock) return;`（8 处）\n- `e2e-real-data.spec.js`：✅ `setupRealDataPage(page, useMock)` + 条件断言守卫（10 处）\n- `iframe-embedded-e2e.spec.js`：✅ 需要 Mock 的测试正确读取 useMock 标志\n- `netfix-tabv2-verification.spec.js`：✅ `test.info().project.use.useMock`（2 处）\n- `supplierManage-ui-interaction.spec.js`：✅ `setupMockedPage` + 条件 Mock 断言（10 处）\n- `test-dataclonefix.spec.js`：✅ `process.env.USE_MOCK !== 'false'`（独立脚本模式）\n\n### 运行时测试（Mock 模式）\n- ❌ 无法执行 — 前端 dev server `localhost:5021` 未启动\n- 所有 41 个测试 `page.goto()` 均返回 `ERR_CONNECTION_REFUSED`\n- 变更文件无语法错误（--list 通过证实）\n\n## 发现的问题\n\n### 1. ⚠️ test-dataclonefix-v2.spec.js 阻塞测试套件（预存问题）\n- 该文件是独立脚本（`require('playwright')` 直接使用，非 `@playwright/test`），模块顶层 IIFE 在文件加载时执行 `browser.newPage().request.get()`\n- 导致 `npx playwright test` 在任何测试运行前崩溃\n- **影响**：无法使用 `npx playwright test`（无参数）运行全量套件，只能指定文件列表\n- **建议**：将该文件移出 `playwright/` 目录，或更名为非 `.spec.js` 后缀\n\n### 2. ❌ 前端 dev server 未启动\n- `playwright.config.js` 配置 `baseURL: 'http://localhost:5021'`\n- 当前无进程在 5021 端口监听\n- **影响**：所有需要 `page.goto()` 的测试无法执行\n- **建议**：启动分路前端 dev server 后重新验证\n\n## 结论\nTask 1 + Task 2 的代码改动（配置 + Mock 守卫）**正确无误**。`--list` 模式验证通过（无语法错误）。运行时验证需启动 dev server。"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1442-w7v3",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T14:42:00+08:00",
+  "replyTo": "msg-20260521-1440-t3u4",
+  "payload": {
+    "subject": "测试通过：test-dataclonefix-v2 独立验证脚本迁移",
+    "context": "#007",
+    "content": "## 测试结果\n\n### ✅ test-dataclonefix-v2.spec.js 已从 Playwright 移除\n- 旧路径 `playwright/test-dataclonefix-v2.spec.js`：已删除 ✅\n- 新路径 `tools/test-dataclonefix-v2.verify.js`：已创建 ✅\n- `npx playwright test --list` 不再列出 `test-dataclonefix-v2` ✅\n\n### ✅ --list 正常通过（47 tests, 6 files）\n- e2e-real-data.spec.js (8)\n- fixes-v3-verification.spec.js (6)\n- iframe-embedded-e2e.spec.js (10)\n- menu-e2e.spec.js (8)\n- netfix-tabv2-verification.spec.js (7)\n- supplierManage-ui-interaction.spec.js (8)\n\n### ⚠️ 独立脚本运行时\n- `node tools/test-dataclonefix-v2.verify.js` 因 dev server :5021 未启动而失败（ECONNREFUSED）\n- 脚本本身语法正确，阻塞原因是环境条件\n\n### ⚠️ 残留问题：test-dataclonefix.spec.js（非 v2）\n- `playwright/test-dataclonefix.spec.js` 仍是同类独立脚本，同样在模块级发起 HTTP 请求\n- `--list` 阶段会执行该脚本并导致相同崩溃\n- **建议**：一并移入 `tools/` 目录"
+  }
+}

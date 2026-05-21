@@ -92,6 +92,7 @@ ls "AgentTeams/inbox/developer/"*.msg.json 2>/dev/null
 - **TASK (normal/low)** → 按序处理
 - **FEEDBACK** → 根据 Reviewer 反馈修改代码，改完后重新发 REVIEW
 - **RESULT** → Reviewer 审查通过，将对应的 `.processing` 重命名为 `.done`，发送最终 RESULT 给 Architect
+- **SYNC** → 来自 Architect 的决策/交付通知。读取内容，**将本条 SYNC 消息直接重命名为 `.done`（无需回复），并立即清理自己 inbox 中该功能相关的 `.done` 到 archive**
 
 ## TASK 处理流程
 
@@ -209,6 +210,8 @@ ls "AgentTeams/inbox/developer/"*.msg.json 2>/dev/null
 `payload.context` 必须与原始 TASK 的功能编号一致。
 
 ## 触发下游（强制）
+
+**通用铁律：向任何角色的 inbox 写入任何消息后，必须写对应的 trigger 文件。不论消息类型（TASK / REVIEW / TEST / RESULT / QUERY / FEEDBACK / SYNC），没有例外。**
 
 每次处理完消息、向其他角色发送消息后，必须**写 trigger 文件**唤醒下游 agent：
 

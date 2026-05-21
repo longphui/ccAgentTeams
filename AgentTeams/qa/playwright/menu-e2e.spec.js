@@ -76,7 +76,9 @@ const MOCK_HRM_TOKEN = {
 };
 
 // ===== 通用 setup =====
-async function setupMockedPage(page) {
+async function setupMockedPage(page, useMock) {
+  if (!useMock) return;
+
   // Mock 后端 API 响应
   await page.route('http://localhost:5000/api/context-user/current-user', route => {
     route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
@@ -95,7 +97,8 @@ async function setupMockedPage(page) {
 
 // ===== Test 1: 菜单树渲染 =====
 test('菜单树渲染 — 验证菜单 DOM 节点存在且层级正确', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   const errors = [];
   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
 
@@ -125,7 +128,8 @@ test('菜单树渲染 — 验证菜单 DOM 节点存在且层级正确', async (
 
 // ===== Test 2: 图标显示 =====
 test('图标显示 — 验证 fa fa-* 和 icon-* 图标的 class 属性', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(3000);
@@ -167,7 +171,8 @@ test('图标显示 — 验证 fa fa-* 和 icon-* 图标的 class 属性', async 
 
 // ===== Test 3: 标签页打开 + startup 首页 =====
 test('标签页打开 — startup 首页加载 + 点击菜单创建标签', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(4000);
@@ -193,7 +198,8 @@ test('标签页打开 — startup 首页加载 + 点击菜单创建标签', asyn
 
 // ===== Test 4: postMessage iframe 桥接 =====
 test('postMessage — HRM_GET_CONTEXT → HRM_CONTEXT 消息流程', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(4000);
@@ -261,7 +267,8 @@ test('postMessage — HRM_GET_CONTEXT → HRM_CONTEXT 消息流程', async ({ pa
 
 // ===== Test 5: Console 无 JS 报错 =====
 test('Console 无 JS 报错', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
   const errors = [];
   page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
   page.on('pageerror', err => errors.push('PAGE_CRASH: ' + err.message));
@@ -292,7 +299,8 @@ test('Console 无 JS 报错', async ({ page }) => {
 
 // ===== Test 6: checkTabPermissions =====
 test('checkTabPermissions — 验证按钮权限检查函数返回值', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(4000);
@@ -343,18 +351,22 @@ test('checkTabPermissions — 验证按钮权限检查函数返回值', async ({
 
 // ===== Test 7: 菜单降级 — menu.json 回退 =====
 test('菜单降级 — 后端不可用时回退到静态 menu.json', async ({ page }) => {
-  // 仅 mock user API + 静态 menu.json，不 mock menu-proxy（模拟后端菜单 API 不可用）
-  await page.route('http://localhost:5000/api/context-user/current-user', route => {
-    route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
-  });
-  // 让 menu-proxy 返回 500 错误（模拟后端不可用）
-  await page.route('http://localhost:5000/api/menu-proxy/get-list-by-role', route => {
-    route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ succeeded: false, errors: '服务不可用' }) });
-  });
-  // 降级到 menu.json
-  await page.route('http://localhost:5000/menu.json', route => {
-    route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_MENU) });
-  });
+  const useMock = test.info().project.use.useMock;
+
+  if (useMock) {
+    // 仅 mock user API + 静态 menu.json，不 mock menu-proxy（模拟后端菜单 API 不可用）
+    await page.route('http://localhost:5000/api/context-user/current-user', route => {
+      route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
+    });
+    // 让 menu-proxy 返回 500 错误（模拟后端不可用）
+    await page.route('http://localhost:5000/api/menu-proxy/get-list-by-role', route => {
+      route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ succeeded: false, errors: '服务不可用' }) });
+    });
+    // 降级到 menu.json
+    await page.route('http://localhost:5000/menu.json', route => {
+      route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_MENU) });
+    });
+  }
 
   const logs = [];
   page.on('console', msg => {
@@ -380,7 +392,8 @@ test('菜单降级 — 后端不可用时回退到静态 menu.json', async ({ pa
 
 // ===== Test 8: appContext 基础状态 =====
 test('appContext 状态 — 验证全局上下文初始化正确', async ({ page }) => {
-  await setupMockedPage(page);
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
 
   await page.goto(FRONTEND + '/index.html', { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(4000);

@@ -368,50 +368,71 @@ test('回归 — {Bug描述} → {修复后预期}', ...);
 ### 8.1 本地执行命令
 
 ```bash
-# 全部 spec
-npx playwright test
+cd AgentTeams/qa
 
-# 单个 spec
-npx playwright test playwright/menu-e2e.spec.js
+# === Mock 模式（默认，不依赖后端） ===
+npx playwright test                        # 全部 spec
+USE_MOCK=true npx playwright test          # 显式指定（同上）
 
-# UI 模式（调试用）
-npx playwright test --ui
+# === 真实后端模式（联调验证） ===
+USE_MOCK=false npx playwright test         # 全部 spec
 
-# 带浏览器可见
-npx playwright test --headed
-
-# 指定 spec 文件
-npx playwright test test-*.spec.js
+# === 其他选项 ===
+npx playwright test playwright/<spec>      # 单个 spec
+npx playwright test --headed               # 可视模式（调试/截图证据）
+USE_MOCK=false npx playwright test --headed  # 真实后端 + 可视
+npx playwright test --ui                   # UI 交互式调试
+npx playwright test --list                 # 列出测试（不执行，检查语法）
 ```
+
+> `USE_MOCK` 由 `playwright.config.js` 的 `use.useMock` 字段传递给 spec，默认 `true`（向后兼容）。spec 中通过 `test.info().project.use.useMock` 获取。
 
 ### 8.2 Playwright 测试认证与 Mock
 
-本项目的 Playwright 测试通过 Mock 模式绕过登录认证，不依赖真实 Token 获取流程。
+本项目支持 **Mock 模式**和**真实后端模式**双模式，通过环境变量 `USE_MOCK` 切换（默认 `true`，向后兼容）。
 
-**Mock 模式**（推荐，与开发 Mock 数据一致）：
+**Mock 模式**（`USE_MOCK=true`，默认，与开发 Mock 数据一致）：
 
 ```javascript
-async function setupMockedPage(page) {
-  // Mock 用户信息 API（替代登录流程）
+async function setupMockedPage(page, useMock) {
+  if (!useMock) return;  // 真实后端模式，跳过所有 Mock
+
   await page.route('**/api/context-user/current-user', route => {
     route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_USER) });
   });
-  // Mock 菜单 API（替代角色权限获取）
   await page.route('**/api/menu-proxy/get-list-by-role', route => {
     route.fulfill({ contentType: 'application/json', body: JSON.stringify(MOCK_MENU) });
   });
 }
+
+test('用例名', async ({ page }) => {
+  const useMock = test.info().project.use.useMock;
+  await setupMockedPage(page, useMock);
+  // ...
+});
+```
+
+**Standalone 脚本**（非 `@playwright/test`）直接用环境变量：
+
+```javascript
+const useMock = process.env.USE_MOCK !== 'false';
+if (useMock) {
+  // page.route() 注册
+}
 ```
 
 **关键点**：
-- Mock 路由使用通配符 `**/api/**` 匹配所有端口（5021 / 5000 / 8088），避免端口硬编码导致路由死代码
+- Mock 路由使用通配符 `**/api/**` 匹配所有端口，避免端口硬编码导致路由死代码
 - Mock 数据与 `shared/requirements/` 中 API 契约的 Mock 数据保持一致
 - 认证相关 API 必须在 `page.goto()` 之前完成 mock，否则页面可能因 401 跳转
+- `USE_MOCK=false` 时所有 `page.route()` 跳过，请求直发后端，用于联调验证
+- 同一套 spec，Mock 和真实后端各跑一次，不写两套脚本
 
 ### 8.3 执行前检查
 
-- 前端 dev server 已启动（`http://localhost:5021`）
-- 后端 API 已启动（`http://localhost:8088` 或 mock 就绪）
+- 前端 dev server 已启动（端口见 `playwright.config.js` 的 `baseURL`）
+- `USE_MOCK=false` 模式时：后端 API 已启动且可访问
+- `AgentTeams/qa/node_modules` 已安装
 - 测试数据干净（无上次测试残留）
 
 ### 8.4 测试报告查看
@@ -445,9 +466,11 @@ npx playwright show-report playwright/html-report/
 |------|------|---------|------|
 | E2E 流程 | 约 3 个 spec（menu-e2e, iframe-embedded-e2e, e2e-real-data） | 菜单、路由、权限、iframe 桥接、真实数据 | 无业务模块覆盖 |
 | Bug 回归 | 约 18 个 spec（test-*.spec.js + fixes/netfix verification） | 主题注入、Token 循环、端口、postMessage 等 | 只在代码级别验证 |
-| UI 交互 | 0 | — | 完全缺失 |
+| UI 交互 | 1 个 spec（supplierManage-ui-interaction） | 供应商管理页面交互 | 大量业务模块缺失 |
 | API 接口 | 0 | — | 完全缺失 |
 | 单元测试 | 0 | — | 缺失前后端单元测试 |
+
+> 所有 spec 已支持 `USE_MOCK` 双模式切换（#007）。Mock 模式下不依赖后端，`USE_MOCK=false` 切换真实后端联调。
 
 ## 附录 C：测试验收清单
 

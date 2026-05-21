@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260521-003",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-21T14:25:00+08:00",
+  "payload": {
+    "subject": "#007 修复: test-dataclonefix-v2.spec.js 阻塞测试套件",
+    "context": "#007",
+    "content": "## 问题\n`AgentTeams/qa/playwright/test-dataclonefix-v2.spec.js` 不是标准的 `@playwright/test` spec 文件，而是顶层 IIFE `(async () => { ... })()` 直接启动 Chromium 的独立验证脚本。\n\nPlaywright 在加载 `testDir`（`./playwright/`）下的文件时，会执行模块顶层代码。该文件的 IIFE 立即调用 `browser.newPage().request.get('http://localhost:5021/js/app.js')`，若 dev server 未启动或网络不通，在测试体运行前就崩溃，阻塞整个 `npx playwright test` 套件。\n\n## 修复方案（二选一，推荐方案 A）\n\n### 方案 A：移出 testDir（推荐）\n将文件移到 `AgentTeams/qa/tools/` 目录，从 testDir 范围外执行：\n```bash\nnode AgentTeams/qa/tools/test-dataclonefix-v2.verify.js\n```\n\n### 方案 B：改名去 .spec.js 后缀\n原地改名 `test-dataclonefix-v2.verify.js`，Playwright 只匹配 `*.spec.js`。\n\n## 涉及文件\n- `AgentTeams/qa/playwright/test-dataclonefix-v2.spec.js`\n\n## 验证标准\n- `npx playwright test --list` 不报 `ECONNREFUSED`\n- 文件从 `playwright/` 目录移除或改名后，Playwright 不再尝试加载",
+    "files": [
+      "AgentTeams/qa/playwright/test-dataclonefix-v2.spec.js"
+    ],
+    "actions": [
+      "将文件移出 playwright/ 目录（推荐 tools/），或改名为非 .spec.js 后缀",
+      "确认 npx playwright test --list 不崩溃",
+      "完成后发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

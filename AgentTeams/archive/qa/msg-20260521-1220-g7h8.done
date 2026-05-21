@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1220-g7h8",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-21T12:20:00+08:00",
+  "payload": {
+    "subject": "测试请求：#007 Task 1 — Playwright 配置双模式支持",
+    "context": "#007",
+    "content": "## 测试重点\n请验证 Playwright 配置改造：\n- `USE_MOCK=true npx playwright test --list` 列出测试不报错（默认 Mock 模式）\n- `USE_MOCK=false npx playwright test --list` 列出测试不报错（真实后端模式）\n- spec 中可通过 `test.info().project.use.useMock` 获取标志\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": ["AgentTeams/qa/playwright.config.js"]
+  }
+}

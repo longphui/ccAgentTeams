@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260521-1300-o5p6",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-21T13:00:00+08:00",
+  "payload": {
+    "subject": "测试请求：#007 Task 1+2 — Playwright 双模式改造",
+    "context": "#007",
+    "content": "## 测试重点\n### Task 1 验证\n- `npx playwright test --list` 默认模式列出测试不报错\n- `USE_MOCK=false npx playwright test --list` 列出测试不报错\n\n### Task 2 验证\n- `USE_MOCK=true npx playwright test` Mock 模式全部通过（向后兼容）\n- `USE_MOCK=false npx playwright test --list` 不报语法错误\n\n## 改动文件\n- `AgentTeams/qa/playwright.config.js` — useMock 配置\n- `AgentTeams/qa/playwright/menu-e2e.spec.js`\n- `AgentTeams/qa/playwright/e2e-real-data.spec.js`\n- `AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js`\n- `AgentTeams/qa/playwright/netfix-tabv2-verification.spec.js`\n- `AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js`\n- `AgentTeams/qa/playwright/test-dataclonefix.spec.js`\n\n## 审查状态\n✅ Task 1 + Task 2 均已通过 Reviewer 审查",
+    "files": [
+      "AgentTeams/qa/playwright.config.js",
+      "AgentTeams/qa/playwright/menu-e2e.spec.js",
+      "AgentTeams/qa/playwright/e2e-real-data.spec.js",
+      "AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js",
+      "AgentTeams/qa/playwright/netfix-tabv2-verification.spec.js",
+      "AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js",
+      "AgentTeams/qa/playwright/test-dataclonefix.spec.js"
+    ]
+  }
+}

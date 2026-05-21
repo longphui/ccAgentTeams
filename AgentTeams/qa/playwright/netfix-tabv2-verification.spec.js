@@ -151,21 +151,24 @@ test('NETFIX-01: appConfig 保留原始 API 地址 — 不被嵌入模式覆盖'
 // Test 2: API 请求 host — 验证请求发往 8088 而非前端 origin
 // =====================================================================
 test('NETFIX-02: API 请求直连 8088 — 不经过前端代理', async ({ page }) => {
+  const useMock = test.info().project.use.useMock;
   const apiHosts = [];
 
-  await page.route('**/api/**', (route, request) => {
-    const url = new URL(request.url());
-    apiHosts.push({ host: url.host, pathname: url.pathname, fullUrl: request.url() });
-    route.fulfill({
-      contentType: 'application/json',
-      body: JSON.stringify({ success: true, result: { totalCount: 0, items: [] } })
+  if (useMock) {
+    await page.route('**/api/**', (route, request) => {
+      const url = new URL(request.url());
+      apiHosts.push({ host: url.host, pathname: url.pathname, fullUrl: request.url() });
+      route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify({ success: true, result: { totalCount: 0, items: [] } })
+      });
     });
-  });
 
-  // 放行静态资源
-  await page.route('**/*.html*', route => route.continue());
-  await page.route('**/*.js', route => route.continue());
-  await page.route('**/*.css', route => route.continue());
+    // 放行静态资源
+    await page.route('**/*.html*', route => route.continue());
+    await page.route('**/*.js', route => route.continue());
+    await page.route('**/*.css', route => route.continue());
+  }
 
   await page.addInitScript(() => {
     localStorage.setItem('token', 'Bearer-mock-token');

@@ -5,39 +5,37 @@
 ## 环境要求
 
 - **Claude Code** CLI（需登录 Anthropic 账号）
-- **Windows Terminal**（用于 5 格布局一键启动）
+- **Windows Terminal**（用于 5 格布局一键启动，放在 `AgentTeams/tools/terminal-*/` 下）
 - **Git Bash**（部分脚本使用 bash 命令）
 
-> **迁移注意**：所有配置文件中硬编码了绝对路径 `D:\work\cc`。克隆到其他机器时**必须**放在 `D:\work\cc` 目录下，否则启动脚本和 skill 文件中的全部路径失效。
+> **迁移注意**：所有路径统一由 `AgentTeams/env.json` 管理。迁移到新机器时**只需修改这一个文件**，无需改动任何脚本或配置。
 
 ## 目录结构
 
 ```
-D:\work\cc\
-├── .claude\
-│   ├── commands/              # 角色 Skill 定义（agent-*.md）
-│   └── settings.local.json    # 权限白名单
-├── AgentTeams/                # 通信中枢
-│   ├── inbox/                 # 📥 收件箱
-│   │   ├── architect/
-│   │   ├── developer/
-│   │   ├── developer1/
-│   │   ├── reviewer/
-│   │   └── qa/
-│   ├── outbox/                # 📤 发件箱（同上 5 个角色）
-│   ├── archive/               # 🗄️ 已完成消息归档（同上 5 个角色）
-│   ├── watcher/               # 🔔 trigger 信号文件 + seen 记录
-│   ├── shared/                # 📋 共享资源
-│   │   ├── context.json       #   项目上下文
-│   │   ├── requirements/      #   需求文档 + 实施计划
-│   │   ├── decisions/         #   架构决策记录
-│   │   └── conventions/       #   编码规范
-│   ├── logs/                  # 📝 编译/构建/测试日志
-│   ├── start-team.ps1         # 🚀 WT 5 格布局一键启动
-│   ├── start-team.bat         #    start-team.ps1 的 bat 包装
-│   ├── start-{role}.bat       #    单角色独立启动
-│   └── _wt-{role}.bat         #    WT 子窗口启动脚本
-└── <项目仓库>/                 # 各项目代码（SVN checkout）
+AgentTeams/
+├── env.json                    # ⭐ 环境配置 — 所有路径的唯一真相源
+├── tools/
+│   └── terminal-1.25.1171.0/   # Windows Terminal（便携版）
+├── inbox/                      # 📥 收件箱
+│   ├── architect/
+│   ├── developer/
+│   ├── developer1/
+│   ├── reviewer/
+│   └── qa/
+├── outbox/                     # 📤 发件箱（同上 5 个角色）
+├── archive/                    # 🗄️ 已完成消息归档（同上 5 个角色）
+├── watcher/                    # 🔔 trigger 信号文件 + seen 记录
+├── shared/                     # 📋 共享资源
+│   ├── context.json            #   项目上下文
+│   ├── requirements/           #   需求文档 + 实施计划
+│   ├── decisions/              #   架构决策记录
+│   └── conventions/            #   编码规范
+├── logs/                       # 📝 编译/构建/测试日志
+├── start-team.ps1              # 🚀 WT 5 格布局一键启动
+├── start-team.bat              #    start-team.ps1 的 bat 包装
+├── start-{role}.bat            #    单角色独立启动
+└── _wt-{role}.bat              #    WT 子窗口启动脚本
 ```
 
 ## 角色一览
@@ -65,19 +63,32 @@ cd D:\work\cc
 # 团队配置（如果托管在 Git）
 git clone <team-config-repo> .
 
-# 如果是从已有机器复制，直接拷贝以下目录到 D:\work\cc\：
+# 如果是从已有机器复制，直接拷贝以下内容到 D:\work\cc\：
 #   .claude\        → Claude Code 配置
 #   AgentTeams\     → 通信系统
 ```
 
-项目仓库按各自方式 checkout 到 `D:\work\cc\` 下。
+项目仓库按各自方式 checkout 到本地任意目录。
 
-### 3. 适配本机环境
+### 3. ⭐ 适配本机环境（只需改一个文件）
 
-| 文件 | 可能需要修改 |
-|------|-------------|
-| `AgentTeams/start-team.ps1` | `$wt` — Windows Terminal 安装路径 |
-| `.claude/settings.local.json` | 权限白名单（编译工具路径、token 等） |
+编辑 `AgentTeams/env.json`，填写本机的实际路径：
+
+```json
+{
+  "agentTeams": "D:/work/cc/AgentTeams",
+  "tools": {
+    "terminal": "D:/work/cc/AgentTeams/tools/terminal-1.25.1171.0/wt.exe"
+  },
+  "projects": {
+    "fenlu":      "D:/work/cc/caikuangzi.fenlu/trunk",
+    "fenluWeb":   "D:/work/cc/caikuangzi.fenluwebproject/trunk",
+    "honguan":    "D:/work/cc/caikuangzi01.huoguan_erp/trunk"
+  }
+}
+```
+
+所有启动脚本和 TASK 分派都从此文件读取路径，无需逐处修改。
 
 ### 4. 填写项目上下文
 
@@ -109,13 +120,13 @@ powershell -ExecutionPolicy Bypass -File AgentTeams/start-team.ps1
 
 **方式 B：单独启动某个角色**
 
-在 `D:\work\cc` 下运行：
+在 `AgentTeams` 目录下运行：
 ```powershell
-AgentTeams\start-architect.bat
-AgentTeams\start-developer.bat
-AgentTeams\start-developer1.bat
-AgentTeams\start-reviewer.bat
-AgentTeams\start-qa.bat
+.\start-architect.bat
+.\start-developer.bat
+.\start-developer1.bat
+.\start-reviewer.bat
+.\start-qa.bat
 ```
 
 每个角色启动后自动进入 `/loop 1m /agent-trigger` 模式，持续监控收件箱。
@@ -152,6 +163,14 @@ AgentTeams\start-qa.bat
 
 各角色自行归档已完成的 `.done`，超过 20 个时强制清理。
 
+## 添加新项目
+
+1. 项目 checkout 到本地任意目录
+2. 在 `env.json` 的 `projects` 中添加项目路径映射
+3. 在 `.claude/commands/` 下创建对应的规范文件
+4. 更新 `shared/context.json`
+5. 如需新角色，在 `.claude/commands/` 下新建 `agent-<name>.md`，并在 watcher 和 trigger 中注册
+
 ## 常见问题
 
 **Q: 角色卡在 `.processing` 不动？**
@@ -163,8 +182,8 @@ AgentTeams\start-qa.bat
 **Q: 收件箱文件太多？**
 各角色有自动清理机制（超过 20 个 `.done` 强制归档），也可以手动移入 `archive/`。
 
-**Q: 如何添加新项目/新角色？**
-1. 项目 checkout 到 `D:\work\cc\` 下
-2. 在 `.claude/commands/` 下创建对应的规范文件
-3. 更新 `shared/context.json`
-4. 如需新角色，在 `.claude/commands/` 下新建 `agent-<name>.md`，并在 watcher 和 trigger 中注册
+**Q: 迁移到新机器怎么做？**
+1. 拷贝 `.claude/` + `AgentTeams/` 到新机器
+2. Clone 项目仓库到新路径
+3. 修改 `AgentTeams/env.json` 中的路径
+4. 运行 `start-team.bat`

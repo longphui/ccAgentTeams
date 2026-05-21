@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260521-1425-s9t0",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-21T14:25:00+08:00",
+  "payload": {
+    "subject": "审查请求：#007 修复 — test-dataclonefix-v2 移出 testDir",
+    "context": "#007",
+    "content": "## 改动\n将 `playwright/test-dataclonefix-v2.spec.js` 移到 `tools/test-dataclonefix-v2.verify.js`：\n- 原名匹配 `*.spec.js` 通配符，Playwright 加载时执行顶层 IIFE 直接启动 Chromium\n- dev server 未启动时 `ECONNREFUSED` 阻塞整个测试套件\n- 移出 `testDir` 范围后，作为独立验证脚本通过 `node tools/test-dataclonefix-v2.verify.js` 手动执行\n\n## 验证\n- `npx playwright test --list` 不再崩溃\n- 文件可从新位置正常引用",
+    "files": [
+      "AgentTeams/qa/playwright/test-dataclonefix-v2.spec.js",
+      "AgentTeams/qa/tools/test-dataclonefix-v2.verify.js"
+    ]
+  }
+}

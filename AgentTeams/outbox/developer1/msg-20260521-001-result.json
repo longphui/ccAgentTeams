@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260521-1220-e5f6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T12:20:00+08:00",
+  "replyTo": "msg-20260521-001",
+  "payload": {
+    "subject": "#007 Task 1 已完成：Playwright 配置双模式支持",
+    "context": "#007",
+    "content": "## 完成情况\n- 修改 `AgentTeams/qa/playwright.config.js`，在 `use` 配置中新增 `useMock: process.env.USE_MOCK !== 'false'`（默认 true）\n- 未添加 headed project（使用 `--headed` CLI 参数即可）\n- ✅ 已通过 Reviewer 审查\n- 向后兼容：所有现有 spec 默认以 Mock 模式运行\n\n## Review 结论\n- 安全检查：✅\n- 环境变量逻辑：✅\n- 计划一致性：✅",
+    "files": ["AgentTeams/qa/playwright.config.js"]
+  }
+}

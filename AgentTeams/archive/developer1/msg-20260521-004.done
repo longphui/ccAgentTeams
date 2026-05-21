@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260521-004",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-21T14:35:00+08:00",
+  "payload": {
+    "subject": "#007 修复: test-dataclonefix.spec.js 同样阻塞测试套件",
+    "context": "#007",
+    "content": "## 问题\n`AgentTeams/qa/playwright/test-dataclonefix.spec.js` 和已修复的 v2 一样，是顶层 IIFE `(async () => { ... })()` 直接启动 Chromium 的独立验证脚本，会在模块加载阶段导致 `npx playwright test` 崩溃。\n\n## 修复\n与 v2 相同处理 — 移到 `AgentTeams/qa/tools/` 目录，改名为非 `.spec.js` 后缀：\n```bash\nmv AgentTeams/qa/playwright/test-dataclonefix.spec.js AgentTeams/qa/tools/test-dataclonefix.verify.js\n```\n\n## 涉及文件\n- `AgentTeams/qa/playwright/test-dataclonefix.spec.js`\n\n## 验证标准\n- `npx playwright test --list` 不报错\n- 文件从 `playwright/` 目录移除后，Playwright 不再尝试加载\n- `node tools/test-dataclonefix.verify.js` 语法正确（运行时因 dev server 可能失败，不影响）",
+    "files": [
+      "AgentTeams/qa/playwright/test-dataclonefix.spec.js"
+    ],
+    "actions": [
+      "将文件移出 playwright/ 到 tools/，改名 .verify.js",
+      "确认 npx playwright test --list 不崩溃",
+      "完成后发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

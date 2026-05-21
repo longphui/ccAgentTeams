@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260521-1250-k1l2",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-21T12:50:00+08:00",
+  "payload": {
+    "subject": "审查请求：#007 Task 2 — Spec Mock 守卫改造",
+    "context": "#007",
+    "content": "## 改动范围\n改造 6 个含 `page.route()` 的 spec 文件，添加 `useMock` 守卫：\n\n### @playwright/test 文件（5 个）\n1. **menu-e2e.spec.js** — `setupMockedPage(page, useMock)` + `if (!useMock) return;`，Test 7 独立 route 加守卫\n2. **e2e-real-data.spec.js** — `setupRealDataPage(page, useMock)` + 守卫，Test 3/6 独立 route 加守卫\n3. **iframe-embedded-e2e.spec.js** — Test 2 (IFRAME-02) 全部 route 加守卫\n4. **netfix-tabv2-verification.spec.js** — Test 2 (NETFIX-02) 全部 route 加守卫\n5. **supplierManage-ui-interaction.spec.js** — `setupMockedPage(page, useMock)` + 守卫，Test 5/6/7 独立 route 加守卫\n\n### standalone 脚本（1 个）\n6. **test-dataclonefix.spec.js** — 用 `process.env.USE_MOCK !== 'false'`，route 加守卫\n\n### 未改动\n- **fixes-v3-verification.spec.js** — 无 page.route()，无需守卫\n- **test-dataclonefix-v2.spec.js** — 按 Task 要求跳过\n- **其余 14 个 standalone 脚本** — 无 page.route()，无需改动\n\n## 审查重点\n- `setupMockedPage`/`setupRealDataPage` 守卫模式一致\n- 独立 `page.route()` 正确包裹\n- standalone 脚本用 `process.env.USE_MOCK` 而非 `test.info()`\n- `USE_MOCK=true` 默认向后兼容",
+    "files": [
+      "AgentTeams/qa/playwright/menu-e2e.spec.js",
+      "AgentTeams/qa/playwright/e2e-real-data.spec.js",
+      "AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js",
+      "AgentTeams/qa/playwright/netfix-tabv2-verification.spec.js",
+      "AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js",
+      "AgentTeams/qa/playwright/test-dataclonefix.spec.js"
+    ]
+  }
+}

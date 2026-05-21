@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1215-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T12:15:00+08:00",
+  "replyTo": "msg-20260521-001",
+  "payload": {
+    "subject": "收到任务：Playwright 配置改造 — 双模式支持",
+    "context": "#007",
+    "content": "收到任务，预计 0.5 小时完成。修改 playwright.config.js，在 use 中加 useMock 字段。"
+  }
+}

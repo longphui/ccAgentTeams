@@ -16,6 +16,7 @@ module.exports = defineConfig({
     screenshot: 'only-on-failure',
     ignoreHTTPSErrors: true,
     actionTimeout: 10000,
+    useMock: process.env.USE_MOCK !== 'false',
   },
   projects: [
     {

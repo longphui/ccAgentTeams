@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1600-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T16:00:00+08:00",
+  "replyTo": "msg-20260521-005",
+  "payload": {
+    "subject": "收到任务：批量迁移 14 个独立验证脚本到 tools/",
+    "context": "#007",
+    "content": "收到，批量 mv + 改名 .verify.js。预计 5 分钟完成。"
+  }
+}

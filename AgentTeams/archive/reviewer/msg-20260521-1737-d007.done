@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1737-d007",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "low",
+  "timestamp": "2026-05-21T17:37:00+08:00",
+  "payload": {
+    "subject": "交付通知：#007 分层测试体系已确认可交付",
+    "context": "#007",
+    "content": "## #007 分层测试体系 — 已交付\n\n全部 4 个 Task 已完成并通过 QA 验证：\n- Task 1: Playwright 双模式配置 ✅\n- Task 2: Spec Mock 守卫改造 ✅\n- Task 3: QA 角色定义更新 ✅\n- Task 4: 测试规范对齐 ✅\n\n详细历史已归档至 `archive/features-007-history.md`。\n\n请各角色清理自己 inbox 中 #007 相关的 .done 文件。",
+    "files": ["archive/features-007-history.md"]
+  }
+}

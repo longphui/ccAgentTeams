@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1225-p9m2",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T12:25:00+08:00",
+  "replyTo": "msg-20260521-1220-g7h8",
+  "payload": {
+    "subject": "测试通过：#007 Task 1 — Playwright 双模式配置",
+    "context": "#007",
+    "content": "## 测试结果\n\n### USE_MOCK=true（默认 Mock 模式）\n- `npx playwright test --list`：✅ 列出 47 个测试，6 个文件\n- 配置读取：`process.env.USE_MOCK !== 'false'` → useMock=true ✓\n\n### USE_MOCK=false（真实后端模式）\n- `npx playwright test --list`：✅ 列出 47 个测试，6 个文件\n- 配置读取：`process.env.USE_MOCK !== 'false'` → useMock=false ✓\n\n### spec 中 useMock 访问方式\n- `playwright.config.js:19` → `useMock: process.env.USE_MOCK !== 'false'`\n- spec 可通过 `test.info().project.use.useMock` 获取 ✓\n\n## 发现的问题\n\n### ECONNREFUSED ::1:5021（已知问题，非本次变更引入）\n- 来源：`playwright/test-dataclonefix-v2.spec.js:12`\n- 原因：该文件是独立脚本（`require('playwright')` 而非 `@playwright/test`），在模块顶层 IIFE 中通过 `browser.newPage().request.get()` 直接请求 `http://localhost:5021/js/app.js`\n- 影响：`--list` 执行模块级代码时因 dev server 未启动而崩溃\n- 结论：**与 USE_MOCK 配置改动无关**，属于预存的脚本设计问题。建议后续将此类验证迁移为标准 Playwright test() 用例\n\n## Playwright 报告\n无需（仅执行 --list，未运行测试体）"
+  }
+}

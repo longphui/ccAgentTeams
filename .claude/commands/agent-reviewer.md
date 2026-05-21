@@ -72,11 +72,13 @@ ls "AgentTeams/inbox/reviewer/"*.msg.json "AgentTeams/inbox/reviewer/"*.review.j
 
 注意：同时扫描 `.msg.json` 和 `.review.json`（防止发送方命名不规范），找到后统一按审查流程处理。
 
-### Step 3：处理 REVIEW 消息
+### Step 3：处理消息
 
-对每条 REVIEW 消息：
+对每条消息：
 1. 将 `.msg.json` 重命名为 `.processing`
-2. 读取消息内容，按审查清单逐项检查
+2. 读取消息内容，按类型处理：
+   - **REVIEW** → 按审查清单逐项检查
+   - **SYNC** → 来自 Architect 的决策/交付通知。读取内容，**将本条 SYNC 直接重命名为 `.done`（无需回复），并立即清理自己 inbox 中该功能相关的 `.done` 到 archive**
 3. 审查完成后将 `.processing` 重命名为 `.done`
 4. 将结果（FEEDBACK 或 RESULT）直接写入**接收方的 inbox**（如 `inbox/developer/`、`inbox/developer1/`），不要放自己的 outbox
 
@@ -234,6 +236,8 @@ ls "AgentTeams/inbox/reviewer/"*.msg.json "AgentTeams/inbox/reviewer/"*.review.j
 | 命名建议、风格建议 | low |
 
 ## 触发下游（强制）
+
+**通用铁律：向任何角色的 inbox 写入任何消息后，必须写对应的 trigger 文件。不论消息类型（REVIEW / RESULT / FEEDBACK / ALERT / SYNC），没有例外。**
 
 每次审查完成、向其他角色发送消息后，必须**写 trigger 文件**唤醒下游 agent：
 

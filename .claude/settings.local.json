@@ -115,7 +115,9 @@
       "Bash(where python3 *)",
       "Read(//c/Users/Administrator/AppData/Local/Programs/Python//**)",
       "Read(//c/Program Files/**)",
-      "Bash(svn diff *)"
+      "Bash(svn diff *)",
+      "Bash(grep -n \"Program Files\\\\|D:\\\\\\\\\\\\\\\\work\" \"D:/work/cc/AgentTeams/start-team.ps1\")",
+      "Bash(grep -h \"terminal\\\\|work\\\\\\\\\\\\\\\\cc\\\\|work/cc\" \"D:/work/cc/AgentTeams/start-team.ps1\" \"D:/work/cc/AgentTeams/_test-wt.bat\")"
     ]
   },
   "enableAllProjectMcpServers": true,

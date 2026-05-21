@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260521-1045-a1b2",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-21T10:45:00+08:00",
+  "replyTo": "msg-20260521-1030-c3d4",
+  "payload": {
+    "subject": "审查反馈：#006 报工审核批次生成修复 — 1 个问题",
+    "context": "#006",
+    "content": "## 审查报告\n\n### ✅ 通过项\n- Bug 1：`productionNum = Min(g.Sum(CompletedQuantity))` + `alreadyBatched` 增量 — 正确\n- Bug 2：`batches.Count + 1` 顺序编号 — 消除越界\n- Bug 3：`maxStepNum` / `maxStepNumStages` 死代码已删除\n- 编译 0 Error\n- 安全检查全部通过\n\n### ❌ 需修改（1 项）\n\n**1. 缺少 IsDeleted 过滤** — `ProduceReportingWorkService.cs:631`\n\n```csharp\n// 当前\nvar batches = _context.ProduceProductionBatchs.Where(a => a.CompanyId == entity.CompanyId \n    && a.WorkOrderNo == entity.WorkOrderNo \n    && (a.Status == 2 || a.Status == 3)).ToList();\n\n// 修复\nvar batches = _context.ProduceProductionBatchs.Where(a => a.CompanyId == entity.CompanyId \n    && a.WorkOrderNo == entity.WorkOrderNo \n    && (a.Status == 2 || a.Status == 3) \n    && !a.IsDeleted).ToList();\n```\n\n原因：软删除批次可能被重复计入 `alreadyBatched`，导致差额偏小。\n\n## 审查结论：需修改（修正后直接通过，无需再次审查）",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.Application\\Produce\\ProduceReportingWorkService.cs"
+    ]
+  }
+}

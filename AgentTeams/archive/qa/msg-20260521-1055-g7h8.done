@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260521-1055-g7h8",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-21T10:55:00+08:00",
+  "payload": {
+    "subject": "测试请求：#006 报工审核批次生成修复",
+    "context": "#006",
+    "content": "## 测试重点\n请验证以下功能：\n\n### 核心场景\n- 单工序单报工审核 → 生成 1 个批次，ProductionNum = 报工量\n- 多工序全部完成后审核 → 批次累计 = 工单计划产量\n- 多工序先后审核 → 先不生成批次（工序不全），全部完成后批次 = Min(各工序完成量)\n- 追加报工增量 → 新批次 ProdNum = 累计完成 - 已批次\n- 已完工标记 → 全工序达计划产量后工单 Status = 2\n\n### 边界场景\n- 审核驳回 (ApprovalStatus=2) → 不进入批次生成\n- 无历史批次 → 批次号从 001 开始，不抛异常\n- 软删除批次 → 不参与 alreadyBatched 计算\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.Application\\Produce\\ProduceReportingWorkService.cs"
+    ]
+  }
+}

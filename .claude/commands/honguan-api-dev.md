@@ -160,7 +160,7 @@ var response = await client.PostAsync("/api/xxx", content);
 ## API 规范
 
 > 完整的 API 规范（请求/响应格式、分页、端点、错误处理、认证）已拆分到独立文件。
-> **生成 API 契约时** → 读取 `D:\work\cc\.claude\commands\honguan-api-spec.md`
+> **生成 API 契约时** → 读取 `.claude/commands/honguan-api-spec.md`
 
 ## 测试
 

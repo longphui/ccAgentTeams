@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260521-1030-c3d4",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-21T10:30:00+08:00",
+  "payload": {
+    "subject": "审查请求：#006 报工审核批次生成修复",
+    "context": "#006",
+    "content": "## 审查重点\n\n### Bug 1 修复：ProductionNum 计算\n- 恢复 `productionNum = Min(各阶段完成量)` 逻辑（r4539 的正确算法）\n- `ProductionNum = productionNum - alreadyBatched`（增量差额）\n- 条件改为 `productionNum > alreadyBatched`（同类量比较）\n\n### Bug 2 修复：批次号顺序编号\n- `batches.Count + 1` 替代 `Substring(BatchNo.Length-3,3)` 解析\n- 消除越界风险\n\n### Bug 3 修复：清理死代码\n- 删除 `maxStepNum` / `maxStepNumStages`（已无引用）\n\n## 变更文件\n- `SAHG.Salt.Application/Produce/ProduceReportingWorkService.cs` (Approval() 方法第 619-662 行)\n\n## 验证结果\n- 编译 0 Error ✅",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.Application\\Produce\\ProduceReportingWorkService.cs"
+    ]
+  }
+}

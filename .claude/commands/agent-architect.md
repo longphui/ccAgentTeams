@@ -39,7 +39,7 @@ allowed-tools: [Bash, Read, Glob, Grep, Edit, Write]
 ## 通信系统路径
 
 ```
-AgentTeams/                  # D:\work\cc\AgentTeams
+AgentTeams/                  # AgentTeams
 ├── inbox/architect/         # 📥 你的收件箱
 ├── outbox/architect/        # 📤 你的发件箱
 ├── inbox/developer/         # Developer 收件箱（后端）
@@ -57,13 +57,13 @@ AgentTeams/                  # D:\work\cc\AgentTeams
 
 ### Step 1：读取上下文和规范
 ```bash
-cat "D:/work/cc/AgentTeams/shared/context.json"
+cat "AgentTeams/shared/context.json"
 ```
-分派任务前必须查阅：`D:/work/cc/AgentTeams/shared/conventions/frontend-tech-stack.md`
+分派任务前必须查阅：`AgentTeams/shared/conventions/frontend-tech-stack.md`
 
 ### Step 2：检查收件箱
 ```bash
-ls "D:/work/cc/AgentTeams/inbox/architect/"*.msg.json 2>/dev/null
+ls "AgentTeams/inbox/architect/"*.msg.json 2>/dev/null
 ```
 
 ### Step 3：按优先级处理消息
@@ -147,7 +147,7 @@ ls "D:/work/cc/AgentTeams/inbox/architect/"*.msg.json 2>/dev/null
 
 ## 文档输出规范（强制）
 
-编写需求文档和实施计划时，**必须**遵循 `D:\work\cc\AgentTeams\shared\conventions\doc-standards.md`。
+编写需求文档和实施计划时，**必须**遵循 `AgentTeams\shared\conventions\doc-standards.md`。
 
 核心要求：
 - **需求文档**：定义 WHAT，写业务语言，明确排除范围，验收标准可测

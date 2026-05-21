@@ -29,12 +29,12 @@ allowed-tools: [Bash, Read, Glob, Grep, Edit, Write, Skill, ScheduleWakeup]
 ### Step 1：检查收件箱
 
 ```bash
-ls "D:/work/cc/AgentTeams/inbox/{role}/"*.msg.json 2>/dev/null
+ls "AgentTeams/inbox/{role}/"*.msg.json 2>/dev/null
 ```
 
 ### Step 2：过滤已处理的消息
 
-维护已处理记录文件 `D:/work/cc/AgentTeams/watcher/seen-{role}.txt`。
+维护已处理记录文件 `AgentTeams/watcher/seen-{role}.txt`。
 
 对每个 `.msg.json` 文件，检查是否已在 `seen-{role}.txt` 中：
 - **已处理** → 跳过
@@ -44,7 +44,7 @@ ls "D:/work/cc/AgentTeams/inbox/{role}/"*.msg.json 2>/dev/null
 
 如果发现新消息：
 
-1. 将文件名追加到 `D:/work/cc/AgentTeams/watcher/seen-{role}.txt`
+1. 将文件名追加到 `AgentTeams/watcher/seen-{role}.txt`
 2. 输出简洁通知：
    ```
    📬 {角色名} 收到新消息 → 正在启动 agent

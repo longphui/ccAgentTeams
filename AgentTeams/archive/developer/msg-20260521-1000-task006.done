@@ -1,0 +1,30 @@
+{
+  "id": "msg-20260521-1000-task006",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-21T10:00:00+08:00",
+  "payload": {
+    "subject": "修复 Approval() 批次生成 ProductionNum 计算错误",
+    "context": "#006",
+    "content": "## 问题\n\n`ProduceReportingWorkService.Approval()` 方法中批次生成逻辑有 Bug：用单条报工的 `QuantityGood` 与累计批次数比较/相减，导致:\n1. 审核顺序靠后的较小报工不触发批次生成\n2. 批次累计总和远小于实际审核通过的报工总量\n\n## SVN 背景\n\n- r4539: `productionNum = Min(各阶段完成量)` 计算正确，但仅最后工序触发\n- r4573: 注释改为\"不限最后工序\"但代码未改\n- r4578: 删除了 productionNum 计算，改为 `entity.QuantityGood - completedTotalNum`（两类不可比）\n\n## 需修改\n\n**文件**: `SAHG.Salt.Application/Produce/ProduceReportingWorkService.cs`\n\n**Approval() 方法第 619-669 行**，具体变更：\n\n1. **恢复 productionNum 计算**（替换当前缺少的逻辑）：取各工序-任务组 CompletedQuantity 的最小值\n   ```csharp\n   var productionNum = groupByProduceTasks.Min(g => g.Sum(a => a.CompletedQuantity));\n   ```\n\n2. **修正条件与 ProductionNum**：用 productionNum（累计）比较 alreadyBatched（累计），差额为批次量\n   ```csharp\n   if (productionNum > alreadyBatched) {\n       ProductionNum = productionNum - alreadyBatched;\n   }\n   ```\n\n3. **批次号改用顺序编号**：`batches.Count + 1` 替代 `Substring(BatchNo.Length-3,3)` 解析\n\n4. **删除死代码**：`var maxStepNum = ...` 和 `var maxStepNumStages = ...`（已无引用）\n\n## 参考\n\n- 详细分析报告：`D:\\work\\cc\\produceReportingWork.md`\n- 需求文档：`AgentTeams/shared/requirements/006-报工审核批次生成修复.md`\n- 实施计划：`AgentTeams/shared/requirements/006-plan-报工审核批次生成修复.md`\n\n## 验证标准\n\n- 编译通过 0 Error\n- 修改后逻辑与分析报告中优化方案一致\n- 完成后编译并发出 REVIEW 给 Reviewer",
+    "files": [
+      "SAHG.Salt.Application/Produce/ProduceReportingWorkService.cs",
+      "D:\\work\\cc\\produceReportingWork.md",
+      "AgentTeams/shared/requirements/006-报工审核批次生成修复.md",
+      "AgentTeams/shared/requirements/006-plan-报工审核批次生成修复.md"
+    ],
+    "actions": [
+      "Step 1: 读取分析报告 produceReportingWork.md",
+      "Step 2: 修改 Approval() 方法中 619-669 行批次生成逻辑",
+      "Step 3: 恢复 productionNum = Min(各阶段完成量)",
+      "Step 4: 修正 ProductionNum = productionNum - alreadyBatched",
+      "Step 5: 批次号改用 batches.Count + 1 顺序编号",
+      "Step 6: 删除 maxStepNum / maxStepNumStages 死代码",
+      "Step 7: 编译验证 0 Error",
+      "Step 8: 发 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260521-1215-sync006",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "low",
+  "timestamp": "2026-05-21T12:15:00+08:00",
+  "payload": {
+    "subject": "✅ #006 报工审核批次生成修复 — 已确认交付",
+    "context": "#006",
+    "content": "## 交付确认\n\n#006 已通过完整流水线并获用户确认，正式交付。\n\n### 修复内容\n- Bug 1: ProductionNum 恢复 `Min(各阶段完成量)` 计算，修正 `ProductionNum = Min - alreadyBatched`\n- Bug 2: 批次号改用 `batches.Count + 1` 顺序编号，消除 Substring 越界\n- Bug 3: 删除 `maxStepNum`/`maxStepNumStages` 死代码\n- Reviewer 反馈：补充 `!a.IsDeleted` 过滤\n\n### 交付物\n- 修改文件：`SAHG.Salt.Application/Produce/ProduceReportingWorkService.cs`\n- 分析报告：`shared/006-analysis-batch-generation.md`\n- 详细历史：`archive/features-006-history.md`\n\n### 下一步\n请各角色清理自己 inbox 中 #006 相关的 `.done` 文件。",
+    "files": [
+      "AgentTeams/archive/features-006-history.md",
+      "AgentTeams/shared/006-analysis-batch-generation.md"
+    ]
+  }
+}

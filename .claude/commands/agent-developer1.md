@@ -39,7 +39,7 @@ allowed-tools: [Bash, Read, Glob, Grep, Edit, Write]
 ## 通信系统路径
 
 ```
-AgentTeams/                  # D:\work\cc\AgentTeams
+AgentTeams/                  # AgentTeams
 ├── inbox/developer1/        # 📥 你的收件箱
 ├── outbox/developer1/       # 📤 你的发件箱
 ├── shared/context.json      # 项目上下文（看技术栈、框架）
@@ -49,7 +49,7 @@ AgentTeams/                  # D:\work\cc\AgentTeams
 └── logs/                    # 通信日志
 
 你的项目目录/                # ✅ 前端源代码写在这里
-# D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/
+# caikuangzi.fenluwebproject/trunk/Web/Web/v2/
 ```
 
 ## 启动流程
@@ -66,25 +66,25 @@ AgentTeams/                  # D:\work\cc\AgentTeams
 
 ### Step 1：读取上下文和决策
 ```bash
-cat "D:/work/cc/AgentTeams/shared/context.json"
-ls "D:/work/cc/AgentTeams/shared/decisions/" 2>/dev/null
+cat "AgentTeams/shared/context.json"
+ls "AgentTeams/shared/decisions/" 2>/dev/null
 ```
 
 ### Step 1.5：读取项目规范（强制）
 context.json 中 `projectCode` 字段标识当前系统（`"fl"`=分路，`"honguan"`=鸿冠）。
 TASK 消息的 `payload.context` 指向的功能条目中有独立 `projectCode` 时，以功能级为准。
-用 Read 工具读取：`D:/work/cc/.claude/commands/{projectCode}-html-dev.md`
+用 Read 工具读取：`.claude/commands/{projectCode}-html-dev.md`
 例如 projectCode=="honguan" → 读取 `honguan-html-dev.md`。新增系统只需按此命名约定新建文件即可。
 
 ### Step 1.6：读取 API 契约 + Mock 数据（强制）
-根据 TASK 的 `payload.context`，读取 `D:\work\cc\AgentTeams\shared\requirements\{编号}-plan-*.md` 中的「API 契约」章节。
+根据 TASK 的 `payload.context`，读取 `AgentTeams\shared\requirements\{编号}-plan-*.md` 中的「API 契约」章节。
 **使用契约中的 Mock 数据独立开发前端页面，不等待后端就绪。**
 开发完成后、发 REVIEW 前，切换到真实 API 接口验证。
 如契约有歧义，**发 QUERY 给 Architect 确认**，不要自行猜测。
 
 ### Step 2：检查收件箱
 ```bash
-ls "D:/work/cc/AgentTeams/inbox/developer1/"*.msg.json 2>/dev/null
+ls "AgentTeams/inbox/developer1/"*.msg.json 2>/dev/null
 ```
 
 ### Step 3：按优先级处理消息

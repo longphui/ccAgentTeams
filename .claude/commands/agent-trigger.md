@@ -29,7 +29,7 @@ allowed-tools: [Bash, Skill]
 ### Step 2：检查信号文件
 
 ```bash
-ls "D:/work/cc/AgentTeams/watcher/trigger-{role}.txt" 2>/dev/null
+ls "AgentTeams/watcher/trigger-{role}.txt" 2>/dev/null
 ```
 
 ### Step 3：有信号 → 启动 Agent
@@ -37,7 +37,7 @@ ls "D:/work/cc/AgentTeams/watcher/trigger-{role}.txt" 2>/dev/null
 如果文件存在：
 
 ```bash
-rm "D:/work/cc/AgentTeams/watcher/trigger-{role}.txt"
+rm "AgentTeams/watcher/trigger-{role}.txt"
 ```
 
 然后调用 Skill 工具启动对应 agent，**不传参数**。

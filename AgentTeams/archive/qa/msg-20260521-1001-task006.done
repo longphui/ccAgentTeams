@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260521-1001-task006",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-21T10:01:00+08:00",
+  "payload": {
+    "subject": "为 #006 批次生成修复编写测试用例并验证",
+    "context": "#006",
+    "content": "## 背景\n\n`ProduceReportingWorkService.Approval()` 方法审核报工后自动生成生产批次，但批次 ProductionNum 计算有 Bug。Developer 正在修复，你需要：\n\n1. **先编写测试用例**（不等 Developer 完成，基于分析报告编写）\n2. **Developer 修复完成后执行验证**（收到 RESULT 后）\n\n## 测试用例编写\n\n基于分析报告中的场景编写 Playwright API 测试或 curl 脚本，覆盖以下：\n\n### 正常流程\n| 用例 | 场景 | 预期 |\n|------|------|------|\n| T01 | 单工序单报工审核 | 生成1个批次，ProdNum=报工良品数 |\n| T02 | 多工序全部完成 | 批次累计 = 工单计划产量 |\n| T03 | 多工序先后审核 | 工序不全时不生成，全部到达后批次=Min |\n| T04 | 追加报工增量 | 已有批次30，新审核达80，生成 ProdNum=50 |\n| T05 | 报工审核驳回 | 不生成批次，批次表无新增 |\n\n### 边界情况\n| 用例 | 场景 | 预期 |\n|------|------|------|\n| T06 | 首次审核无历史批次 | 批次号 001，不抛异常 |\n| T07 | 审核量恰好等于已批次 | 不生成重复批次 |\n\n### 回归\n| 用例 | 场景 |\n|------|------|\n| T08 | 审核通过后工单 Status 正确变更 |\n| T09 | 审核驳回后工单 Status 不变 |\n\n## 参考\n\n- 分析报告：`D:\\work\\cc\\produceReportingWork.md`（含验证场景数据）\n- 需求文档：`AgentTeams/shared/requirements/006-报工审核批次生成修复.md`\n\n## 执行时机\n\n收到 Developer 的 REVIEW RESULT（审查通过）后，执行测试验证。完成后发 RESULT 给 Architect。",
+    "files": [
+      "D:\\work\\cc\\produceReportingWork.md",
+      "AgentTeams/shared/requirements/006-报工审核批次生成修复.md"
+    ],
+    "actions": [
+      "读取分析报告 produceReportingWork.md 了解 Bug 和验证场景",
+      "基于验收标准编写 Playwright/curl 测试用例",
+      "等待 Developer 修复完成",
+      "执行测试验证修复效果",
+      "发 RESULT 给 Architect"
+    ],
+    "deadline": null
+  }
+}

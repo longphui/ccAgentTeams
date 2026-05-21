@@ -1,5 +1,6 @@
-$wt = "C:\Program Files\terminal-1.25.1171.0\wt.exe"
-$dir = "D:\work\cc\AgentTeams"
+$env = Get-Content "$PSScriptRoot\env.json" -Encoding UTF8 | ConvertFrom-Json
+$wt  = $env.tools.terminal
+$dir = $env.agentTeams
 
 $args = @(
     '-w', '0',

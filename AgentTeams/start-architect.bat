@@ -1,7 +1,6 @@
 @echo off
 chcp 65001 >nul
-set "PROJECT_DIR=D:\work\cc"
-cd /d %PROJECT_DIR%
+cd /d "%~dp0.."
 title Architect
 mode con cols=100 lines=30
 

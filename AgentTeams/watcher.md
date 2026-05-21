@@ -106,7 +106,7 @@ Trigger 文件为空文件，只用来做信号检测。`/agent-trigger` 检测�
 ## 备用：watcher.sh 终端脚本
 
 ```bash
-bash D:/work/cc/AgentTeams/watcher.sh
+bash watcher.sh
 ```
 
 在 Git Bash 终端中运行，监控所有角色收件箱并打印通知。不自动触发 agent，仅用于调试。

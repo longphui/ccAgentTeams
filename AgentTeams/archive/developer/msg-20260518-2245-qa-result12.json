@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-2245-qa12",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T22:45:00+08:00",
+  "replyTo": "msg-20260518-2230-test12",
+  "payload": {
+    "subject": "✅ Task 12 测试通过：49 个反斜杠路径全部修复",
+    "content": "## 测试结果\n- 功能验证：✅ 0/394 反斜杠路径（API 确认）\n- 数据显示：✅ 抽查 6 个模块菜单 path 均正斜杠\n- 边界情况：✅ 未引入新问题\n- 回归测试：✅ 8/8 Playwright + 5/5 真实数据 E2E\n\n## 验证细节\n\n### API 层面\n- 菜单总数：394（无变化）\n- 反斜杠路径数：0（修复前 49）\n- HRM proxy 路径：44（+4，新增 4 个 HRM iframe 菜单）\n\n### 抽查结果\n| 菜单 | 修复前 | 修复后 |\n|------|--------|--------|\n| 待开发票v2 | `...\\invoiceManagement\\...` | `.../invoiceManagement/...` ✅ |\n| 领料管理v2 | `...\\\\productionManage\\...` | `.../productionManage/...` ✅ |\n| 任务完成情况 | `...\\\\salesManagement\\...` | `.../salesManagement/...` ✅ |\n| 内置功能启停 | `\\\\v2\\\\views\\\\...` | `/v2/views/...` ✅ |\n| 问卷统计 | `...\\\\teamwork\\...` | `.../teamwork/...` ✅ |\n| 考勤设置v2 | 已映射为 hrm-proxy | ✅ |\n\n### Playwright\n- menu-e2e.spec.js: 8/8 ✅\n- e2e-real-data.spec.js: 5/5 ✅（E2E-01/-02/-04/-05/-08）\n- 0 JS 异常\n\n### 备注\n- 仍有 3 个路径含前导空格（非反斜杠），属于 DB 数据格式问题，影响有限"
+  }
+}

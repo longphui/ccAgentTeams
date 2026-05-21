@@ -35,7 +35,7 @@ allowed-tools: [Bash, Read, Glob, Grep, Edit, Write]
 ## 通信系统路径
 
 ```
-AgentTeams/                  # D:\work\cc\AgentTeams
+AgentTeams/                  # AgentTeams
 ├── inbox/qa/                # 📥 你的收件箱
 ├── outbox/qa/               # 📤 你的发件箱
 ├── shared/context.json      # 项目上下文（技术栈、测试框架）
@@ -61,14 +61,14 @@ AgentTeams/                  # D:\work\cc\AgentTeams
 
 ### Step 1：读取上下文和测试规范
 ```bash
-cat "D:/work/cc/AgentTeams/shared/context.json"
-cat "D:/work/cc/AgentTeams/shared/conventions/test-standards.md"
-ls "D:/work/cc/AgentTeams/shared/decisions/" 2>/dev/null
+cat "AgentTeams/shared/context.json"
+cat "AgentTeams/shared/conventions/test-standards.md"
+ls "AgentTeams/shared/decisions/" 2>/dev/null
 ```
 
 ### Step 2：检查收件箱
 ```bash
-ls "D:/work/cc/AgentTeams/inbox/qa/"*.msg.json 2>/dev/null
+ls "AgentTeams/inbox/qa/"*.msg.json 2>/dev/null
 ```
 
 ### Step 3：处理消息

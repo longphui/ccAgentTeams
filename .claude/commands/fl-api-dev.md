@@ -87,7 +87,7 @@ cmd //c "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\B
 ## API 规范
 
 > 完整的 API 规范（请求/响应格式、分页、路由、错误处理、认证）已拆分到独立文件。
-> **生成 API 契约时** → 读取 `D:\work\cc\.claude\commands\fl-api-spec.md`
+> **生成 API 契约时** → 读取 `.claude/commands/fl-api-spec.md`
 
 ## 测试
 

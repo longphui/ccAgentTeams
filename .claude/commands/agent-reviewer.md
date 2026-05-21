@@ -37,7 +37,7 @@ allowed-tools: [Bash, Read, Glob, Grep, Edit, Write]
 ## 通信系统路径
 
 ```
-AgentTeams/                  # D:\work\cc\AgentTeams
+AgentTeams/                  # AgentTeams
 ├── inbox/reviewer/          # 📥 你的收件箱
 ├── outbox/reviewer/         # 📤 你的发件箱
 ├── shared/context.json      # 项目上下文（技术栈、框架）
@@ -57,17 +57,17 @@ AgentTeams/                  # D:\work\cc\AgentTeams
 
 ### Step 1：读取上下文和编码规范（强制）
 ```bash
-cat "D:/work/cc/AgentTeams/shared/context.json"
+cat "AgentTeams/shared/context.json"
 ```
 从 context.json 获取 REVIEW 消息 `payload.context` 对应功能的 `projectCode`，
 然后读取对应系统的规范文件：
-- `D:/work/cc/.claude/commands/{projectCode}-api-dev.md`（后端规范）
-- `D:/work/cc/.claude/commands/{projectCode}-html-dev.md`（前端规范）
-- `D:/work/cc/AgentTeams/shared/conventions/test-standards.md`（测试规范，审查时参照附录 C 验收清单）
+- `.claude/commands/{projectCode}-api-dev.md`（后端规范）
+- `.claude/commands/{projectCode}-html-dev.md`（前端规范）
+- `AgentTeams/shared/conventions/test-standards.md`（测试规范，审查时参照附录 C 验收清单）
 
 ### Step 2：检查收件箱
 ```bash
-ls "D:/work/cc/AgentTeams/inbox/reviewer/"*.msg.json "D:/work/cc/AgentTeams/inbox/reviewer/"*.review.json 2>/dev/null
+ls "AgentTeams/inbox/reviewer/"*.msg.json "AgentTeams/inbox/reviewer/"*.review.json 2>/dev/null
 ```
 
 注意：同时扫描 `.msg.json` 和 `.review.json`（防止发送方命名不规范），找到后统一按审查流程处理。

@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260520-2355-sync005",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "low",
+  "timestamp": "2026-05-20T23:55:00+08:00",
+  "payload": {
+    "subject": "✅ #005 测试规范文档 — 已确认可交付",
+    "context": "#005",
+    "content": "## 交付确认\n\n#005 测试规范文档已经过完整流水线（QA 编写 → Reviewer 审查通过 → Architect 确认），正式交付。\n\n### 交付物\n- `AgentTeams/shared/conventions/test-standards.md` — 测试规范（8 章 + 3 附录）\n- `AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js` — UI 交互测试示例\n\n### 已接入角色定义\n- **QA**：启动时强制读取全文，测试维度速查表已交叉引用\n- **Reviewer**：启动时读取，审查清单新增「测试覆盖」5 项（附录 C）\n- **Developer**：API 自测时参考第 3 章 curl 模板\n\n### 详细历史\n→ `AgentTeams/archive/features-005-history.md`\n\n请各角色清理自己 inbox 中 #005 相关的 `.done` 文件。",
+    "files": [
+      "AgentTeams/shared/conventions/test-standards.md",
+      "AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js"
+    ]
+  }
+}

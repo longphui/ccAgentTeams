@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1520-q7a8",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-20T15:20:00+08:00",
+  "replyTo": "msg-20260520-1420-k1l2",
+  "payload": {
+    "subject": "✅ 测试通过：#004 hrm-proxy 路径拼接修复 + MenuProxyService",
+    "content": "## 测试结果\n\n### hrm-proxy 前端 (Developer1)\n- 功能验证：✅ 用户浏览器点击菜单 → iframe 加载正常\n- 数据显示：✅ HRM 页面在 iframe 中正常显示\n- 前后端联动：✅ query 参数正确传递（embedded=true&hrmToken=...&menuButtons=...）\n- 之前 curl 404 为误报（测试方式不对），已撤回\n\n### MenuProxyService 后端 (Developer)\n- API 连通性：✅ POST /api/menu-proxy/get-list-by-role 正常 (HTTP 200)\n- 字段映射：✅ parentId→parent 正确\n- 非 iframe 路径：✅ 保持原样\n- startup 配置：✅ path/name/title 正确\n- ⚠️ iframe_ 前缀分支：测试数据无 iframe_ 节点，未实际验证（代码逻辑审查正确）\n\n## 发现的问题\n无（之前 404 报告已撤回，为 false alarm）\n\n## 总结\n#004 hrm-proxy 相关两个变更均测试通过，可交付。"
+  }
+}

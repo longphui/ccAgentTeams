@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1020-d5e6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:20:00+08:00",
+  "payload": {
+    "subject": "GetAvailableCodes — LINQ 不支持 IsNullOrWhiteSpace",
+    "context": "#002",
+    "content": "## 问题\n获取商品编码接口报错：LINQ to Entities does not recognize 'IsNullOrWhiteSpace'。与之前 AddDays 同类问题，需将 string 判断移到 LINQ 外部。",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"],
+    "actions": ["IsNullOrWhiteSpace 移到 LINQ 外部", "编译 0 Error"],
+    "deadline": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-dismisstemplate-done-result",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T20:35:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-task",
+  "payload": {
+    "subject": "✅ 离职员工页面 — 设置离职模板按钮无反应 修复完成",
+    "content": "## 根因\n`util.js` 嵌入模式 stub 的 `openRouteInTab` 是空函数。\n\n离职页面「设置离职模板」按钮是 `<lay-link-button>` 没有 `target` 属性。`LayLinkButton` 组件 `open()` 走 `default` 分支，调用 `getAppContext().openRouteInTab(route, state, ok)`。嵌入 stub 中该方法为空函数 → 点击无反应。\n\n## 修复\n`util.js` L169：将空函数替换为实际实现，降级调用 `this.openPage()` 以弹窗打开页面（嵌入模式无标签页系统）。\n\n## 审查状态\n✅ Reviewer 审查通过",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

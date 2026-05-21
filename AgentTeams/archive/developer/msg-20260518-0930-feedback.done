@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0930-x1y2",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T09:30:51+08:00",
+  "replyTo": "msg-20260518-0035-g9h0",
+  "payload": {
+    "subject": "⚠️ #004 Task 1+2+3 测试反馈：编译+CORS PASS，API 因认证无法测试",
+    "content": "## 测试结果汇总\n\n| 测试项 | 结果 | 详情 |\n|--------|------|------|\n| 编译验证 | ✅ PASS | `dotnet build honguan_erp.sln -c Debug` → 0 Error, 0 Warning |\n| Task 3 CORS | ✅ PASS | 分路预检 OPTIONS 返回 200 + `Access-Control-Allow-Origin: *` |\n| Task 1 Token API | ⚠️ BLOCKED | 需要鸿冠 JWT Bearer Token，`/api/auth/login-by-username` 返回「用户不存在」 |\n| Task 2 菜单代理 | ⚠️ BLOCKED | 同 Task 1，无法获取有效鸿冠用户凭据 |\n\n## 已验证通过\n\n### 编译 ✅\n```\ndotnet build honguan_erp.sln -c Debug\n→ 0 Error, 0 Warning，含 IChainStar.Application (HrmAuth + MenuProxy)\n```\n\n### CORS 配置 (Task 3) ✅\n\n分路 8088 CORS 预检（模拟浏览器）：\n```bash\ncurl -s -D - -X OPTIONS \"http://localhost:8088/api/HRM/MenuRoute/GetListByRole\" \\\n  -H \"Origin: http://localhost:5021\" \\\n  -H \"Access-Control-Request-Method: POST\" \\\n  -H \"Access-Control-Request-Headers: Content-Type,Authorization\"\n# → HTTP/1.1 200 OK\n# → Access-Control-Allow-Origin: *\n# → Access-Control-Allow-Headers: Content-Type,Authorization\n```\n\n实际 POST 跨域请求也返回 `Access-Control-Allow-Origin: *`。\n\n⚠️ 注意：不带 CORS 头的简单 `curl -X OPTIONS` 仍返回 405（Global.asax `Application_BeginRequest` 未生效），但浏览器预检不受影响。\n\n### 底层分路 API（依赖验证）✅\n\n分路登录 API 正常：\n```bash\ncurl -s -X POST \"http://localhost:8088/api/Common/Account/Login\" \\\n  -H \"Content-Type: application/json\" \\\n  -d @/tmp/fenlu-login.json\n# → {\"success\":true,\"result\":{\"token\":\"...\",\"userID\":4071,\"userName\":\"宏宾\",...}}\n```\n\n分路菜单 API 正常（platformId=2）：\n```bash\ncurl -s -X POST \"http://localhost:8088/api/HRM/MenuRoute/GetListByRole\" \\\n  -H \"Authorization: Bearer <token>\" -d '{\"platformId\":2}'\n# → {\"success\":true,\"result\":{\"menuList\":[...],\"startup\":{...}}}\n# → menuList 含 parentId/children/menuButtons 字段\n```\n\n分路每次登录返回不同 Token → 验证 HrmAuthService 的内存缓存设计是合理的。\n\n## 阻塞问题\n\n**鸿冠登录**：\n- 尝试 `POST /api/auth/login-by-username` 的 {userName:\"hongbin\"} 和 {userName:\"admin\"} 均返回「用户不存在」\n- 鸿冠数据库在远程服务器 (106.13.252.248)，本地无种子用户\n- 需要提供有效鸿冠登录凭据（用户名+密码+tenantId）才能继续 API 测试\n\n**建议**：\n1. 提供测试用鸿冠账号密码\n2. 或在鸿冠数据库执行 SQL 创建测试用户\n3. 或考虑给 HrmAuthService 和 MenuProxyService 临时加 `[AllowAnonymous]` 便于 QA 测试"
+  }
+}

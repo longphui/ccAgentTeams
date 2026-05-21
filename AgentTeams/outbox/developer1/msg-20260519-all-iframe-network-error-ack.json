@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-all-iframe-network-error-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T21:15:00+08:00",
+  "replyTo": "msg-20260519-all-iframe-network-error",
+  "payload": {
+    "subject": "✅ 收到 ALERT：已定位根因，立即修复",
+    "content": "根因：hrapproval-apihost 修复将 appConfig.baseUrl1 覆盖为 location.origin，对所有嵌入页面生效。页面经 HRM 代理加载时 origin 变为 8095，API 请求发往 http://localhost:8095/api/...，HRM 网关未转发 /api/ 路由导致全部请求失败。已回滚。"
+  }
+}

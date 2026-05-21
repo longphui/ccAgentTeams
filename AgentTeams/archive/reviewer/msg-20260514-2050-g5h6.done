@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-2050-g5h6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:50:00+08:00",
+  "payload": {
+    "subject": "审查请求：隐藏自动组合按钮",
+    "context": "#002",
+    "content": "## 变更内容\n「一键自动组合」按钮加 `v-if=\"false\"` 隐藏，保留代码和 `autoAssemblyUrl()` 方法不变，方便后续恢复。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

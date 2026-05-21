@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-2220-ack01",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T22:20:00+08:00",
+  "replyTo": "msg-20260518-2155-f3g4",
+  "payload": {
+    "subject": "✅ 收到任务：#004 Task 12 修复菜单 DB 中 49 个反斜杠路径",
+    "content": "收到任务，预计 0.5 小时完成。先确认影响范围再执行 UPDATE。"
+  }
+}

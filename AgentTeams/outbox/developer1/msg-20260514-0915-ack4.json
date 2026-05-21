@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0915-n9o0",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:15:00+08:00",
+  "replyTo": "msg-20260514-0915-t0u1",
+  "payload": {
+    "subject": "✅ 收到任务：成品 select 同行布局",
+    "content": "收到，用 flex 布局强制并排。"
+  }
+}

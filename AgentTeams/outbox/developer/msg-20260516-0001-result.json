@@ -1,0 +1,28 @@
+{
+  "id": "msg-20260516-1500-r1s2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T15:05:00+08:00",
+  "replyTo": "msg-20260516-0001",
+  "payload": {
+    "subject": "✅ CodeGenerator 后端优化（#003 Phase A+B）已完成",
+    "content": "## 完成情况\n\n### Phase A（r4557）\n- Task 1: StartValue 修复 — ICodeService 新增 InitCounter + GenerateCode 初始化\n- Task 2: 软删除子项过滤 — GetRuleDetails + GenerateCode 过滤 IsDeleted\n\n### Phase B（r4558-r4562）\n- Task 4: Core 实体 — BizFieldDefinition 重构 + CodeRule/BizCodeIdentifier 加 Domain\n- Task 5: DTO 层 — 同步字段变更 + BizContext→DomainId\n- Task 7: ResolveBusinessField 重写（fieldSql + @domainId 参数化） + GenerateCode 适配\n- Task 8: SaveRule Domain 一致性校验\n- Task 9: SaveBizField 适配新字段\n- Task 10: 新增 GetDomainList 接口 + DomainOptionDto\n- Task 11: Controller 新增 GetDomainList Action\n- 审查反馈修复 (r4562): SaveRule/SaveBizCode 编辑模式 Domain 持久化 + GetDomainList EF6 兼容\n\n### 编译状态\nCP1/CP2/CP3 均 ✅ 0 新增 Error\n\n### SVN 版本\nr4557, r4558, r4559, r4560, r4561, r4562\n\n### 待手动操作\n- Task 3: 数据库迁移（需 VS PMC: Add-Migration + Update-Database + 手动 SQL 补历史数据）\n- Task 6: AutoMapper 跳过（同名字段自动映射）\n\n### 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "SAHG.Salt.Application/CodeService/ICodeService.cs",
+      "SAHG.Salt.Core/CodeGenerator/BizFieldDefinition.cs",
+      "SAHG.Salt.Core/CodeGenerator/CodeRule.cs",
+      "SAHG.Salt.Core/CodeGenerator/BizCodeIdentifier.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/BizFieldDefinitionDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/CodeRuleDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/BizCodeIdentifierDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/GenerateCodeInput.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/DomainOptionDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "SAHG.Salt.Application/SAHG.Salt.Application.csproj"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260519-1430-j2k3.msg.json",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T14:30:00+08:00",
+  "payload": {
+    "subject": "修复 newFenluApiBase 指向错误：5001(天津宏观世纪) → 8088(分路)",
+    "context": "#004",
+    "content": "## 问题\n\n`/settings/get-by-key` 请求一直报网络错误。`Http2` 使用的 `newFenluApiBase` 是 `http://localhost:5001/api`（天津宏观世纪），但 `/settings/get-by-key` 是分路接口，应走 `http://localhost:8088/api`。\n\n## 修复\n\n`appConfig.js` 第 19 行：\n```javascript\n// 改前\nnewFenluApiBase: 'http://localhost:5001/api',\n\n// 改后\nnewFenluApiBase: 'http://localhost:8088/api',\n```\n\n## 说明\n\nBug #9 只改了 https→http，但地址本身（5001 天津宏观世纪）就是错的。`newFenluApiBase` 是分路的 Furion API 基地址，应为 8088。",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/appConfig.js"
+    ],
+    "actions": [
+      "appConfig.js 第 19 行 newFenluApiBase 改为 http://localhost:8088/api",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

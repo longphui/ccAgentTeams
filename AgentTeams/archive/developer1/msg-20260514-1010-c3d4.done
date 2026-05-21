@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-1010-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:10:00+08:00",
+  "payload": {
+    "subject": "create_edit.html 编码弹窗复选框点任意一个全选 — 未修复",
+    "context": "#002",
+    "content": "## 问题描述\n编码选择弹窗中的 lay-table，点击任意单个 checkbox 仍然会全选所有行，而非只选中点击的那一行。\n\n## 排查方向\n- lay-table 的 `v-model:selectedKeys` + `row-key` 配置是否正确\n- `row-key` 指向的字段值是否唯一\n- 是否缺少必要的属性配置",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ],
+    "actions": [
+      "排查 lay-table checkbox 全选问题，修复为单选",
+      "验证点击单行 checkbox 只选中该行"
+    ]
+  }
+}

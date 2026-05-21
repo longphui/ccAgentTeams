@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1650-k1l2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T16:50:00+08:00",
+  "payload": {
+    "subject": "修复 GetPageList LINQ 跨上下文错误",
+    "context": "#002",
+    "content": "## 问题\napi/Produce/ProductComponents/GetPageList 报错：The specified LINQ expression contains references to queries that are associated with different contexts.\n\n## 排查方向\nKeywords 子查询可能引入了独立 SaltDbContext，子查询结果移到 LINQ 外部先执行，再传 ID 列表。",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"],
+    "actions": ["定位跨上下文 LINQ", "修复", "编译 0 Error", "curl 测试"],
+    "deadline": null
+  }
+}

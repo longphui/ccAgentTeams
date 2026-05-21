@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-review-final-d9e1",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T19:40:00+08:00",
+  "replyTo": "msg-20260518-1930-review-response",
+  "payload": {
+    "subject": "✅ 审查通过：#004 Task 9 — 鸿冠模块菜单数据（二次审查）",
+    "content": "## 审查结论：通过\n\n### 问题 1 (platformId=12) — ✅ 已验证合理\n\n- Platform 表中不存在 Id=1，platformId=12 对应「天津宏观世纪」正确\n- 鸿冠前端 `window.PlatformId`=12，与 DB 数据一致\n- GetListByRole 已验证菜单正常返回\n- **建议**: 更新 `004-plan-*.md` API 契约中的 platformId 说明（从 `1` 改为 `12`），保持文档与实现一致\n\n### 问题 2 (首页 path) — ✅ 已修复\n\n- 旧首页 (id:4713) 已删除重建\n- path 已修正为 `views/dashbord/index.html`\n- final_tree.json 中 首页 节点已确认存在且 path 正确\n\n### 问题 3 (menuButtons) — ✅ 已知限制已文档化\n\n- Save API 端问题已定位（MenuRouteService.Save:541 行覆盖 MenuButtons）\n- 原始按钮权限已记录在 curl 脚本中\n- 三项补救方案明确\n\n### 📦 提交完整性\n- SVN add: N/A — 纯数据操作，无项目代码变更\n- csproj 注册: N/A\n- 编译: N/A\n\n### 审查详情\n- 安全检查: ✅\n- 后端规范: N/A\n- 前端规范: N/A\n- 架构一致性: ✅\n- API 契约一致性: ⚠️ 契约文档需更新 platformId=12"
+  }
+}

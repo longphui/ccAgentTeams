@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-1545-cors",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T15:45:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 CORS 跨域 — OWIN 中间件",
+    "context": "#004",
+    "content": "## 修改内容\n\n### 问题\n嵌入模式下，分路页面（iframe 嵌入在 HRM `localhost:8095`）调用 `http://localhost:8088/api/...` 时浏览器报 CORS 错误：OPTIONS 预检无 `Access-Control-Allow-Origin` 头。\n\n### 根因\nCORS 仅在 Web API 层配置（`EnableCorsAttribute`），但 OPTIONS 预检请求在到达 Web API 管道前就被 OWIN/ABP 认证中间件拦截，导致无 CORS 头返回。\n\n### 修复\n1. **Startup.cs**: 在 OWIN 管道中添加 `app.UseCors(CorsOptions.AllowAll)`，放在 `app.UseAbp()` 之前，确保预检请求在认证前就被 CORS 中间件处理。\n2. **SaltWebAppApiModule.cs**: 移除冗余的 `GlobalConfiguration.Configuration.EnableCors()`（避免与 OWIN CORS 产生双 `Access-Control-Allow-Origin` 头）。\n\n### 修改文件\n- `SAHG.Salt.WebAppApi/App_Start/Startup.cs` — 添加 `using Microsoft.Owin.Cors` + `app.UseCors(CorsOptions.AllowAll)`\n- `SAHG.Salt.WebAppApi/App_Start/SaltWebAppApiModule.cs` — 移除 `EnableCorsAttribute` + 移除 `using System.Web.Http.Cors`\n\n### 编译\n✅ 解决方案编译 0 Error\n\n### curl 验证\n- ✅ OPTIONS 预检 → HTTP 200, `Access-Control-Allow-Origin: http://localhost:8095`, `Access-Control-Allow-Headers: authorization,content-type`\n- ✅ POST 请求 → HTTP 200, `Access-Control-Allow-Origin: http://localhost:8095`, `Access-Control-Allow-Credentials: true`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/App_Start/Startup.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/App_Start/SaltWebAppApiModule.cs"
+    ]
+  }
+}

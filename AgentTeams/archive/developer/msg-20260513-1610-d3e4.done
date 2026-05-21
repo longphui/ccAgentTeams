@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260513-1610-d3e4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:10:00+08:00",
+  "payload": {
+    "subject": "简化生成编码确认弹窗 — 改用 layer.confirm",
+    "context": "用户反馈当前确认弹窗过于复杂（独立 lay-layer + 表单模板），只需像删除按钮那样简单提醒即可。",
+    "content": "## 改动\n\n1. 移除 `<lay-layer v-model=\"confirmVisible\">` 整块模板代码（约 12 行）\n2. 移除 `data()` 中的 `confirmVisible` 和 `confirmData`\n3. `showConfirm(row)` 改为直接调用 `layer.confirm()`，提示内容包含工单编号、产品名称、生成数量\n4. `doGenerateCode()` 逻辑移入 `layer.confirm` 的 `yes` 回调\n\n## 参考\n\n参考项目中删除按钮的 `layer.confirm` 模式。\n\n## 成功标准\n\n- 点击「生成编码」→ 弹出简洁确认框（layer.confirm）\n- 确认 → 执行生成，取消 → 关闭",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "移除 lay-layer 模板和相关 data",
+      "showConfirm 改用 layer.confirm",
+      "验证确认弹窗正常"
+    ],
+    "deadline": null
+  }
+}

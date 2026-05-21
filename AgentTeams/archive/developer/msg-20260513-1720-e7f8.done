@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-1720-e7f8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T17:20:00+08:00",
+  "payload": {
+    "subject": "重构 GetPageListForCodeGen — 简化查询，直接查 ProduceWorkOrder 表",
+    "context": "#001",
+    "content": "## 问题\n\n当前 `GetPageListForCodeGen` 调用 `GetWorkOrderPage(input, false)`，该方法：\n- 关联了排产(Plans)、任务(Tasks)、批次(Batches)等大量不必要的表\n- 内部有工单分类逻辑，不适合「查询所有工单」的需求\n- StatusName 通过 AutoMapper Adapt 后丢失\n\n## 重构方案\n\n直接查询 `ProduceWorkOrder` 表，简化实现：\n\n```csharp\npublic async Task<dynamic> GetPageListForCodeGen(WorkOrderProductionPageSearchInput input)\n{\n    // Step 1: 直接查 ProduceWorkOrder，不过滤 Status（查询全部工单）\n    var query = _context.ProduceWorkOrders.Where(x => !x.IsDeleted);\n\n    // Step 2: 基础过滤\n    if (!string.IsNullOrWhiteSpace(input.WorkOrderNo))\n        query = query.Where(x => x.WorkOrderNo.Contains(input.WorkOrderNo));\n    if (!string.IsNullOrWhiteSpace(input.ProductName))\n        query = query.Where(x => x.ProductName.Contains(input.ProductName));\n    if (input.Statuss != null && input.Statuss.Count > 0)\n        query = query.Where(x => input.Statuss.Contains(x.Status));\n\n    // Step 3: 总数\n    var count = await query.CountAsync();\n\n    // Step 4: 分页\n    var list = await query.OrderByDescending(x => x.Id)\n        .Skip(input.SkipCount).Take(input.MaxResultCount).ToListAsync();\n\n    // Step 5: 批量查编码数量（保留此逻辑）\n    var workOrderIds = list.Select(x => x.Id).ToList();\n    var codeCounts = await (from o in _context.CodeRecordObjects\n                            where o.ObjectType == \"ProduceWorkOrder\"\n                               && workOrderIds.Contains(o.ObjectId)\n                               && !o.IsDeleted\n                            group o by o.ObjectId into g\n                            select new { WorkOrderId = g.Key, Count = g.Count() })\n                            .ToListAsync();\n    var codeCountDict = codeCounts.ToDictionary(x => x.WorkOrderId, x => x.Count);\n\n    // Step 6: 组装输出，无需 AutoMapper Adapt\n    var outputList = list.Select(item => new WorkOrderCodeGenOutput\n    {\n        Id = item.Id,\n        WorkOrderNo = item.WorkOrderNo,\n        ProductName = item.ProductName,\n        ProductId = item.ProductId,\n        PlannedProductionNum = item.PlannedProductionNum,\n        Status = item.Status,\n        StatusName = StringExtension.GetDescription((ProduceWorkOrderStatusEnum)item.Status),\n        GeneratedCodeCount = codeCountDict.ContainsKey(item.Id) ? codeCountDict[item.Id] : 0,\n    }).ToList();\n\n    // Step 7: CodeGenStatus 内存过滤\n    if (input.CodeGenStatus.HasValue)\n    {\n        if (input.CodeGenStatus == 0)\n            outputList = outputList.Where(x => x.GeneratedCodeCount == 0).ToList();\n        else\n            outputList = outputList.Where(x => x.GeneratedCodeCount > 0).ToList();\n    }\n\n    return new { count = count, list = outputList };\n}\n```\n\n## 关键要点\n\n1. **不调用 GetWorkOrderPage** — 不关联 Plans/Tasks/Batches\n2. **不过滤工单状态** — 查询所有工单（Statuss 为空时不过滤）\n3. **不用 AutoMapper Adapt** — 直接 new WorkOrderCodeGenOutput 赋值，避免映射遗漏\n4. **CodeGenStatus 在内存过滤** — 因为 codeCountDict 是内存数据\n5. **需要引入 using** — `System.Data.Entity` (for EF6 async)",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/AgentTeams/shared/requirements/001-plan-生产工单产品编码生成.md"
+    ],
+    "actions": [
+      "重写 GetPageListForCodeGen：直接查 ProduceWorkOrder，不调用 GetWorkOrderPage",
+      "不用 AutoMapper Adapt，直接 new WorkOrderCodeGenOutput 赋值",
+      "StatusName 直接赋值，避免映射遗漏",
+      "保持 CodeGenStatus 内存过滤逻辑",
+      "编译通过 0 Error",
+      "更新计划文档 Task 3 的实现代码"
+    ]
+  }
+}

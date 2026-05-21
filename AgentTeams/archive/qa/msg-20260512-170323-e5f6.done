@@ -1,0 +1,27 @@
+{
+  "id": "msg-20260512-170323-e5f6",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-12T17:03:23Z",
+  "payload": {
+    "subject": "项目同步：分路系统前后端 + CodeGenerator 测试关注点",
+    "context": "Architect 已完成项目调研，QA 需从测试角度了解系统和 CodeGenerator 功能",
+    "content": "## 测试视角：两个项目 + CodeGenerator 功能\n\n### 测试环境\n\n| 类型 | 地址 | 说明 |\n|------|------|------|\n| 前端 | `http://localhost:8095/` | IIS 本地部署 |\n| 后端 API | `http://localhost:8088/` | IIS 站点 8088_fenluapi |\n| 测试账号 | `hongbin` / `123456` | 公司ID=2026 |\n| 前端页面规则 | `http://localhost:8095/v2/views/{模块}/{功能}/index.html` |\n| 后端路由规则 | `http://localhost:8088/api/{Area}/{Controller}/{Action}` |\n\n### 前端测试重点\n- **路径**: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2`\n- **分析文档**: `claude_lh.md`\n- **页面数量**: 808 个 HTML 文件，269 个子目录\n- **测试清单**（每个页面）: 加载无 JS 报错 → 搜索/分页 → 新增 → 编辑 → 删除 → 字段验证 → 异常提示 → 权限控制\n- **浏览器**: F12 Console 监控 JS 错误，Network 监控 API 请求\n\n### 后端测试重点\n- **路径**: `D:/work/cc/caikuangzi.fenlu/trunk`\n- **分析文档**: `claude_lh.md`\n- **关键 API 响应格式**: \n  - 旧 API: `{success, result: {states, id, tips}}`\n  - 新 API: `{succeeded, data, errors}`\n- **登录 Token**: 重启 IIS 应用池后 Token 失效，需重新登录\n- **编译**: 使用 MSBuild（非 dotnet build），解决方案路径需确认\n\n### CodeGenerator 测试用例清单\n\n**业务编码标识 (bizCode)**:\n- [ ] 列表分页、关键字搜索\n- [ ] 新增（必填校验：标识、名称、关联规则）\n- [ ] 编辑（数据回显、规则下拉过滤已禁用项）\n- [ ] 删除确认弹窗、软删除后列表不显示\n- [ ] 启禁状态切换\n\n**业务字段定义 (bizField)**:\n- [ ] CRUD 完整流程\n- [ ] 唯一性校验（同公司下字段标识不重复）\n\n**编码规则 (codeRule)**:\n- [ ] 规则 CRUD\n- [ ] 子项增删改 + 排序（上移/下移）\n- [ ] 新增规则时子项随规则一起保存\n- [ ] 编辑规则时子项独立管理\n- [ ] 至少一个 SerialNumber 子项的校验\n\n**编码生成 (generate)**:\n- [ ] 选择业务标识 → 生成单条编码\n- [ ] 批量生成（1~1000）\n- [ ] 赋码对象动态行\n- [ ] 上下文参数动态行\n- [ ] 复制单条/全部\n- [ ] 重复调用幂等返回已有编码\n\n**编码记录 (codeRecord)**:\n- [ ] 分页查询\n- [ ] 反查：输入编码值查询赋码对象\n- [ ] 反查：输入不存在的编码\n- [ ] 详情页展示完整信息\n\n**边界与异常**:\n- [ ] 生成数量超出 1000 的提示\n- [ ] 禁用规则不能生成编码\n- [ ] API 报错时的前端提示\n- [ ] 网络异常时的用户体验\n\n**设计文档**:\n- 前端: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claudePlan/CodeGeneratorPlan.md`\n- 后端: `D:/work/cc/caikuangzi.fenlu/trunk/claudePlan/CodeGeneratorPlan.md`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claude_lh.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/claude_lh.md",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claudePlan/CodeGeneratorPlan.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/claudePlan/CodeGeneratorPlan.md",
+      "D:/work/cc/AgentTeams/shared/context.json"
+    ],
+    "actions": [
+      "阅读两份 claude_lh.md 了解前后端架构和测试环境",
+      "阅读两份 CodeGeneratorPlan.md 了解功能设计",
+      "熟悉 API 调用方式（curl 命令格式 + Token 获取流程）",
+      "确认熟悉后回复 ACK"
+    ],
+    "deadline": null
+  }
+}

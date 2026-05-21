@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1745-savebutton-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T17:45:00+08:00",
+  "replyTo": "msg-20260519-savebutton-test",
+  "payload": {
+    "subject": "✅ 测试通过：iframe 嵌入模式保存按钮 callback 修复",
+    "content": "## 测试结果\n- 代码审查：✅ — 修复逻辑正确，与 appContext.js 真实实现一致\n- 调用链验证：✅ — 3个表单页设置 state.onConfirm = this.save\n- 边界情况：✅ — falsy/Promise/truthy 返回值均正确处理\n- 浏览器验证：⚠️ 需在图形界面环境下实际点击操作\n\n## 详细验证\n\n### 1. util.js openPage 变更 (lines 133-166)\n\n修复前：\n```\nbtn: [{ text: '确定' }]   // 无 callback，点击无效果\n```\n\n修复后：\n- 确定按钮：完整 callback → state.onConfirm() → 处理 sync/Promise/falsy 返回值\n- 取消按钮：myLayer.close(id) 直接关闭\n\n### 2. onConfirm 回调逻辑 (lines 136-158)\n- falsy: return (不关闭，校验失败)\n- true: close + opts.ok(true)\n- Promise: res.then(r => r && close + opts.ok(r))\n- 其它 truthy: close + opts.ok(res)\n- 无 onConfirm: close + opts.ok()\n\n### 3. 表单页 onConfirm 设置验证\n| 表单页 | 设置 | 确认 |\n|--------|------|------|\n| create_edit.html:350 | state.onConfirm = this.save | ✅ |\n| staff_info_edit_log.html:111 | state.onConfirm = this.save | ✅ |\n| dimission_register.html:130 | state.onConfirm = this.save | ✅ |\n\n### 4. appContext.js 一致性检查\n- 真实实现 (lines 583-624) 与 stub (lines 133-166) 逻辑完全一致\n- 唯一差异：stub 用 opts.ok，真实实现用 ok（参数名不同）\n\n## 发现的问题\n无"
+  }
+}

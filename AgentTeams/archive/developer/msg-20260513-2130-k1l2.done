@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260513-2130-k1l2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T21:30:00+08:00",
+  "payload": {
+    "subject": "重构 GetCodeRecordsByObject — 纯通用接口 + 业务封装层",
+    "context": "#001",
+    "content": "## 架构决策\n见 `shared/decisions/006-GetCodeRecordsByObject重构.md`，需求和计划已同步更新。\n\n## 两个问题\n1. **抽象混乱**：通用接口混入了 WorkOrderNo/ProductName 业务字段\n2. **性能隐患**：查 CodeRecordObjects 表全量数据，日后数据量大时极慢\n\n## 改动 1：重构 GetCodeRecordsByObject\n- 入参改为 `ObjectPair[] Objects`（{ObjectType, ObjectId} 数组），匹配任一\n- 移除：ObjectType（单个）、ObjectId（单个）、WorkOrderNo、ProductName\n- 通过 CodeRecord.Objects 属性关联查询，不走 CodeRecordObjects 全表\n\n## 改动 2：新增业务封装端点\n- Tab3 需要 WorkOrderNo/ProductName/CodeValue/StartTime/EndTime 筛选\n- 新增端点：接受业务参数 → 先查 ProduceWorkOrder 得 Id → 构造 Objects[] → 调 GetCodeRecordsByObject\n- 弹窗 codeList.html 直接传 `[{ObjectType:\"ProduceWorkOrder\", ObjectId: workOrderId}]`，不受影响\n\n## 要求\n- 编译 0 Error\n- 不影响弹窗现有功能",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "D:/work/cc/AgentTeams/shared/decisions/006-GetCodeRecordsByObject重构.md"
+    ],
+    "actions": ["重构 GetCodeRecordsByObject 入参为 Objects[]", "查询改为走 CodeRecord.Objects 属性关联", "新增业务封装端点供 Tab3 使用", "编译通过 0 Error"],
+    "deadline": null
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "msg-20260520-1400-t001",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-20T14:00:00+08:00",
+  "payload": {
+    "subject": "制定通用测试规范文档 — 覆盖 API/JS/UI/单元/E2E 全层级",
+    "context": "#005",
+    "content": "## 目标\n\n制定一份通用测试规范文档（`AgentTeams/shared/conventions/test-standards.md`），作为本项目所有角色（Developer / Developer1 / QA / Reviewer）的测试标准。之后所有新功能的测试用例、Playwright 脚本、单元测试均按此规范执行。\n\n## 背景\n\n当前 QA 已搭建 Playwright 基础环境（18 个 spec 文件），但存在明显覆盖缺口：\n- 现有测试集中在 JS API/函数级别（mock 驱动的函数签名验证）\n- 缺失真实 UI 交互测试（按钮点击、弹窗操作、表单填写）\n- 缺失 API 接口测试规范\n- 缺失前后端单元测试规范\n- 无统一的测试命名/目录/报告规范\n\n## 规范文档必须覆盖的内容\n\n### 1. 测试层级定义\n\n明确每层的测试范围、工具、编写者、执行者：\n\n| 层级 | 范围 | 工具 | 执行者 |\n|------|------|------|--------|\n| 后端单元测试 | .cs 方法级 | 待定（建议 NUnit/xUnit） | Developer |\n| 前端单元测试 | JS 纯函数（工具函数/数据处理） | Vitest/Jest | Developer1 |\n| API 接口测试 | HTTP 端点（请求/响应/状态码/错误） | curl 脚本或 Playwright API | QA 或 Developer |\n| JS 函数测试 | 浏览器全局函数（checkTabPermissions 等） | Playwright page.evaluate | QA |\n| UI 交互测试 | 真实按钮点击/弹窗/表单/弹窗内按钮 | Playwright page.click/page.fill | QA |\n| E2E 流程测试 | 完整业务链路（登录→列表→新增→编辑→删除） | Playwright | QA |\n| 回归测试 | Bug 修复后验证不再复现 | Playwright | QA |\n\n### 2. UI 交互测试规范（重点补齐）\n\n这是当前最大缺口，必须详细规定：\n\n- **按钮覆盖**：列表页每个按钮（搜索/新增/编辑/删除/导出/审批等）必须有对应的点击+结果验证用例\n- **弹窗覆盖**：每个弹窗（新增表单/编辑表单/确认对话框）必须有 打开→填表→点确定→验证结果 的完整链路\n- **弹窗内按钮**：弹窗内的确定/取消/关闭按钮必须单独测试（点取消不保存、点确定保存成功）\n- **表单交互**：输入框 fill、下拉选择、日期选择、必填校验、格式校验\n- **列表交互**：搜索、分页、排序、行内操作按钮\n- **权限联动**：有权限时按钮可见可点击、无权限时按钮隐藏或禁用\n- **错误处理**：API 返回错误时页面不崩溃、有 toast/提示、可重试\n\n### 3. API 测试规范\n\n- 每个 API 端点的测试模板（正常返回 + 异常返回 + 边界值）\n- 请求格式（Header/Body/Query 参数组合）\n- 状态码验证\n- 响应字段类型验证（不是只检查 succeeded，要遍历 data 内每个字段类型）\n- Mock 数据复用规则（测试 Mock 与开发 Mock 统一来源）\n\n### 4. JS 函数测试规范\n\n- 纯函数单元测试：入参→出参、边界值、异常输入\n- 浏览器全局函数测试：当前已有的 page.evaluate 模式，补充异常路径\n- 工具函数覆盖率要求\n\n### 5. 测试命名与目录规范\n\n- Playwright spec 文件命名：`{模块名}-{测试层级}.spec.js`\n- 测试用例命名：`{场景} — {操作} → {预期}`\n- 截图输出目录统一\n- 测试报告格式要求\n\n### 6. 测试数据管理\n\n- Mock 数据集中存放（`shared/mock/` 或 `qa/fixtures/`）\n- 与 `shared/requirements/` 中 API 契约的 Mock 数据保持一致\n- 敏感数据脱敏规则\n\n### 7. 回归测试清单\n\n- 每次 Bug 修复后自动追加一条回归用例到对应模块的 spec 文件\n- 回归用例标记 `// REGRESSION: Bug #N` 注释\n\n### 8. 测试执行与 CI（可选，中期规划）\n\n- 本地执行命令\n- 未来可对接的 CI 触发方式（目前手动）\n\n## 参考现有资产\n\n- `AgentTeams/qa/playwright.config.js` — 现有 Playwright 配置\n- `AgentTeams/qa/playwright/menu-e2e.spec.js` — 现有菜单 E2E 测试（8 个用例）\n- `AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js` — 现有 iframe 嵌入 E2E 测试（10 个用例）\n- `AgentTeams/qa/playwright/test-*.spec.js` — 现有 Bug 回归测试（16 个文件）\n- `AgentTeams/shared/conventions/doc-standards.md` — 文档规范（可参考其章节结构）\n\n## 交付物\n\n1. **`AgentTeams/shared/conventions/test-standards.md`** — 完整的测试规范文档（≥ 200 行）\n2. **更新 `playwright.config.js`** — 如规范需要调整配置\n3. **示例：一个模块的完整 UI 交互测试** — 选一个已有页面（建议采购管理 index.html），按新规范写一套 Playwright UI 交互测试作为示范\n\n## 验收标准\n\n| # | 场景 | 预期 |\n|---|------|------|\n| 1 | 新成员加入项目时 | 阅读 test-standards.md 后能独立编写符合规范的测试用例 |\n| 2 | Developer 写完 API 后 | 按 API 测试规范自测，覆盖正常+异常+边界 |\n| 3 | Developer1 写完页面后 | 按 UI 测试规范自测，覆盖按钮/弹窗/表单 |\n| 4 | QA 执行测试时 | 按规范逐项执行，输出统一格式的测试报告 |\n| 5 | 回归测试 | 每次修 Bug 后自动追加回归用例，不会遗漏 |\n\n## 注意事项\n\n- 这是通用规范，不绑定具体功能（#001~#004）\n- 项目特点：零构建工具、Vue 3 全局构建、LayuiVue、iframe 嵌入、mock 驱动前端开发\n- 不需要搭建 CI/CD，先规范本地手动执行流程即可",
+    "files": [
+      "AgentTeams/qa/playwright.config.js",
+      "AgentTeams/qa/playwright/menu-e2e.spec.js",
+      "AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js",
+      "AgentTeams/shared/conventions/doc-standards.md",
+      "AgentTeams/shared/conventions/frontend-tech-stack.md"
+    ],
+    "actions": [
+      "分析现有测试资产（18个spec文件），总结当前覆盖情况和缺口",
+      "编写 test-standards.md — 覆盖全部 8 个章节",
+      "选一个实际页面（建议采购管理 index.html），按新规范编写 UI 交互测试示范",
+      "如有必要，更新 playwright.config.js 适配新规范",
+      "完成后发 REVIEW 给 reviewer 审查"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1130-reply-c3d4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:30:00+08:00",
+  "replyTo": "msg-20260514-1010-c3d4",
+  "payload": {
+    "subject": "✅ checkbox 全选修复 — kebab-case",
+    "content": "## 根因\nVue 3 中 `v-model:X` 映射为 `update:X` 事件名。LayuiVue 2.22.2 的 lay-table 发射 `update:selected-keys`（kebab-case），但 `v-model:selectedKeys`（camelCase）监听 `update:selectedKeys` — 事件名不匹配。\n\n## 修复\n`v-model:selectedKeys` → `v-model:selected-keys`\n\n## 验证\n项目中 `bomDesign/productConfig/index.html` 和 `orders/index.html` 均使用 `v-model:selected-keys`。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

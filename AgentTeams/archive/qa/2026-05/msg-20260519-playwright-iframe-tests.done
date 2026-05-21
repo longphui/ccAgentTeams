@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260519-playwright-iframe-tests",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T21:10:00+08:00",
+  "payload": {
+    "subject": "Playwright 补全 iframe 嵌入模式测试用例",
+    "context": "#004",
+    "content": "## 背景\n之前搭建的 Playwright 8 个用例全部通过，但只覆盖了独立分路页面，没有覆盖**鸿冠 iframe 嵌入模式**。近期大量 Bug 都出现在嵌入模式下：API host 错误、按钮无反应、弹窗空白等。Playwright 需要补上这个场景才能真正发挥作用。\n\n## 任务\n\n### 1. 新增 iframe 嵌入模式测试场景\n测试链路：鸿冠主页 → hrm-proxy → 分路页面（iframe 嵌套）\n至少覆盖以下页面：\n- 员工信息列表（加载、列显示、分页）\n- 员工入职登记（弹窗打开、表单渲染、保存按钮可点击）\n- 员工档案编辑/详情（弹窗内容非空白）\n- 离职员工（设置离职模板按钮可点击）\n- 人事审批目录下任意页面（API 请求 host 正确）\n\n### 2. 关键断言\n- API 请求 host 指向正确的 API 地址（localhost:8088），而非前端地址（localhost:8095）\n- 弹窗内容非空白（iframe body 有内容）\n- 按钮点击有响应（弹窗打开/关闭/保存）\n- 页面列表数据正常加载\n\n### 3. 固化近期 Bug 为回归用例\n把以下已修复的问题加入测试：\n| Bug | 测试场景 |\n|-----|---------|\n| 弹窗空白 | iframe 嵌入模式下打开新增/编辑弹窗，验证非空白 |\n| 保存按钮无反应 | 弹窗内点击确定保存，验证触发 save 方法 |\n| API host 错误 | 拦截请求，断言 host === 8088 |\n| 菜单 404 | 导航到人事审批菜单，验证页面正常加载 |\n| 离职模板按钮 | 点击设置离职模板，验证页面正常打开 |\n\n## 已有 Playwright 配置路径\n查看 `AgentTeams/logs/` 和之前的测试脚本位置",
+    "files": [],
+    "actions": ["阅读现有 Playwright 配置和用例", "新增 iframe 嵌入模式测试场景", "固化近期 Bug 为回归用例", "运行验证全部通过", "发 RESULT 给 Architect"]
+  }
+}

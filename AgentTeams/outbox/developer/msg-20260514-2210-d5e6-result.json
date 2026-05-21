@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-2210-d5e6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T22:10:00+08:00",
+  "replyTo": "msg-20260514-2128-a1b2",
+  "payload": {
+    "subject": "✅ ProductComponentsService DbFunctions.Like → Contains 已完成",
+    "content": "## 完成情况\n- 3 处 `DbFunctions.Like` 改为 `Contains`\n- 移除 `var keyword = \"%\" + input.Keywords + \"%\";`\n- `using System.Data.Entity;` 保留（`ToListAsync` 等异步扩展需要）\n- 编译 0 Error\n- ✅ 已通过 Reviewer 审查\n- ✅ 已通知 QA 测试",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"]
+  }
+}

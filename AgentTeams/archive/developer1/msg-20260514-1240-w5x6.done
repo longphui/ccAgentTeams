@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-1240-w5x6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T12:40:00+08:00",
+  "payload": {
+    "subject": "修复删除接口 404 — URL 改用路径参数",
+    "context": "#002",
+    "content": "## 问题\n删除按钮调用 `POST /api/Produce/ProductComponents/Delete` 报 404。\n\n## 根因\n前端把 `id` 放在 POST body `{ data: { id: row.id } }`，但后端 `Delete(int id)` 默认从 URL 绑定。项目其他所有 Delete 都是把 id 拼在 URL 路径上。\n\n## 修复\n将 L93 `Http.post(\"/api/Produce/ProductComponents/Delete\", { data: { id: row.id } })` 改为：`Http.post(\"/api/Produce/ProductComponents/Delete/\" + row.id)`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ],
+    "actions": [
+      "修改 Delete API 调用方式为 URL 路径参数",
+      "验证删除确认流程正常"
+    ]
+  }
+}

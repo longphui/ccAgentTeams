@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260516-review-0001",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:30:00+08:00",
+  "replyTo": "msg-20260516-1400-d1e2",
+  "payload": {
+    "subject": "审查反馈：CodeGenerator 后端优化 — 3 个需修改问题",
+    "content": "## 审查报告\n\n### 🔒 安全问题\n- [x] SQL 注入：✅ ResolveBusinessField 使用 `new SqlParameter(\"@domainId\", domainId)` 参数化查询\n- [x] 租户隔离：⚠️ BizFieldDefinition 相关查询（GetBizFieldList/GetBizFieldPageList/GetBizFieldDetails/SaveBizField/DeleteBizField/GetDomainList）历来未加 CompanyId 过滤（**预存问题**，非本次引入）\n- [x] 权限控制：✅ Controller 所有 Action 均有 `[CommonLog]`\n- [x] XSS：✅ 不涉及\n- [x] 敏感信息：✅ 日志中无密码/Token\n\n### 🔴 需修改（3 项）\n\n#### 1. SaveBizCode 编辑模式不保存 Domain 字段\n**文件**: `SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs` Line 274-281\n\n编辑模式下逐属性赋值遗漏了 `entity.Domain = input.Domain`，导致用户通过 bizCode 页面选择的 Domain 在编辑保存后不生效。新增模式走 `ObjectMapper.Map` 可能碰巧自动映射，但编辑路径确定丢失。\n\n**修复**:\n```csharp\nentity.Domain = input.Domain;  // 在 entity.Status = input.Status; 之后新增\n```\n\n#### 2. SaveRule 编辑模式不保存 Domain 字段  \n**文件**: `SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs` Line 117-121\n\n同上，编辑模式下未赋值 `entity.Domain = input.Domain`。\n\n**修复**:\n```csharp\nentity.Domain = input.Domain;  // 在 entity.Status = input.Status; 之后新增\n```\n\n#### 3. GetDomainList 中使用 string.IsNullOrWhiteSpace 在 LINQ 表达式内\n**文件**: `SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs` Line 629-638\n\n`string.IsNullOrWhiteSpace()` 是已知的 EF6 不兼容方法（见项目高频 Bug 列表），放在 LINQ 表达式内会导致运行时 `NotSupportedException`。\n\n当前代码：\n```csharp\n.Where(f => f.IsDeleted != true && !string.IsNullOrWhiteSpace(f.DomainCode))\n```\n\n**修复**:\n```csharp\n.Where(f => f.IsDeleted != true && f.DomainCode != null && f.DomainCode != \"\")\n```\n或移到 `.ToList()` 之后过滤（数据量小，可接受）：\n```csharp\n.ToList().Where(f => !string.IsNullOrWhiteSpace(f.DomainCode)).GroupBy(...)\n```\n\n### 📐 后端规范检查\n- [x] 注释：✅ 新增类/属性/方法 XML 注释完整\n- [x] 返回类型：✅ GetDomainList → `IList<DomainOptionDto>`\n- [x] Service 继承：✅ `SaltAppServiceBase`\n- [x] Controller 继承：✅ `SaltControllerBase`，`[HttpGet]`/`[HttpPost]` 正确\n- [x] DTO 继承：✅ `HRM_CompanyEntityDto`，`CheckData()` 验证完整\n- [x] #region 分组：✅ Service 和 Controller 均正确分组\n- [x] 软删除：✅ `entity.Delete(modifier)` + `repo.Update(entity)`\n\n### 🐛 Bug 风险\n- [x] LINQ 不兼容方法：🔴 见上文 #3\n- [x] 其他模式：✅ 未发现\n\n### ⚡ 性能检查\n- [x] N+1 查询：✅ GetCodeRecords 已批量查询\n- [x] 全表扫描：✅ 不涉及\n\n### 📐 架构一致性\n- [x] 对照 decisions/007：✅ 参数化查询，无 raw SQL 拼接\n- [x] 实体继承：✅ `HRM_CompanyEntity` 正确\n- [x] 硬编码：✅ 无\n\n### 📦 提交完整性\n- SVN add：无新建文件需要 add（DomainOptionDto.cs 已在 SVN 中）\n- csproj 注册：✅ `DomainOptionDto.cs` 已在 `SAHG.Salt.Application.csproj` Line 1417 注册\n- 编译：✅ 0 新增 Error（仅预存 `ProductionTraceOutput.cs` 缺失 CS2001，与本次无关）\n\n## 审查结论\n**需修改** — 3 个问题，其中 #1 #2 为功能缺陷（Domain 字段编辑后丢失），#3 为 LINQ 运行时异常。修复后重新提请审查。",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260512-103000-o5p6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-12T10:30:00+08:00",
+  "replyTo": "msg-20260511-090000-a1b2",
+  "payload": {
+    "subject": "测试 JWT 认证完整流程",
+    "context": "Developer 已完成 JWT 认证模块开发并通过安全审查，需要全面测试",
+    "content": "## 测试范围\n\n请对 JWT 认证模块进行全面测试：\n\n### 功能测试（8项）\n1. 正常登录 — 正确用户名密码应返回 token\n2. 错误密码 — 错误密码应返回 401\n3. Token 验证 — 有效 token 可访问受保护接口\n4. 过期 token — 过期 token 应返回 401\n5. Token 刷新 — 有效 refresh_token 可刷新\n6. 刷新轮转 — 旧 refresh_token 不可重复使用\n7. 登出 — 登出后 refresh_token 失效\n8. 多设备 — 最多5个 refresh_token 限制\n\n### 安全测试（4项）\n9. 无 token 访问 — 应返回 401\n10. 伪造 token — 应返回 401\n11. SQL 注入 — 用户名/密码字段注入测试\n12. 暴力破解 — 连续失败登录是否有限制\n\n### 性能测试\n13. 并发 100 用户登录 P99 < 500ms\n\n## 验收标准\n- 功能测试 1-8 全部通过\n- 安全测试 9-12 必须通过\n- 性能测试 P99 < 500ms",
+    "files": [
+      "src/auth/handler.go",
+      "src/auth/middleware.go",
+      "src/auth/service.go"
+    ],
+    "actions": [
+      "编写功能测试用例",
+      "编写安全测试用例",
+      "运行性能测试",
+      "输出测试报告"
+    ],
+    "deadline": "2026-05-12T18:00:00+08:00"
+  }
+}

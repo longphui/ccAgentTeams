@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0855-q7r8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T08:55:00+08:00",
+  "payload": {
+    "subject": "手动组装弹框 — productOptions 未绑定到 select 组件",
+    "context": "#002",
+    "content": "## 问题\n接口已正常返回数据，但 `productOptions` 变量没有绑定到 select 组件上，导致下拉仍然为空。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["检查 select 组件的 options 绑定是否正确", "确保 productOptions 数据赋值后 select 能响应更新"],
+    "deadline": null
+  }
+}

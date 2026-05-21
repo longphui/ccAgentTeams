@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260511-094500-e5f6",
+  "type": "RESULT",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-11T09:45:00+08:00",
+  "replyTo": "msg-20260511-093000-c3d4",
+  "payload": {
+    "subject": "✅ Token 过期策略已确认",
+    "content": "## 决策结果\n\n经综合考虑安全性和用户体验，决定如下：\n\n### 1. access_token：**30分钟**\n- 理由：平衡安全与体验，30分钟窗口适合大多Web应用\n- 泄露后影响可控\n\n### 2. refresh_token：**14天**\n- 理由：2周内用户至少登录一次，无需记住密码\n- 14天不活跃则自动过期\n\n### 3. 刷新策略：**轮转刷新（方案A）**\n- 每次使用 refresh_token 刷新时，旧 token 立即失效\n- 签发新的 access_token + refresh_token\n- 如果检测到已失效的 refresh_token 被使用 → 撤销该用户所有 token（防重放攻击）\n\n### 4. 多设备：**每个用户最多5个有效 refresh_token**\n- 超过限制时，淘汰最旧的一个\n- 支持用户在设置页面查看和撤销设备\n\n## 数据模型建议\n\n```sql\nCREATE TABLE refresh_tokens (\n    id BIGSERIAL PRIMARY KEY,\n    user_id BIGINT NOT NULL,\n    token_hash VARCHAR(64) UNIQUE NOT NULL,\n    device_info VARCHAR(255),\n    expires_at TIMESTAMP NOT NULL,\n    revoked BOOLEAN DEFAULT FALSE,\n    created_at TIMESTAMP DEFAULT NOW()\n);\n\nCREATE INDEX idx_refresh_tokens_user ON refresh_tokens(user_id, revoked);\n```\n\n已更新 `shared/decisions/001-token-strategy.md`，可作为开发参考。",
+    "files": ["shared/decisions/001-token-strategy.md"]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260518-2155-f3g4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T21:55:00+08:00",
+  "payload": {
+    "subject": "#004 Task 12: 修复菜单 DB 中 49 个反斜杠路径",
+    "context": "#004",
+    "content": "## 背景\n\nQA E2E 测试在菜单数据中发现 **49 个菜单项**的 `path` 字段使用反斜杠（`\\`）而非正斜杠（`/`），导致浏览器无法正确加载。\n\n示例：\n```\n\\v2\\views\\ProductManage\\ProductList\\productConfig\\productClassifyConfig\\index.html\n```\n应改为：\n```\n/v2/views/ProductManage/ProductList/productConfig/productClassifyConfig/index.html\n```\n\n## 任务\n\n在鸿冠 DB 菜单表中执行 UPDATE，将所有 `path` 字段中的 `\\` 替换为 `/`。\n\n### 操作步骤\n\n1. 查询确认受影响的行数：`SELECT COUNT(*) FROM [MenuTable] WHERE [Path] LIKE '%\\%'` （注意表名需确认）\n2. 执行 UPDATE 替换\n3. 验证修复后菜单加载正常（无 404）\n\n### 验收标准\n\n- [ ] 49 个反斜杠路径全部修复为正斜杠\n- [ ] 修复后菜单加载正常\n- [ ] 提供执行的 SQL 脚本备查\n\n### 注意\n\n- 先确认菜单表名和字段名（可能是 `AbpMenus.Path` 或类似）\n- 建议先 SELECT 确认影响范围再 UPDATE\n- 只替换 path 字段，不影响其他字段",
+    "files": [],
+    "actions": ["确认菜单表名/字段名", "SELECT 确认 49 行", "UPDATE 替换 \\ → /", "验证"],
+    "deadline": null
+  }
+}

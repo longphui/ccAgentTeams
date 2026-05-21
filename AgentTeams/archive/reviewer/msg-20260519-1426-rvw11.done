@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1426-rvw11",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T14:26:00+08:00",
+  "payload": {
+    "subject": "审查请求：states Map 提升为模块级共享（修复弹窗 getState 返回 undefined）",
+    "context": "#004",
+    "content": "## 问题\n`getAppContext()` 每次 `return { states: new Map(), ... }` → 每次调用创建新 Map。\n`openPage()` 写入 Map-A → `getState()` 从 Map-B 读取 → `undefined` → 弹窗空白\n\n## 修复（3 处改动）\n1. `var _embeddedStates = new Map();` 在 getAppContext 外部声明（L53）\n2. stub 中 `states: _embeddedStates`（共享引用，L71）\n3. openPage 去掉 `if (!that.states) that.states = new Map();` 冗余 guard（states 已在外部初始化）\n\n## 审查重点\n1. `_embeddedStates` 在 getAppContext 定义前声明，全局可访问\n2. openPage 写入和 getState 读取现在操作同一个 Map\n3. 改动仅 3 行，无邻近代码影响",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ]
+  }
+}

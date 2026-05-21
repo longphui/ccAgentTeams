@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260518-1025-i1j2",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T10:25:00+08:00",
+  "payload": {
+    "subject": "测试请求：#004 HRM Token桥接 + 菜单代理（方案A 安全修复后）",
+    "context": "#004",
+    "content": "## 测试重点\n\n请重新验证以下 API（JWT 已在 Dev 环境全局关闭，无需认证）：\n\n### 1. Token 桥接 API\n```bash\ncurl -s -X POST \"http://localhost:5000/api/hrm-auth/get-fenlu-token\"\n# 预期: {\"succeeded\":true,\"data\":{\"token\":\"eyJ...\"}}\n```\n\n### 2. 菜单代理 API\n```bash\ncurl -s -X POST \"http://localhost:5000/api/menu-proxy/get-list-by-role\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"platformId\":2}'\n# 预期: {\"succeeded\":true,\"data\":{\"children\":[...],\"startup\":{...}}}\n```\n\n## 变更说明\n- 不再使用 `[AllowAnonymous]`，改为 `Startup.cs` 环境判断\n- Development 环境自动跳过 JWT，生产环境自动启用\n- 需重启 dotnet 进程加载新 DLL\n\n## 审查状态\n✅ 已通过 Reviewer 审查（方案 A 环境条件判断）",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Web.Core\\Startup.cs"
+    ]
+  }
+}

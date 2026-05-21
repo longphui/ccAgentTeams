@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1100-e1f2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:00:00+08:00",
+  "payload": {
+    "subject": "查询编码弹框列信息对齐编码记录页面（导出用）",
+    "context": "#002",
+    "content": "## 需求\n将「已生成编码」页面中「查询编码」弹框（codeList.html）的显示列，改为与主「编码记录」页面（index.html Tab3）一样的完整列信息。\n\n## 原因\n用户需要导出使用，目前弹框列信息不完整。\n\n## 要求\n- 弹框列定义对齐编码记录页面的完整列（编码值、工单编号、商品名称、生成时间等）\n- 保持弹框功能正常（筛选、分页等）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "对照 index.html Tab3 编码记录页面的列定义",
+      "更新 codeList.html 弹框 lay-table 的 columns 和 template",
+      "确保现有功能（筛选、分页）不受影响"
+    ]
+  }
+}

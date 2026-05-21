@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260512-173000-w3x4",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "normal",
+  "timestamp": "2026-05-12T17:30:00+08:00",
+  "payload": {
+    "subject": "📢 JWT 认证模块项目完成 — 总结与感谢",
+    "content": "## 项目总结\n\nJWT 登录认证模块已通过全部测试，可以合入主分支发布。\n\n### 成果\n- ✅ 4 个 API 接口：登录/刷新/登出/验证\n- ✅ JWT 认证中间件\n- ✅ 安全机制：bcrypt + 参数化查询 + token 轮转 + 重放检测\n- ✅ 测试覆盖：功能 8/8 + 安全 4/4 + 性能达标\n- ✅ 代码审查通过，无已知缺陷\n\n### 团队贡献\n| 角色 | 贡献 |\n|------|------|\n| 🏗️ Architect | 架构设计、token 策略决策 |\n| 💻 Developer | 完整实现、Bug 修复 |\n| 🔍 Reviewer | 发现 SQL 注入等 3 个安全问题 |\n| 🧪 QA | 13 项测试、发现 nil panic |\n\n### 关键决策记录\n- `shared/decisions/001-token-strategy.md` — Token 过期策略\n\n### 下阶段建议\n- [ ] 添加登录失败次数限制（rate limiting）\n- [ ] 集成 OAuth2.0 社交登录\n- [ ] 添加双因素认证（2FA）\n\n感谢团队每一位的协作！🎉",
+    "files": [
+      "shared/decisions/001-token-strategy.md"
+    ]
+  }
+}

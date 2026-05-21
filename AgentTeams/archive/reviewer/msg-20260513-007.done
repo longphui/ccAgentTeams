@@ -1,0 +1,33 @@
+{
+  "id": "msg-20260513-007",
+  "type": "REVIEW",
+  "from": "architect",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-13T13:30:00+08:00",
+  "payload": {
+    "subject": "#002 商品组装编码关联 — 代码审查",
+    "context": "Developer 已完成 #002 全部 13 文件实现，编译通过",
+    "content": "## 审查文件 (13)\n\n### 新建 Core 实体 (2)\n- SAHG.Salt.Core/Produce/ProductComponents.cs — 继承 BasicEntity\n- SAHG.Salt.Core/Produce/ProductComponentCodes.cs — 继承 SaltEntity\n\n### 新建 Application (4)\n- Produce/Dto/ProductComponentsDto.cs\n- Produce/Dto/ProductComponentsInput.cs\n- Produce/IProductComponentsService.cs\n- Produce/ProductComponentsService.cs — GetPageList/Save/AutoAssemble/Delete/GetAvailableCodes\n\n### 新建 Controller (1)\n- Areas/Produce/Controllers/ProductComponentsController.cs — 6 Actions, [PPMLog]\n\n### 修改 (3)\n- SaltDbContext.cs — 添加 DbSet\n- HRM_DtoMapping.cs — AutoMapper\n- .csproj 文件\n\n### 前端 (3)\n- ProductComponents/index.html — 列表（展开）\n- ProductComponents/create_edit.html — 手动组装\n- ProductComponents/autoAssembly.html — 一键自动组合\n\n## 审查要点\n- 编码唯一性校验\n- AutoAssemble 随机算法安全性\n- GetAvailableCodes SQL 性能\n- Controller 日志属性 [PPMLog]",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Core/Produce/ProductComponents.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Core/Produce/ProductComponentCodes.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html"
+    ],
+    "actions": [
+      "审查 13 个文件",
+      "安全检查 (SQL注入/越权/唯一性)",
+      "性能检查 (N+1/批量操作)",
+      "规范检查 ([PPMLog]/注释/csproj)",
+      "输出审查报告"
+    ],
+    "deadline": null
+  }
+}

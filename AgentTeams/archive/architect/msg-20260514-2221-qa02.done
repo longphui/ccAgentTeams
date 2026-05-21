@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2221-qa02",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T22:21:00+08:00",
+  "replyTo": "msg-20260514-2210-e7f8",
+  "payload": {
+    "subject": "❌ 测试未通过：ProductComponentsService Contains 中文搜索",
+    "content": "## 测试结果\n- 功能验证：❌ 中文搜索全部抛异常\n- 数据显示：✅ 列表/详情数据显示正常\n- 边界情况：✅ 空关键词、无匹配（英文）正常\n- 前后端联动：❌ 中文关键词触发未处理异常\n\n## 发现的问题\n- **high**: 中文关键词搜索全部抛异常（已发 FEEDBACK 到 developer inbox）\n  - ProductCode/CodeValue 英文搜索 → 正常\n  - ProductName/ComponentProductName 中文搜索 → 全部异常\n  - 详见 `inbox/developer/msg-20260514-2220-qa01.msg.json`\n\n## 结论\nContains 方案未解决中文搜索问题，与 DbFunctions.Like 方案存在相同的中文异常。建议重新评估方案。"
+  }
+}

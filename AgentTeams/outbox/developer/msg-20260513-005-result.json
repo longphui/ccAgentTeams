@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-1257-b3c4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T13:00:00+08:00",
+  "replyTo": "msg-20260513-005",
+  "payload": {
+    "subject": "✅ 商品组装编码关联 已完成",
+    "content": "## 完成情况\n\n全部 13 个文件已完成（10 新建 + 3 修改），编译通过 0 错误。\n\n### 新建文件 (10)\n\n**Core 实体 (2):**\n- `SAHG.Salt.Core/Produce/ProductComponents.cs` — 继承 BasicEntity，含 ProductId/ProductCode/ComponentProductId/ComponentQuantity/ComponentUnit + ICollection<ProductComponentCodes> Codes\n- `SAHG.Salt.Core/Produce/ProductComponentCodes.cs` — 继承 SaltEntity，含 ProductComponentId/CodeValue\n\n**Application DTO (2):**\n- `SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs` — 继承 HRM_CompanyEntityDto，含 ProductName/ComponentProductName 展示字段 + Codes 子集合\n- `SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs` — 入参 POCO，含 Components: List<ComponentItem>\n\n**Application Service (2):**\n- `SAHG.Salt.Application/Produce/IProductComponentsService.cs` — 6 方法接口\n- `SAHG.Salt.Application/Produce/ProductComponentsService.cs` — 完整实现：\n  - GetPageList: JOIN Products 表按成品分组查列表\n  - Save: 校验编码唯一性后保存主表+子表\n  - AutoAssemble: 随机取未使用编码 → 展示结果 → Save\n  - Delete: 软删除主表+子表\n  - GetAvailableCodes: 查 CodeRecordObjects JOIN CodeRecords，排除已用编码\n\n**Controller (1):**\n- `SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs` — 6 Actions，全部带 [PPMLog]\n\n**前端 (3):**\n- `v2/views/.../ProductComponents/index.html` — 列表页，lay-page-view，支持展开/筛选/删除\n- `v2/views/.../ProductComponents/create_edit.html` — 手动组装弹窗，成品+组件+逐个选编码\n- `v2/views/.../ProductComponents/autoAssembly.html` — 一键自动组合页面\n\n### 修改文件 (4)\n\n- `SaltDbContext.cs` — 添加 ProductComponents + ProductComponentCodes DbSet\n- `HRM_DtoMapping.cs` — 添加双向 Mapster 映射\n- `SAHG.Salt.Core.csproj` — 添加 1 个 Compile Include\n- `SAHG.Salt.Application.csproj` — 添加 3 个 Compile Include\n\n### 编译验证\n\nMSBuild 编译通过，0 错误。未改动任何框架文件（SaltDataModule.cs / Global.asax.cs）。\n\n### 已知 limitations\n\n- 前端 3 个 HTML 文件已编写但未经浏览器实测（无本地测试环境）\n- autoAssembly.html 的结果展示逻辑较简单（未从后端反查实际保存的编码展示），可根据实际效果微调",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Core/Produce/ProductComponents.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Core/Produce/ProductComponentCodes.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html"
+    ]
+  }
+}

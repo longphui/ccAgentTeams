@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-165513-fb1",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T16:55:13+08:00",
+  "replyTo": "msg-20260514-1700-test-save",
+  "payload": {
+    "subject": "🐛 Save/AutoAssemble DB 写入全部报空异常（critical）",
+    "content": "## 复现步骤\n1. POST /api/Produce/ProductComponents/Save，传正常入参（含有效 Codes）\n2. 或 POST /api/Produce/ProductComponents/AutoAssemble，传正常入参\n\n## 期望行为\nStates=true，数据写入 ProductComponents + ProductComponentCodes\n\n## 实际行为\n```json\n{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}\n```\n所有涉及 DB 写入的操作均返回空 message 的框架错误。\n\n## 已通过的测试\n- Save Codes=null → \"组件编码不能为空\" ✅\n- Save Codes=[] → \"组件编码不能为空\" ✅\n- AutoAssemble Codes=null → \"组件编码不能为空\" ✅\n\n## 已确认失败\n- Save 含已使用编码（如 SH1_20260514000086）→ 空异常 ❌\n- Save 正常保存（唯一编码）→ 空异常 ❌\n- AutoAssemble 正常自动组合（2个组件）→ 空异常 ❌\n- Save 含空 CodeValue → 空异常（期望返回\"请选择组件编码\"）❌\n\n## 判断\n读操作（GetPageList/GetAvailableCodes/CheckCodeRule）正常，写操作全部失败。可能原因：\n1. IIS 未重新编译部署最新 DLL\n2. ProductComponents/ProductComponentCodes DbSet 未注册或 EF 映射异常\n3. CreateNew() / SaveChanges 中未捕获的异常"
+  }
+}

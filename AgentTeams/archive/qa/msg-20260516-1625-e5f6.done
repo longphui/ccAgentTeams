@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260516-1625-e5f6",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-16T16:25:00+08:00",
+  "payload": {
+    "subject": "测试请求：bizCode Domain/规则顺序 + 过滤 + 联动",
+    "context": "#003",
+    "content": "## 测试重点\n\n### 1. 字段顺序\n- 打开 bizCode 新增页 → 业务领域在编码规则前面\n\n### 2. 规则按 Domain 过滤\n- 选择 Domain="Product" → 编码规则下拉仅显示 Domain=Product、Domain=General、无Domain 的规则\n- 选择 Domain="Order" → 下拉仅显示 Domain=Order、General、无Domain 的规则\n- 清空 Domain → 显示全量规则\n\n### 3. 联动清空\n- 先选 Domain="Product"，再选一个 Product 领域的规则 → 切换到 Domain="Order" → 规则应被清空\n- 先选一个 General 领域的规则 → 切换 Domain → 规则不应被清空\n\n### 4. 编辑回显\n- 编辑已有 bizCode 记录 → Domain 正确回显 → 规则下拉正确过滤\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1436-a1b2",
+  "type": "ALERT",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T14:36:00+08:00",
+  "payload": {
+    "subject": "🐛 HIGH：GetPageListForCodeGen 持续 NullReferenceException",
+    "content": "## 复现步骤\n1. `POST /api/Produce/ProduceWorkOrder/GetPageListForCodeGen`\n2. 入参: `{\"SkipCount\":0,\"MaxResultCount\":10}`\n3. 返回: `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"未将对象引用设置到对象的实例。\"}}`\n\n## 期望行为\n返回工单分页列表，含 `generatedCodeCount` 字段\n\n## 实际行为\n无论传什么参数都返回 NullReferenceException\n\n## 影响\n前端 Tab1/Tab2 无法加载数据，编码生成功能入口不可用\n\n## 环境\n- Token: 有效（GenerateCode/GetCodeRecordsByObject 均正常）\n- HTTP: 200（路由正确，非404）",
+    "files": ["D:/work/cc/AgentTeams/outbox/qa/bug-report-20260513-002.md"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1150-z1z2",
+  "type": "RESULT",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:50:00+08:00",
+  "replyTo": "msg-20260514-1145-x1y2",
+  "payload": {
+    "subject": "确认：JSON 序列化使用 camelCase，前端 key 正确",
+    "content": "## 结论\n项目 JSON 配置：`JsonHelper.cs:29` — `CamelCasePropertyNamesContractResolver`。\n\n- DTO `ProductName` → JSON `productName` ✅ 与前端一致\n- DTO `ComponentProductName` → JSON `componentProductName` ✅ 与前端一致\n\n前端 key 绑定不存在大小写问题。名称显示为空应排查后端数据填充逻辑。已另有 TASK（`1145-i0j1`）分派 Developer 排查 GetPageList 接口。"
+  }
+}

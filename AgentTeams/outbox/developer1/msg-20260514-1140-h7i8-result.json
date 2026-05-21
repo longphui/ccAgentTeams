@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1150-z1a2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:50:00+08:00",
+  "replyTo": "msg-20260514-1140-h7i8",
+  "payload": {
+    "subject": "✅ 成品名称和半成品名称列已修复",
+    "content": "## 问题原因\n两列同时配置了 `key` 和 `customSlot`，slot 模板为纯透传 `{{row.productName}}`，可能与 lay-page-view 的 slot 渲染机制冲突导致列显示为空。\n\n## 修复\n- 去掉 `customSlot`，由 `key` 直接渲染（key 值与 API 返回字段一致：`productName`、`componentProductName`）\n- 删除冗余的 slot 模板\n- codes 和 operator 列保留 customSlot（真正需要自定义渲染）",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

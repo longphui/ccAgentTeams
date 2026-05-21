@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-2015-u1v2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:15:00+08:00",
+  "replyTo": "msg-20260513-2015-g8h9",
+  "payload": {
+    "subject": "✅ 收到任务：排查编码生成提示错误",
+    "content": "收到，正在排查 Http.post 响应结构。"
+  }
+}

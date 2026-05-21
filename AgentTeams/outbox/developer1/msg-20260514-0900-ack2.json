@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0900-f1g2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:00:00+08:00",
+  "replyTo": "msg-20260514-0900-r8s9",
+  "payload": {
+    "subject": "✅ 收到任务：select 加 searchable + 布局优化",
+    "content": "收到，立即处理。"
+  }
+}

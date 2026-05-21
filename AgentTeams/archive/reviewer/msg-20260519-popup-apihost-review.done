@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-popup-apihost-review",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T19:20:00+08:00",
+  "payload": {
+    "subject": "审查请求：嵌入模式弹框 API base-path 修复",
+    "context": "#004",
+    "content": "## 根因\n嵌入模式下用户不经过 fenlu login 流程，`login.html` 中的 `localStorage.setItem(\"base-path\", baseApiUrl)` 从未执行。\n弹框页面依赖 `base-path` 拼接上传/图片等资源的绝对 URL，值为 null 时产生 `\"null/api/...\"` 错误地址。\n\n## 修复\nbaseService.js 嵌入模式 handler：\n- 检测到 `?embedded=true` 时，检查 `base-path` 是否已设置\n- 未设置则从 `appConfig.baseUrl1` 写入 localStorage\n- 降级：`appConfig.baseUrl1` → `appConfig.newFenluApiBase` → 空字符串\n\n## 加载时序保证\nimportresloader.js 先加载 appConfig.js（设置 appConfig），再加载 resloader.js → baseService.js。\nbaseService.js 顶层代码执行时 appConfig 已就绪。\n\n## 审查重点\n1. 逻辑放在 baseService.js 顶层（非函数内），每次页面加载执行\n2. 只在无 base-path 时写入（不覆盖已有值）\n3. 降级链安全",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

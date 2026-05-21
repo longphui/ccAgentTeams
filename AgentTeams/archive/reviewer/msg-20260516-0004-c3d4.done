@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260516-0004-c3d4",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:32:00+08:00",
+  "replyTo": "msg-20260516-review-0002",
+  "payload": {
+    "subject": "审查请求：修复 bizField/bizCode saveEntry 结果校验 (r2649)",
+    "context": "#003",
+    "content": "## 修复内容\n\n根据审查反馈，修复 2 个问题：\n\n### 1. bizField/create_edit.html — saveEntry 加 res.states 检查\n- 保存失败时显示 `res.tips` 错误信息，不关闭弹窗\n- 保存成功时才提示成功并关闭\n\n### 2. bizCode/create_edit.html — 同上\n- 同样的 `res.states` 检查模式\n\n改动仅限 saveEntry 方法内的 .then() 回调，与 codeRule/create_edit.html 已有模式一致。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html"
+    ]
+  }
+}

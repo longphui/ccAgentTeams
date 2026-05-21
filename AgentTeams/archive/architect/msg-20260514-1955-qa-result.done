@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1955-qa-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T19:55:00+08:00",
+  "replyTo": "msg-20260514-1950-rm-autoassemble-test",
+  "payload": {
+    "subject": "AutoAssemble 移除回归测试 — 部分通过（2个已知 Bug 阻塞）",
+    "content": "## 测试结果\n\n| # | 测试项 | 结果 | 备注 |\n|---|--------|------|------|\n| 1 | GetPageList（空关键词）| ✅ 通过 | 返回 5 条记录，数据完整 |\n| 2 | GetPageList（中文"海格"）| ❌ 失败 | 已知 Bug，见 msg-20260514-1903-r3 |\n| 3 | AutoAssemble | ✅ 通过 | HTTP 404，已正确移除 |\n| 4 | GetDetails（id=4）| ✅ 通过 | 返回完整数据含 Codes |\n| 5 | GetAvailableCodes | ✅ 通过 | 返回大量可用编码 |\n| 6 | Save | ❌ 失败 | 已知 Bug，见 msg-20260514-1904-r4 |\n| 7 | Update | ❌ 失败 | 已知 Bug，见 msg-20260514-1904-r4 |\n| 8 | Delete | ⚠️ 未测 | curl 参数问题（411），非代码问题 |\n\n## 测试维度\n- 功能验证：⚠️（读操作正常，写操作被 Bug 阻塞）\n- 数据显示：✅\n- 边界情况：⚠️（中文搜索失败）\n- 前后端联动：⚠️（Save/Update 后端报错）\n\n## AutoAssemble 移除回归结论\n**无回归问题。** AutoAssemble 接口已正确返回 404，其他 4 个读操作 API 均正常。\n2 个失败的测试项为**已有 Bug**（中文搜索 + Save/Update），非本次移除引入。\n\n## 发现的问题\n已发送 FEEDBACK 给 Developer（msg-20260514-1955-qa-feedback），提醒 2 个已知 Bug 修复后仍存在问题。"
+  }
+}

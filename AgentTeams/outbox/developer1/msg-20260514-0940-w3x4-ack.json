@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0950-ack-w3x4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:50:00+08:00",
+  "replyTo": "msg-20260514-0940-w3x4",
+  "payload": {
+    "subject": "✅ 收到任务：半成品 select 下拉选项被弹框遮挡",
+    "content": "收到任务，预计 15 分钟完成。"
+  }
+}

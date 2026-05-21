@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260514-2225-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T22:25:00+08:00",
+  "payload": {
+    "subject": "排除法定位中文搜索根因：先用 raw SQL 验证",
+    "context": "#002",
+    "content": "## 背景\n\nQA 证实：`Contains` 和 `DbFunctions.Like` 中文搜索失败表现完全一致。根因不在 LINQ 方法，在数据层。\n\n详见决策 [shared/decisions/007-chinese-search-root-cause.md](shared/decisions/007-chinese-search-root-cause.md)\n\n## 排除法步骤\n\n### Step 1: 查数据库实际列类型\n连接 SQL Server，执行：\n```sql\nSELECT COLUMN_NAME, DATA_TYPE, CHARACTER_SET_NAME, COLLATION_NAME\nFROM INFORMATION_SCHEMA.COLUMNS\nWHERE TABLE_NAME = 'Product' AND COLUMN_NAME = 'ProductName';\n```\n\n如果 DATA_TYPE = 'varchar' → 确认根因，列需要改为 NVARCHAR。\n\n### Step 2: 用 raw SQL 验证\n在 GetPageList 中，对 ProductName 搜索用 `_context.Database.SqlQuery<>()` 替代 `_productRep.GetAll().Where(Contains)`：\n\n```csharp\nvar keyword = input.Keywords;\nvar sql = @\"SELECT p.Id FROM Product p \n    WHERE p.IsDeleted = 0 AND p.ProductName LIKE N'%' + @p0 + N'%'\";\nvar matchingIds = await _context.Database.SqlQuery<int>(sql, keyword).ToListAsync();\n```\n\n关键：`N'%' + @p0 + N'%'` 确保 LIKE 模式带 Unicode N 前缀。\n\n### Step 3: 根据结果判断\n- 如果 raw SQL 中文搜到结果 → EF 参数绑定是根因，保留 raw SQL 方案\n- 如果 raw SQL 也失败 → 数据库列类型是根因，需改列类型（需迁移）\n\n## 要求\n- 编译 0 Error\n- 每步都记录结果，反馈给 Architect\n- 发 REVIEW 前需完成 svn st + 编译检查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ],
+    "actions": [
+      "查数据库 Product.ProductName 列类型（VARCHAR 还是 NVARCHAR）",
+      "用 raw SQL + N前缀 LIKE 验证中文搜索",
+      "根据结果确定修复方案并实施",
+      "编译 0 Error",
+      "发 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2005-f6g7",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T20:05:00+08:00",
+  "payload": {
+    "subject": "修复 layer.confirm ok 回调不触发 — 改为 yes 写法",
+    "context": "#001",
+    "content": "## 问题\n`index.html` 的 `showConfirm` 方法中，`layer.confirm()` 弹框后点击确认，ok 回调不触发，接口请求未发出。\n\n## 根因\nLayuiVue 的 `layer.confirm(content, options)` 只接受两个参数，确认回调必须写在 `options.yes` 或 `options.btn[].callback` 中。当前代码用第三个位置参数传回调，LayuiVue 不识别。\n\n## 对比\n\n### 当前（错误）\n```javascript\nlayer.confirm(\n    '确认要生成（' + r.plannedProductionNum + '）个编码吗？',\n    { title: '确认生成编码', icon: 3 },\n    function (index) {\n        // ← 这个回调不会触发\n    }\n);\n```\n\n### 正确（项目已有参照：codeRule/index.html:103-115）\n```javascript\nlayer.confirm(\n    '确认要生成（' + r.plannedProductionNum + '）个编码吗？',\n    {\n        title: '确认生成编码',\n        icon: 3,\n        yes: function (index) {\n            // 原回调内容移到这里\n            layer.close(index);\n        }\n    }\n);\n```\n\n## 需要改的文件\n`D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html`\n\n`showConfirm` 方法（约第 131-165 行）：将第三个参数 function(index){...} 内的代码搬到 options 对象的 `yes` 字段中。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"],
+    "actions": ["将 layer.confirm 第三个参数回调改为 options.yes 回调", "验证弹框确认后接口请求正常发出"],
+    "deadline": null
+  }
+}

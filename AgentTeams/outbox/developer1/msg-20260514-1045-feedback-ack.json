@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1055-ack-feedback",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:55:00+08:00",
+  "replyTo": "msg-20260514-1045-feedback",
+  "payload": {
+    "subject": "✅ 收到 FEEDBACK：补全注释",
+    "content": "收到，按 fl-html-dev.md 规范为 3 个文件补全注释。"
+  }
+}

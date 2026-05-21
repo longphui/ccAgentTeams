@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-0001-a1b2",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T00:00:00Z",
+  "replyTo": "msg-20260512-170323-c3d4",
+  "payload": {
+    "subject": "审查反馈：CodeGenerator 模块 — 13 个问题（含 1 个严重安全漏洞）",
+    "content": "## 审查完成，发现 13 个问题\n\n### 阻塞项（必须修复）\n- [ ] **#1 [critical] SQL 注入** — CodeGeneratorService.cs:573 动态拼接表名/字段名到 SQL，需添加白名单校验\n- [ ] **#2 [high] 多租户数据泄露** — BizFieldDefinition 查询未过滤 CompanyId，所有公司共享字段定义\n\n### 强烈建议\n- [ ] **#4 [high] 缺少单条幂等检查** — 设计文档要求 Count==1 时复用已有编码，实际实现缺失\n- [ ] **#8 [medium] SourceTable/SourceField 无输入校验** — 增大 SQL 注入风险面\n\n### 建议改进\n- [ ] #5 规则名称唯一性校验\n- [ ] #6 字段定义名称唯一性校验\n- [ ] #7 CommonLog vs HRMLog 确认\n- [ ] #9 #10 BasicEntity 继承评估\n\n完整报告见: outbox/reviewer/review-report-20260513.md",
+    "files": ["outbox/reviewer/review-report-20260513.md"]
+  }
+}

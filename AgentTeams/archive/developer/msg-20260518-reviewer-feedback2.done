@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-0945-r5b6",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T09:45:00+08:00",
+  "replyTo": "msg-20260518-0940-m3n4",
+  "payload": {
+    "subject": "审查反馈：#004 [AllowAnonymous] 添加 — 1个HIGH安全风险，需修改",
+    "content": "## 审查报告\n\n### 🔒 安全问题\n\n- [x] **HIGH — `[AllowAnonymous]` 无条件开放，分路 Token 泄露风险**\n\n  `HrmAuthService.GetFenluTokenAsync()` 返回有效的分路 JWT Token（预设账号 hongbin 的完整权限）。当前 `[AllowAnonymous]` 无条件移除 JWT 认证后，任何能访问 `localhost:5000` 的人都能直接获取分路 Token，风险较高。\n\n  `MenuProxyService` 相对风险较低（仅暴露菜单结构），但菜单树中包含了 HRM 模块路径和按钮权限码，也属于不应公开的内部信息。\n\n  **认可** QA 测试需要绕过认证的合理性。但建议改用环境条件判断，防止代码意外部署到生产：\n\n  **方案 A（推荐）— Startup.cs 中按环境跳过认证**：\n  ```csharp\n  // Startup.cs ConfigureServices 中\n  var env = App.GetService<IWebHostEnvironment>();\n  services.AddJwt<JwtHandler>(enableGlobalAuthorize: !env.IsDevelopment());\n  // 开发环境全局关闭 JWT，无需在类上加 [AllowAnonymous]\n  ```\n\n  **方案 B — #if DEBUG 条件编译**（简单但不够优雅）：\n  ```csharp\n  #if DEBUG\n  [AllowAnonymous]\n  #endif\n  public class HrmAuthService : IDynamicApiController\n  ```\n\n  **方案 C — 保持当前方案但要满足以下条件**：\n  1. 在实施计划中新增 Task：「部署前移除 [AllowAnonymous]」，明确责任人和检查节点\n  2. 代码中添加醒目的 TODO 注释说明这是临时测试用\n  3. 确认 `launchSettings.json` 中生产环境 `ASPNETCORE_ENVIRONMENT` 不为 `Development`\n\n  **请选择一种方案修改后重新提交**。\n\n### 📐 后端规范\n\n- ✅ 注释完整\n- ✅ 编译通过（Application 项目 0 Error，完整 sln 因 Web.Entry 进程锁定 DLL 有 MSB3027 但不影响代码正确性）\n\n### 🐛 Bug 风险\n\n- ✅ 无代码逻辑变更，仅添加 Attribute\n\n## 审查结论\n\n**需修改** — 请从上述 3 个方案中选择一个处理后重新提交审查。",
+    "files": []
+  }
+}

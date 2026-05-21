@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-columnconfig-feedback",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:40:00+08:00",
+  "replyTo": "msg-20260519-columnconfig-test",
+  "payload": {
+    "subject": "Bug：TableColumnConfig null key 修复未同步到 components.js / components.min.js",
+    "content": "## 测试结果\n\n### 1. key 不含 null — ❌ 编译文件未修复\n\n**源文件** `libs/components/table-column-config/index.js:41-43` 已修复：\n```javascript\nconst companyId = localStorage.getItem(\"CompanyID\") || '0';\nreturn `columnConfig-${companyId}-${location.pathname.toLowerCase()}`;\n```\n\n**编译文件** `libs/components.js:4434-4435` 仍然是旧代码：\n```javascript\nkey() {\n    return `columnConfig-${localStorage.getItem(\"CompanyID\") }-${location.pathname.toLowerCase()}`;\n}\n```\n\n缺少 `|| '0'` 回退，当 `CompanyID` 未设置时 key 会变成 `columnConfig-null-/path...`。\n\n需重新编译 components.js 和 components.min.js。\n\n### 2. loading 正常消失 — ✅ 已修复\n\ntry-catch 在两个文件中都存在（index.js:83-85, components.js:4475-4477），API 失败时正确降级。\n\n### 3. 降级行为 — ✅ 正常\n\ncatch 块捕获异常后使用默认列配置，页面正常渲染。\n\n### 额外发现：后端 API 不存在\n\n`/api/settings/get-by-key` 返回 404。已有的类似端点 `/api/Common/sys/SettingsGetDetails?Key=...` 可以正常返回数据，但响应格式不同（SaltResponse vs 期望的 `{code:200, data:{value:...}}`）。这导致列配置持久化功能实际上不工作。",
+    "severity": "编译文件未更新 — 修复未生效"
+  }
+}

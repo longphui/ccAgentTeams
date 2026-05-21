@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260516-1600-bizCode",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-16T16:00:00+08:00",
+  "payload": {
+    "subject": "bizCode 编辑页：交换 Domain/规则顺序 + 规则下拉按 Domain 过滤 + 改标签",
+    "context": "#003",
+    "content": "## 问题\n\nbizCode 编辑页面（`create_edit.html`）三个问题：\n1. 字段顺序反了：应先选\"业务领域\"，再选\"编码规则\"\n2. 编码规则下拉未按 Domain 过滤，显示了所有领域的规则\n3. 标签名\"关联规则\"应改为\"编码规则\"\n\n## 改动\n\n### 1. 交换字段顺序\n\n将 `业务领域`（当前 line 44-52）移到 `编码规则`（当前 line 34-41）**前面**。\n\n### 2. 标签改名\n\n全文 `关联规则` → `编码规则`（line 3 描述、line 34 label、line 123 校验提示）。\n\n### 3. 规则下拉按 Domain 过滤\n\n当前 `loadRuleList()` 只过滤 status：\n```javascript\nthis.ruleList = (res || []).filter(r => r.status);\n```\n\n需改为：当已选择 Domain 时，规则下拉仅显示：\n- `r.domain === selectedDomain`\n- `r.domain === 'General'`\n- `!r.domain`（向后兼容，无 Domain 的旧规则）\n\n实现方式建议：用 computed property 或 watch Domain 变化后重新过滤。不要修改后端 API。\n\n### 4. 联动\n\n如果用户先选了规则、后选了 Domain，而当前规则不匹配新 Domain，应清空规则选择（避免提交不匹配的数据）。\n\n## 参考\n\n- `bizCode/create_edit.html` — 当前实现\n- `codeRule/create_edit.html` — 参考 Domain 下拉 + 过滤的实现（Task 13 已做类似逻辑）",
+    "files": [
+      "v2/views/CodeGenerator/bizCode/create_edit.html"
+    ],
+    "actions": [
+      "交换字段顺序：业务领域在前，编码规则在后",
+      "标签改名：关联规则 → 编码规则（3处）",
+      "规则下拉按 Domain 过滤（当前 Domain + General + 无Domain旧数据）",
+      "Domain 变更时清空不匹配的规则选择",
+      "svn commit",
+      "完成后发 REVIEW 给 reviewer"
+    ],
+    "deadline": null
+  }
+}

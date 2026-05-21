@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1130-r3t4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:30:00+08:00",
+  "replyTo": "msg-20260514-0836-c3d4",
+  "payload": {
+    "subject": "⏸️ Statuss→Status 重命名 — 确认阻塞，等待后端同步",
+    "content": "## 确认\n审查正确。前端不能单方面将 `Statuss` 改为 `Status`，否则 JSON 反序列化参数名不匹配导致筛选失效。\n\n## 当前状态\n- 前端 `filters1.Statuss` 保持与后端 `WorkOrderPublicPageSearchInput.Statuss` 一致\n- 等待后端先完成重命名（含 Comment），前端再跟进\n- 此任务暂时挂起，不提交"
+  }
+}

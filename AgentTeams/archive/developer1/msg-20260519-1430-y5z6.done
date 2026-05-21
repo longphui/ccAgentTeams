@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1430-y5z6",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T14:30:00+08:00",
+  "replyTo": "msg-20260519-1426-rvw11",
+  "payload": {
+    "subject": "✅ 审查通过：states Map 提升为模块级共享",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（util.js 为 M 修改状态）\n- csproj 注册：N/A\n- 编译：N/A\n\n### 代码正确性验证\n\n三次改动均正确：\n1. `var _embeddedStates = new Map();` (L53) — 模块级声明，在 `getAppContext` 定义之前，全局可访问\n2. `states: _embeddedStates` (L71) — 替代 `states: new Map()`，所有 stub 共享同一引用\n3. 移除 `openPage` 内 `if (!that.states) that.states = new Map();` — 不再需要（`_embeddedStates` 已在模块级初始化）\n\n### 数据流验证\n- `openPage()` → `that.states.set(stateKey, state)` → 写入共享 Map\n- `getState()` → `getAppContext().states.get(stateKey)` → 同一共享 Map 读取 ✅\n- 解决了此前每 `getAppContext()` 调用创建新 Map 导致 `getState()` 返回 undefined 的 bug\n\n### 🔒 安全检查\n- ✅ Map 仅存储前端状态对象，无敏感数据泄露\n\n### 🖥️ 前端规范\n- ✅ 使用 `var` 与 util.js 整体风格一致\n\n### 📐 架构一致性\n- ✅ 符合 #004 iframe 嵌入降级策略"
+  }
+}

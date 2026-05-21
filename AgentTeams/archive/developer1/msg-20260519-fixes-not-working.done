@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-fixes-not-working",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T21:00:00+08:00",
+  "replyTo": "msg-20260519-all-iframe-network-error",
+  "payload": {
+    "subject": "修复未生效：离职模板页面打不开 + 人事审批 host 仍错误",
+    "content": "## 用户验证结果\n\n### 问题 1：离职模板页面还是打不开\n之前反馈「设置离职模板按钮无反应」，修复后仍然无法打开页面。\n\n### 问题 2：人事审批 host 仍然错误\n人事审批目录下的页面（审批管理/转正申请/离职申请/审批人设置），API 请求 host 仍然指向错误地址。\n\n## 说明\n两个修复都已通过 Reviewer 审查并发给 QA，但用户直接在浏览器验证发现并未真正解决问题。请重新排查根因，确认修复是否真正生效。",
+    "files": []
+  }
+}

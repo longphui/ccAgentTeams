@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-blankpopup-review",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T18:10:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 iframe 嵌入模式弹框空白 (util.js)",
+    "context": "#004",
+    "content": "## 根因\n\n嵌入模式下 `getAppContext()` 创建的 stub 从未存储到 `window.appContext`。当 `lay-link-button target=\"_popup\"` 打开弹框时：\n\n1. 父页面：stub 存 state 到 `_embeddedStates` Map\n2. 弹框：`getRootWindow()` 找到父窗口 → `parentWin.appContext` 为 undefined\n3. 弹框创建新 stub（空 Map）→ `getState()` → undefined → `state.value` TypeError\n4. Vue 挂载失败 → 空白弹框\n\n## 修复\n\n`util.js:62 + 138-139`：将 stub 赋值给 `window.appContext`：\n```javascript\nvar stub = { ... };\nwindow.appContext = stub;\nreturn stub;\n```\n\n弹框的 `getRootWindow()?.appContext` 现在能找到父窗口的 stub，共享 `_embeddedStates`，state 传递恢复正常。\n\n## 审查重点\n- `window.appContext = stub` 不会干扰正常模式（`appContext.js:715` 覆盖）\n- 不影响已有 Bug 修复（Bug #7-16 的 `getDefaultTheme`/`applyThemeToTarget`/`openPage` 均在 stub 内）",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ]
+  }
+}

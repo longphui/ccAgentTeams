@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1230-u3v4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T12:30:00+08:00",
+  "payload": {
+    "subject": "编码组合列表页改为两级分组显示",
+    "context": "#002",
+    "content": "## 需求\n编码组合列表页（ProductComponents/index.html）改为两级分组显示，参考现有页面实现模式。\n\n## 参考页面\n`D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/Proxy-ProducedGoods/SameProduct.html`\n\n## 要求\n- 参照 SameProduct.html 的两级分组展示模式\n- 第一级按成品（ProductCode）分组，第二级展开显示编码明细\n- 适配新实体结构（ProductComponentCode 携带 ComponentProductId + Unit）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/Proxy-ProducedGoods/SameProduct.html"
+    ],
+    "actions": [
+      "阅读 SameProduct.html 了解两级分组实现模式",
+      "改造 index.html 列表为两级分组显示",
+      "适配新数据结构"
+    ]
+  }
+}

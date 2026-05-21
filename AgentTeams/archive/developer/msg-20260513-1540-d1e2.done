@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-1540-d1e2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-13T15:40:00+08:00",
+  "payload": {
+    "subject": "重构：将 #001 前端文件移入 generatorProductCodes 子目录",
+    "context": "与 #002 的 ProductComponents 目录保持一致，将两个文件移入独立子目录。",
+    "content": "## 操作步骤\n\n### 1. SVN 创建目录并移动文件\n```bash\nsvn mkdir generatorProductCodes\nsvn mv index.html generatorProductCodes/\nsvn mv codeList.html generatorProductCodes/\n```\n\n### 2. 更新 codeListUrl 引用\n`generatorProductCodes/index.html:185`，codeListUrl 路径从：\n```\n/v2/views/productionManage/commonProductionStages/codeList.html\n```\n改为：\n```\n/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html\n```\n\n### 3. 验证\n- 确认 `commonProductionStages/` 下只剩 `ProductComponents/` 和 `generatorProductCodes/` 两个子目录\n- 确认 svn 状态正确",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/codeList.html"
+    ],
+    "actions": [
+      "svn mkdir generatorProductCodes",
+      "svn mv index.html → generatorProductCodes/",
+      "svn mv codeList.html → generatorProductCodes/",
+      "更新 codeListUrl 路径",
+      "验证目录结构"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-1425-h7i8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T14:25:00+08:00",
+  "replyTo": "msg-20260516-1400-d1e2",
+  "payload": {
+    "subject": "✅ codeRule Domain 前置检查 + 业务字段过滤 已完成",
+    "content": "## 完成情况\n- `create_edit.html`: showItemDialog() 开头 Domain 前置检查，未选则提示并阻止弹框；传递 `_domain` 给子项\n- `item_form.html`: loadBizFieldList() 后 filter 仅保留当前 Domain + General\n- SVN r2650\n- ✅ Reviewer 审查通过\n\n## 预存问题（Reviewer 指出，非本次引入）\n- `_domain` 在 state.return() 时未清理，JSON.stringify 后传入后端（后端 DTO 忽略，无实际影响）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/item_form.html"
+    ]
+  }
+}

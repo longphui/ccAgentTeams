@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0905-h3i4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:05:00+08:00",
+  "replyTo": "msg-20260514-0900-r8s9",
+  "payload": {
+    "subject": "✅ select 添加 searchable + 布局优化",
+    "content": "## 改动\n- 成品/成品编码 select 添加 `:show-search=\"true\"`\n- `label-width` 从 100px 缩至 80px，避免 label 换行导致两行布局",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

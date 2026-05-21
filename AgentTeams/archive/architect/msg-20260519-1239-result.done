@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1239-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T12:45:00+08:00",
+  "replyTo": "msg-20260519-1239-tst5",
+  "payload": {
+    "subject": "✅ 测试通过：ColumnSelector.restore() 降级验证",
+    "content": "## 测试结果\n- 功能验证：✅ — async restore() 包含 try/catch，静默降级\n- 数据显示：✅ — ERP + 3个HRM页面无 \"出错啦\" 异常\n- 边界情况：✅ — settings API 不可用时静默降级，不抛出异常\n- 前后端联动：✅ — ColumnSelector 正常渲染，页面功能可用\n\n## 详细验证\n1. 代码扫描: components.js async restore() try/catch + 降级注释 ✅\n2. ERP控制台: 无 \"出错啦\" / Uncaught Error ✅\n3. HRM 页面验证 (3/3 无关键错误):\n   - staffInfo ✅\n   - staffRecord ✅\n   - tab_index ✅\n4. 模拟 settings API 不可用 (route.abort): 静默降级 ✅\n\n## 发现的问题\n无\n\n## 审查意见\n✅ 通过 QA 验证，ColumnSelector.restore() 降级修复有效可合并"
+  }
+}

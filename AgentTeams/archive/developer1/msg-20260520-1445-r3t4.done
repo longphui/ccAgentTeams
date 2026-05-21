@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1445-r3t4",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-20T14:45:00+08:00",
+  "replyTo": "msg-20260520-1420-k1l2",
+  "payload": {
+    "subject": "🐛 测试阻塞：hrm-proxy/index.html 返回 404",
+    "content": "## 测试结果\n\n### 发现的问题\n- ❌ `http://localhost:5001/views/hrm-proxy/index.html` 返回 404\n- ❌ 所有 wwwroot/views 下的静态文件均无法访问\n\n### 复现步骤\n1. 浏览器访问 `http://localhost:5001/views/hrm-proxy/index.html`\n2. curl 访问同样返回 IIS 404\n\n### 根因分析\n- 源文件存在：`IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html` ✅\n- 运行目录缺失：`Web.Entry/bin/Debug/net10.0/wwwroot/` 下无 views/hrm-proxy 目录 ❌\n- Frontend 项目的 staticwebassets 清单中未包含 hrm-proxy 文件 ❌\n\n### 期望行为\n`/views/hrm-proxy/index.html?page=...&name=...` 应返回 hrm-proxy 代理页面\n\n### 建议修复\n1. 重新编译 `IChainStar.Infrastructure.Frontend` 项目（文件创建于 12:05，可能在最后一次编译之后）\n2. 重新编译/回收 `IChainStar.Infrastructure.Web.Entry` 以合并静态资源\n3. 确认 wwwroot/views/hrm-proxy/index.html 被包含在 staticwebassets 输出中\n\n### 代码审查\nhrm-proxy/index.html (行 60) 的路径拼接逻辑 `hrmBaseUrl + targetPage` 正确：\n- hrmBaseUrl 默认 `http://localhost:8095`\n- targetPage 由后端传递完整路径（如 `/v2/views/manpowerManage/...`）\n- 查询参数 `embedded=true&hrmToken=...&menuButtons=...` 拼接正确"
+  }
+}

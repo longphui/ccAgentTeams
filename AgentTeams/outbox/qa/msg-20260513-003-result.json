@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-1135-c3d4",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:35:00+08:00",
+  "replyTo": "msg-20260513-003",
+  "payload": {
+    "subject": "⛔ 测试阻塞：EF 模型变更导致 API 不可用",
+    "content": "## 测试结果\n- 测试用例数: 34\n- 通过: 0\n- 失败: 0\n- 跳过: 0\n- **阻塞: 34**\n- 测试覆盖率: 0%\n\n## 阻塞原因\nIIS 应用池重启后，所有 API 请求（包括 Login）均返回 500：\n```\nInvalidOperationException: The model backing the 'SaltDbContext' context has\nchanged since the database was created.\n```\n\n## 发现的 Bug\n| # | 严重度 | 描述 |\n|---|--------|------|\n| 1 | critical | EF 模型变更，SaltDbContext 初始化失败，应用完全不可用 |\n\n## ALERT 已发送至 Developer\n`inbox/developer/msg-20260513-1135-a1b2.msg.json`\n\n## 建议\n执行 EF Code First Migration 更新数据库后通知 QA 重新测试。",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513.md",
+      "D:/work/cc/AgentTeams/outbox/qa/bug-report-20260513-001.md"
+    ]
+  }
+}

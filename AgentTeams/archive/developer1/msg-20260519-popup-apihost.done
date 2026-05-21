@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-popup-apihost",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T19:00:00+08:00",
+  "payload": {
+    "subject": "iframe 弹框：API 请求 host 错误，指向客户端页面的 host 而非 API host",
+    "context": "#004",
+    "content": "## 现象\n\n宏观系统 → iframe 嵌入分路员工档案页面 → 点击编辑或详情 → 弹框中所有接口请求的 host 变成了分路客户端页面的 host，而不是分路 API 的 host。\n\n## 排查方向\n\n弹框中 API baseUrl 解析可能：\n- 使用了相对路径而非绝对路径\n- `appConfig.js` / `baseService.js` 在弹框上下文中加载不完整\n- baseUrl 继承自页面 URL（`location.origin`）而非 API 配置\n- 弹框打开方式导致资源加载链路不一致\n\n## 行动项\n\n1. 排查弹框页面 API baseUrl 解析逻辑\n2. 修复弹框中 API 请求指向正确的分路 API host\n3. 浏览器验证：弹框中的列表查询、保存等接口请求到正确地址",
+    "files": [],
+    "actions": ["排查弹框 API host 解析错误", "修复 baseUrl 指向正确 API 地址", "浏览器验证"],
+    "deadline": null
+  }
+}

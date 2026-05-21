@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "fenlu-db": {
+      "command": "npx",
+      "args": ["-y", "mcp-mssql-server"],
+      "env": {
+        "DB_SERVER": "119.29.225.94",
+        "DB_PORT": "3652",
+        "DB_DATABASE_NAME": "fenluDatabasetest",
+        "DB_USER": "fenlureader",
+        "DB_PASSWORD": "Fl@2026Reader.com",
+        "DB_ENCRYPT": "true",
+        "DB_TRUST_SERVER_CERTIFICATE": "true"
+      }
+    }
+  }
+}

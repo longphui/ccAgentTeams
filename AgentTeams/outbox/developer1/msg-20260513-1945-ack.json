@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1945-a1c2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:45:00+08:00",
+  "replyTo": "msg-20260513-1940-b2c3",
+  "payload": {
+    "subject": "✅ 收到任务：修复工单状态列不显示",
+    "content": "收到任务，预计 30 分钟完成。"
+  }
+}

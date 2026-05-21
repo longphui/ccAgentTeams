@@ -1,0 +1,28 @@
+{
+  "id": "msg-20260516-1400-d1e2",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:00:00+08:00",
+  "payload": {
+    "subject": "审查请求：CodeGenerator 后端优化（#003 Phase A+B）",
+    "context": "#003",
+    "content": "## 审查重点\n\n### Phase A（r4557）\n- **Task 1 — StartValue 修复**：ICodeService 新增 InitCounter（Redis StringSet with When.NotExists），GenerateCode 中批量获取流水号前初始化\n- **Task 2 — 软删除过滤**：GetRuleDetails Map 前过滤 IsDeleted、GenerateCode OrderBy 前过滤 IsDeleted\n\n### Phase B（r4558-r4561）\n- **Task 4 — Core 实体**：BizFieldDefinition 重构（删 SourceTable/SourceField/Format/DefaultValue，加 DomainCode/DomainName/FieldSql）；CodeRule + BizCodeIdentifier 加 Domain\n- **Task 5 — DTO 层**：BizFieldDefinitionDto 同步字段变更 + CheckData 校验 DomainCode/FieldSql；CodeRuleDto 加 Domain + CheckData 非空校验；BizCodeIdentifierDto 加 Domain；GenerateCodeInput 中 BizContext(Dictionary)→DomainId(long)\n- **Task 7 — ResolveBusinessField 重写**：改为接收 fieldSql + domainId，参数化查询 `new SqlParameter(\"@domainId\", domainId)\`；GenerateCode Step 2 中 BusinessField 加 Domain 一致性校验\n- **Task 8 — SaveRule Domain 校验**：BusinessField 子项遍历，引用的 BizFieldDefinition.DomainCode 必须匹配 CodeRule.Domain（General 除外）\n- **Task 9 — SaveBizField 适配**：属性赋值改为 DomainCode/DomainName/FieldSql\n- **Task 10 — GetDomainList 接口**：新建 DomainOptionDto，ICodeGeneratorService 加声明，CodeGeneratorService 实现（DISTINCT DomainCode/DomainName），注册 csproj + svn add\n- **Task 11 — Controller**：新增 [HttpGet] GetDomainList() Action\n\n### 未完成（需手动操作）\n- **Task 3 — 数据库迁移**：需在 Visual Studio PMC 中执行 Add-Migration + Update-Database，然后手动 SQL 补历史数据\n\n### 编译状态\n- CP1 (Application): ✅ 0 新增错误\n- CP2 (Core): ✅ 0 错误\n- CP3 (全解决方案): ✅ 0 新增错误（预存 ProductionTraceOutput.cs 缺失不相关）",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "SAHG.Salt.Application/CodeService/ICodeService.cs",
+      "SAHG.Salt.Core/CodeGenerator/BizFieldDefinition.cs",
+      "SAHG.Salt.Core/CodeGenerator/CodeRule.cs",
+      "SAHG.Salt.Core/CodeGenerator/BizCodeIdentifier.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/BizFieldDefinitionDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/CodeRuleDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/BizCodeIdentifierDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/GenerateCodeInput.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/DomainOptionDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "SAHG.Salt.Application/SAHG.Salt.Application.csproj"
+    ]
+  }
+}

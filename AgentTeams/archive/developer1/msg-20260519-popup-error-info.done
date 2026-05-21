@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-popup-error-info",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:25:00+08:00",
+  "payload": {
+    "subject": "补充：弹框空白 — 控制台报错 + 范围扩大",
+    "context": "#004",
+    "content": "## 补充信息\n\n### 浏览器控制台报错\n\n点击员工入职登记后：\n```\ncreate_edit.html?stateKey=stub_1779178853554_k417dp&_=1779178853554:121\nUncaught TypeError: Cannot read properties of undefined (reading 'value')\n```\n\n### 范围更新\n\n不仅是员工入职登记，**宏观系统所有 iframe 代理的分路页面**，新增/编辑弹框均为空白。是系统性 Bug，请排查弹框机制在跨域 iframe 中的通用断裂点。",
+    "files": [],
+    "actions": [],
+    "deadline": null
+  }
+}

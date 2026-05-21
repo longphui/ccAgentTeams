@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260514-2040-y8z9",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:40:00+08:00",
+  "replyTo": "msg-20260514-1945-s3t4",
+  "payload": {
+    "subject": "✅ #001 Statuss→Status + #002 审查反馈修复 已完成",
+    "content": "## 完成情况\n\n### #001 工单状态查询参数修正\n- generatorProductCodes/index.html L79: `Statuss` → `Status`\n- 筛选下拉选项值不变（0-4,6）\n- ✅ Reviewer 审查通过\n\n### #002 审查反馈修复（3项）\n- 序号列加 `key:\"rowNo\"`（防止 type=\"number\" 覆盖 row.id）\n- 删除按钮 `type=\"danger\"` + `v-if=\"delType\"`\n- 手动组装按钮 `v-if=\"addType\"`\n- ✅ Reviewer 审查通过\n\n## 审查状态\n全部 REVIEW 已通过。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ]
+  }
+}

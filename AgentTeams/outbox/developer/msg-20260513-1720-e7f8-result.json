@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1847-c3d4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T18:47:00+08:00",
+  "replyTo": "msg-20260513-1720-e7f8",
+  "payload": {
+    "subject": "✅ GetPageListForCodeGen 重构完成",
+    "content": "## 改动\n\n### 不再调用 GetWorkOrderPage\n- 直接查 `_context.ProduceWorkOrders`，不再关联 Plans / Tasks / Batches 等表\n- 过滤：WorkOrderNo (Contains) / ProductName (Contains) / Statuss (Contains)\n\n### 不用 AutoMapper Adapt\n- 手动 new WorkOrderCodeGenOutput 赋值 8 个必含字段\n- Id / WorkOrderNo / ProductName / ProductId / PlannedProductionNum / Status / StatusName / GeneratedCodeCount\n- StatusName = StringExtension.GetDescription() 直接赋值，不会遗漏\n\n### 保持 CodeGenStatus 内存过滤\n- CodeGenStatus 有值时先查全表 → 内存过滤 → 再分页\n- 无值时直接数据库分页 (Skip + Take)\n\n### 编译\n- 无新增引用，文件现有 using 已覆盖所有类型\n- EF6 async 方法 (ToListAsync / CountAsync) 已有 using System.Data.Entity",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs"
+    ]
+  }
+}

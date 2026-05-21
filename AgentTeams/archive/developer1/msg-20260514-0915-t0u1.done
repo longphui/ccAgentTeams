@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0915-t0u1",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:15:00+08:00",
+  "payload": {
+    "subject": "成品 select 和成品编码 select 仍未同行 — 重新调整",
+    "context": "#002",
+    "content": "## 问题\n上次只改了 label-width 没解决根本问题。成品选择框和成品编码选择框还是分两行，需要放到同一行。\n\n## 要求\n两个 select 并排在一行内，可用 layui 栅格（如 `layui-row` + `layui-col-xs*`）或 flex 布局。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["成品 select 和成品编码 select 并排同行"],
+    "deadline": null
+  }
+}

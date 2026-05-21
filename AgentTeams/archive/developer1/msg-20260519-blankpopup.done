@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260519-blankpopup",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:20:00+08:00",
+  "payload": {
+    "subject": "iframe 嵌入模式：员工入职登记弹框空白",
+    "context": "#004",
+    "content": "## 现象\n\n天津宏观世纪系统 → iframe 嵌入分路员工信息页面 → 点击「员工入职登记」按钮 → 弹框页面空白，没有内容。\n\n## 排查方向\n\n嵌入模式下弹框（popup/modal）可能涉及：\n- 弹框页面的资源加载（Vue、LayuiVue、组件脚本）是否正确加载\n- `getState()` / `stateKey` 传参机制在 iframe 嵌套弹框中是否正常\n- 弹框打开方式（`openPage` / `lay-layer` / `lay-form`）在嵌入模式下的兼容性\n- 弹框页面的 API 请求是否正常（CORS 已修复，但需确认弹框页面使用的 HttpClient）\n\n## 相关文件\n\n- `caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/manpowerManage/staffManagement/staffInfo/index.html`（员工信息列表页）\n- `caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/manpowerManage/staffManagement/staffInfo/create_edit.html`（入职登记弹框页面）\n\n## 行动项\n\n1. 排查弹框在 iframe 嵌入模式下空白的原因\n2. 修复弹框内容渲染\n3. 浏览器验证：在宏观系统 iframe 中点击入职登记，弹框正常显示内容",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/manpowerManage/staffManagement/staffInfo/index.html",
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/manpowerManage/staffManagement/staffInfo/create_edit.html"
+    ],
+    "actions": ["排查弹框空白根因", "修复渲染问题", "浏览器验证"],
+    "deadline": null
+  }
+}

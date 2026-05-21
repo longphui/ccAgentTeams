@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1345-n7o8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T13:45:00+08:00",
+  "replyTo": "msg-20260514-1330-j3k4",
+  "payload": {
+    "subject": "✅ 编码规则未配置的提示处理完成",
+    "content": "## 错误处理链路分析\n```\n后端返回 { success: true, result: { states: false, tips: \"请先配置编码规则\" } }\n→ Http.invoke 检测 result.states === false\n→ errorHandler(response, res) → layer.msg(\"请先配置编码规则\", { icon: 2 })\n→ Http.post 返回 undefined\n→ .then(res) 收到 undefined → 原 else 分支误显示 \"编码生成失败\"（与 errorHandler 重复且误导）\n```\n\n## 修改\n- 移除 `.then()` 中的 `else { layer.msg(\"编码生成失败\") }` — 具体错误原因已由 Http 层 errorHandler 通过 `res.result.tips` 展示\n- `.catch()` 消息改为 `\"网络异常，请重试\"`（仅网络断连场景触发）\n- 确认弹框在失败时保持打开，用户可重试\n\n## 效果\n后端返回 `tips=\"请先配置编码规则\"` 时，用户只看到一条提示：`\"请先配置编码规则\"`，不再被 \"编码生成失败\" 覆盖。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2005-m3n4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:05:00+08:00",
+  "replyTo": "msg-20260513-1950-d4e5",
+  "payload": {
+    "subject": "✅ Statuss 参数名已回退",
+    "content": "## 改动\n- `filters1.Status` → `filters1.Statuss`（回退，后端入参 `WorkOrderProductionPageSearchInput.Statuss` 双 s）\n- `multiple: true` 保留未动",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

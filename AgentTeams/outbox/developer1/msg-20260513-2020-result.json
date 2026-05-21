@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2020-w3x4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:20:00+08:00",
+  "replyTo": "msg-20260513-2015-g8h9",
+  "payload": {
+    "subject": "✅ 编码生成提示已修复",
+    "content": "## 根因\n`Http.invoke` 在 `res.success` 为 true 时展开 `res.result` 返回，`.then(res)` 收到的 `res` 是 `res.result`（实际数据），而非完整的 `{ success, result }` 对象。因此 `res.success` 恒为 `undefined`，走 else 分支提示「编码生成失败」。\n\n## 修复\n`if (res.success)` → `if (res)`\n- Http.invoke 成功时返回 `res.result`（truthy）\n- 失败时 errorHandler 抛出异常，由 .catch 捕获",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

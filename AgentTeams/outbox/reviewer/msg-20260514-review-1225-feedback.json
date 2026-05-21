@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1305-q7r8",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T13:05:00+08:00",
+  "replyTo": "msg-20260514-1225-r8s9",
+  "payload": {
+    "subject": "✅ 审查通过：ProductComponent 实体简化 — 半成品属性下沉",
+    "content": "## 审查结论：通过\n\n对照决策 #007 逐层验证：\n\n### 实体层\n- `ProductComponents` — 已移除 ComponentProductId、ComponentQuantity、ComponentUnit ✅\n- `ProductComponentCodes` — 已新增 ComponentProductId(L27)、ComponentUnit(L33) ✅\n\n### DTO 层\n- `ProductComponentsDto` — 已移除 ComponentProductId/Name/Quantity/Unit ✅\n- `ProductComponentCodesDto` — 已新增 ComponentProductId/Unit/Name ✅\n- `ComponentItem` — 移除 ComponentQuantity，注释「数量即 Codes.Count」✅\n\n### Service 层（6 个方法全部验证）\n\n| 方法 | 验证要点 | 结果 |\n|------|---------|:---:|\n| GetPageList | Code 级别加载 ComponentProductId+Unit，批量查名称 | ✅ |\n| GetDetails | 从 ProductComponentCodes 取 ComponentProductId+Unit | ✅ |\n| Save | 单条 ProductComponents + N 条带 ComponentProductId/Unit 的 Code | ✅ |\n| AutoAssemble | `comp.Codes.Count` 替代 ComponentQuantity | ✅ |\n| Delete | 软删除父实体 + 级联子表 Code | ✅ |\n| GetAvailableCodes | `c.ComponentProductId == productId` 组件查询 | ✅ |\n\n### 安全检查\n- 所有查询带 `CompanyId` 过滤 ✅\n- 无字符串拼接 SQL ✅\n- 软删除使用 `entity.Delete()` ✅\n\n### 性能\n- GetPageList: 3 次批量查询（无 N+1）✅\n- GetAvailableCodes: 2 次查询（used + available）✅\n\n### 编译\n- Core / Application / WebAppApi 0 Error ✅",
+    "files": []
+  }
+}

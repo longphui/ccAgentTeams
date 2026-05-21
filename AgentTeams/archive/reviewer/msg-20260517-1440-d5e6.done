@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260517-1440-d5e6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-17T14:40:00+08:00",
+  "payload": {
+    "subject": "审查请求：[fl] baseService.js ?embedded=true Token过期防控",
+    "context": "#004",
+    "content": "## 审查重点\n请检查以下内容：\n1. `isEmbedded` 检测逻辑是否正确\n2. `onTokenExpired()` 函数在嵌入/非嵌入模式下的分支逻辑\n3. 所有 5 处 `getRootWindow().location.href = '/login.html'` 是否已替换为 `onTokenExpired()`（剩余 1 处在 `onTokenExpired` 自身 fallback 中）\n4. 非嵌入模式行为与改前完全一致\n\n## 改动文件\n只有 1 个文件：`baseService.js`（约 20 行新增 + 6 处替换）",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\baseService.js"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentTeams Message Format",
+  "description": "Claude Code 会话间通信标准消息格式",
+  "type": "object",
+  "required": ["id", "type", "from", "to", "timestamp", "payload"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "唯一消息ID，格式: msg-{timestamp}-{random4}"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["TASK", "RESULT", "QUERY", "REVIEW", "FEEDBACK", "ALERT", "SYNC"],
+      "description": "消息类型"
+    },
+    "from": {
+      "type": "string",
+      "enum": ["architect", "developer", "reviewer", "qa"],
+      "description": "发送方角色"
+    },
+    "to": {
+      "type": "string",
+      "enum": ["architect", "developer", "reviewer", "qa", "all"],
+      "description": "接收方角色"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "normal", "high", "critical"],
+      "default": "normal"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO 8601 时间戳"
+    },
+    "replyTo": {
+      "type": "string",
+      "description": "回复某条消息的ID"
+    },
+    "payload": {
+      "type": "object",
+      "description": "消息正文",
+      "properties": {
+        "subject": {
+          "type": "string",
+          "description": "简短主题（≤80字符）"
+        },
+        "context": {
+          "type": "string",
+          "description": "背景说明"
+        },
+        "content": {
+          "type": "string",
+          "description": "核心内容（Markdown格式）"
+        },
+        "files": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "相关文件路径列表"
+        },
+        "actions": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "期望的行动项"
+        },
+        "deadline": {
+          "type": "string",
+          "description": "截止时间 ISO 8601"
+        }
+      },
+      "required": ["subject", "content"]
+    }
+  }
+}

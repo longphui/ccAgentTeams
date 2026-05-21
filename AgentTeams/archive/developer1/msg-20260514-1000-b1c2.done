@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1000-b1c2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:00:00+08:00",
+  "payload": {
+    "subject": "create_edit.html 半成品编码弹窗搜索功能修复",
+    "context": "#002",
+    "content": "## 问题描述\n编码选择弹窗（lay-layer）中：\n1. 搜索框（lay-input）输入后没有自动触发过滤\n2. 没有搜索按钮\n\n## 期望行为\n- 输入搜索文本后能实时过滤编码列表（或添加搜索按钮手动触发）\n- 清空搜索框后恢复显示全部编码\n\n## 涉及区域\n- `codePickerVisible` 编码选择弹窗\n- `codeSearchText` + `filteredCodeList` computed\n- `availableCodeList` 数据加载逻辑",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ],
+    "actions": [
+      "排查 filteredCodeList computed 为何没有响应 codeSearchText 变化",
+      "修复搜索过滤逻辑使其正常工作",
+      "如需要，添加搜索按钮"
+    ]
+  }
+}

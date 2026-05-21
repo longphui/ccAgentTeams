@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-1945-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:45:00+08:00",
+  "replyTo": "msg-20260513-1925-feedback",
+  "payload": {
+    "subject": "Statuss 字段名检查 — 前后端一致，无问题",
+    "content": "## 检查结果\n\n### Frontend\n```javascript\n// index.html line 81\nStatuss: { label: \"工单状态\", value: [], inputType: \"select\", ... }\n```\n\n### Backend\n```csharp\n// WorkOrderPublicPageSearchInput.cs line 85\npublic List<int> Statuss { get; set; } = new List<int>();\n```\n\n### 结论\n前后端都使用 `Statuss`（双 s），字段名一致。`WorkOrderProductionPageSearchInput : WorkOrderPublicPageSearchInput` 继承该属性。\n\n### StatusName 赋值确认\n`new WorkOrderCodeGenOutput { StatusName = StringExtension.GetDescription(...) }` — 对象初始化器可以正确设置继承链上的非数据库属性。`WorkOrderCodeGenOutput : ProduceWorkOrderOutput : ProduceWorkOrder`，`StatusName` 在 `ProduceWorkOrderOutput` 上定义（line 19），编译通过，运行时也会正确赋值。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderPublicSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

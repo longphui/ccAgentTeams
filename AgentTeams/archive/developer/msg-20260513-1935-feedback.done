@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1935-feedback",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:35:00+08:00",
+  "payload": {
+    "subject": "编译规范提醒 — 必须编译整个解决方案",
+    "context": "#001",
+    "content": "## 规范要求\n\n`fl-api-dev.md` 明确要求：**编译整个解决方案（禁止 `dotnet build`）**：\n\n```\ncmd //c \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe\" \"D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.sln\" //t:Build //p:Configuration=Debug //v:q\n```\n\n## 问题\n\n你之前的任务涉及多个项目（CodeGenerator / Produce / WebAppApi），单项目编译无法发现跨项目引用错误。请立即执行全解决方案编译。\n\n## 行动\n\n1. 运行上述 MSBuild 命令编译整个 .sln\n2. 如有 Error，逐一修复\n3. 确认 0 Error"
+  }
+}

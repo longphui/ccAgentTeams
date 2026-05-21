@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1530-c3d4",
+  "type": "ALERT",
+  "from": "qa",
+  "to": "developer",
+  "priority": "medium",
+  "timestamp": "2026-05-13T15:30:00+08:00",
+  "payload": {
+    "subject": "🐛 新增 Bug：GetPageListForCodeGen 中文搜索异常",
+    "content": "## 复现步骤\n1. 登录获取 Token\n2. 调用 `POST /api/Produce/ProduceWorkOrder/GetPageListForCodeGen`\n3. 入参: `{\"Data\":{\"PageNumber\":1,\"PageSize\":5,\"ProductName\":\"测试\"}}`\n4. 返回: `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}`\n\n同样 `WorkOrderNo` 传中文也失败，但英文/数字正常：\n- `ProductName=\"a\"` → 正常返回 28 条\n- `ProductName=\"测试\"` → 错误\n- `WorkOrderNo=\"GD\"` → 正常（返回0条但无错误）\n- `WorkOrderNo=\"测试\"` → 错误\n\n## 期望行为\n- 中文搜索应正常匹配或无匹配（返回空列表），不应抛出异常\n\n## 实际行为\n- success:false，error.message 为空字符串（异常被吞）\n\n## 原因推测\nEF6 LINQ 的 `.Contains()` 和 `==` 在 SQL 翻译时对中文字符处理异常。可能需要设置 SQL Server 的 COLLATE 或使用参数化查询。\n\n## 环境\n- API: http://localhost:8088\n- 数据库: SQL Server (推测 Chinese_PRC_CI_AS)",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513-regression.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs"
+    ]
+  }
+}

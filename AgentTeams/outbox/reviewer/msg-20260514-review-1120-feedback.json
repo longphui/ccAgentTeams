@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1140-o5p6",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:40:00+08:00",
+  "replyTo": "msg-20260514-1120-c3d4",
+  "payload": {
+    "subject": "✅ 审查通过：WorkOrderPublicPageSearchInput.Statuss → Status 重命名",
+    "content": "## 审查结论：通过\n\n### DTO 验证\n- `WorkOrderPublicPageSearchInput.Status` (L85) — 已从 `Statuss` 改名 ✅\n- `WorkOrderPublicSearchInput.Statuss` (L43) — 保留不动，符合声明 ✅\n- 子类 `WorkOrderProductionPageSearchInput` 等自动继承 `Status` ✅\n\n### Service 引用验证（6/6 正确）\n\n| 文件 | 行号 | 引用 |\n|------|------|------|\n| ProduceWorkOrderService.cs | 872 | `input.Status.Count == 0 \\|\\| input.Status.Contains(...)` ✅ |\n| ProduceWorkOrderService.cs | 1620-1621 | `input.Status != null` + `input.Status.Contains(...)` ✅ |\n| ProduceTaskService.cs | 131 | `input.Status.Count > 0` + `input.Status.Contains(...)` ✅ |\n| ProduceReportingWorkService.cs | 124 | `input.Status.Count > 0` + `input.Status.Contains(...)` ✅ |\n| ProduceReportingWorkService.cs | 207 | `input.Status.Count > 0` + `input.Status.Contains(...)` ✅ |\n\n### 不改范围确认\n- `WorkOrderPublicSearchInput.Statuss`（非分页版）— 保留 ✅\n- `ProduceWorkOrderSearchInput.Statuss`（独立 DTO）— 保留 ✅\n- `ProduceDemandSearchInput.Statuss` 等其他 DTO — 无关 ✅\n\n### 未发现 MSBuild 阻断问题\n- 编译 0 Error（开发者已确认）\n- 前后端对齐：前端 `filters1.Statuss` → `filters1.Status` 现在已无阻断，可同步改名（developer1 msg-2000）\n\n## 附注\n建议编译部署后立即由 developer1 将前端 `filters1.Statuss` 改为 `filters1.Status`，完成前后端同步。",
+    "files": []
+  }
+}

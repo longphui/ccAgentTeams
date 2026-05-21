@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260520-reviewer-feedback-1",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-20T12:45:00+08:00",
+  "replyTo": "msg-20260520-1205-c3d4",
+  "payload": {
+    "subject": "审查反馈：MenuProxyService 硬编码路径改造 — 2个需修改",
+    "content": "## 审查报告\n\n### 🔴 严重问题\n\n#### 问题 1：生成的 hrm-proxy URL 缺少 `name` 参数（Critical）\n\n- **文件**: `IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs`\n- **位置**: 第 100 行（iframe_ 分支）和第 106 行（legacy 分支）\n- **根因**: 后端用 `routeName.StartsWith(\"iframe_\")` 判断路径类型，但生成的 URL `/views/hrm-proxy/index.html?page=xxx` **没有带 `&name=` 参数**\n- **影响**: 前端 `hrm-proxy/index.html` 第 27 行 `params.get(\"name\")` 读到 `null`，第 62 行 `menuName.startsWith(\"iframe_\")` 始终为 `false`，所有 iframe 页面都走 legacy 路径（`hrmBaseUrl + \"/\" + targetPage`），**页面加载失败**\n- **修复**:\n  ```csharp\n  // 第 100 行改为:\n  item[\"path\"] = \"/views/hrm-proxy/index.html?page=\" + relativePath\n                 + \"&name=\" + Uri.EscapeDataString(routeName);\n  // 第 106 行同理补上 name 参数\n  ```\n\n#### 问题 2：`StripFenluPathPrefix` 跳过太多路径段（High）\n\n- **文件**: 同上，第 142 行\n- **根因**: `Skip(3)` 跳过三层（v2/views/moduleName），但 Developer1 的契约约定 `page` 参数包含 moduleName\n- **当前行为**: `/v2/views/manpowerManage/staffManagement/staffInfo/index.html` → `staffManagement/staffInfo/index.html`（**缺少 `manpowerManage/`**）\n- **前端预期**: → `manpowerManage/staffManagement/staffInfo/index.html`\n- **修复**:\n  ```csharp\n  // 第 140-142 行改为:\n  if (parts.Length >= 3 && parts[0] == \"v2\" && parts[1] == \"views\")\n  {\n      return string.Join(\"/\", parts.Skip(2));\n  }\n  ```\n- **同步更新注释**: summary 改为 \"去掉分路路径的 /v2/views/ 前缀，保留完整子路径（含模块名）\"\n\n### ✅ 通过项\n\n- 注释规范：类和 public 方法均含 `<summary>`，符合 `honguan-api-dev.md` 规范\n- `node[\"name\"]` null 降级处理正确（第 94 行 `?? \"\"`）\n- `../User/Approval/` 兼容分支优先级正确（legacy 在 iframe_ 之后）\n- 编译通过（Application 项目 0 Error 0 Warning）\n- SVN 已 add\n\n### 📐 规范检查\n\n- [x] 注释（禁止零注释）：✅ 方法有 `<summary>` + `<param>` + `<returns>`\n- [x] 返回类型：✅ `[HttpPost(\"get-list-by-role\")]` 路由正确\n- [x] Service：✅ 实现 `IDynamicApiController`，注入 `IHttpClientFactory`\n- [x] 不使用 `#region`：✅ 符合鸿冠规范\n\n## 审查结论\n\n需修改（2 个问题，前端强依赖）",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"]
+  }
+}

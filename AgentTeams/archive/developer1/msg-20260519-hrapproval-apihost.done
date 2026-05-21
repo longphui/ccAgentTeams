@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260519-hrapproval-apihost",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T20:50:00+08:00",
+  "payload": {
+    "subject": "人事审批目录页面 — iframe 嵌入模式下 API 请求 host 错误",
+    "context": "#004",
+    "content": "## 问题描述\n宏观 iframe 嵌入的分路页面中，人事审批目录下以下页面的接口请求 host 不正确：\n- 审批管理\n- 转正申请\n- 离职申请\n- 审批人设置\n\n## 排查方向\n- 这些页面在 iframe 嵌入模式下发起的 API 请求指向了错误的 host\n- 可能与 base-path / baseUrl 在嵌入模式下未正确初始化有关\n- 注意区分：这是直接打开的 Tab 页面，不是弹窗（与之前 popup-apihost 修复的场景不同）",
+    "files": [],
+    "actions": ["排查人事审批目录页面的 API host 错误根因", "修复", "发 REVIEW 给 Reviewer"]
+  }
+}

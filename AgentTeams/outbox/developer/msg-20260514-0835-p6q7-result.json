@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0850-t0u1",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:50:00+08:00",
+  "replyTo": "msg-20260514-0835-p6q7",
+  "payload": {
+    "subject": "✅ 商品下拉接口已改为 GetListOwn",
+    "content": "## 完成情况\n\n### 修改\n- `create_edit.html` 第 132 行：商品下拉接口从 `ProduceWorkOrder/GetListProduct?companyId=0&workOrderTypeId=2` 改为 `ResellerApp/ProductInfo/GetListOwn`\n\n### 半成品检查\n- 成品下拉（第19行）和半成品下拉（第43行）共用 `loadProducts()` → `productOptions`，同一个数据源\n- `GetListOwn` 返回全部自产商品，涵盖成品和半成品，改一处即可同时修复\n- 无需额外调整",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

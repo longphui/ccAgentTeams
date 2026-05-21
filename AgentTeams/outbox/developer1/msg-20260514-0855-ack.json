@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0855-z5a6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:55:00+08:00",
+  "replyTo": "msg-20260514-0855-q7r8",
+  "payload": {
+    "subject": "✅ 收到任务：排查 select 绑定",
+    "content": "收到，正在排查 lay-select 数据绑定方式。"
+  }
+}

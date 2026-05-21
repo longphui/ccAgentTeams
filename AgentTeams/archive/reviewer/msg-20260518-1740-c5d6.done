@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-1740-c5d6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T17:40:00+08:00",
+  "payload": {
+    "subject": "审查请求：鸿冠端 startup 路由 menuButtons 同步修复",
+    "context": "#004",
+    "content": "## 变更说明\n参照分路端 v2/app.js 的修复方式，在鸿冠前端 wwwroot/js/app.js 的 initMenu() 中为 startupRoute 补充 menuButtons 字段。\n\n## 修改内容\n- 将解构赋值改为逐一声明（保持 menuButtons 默认值 []）\n- startupRoute 统一为单行对象字面量，含 `menuButtons: startup.menuButtons || []`\n\n## 审查重点\n- menuButtons 默认值 [] 是否正确\n- 与分路端修复模式是否一致",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js"]
+  }
+}

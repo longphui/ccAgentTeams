@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-blankpopup-result",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T18:20:00+08:00",
+  "replyTo": "msg-20260519-blankpopup-review",
+  "payload": {
+    "subject": "✅ 审查通过：修复 iframe 嵌入模式弹框空白 (util.js)",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无需新建文件（util.js 已跟踪，状态 M）\n- csproj 注册：N/A（JS 文件）\n- 编译：N/A（JS 文件）\n\n### 根因分析验证\n\n嵌入模式弹框空白的调用链验证：\n\n```\n父页面 getAppContext() → stub 创建 → 存 state 到 _embeddedStates\n弹框加载 → getAppContext() → getRootWindow() → parentWin.appContext\n  ├── 修复前: parentWin.appContext = undefined → 创建新 stub（空 Map）\n  │   → getState() = undefined → state.value TypeError → 空白\n  └── 修复后: parentWin.appContext = stub（line 138）→ 共享 _embeddedStates\n      → getState() 找到 state → 正常渲染\n```\n\n### 变更评估\n\n| 变更 | 文件:行 | 评估 |\n|------|--------|------|\n| `window.appContext = stub` | util.js:138 | ✅ 正确。弹框通过 `getRootWindow()?.appContext` 发现父窗口 stub，共享 `_embeddedStates` |\n\n### 审查详情\n\n#### 🔒 安全检查\n- ✅ SQL 注入：N/A\n- ✅ 租户隔离：嵌入模式租户上下文由父窗口控制，无新增风险\n- ✅ 权限控制：N/A（工具函数）\n- ✅ XSS：URL 参数仅在内存中传递，不注入 DOM\n- ✅ 敏感信息：无密码/Token 泄露\n\n#### 🖥️ 前端规范检查\n- ✅ 注释：新增一行，自说明，无需额外注释\n- ✅ 按钮规范：N/A\n- ✅ 资源引入：N/A（工具文件）\n\n#### 🐛 高频 Bug 模式\n- ✅ LINQ/Http/LayuiVue：N/A\n- ✅ 无新增风险\n\n#### 📐 架构一致性\n- ✅ 与决策 #009（iframe 集成）一致。stub 设计本意就是为嵌入模式提供完整的 appContext 替代，`window.appContext = stub` 是之前的遗漏\n- ✅ 正常模式不受影响：`appContext.js` 初始化时 `window.appContext = appContext` 会覆盖任何之前的值\n\n#### 🔗 API 契约一致性\n- ✅ 无 API 变更\n\n### 边界分析\n\n| 场景 | 行为 | 结果 |\n|------|------|------|\n| 正常模式（非嵌入） | 先走 `getRootWindow()?.appContext` 命中真实 appContext | ✅ 不受影响 |\n| 嵌入模式首次调用 | stub 创建 + `window.appContext = stub` | ✅ stub 可被发现 |\n| 嵌入模式二次调用 | `getRootWindow()?.appContext` 命中 stub | ✅ 复用同一 stub |\n| 弹框内调用 | `getRootWindow()` → `parentWin.appContext` = stub | ✅ state 共享正常 |\n| 正常模式后续加载 | `appContext.js` 覆盖 `window.appContext` | ✅ 真实对象覆盖 stub |"
+  }
+}

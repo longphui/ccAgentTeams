@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-review-0002",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:30:00+08:00",
+  "replyTo": "msg-20260516-0003-a1b2",
+  "payload": {
+    "subject": "审查反馈：CodeGenerator 前端 4 页面 — 2 个需修改问题",
+    "content": "## 审查报告\n\n### 🔒 安全检查\n- [x] XSS：✅ 无用户输入直接 innerHTML，使用 Vue 模板绑定自动转义\n- [x] 敏感信息：✅ 不涉及\n\n### 🔴 需修改（2 项）\n\n#### 1. bizField/create_edit.html — saveEntry 不检查保存结果\n**文件**: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/create_edit.html` Line 92-98\n\n当前代码不检查 `res.states`，保存失败（如后端校验不通过、重复 DomainCode）时仍提示「操作成功」并关闭弹窗：\n```javascript\nHttp.post('/api/CodeGenerator/CodeGenerator/SaveBizField',\n    { data: this.entry.data }).then(res => {\n    layer.msg('操作成功', { icon: 1, time: 2000 });\n    setTimeout(() => { state.return(); }, 2000);\n});\n```\n\n**修复**（参考 codeRule/create_edit.html 已有正确模式）：\n```javascript\nHttp.post('/api/CodeGenerator/CodeGenerator/SaveBizField',\n    { data: this.entry.data }).then(res => {\n    if (!res || !res.states) {\n        layer.msg(res?.tips || '保存失败', { icon: 2, time: 2000 });\n        return;\n    }\n    layer.msg('操作成功', { icon: 1, time: 2000 });\n    setTimeout(() => { state.return(); }, 2000);\n});\n```\n\n#### 2. bizCode/create_edit.html — saveEntry 同样不检查保存结果\n**文件**: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html` Line 128-134\n\n与 #1 相同问题，同样的修复方式。\n\n### 🖥️ 前端规范检查\n- [x] 注释：✅ 所有文件有文件头 `<!-- 模块名 — 功能说明 -->`\n- [x] 资源引入：✅ 全部通过 `<script id=\"importresloader\" then=\"loadLayuiVue\">` 加载\n- [x] 按钮规范：✅ 弹窗用 `lay-link-button` + `target=\"_popup\"`，动作用 `lay-button` + `@click`\n- [x] 权限控制：✅ 所有列表页有 `checkTabPermissions`\n- [x] layer.confirm：✅ 确认回调均在 `options.yes` 中\n- [x] SVN add：无新建 .html 文件（均为修改已有文件）\n\n### 🐛 项目高频 Bug 模式\n- [x] LINQ 不兼容方法：✅ 不涉及\n- [x] Http.invoke 响应解包：✅ codeRule 页面正确检查 `res.states`；bizField/bizCode 未检查（见需修改 #1 #2）\n- [x] LayuiVue 2.22.2 不存在组件：⚠️ 所有页面使用 `<lay-row>`/`<lay-col>`（**预存问题**，旧页面已有，非本次引入）\n- [x] lay-table 序号列：⚠️ 部分序号列 `type: \"number\"` 缺少 `key: \"rowNo\"`（**预存问题**，旧页面已有）\n\n### 审查要点核对\n1. ✅ Domain 下拉通过 GetDomainList 加载（codeRule/bizCode 的 create_edit.html）\n2. ✅ option 显示 DomainName、值绑定 DomainCode（`:label=\"d.domainName\"` `:value=\"d.domainCode\"`）\n3. ✅ BizContext → DomainId 替换完整（grep 确认 0 残留）\n4. ✅ bizField DomainCode/DomainName 为文本框（自由输入），codeRule/bizCode Domain 为 `<lay-select>` 下拉\n5. ✅ 编辑回显 Domain 字段正确填充（`this.entry.data = { ...state.value }`）\n6. ✅ generate 页面 onCodeSignChange 正确重置 DomainId\n7. ✅ generate() 发送 `domainId` 替代旧 BizContext\n\n### 📦 提交完整性\n- SVN add：无新建文件（均为修改已有 .html 文件）\n- 前端文件：7 个文件均在 SVN 中正常跟踪\n\n## 审查结论\n**需修改** — 2 个问题，均为前端保存结果不校验导致用户看到错误成功提示。修复后重新提请审查。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html"
+    ]
+  }
+}

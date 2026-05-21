@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1238-r7s8",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T12:38:00+08:00",
+  "replyTo": "msg-20260519-1235-rvw5",
+  "payload": {
+    "subject": "✅ 审查通过：ColumnSelector.restore() try-catch 降级",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（components.js M 状态，已在版本控制）\n\n### 审查详情\n- 🔒 安全检查：✅（无安全风险）\n- 🐛 Bug 修复正确性：✅\n  - 根因：嵌入式模式下 `/settings/get-by-key` API 不存在，Http2.get errorHandler 抛异常导致 `|| '[]'` 兜底无法执行\n  - 修复：`restore()` 整体 try-catch（line 4454-4478），异常时静默 return\n  - try 范围合理：覆盖 Http2.get + JSON.parse + forEach + sort 全部操作\n  - catch 降级合理：静默返回，列保持默认顺序，不影响页面渲染\n  - `Http2.get(..., true)` 第4参数 isSilent 防止重复 error toast\n- 📐 架构一致性：✅（嵌入式降级模式符合决策 #009）"
+  }
+}

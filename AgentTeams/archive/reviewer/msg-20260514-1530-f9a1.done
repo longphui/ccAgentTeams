@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1530-f9a1",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T15:30:00+08:00",
+  "payload": {
+    "subject": "审查请求：Save 验证逻辑适配扁平 Codes 结构",
+    "content": "## 问题\nSave/AutoAssemble 接口校验 `input.Components` 但前端已将 Components 冗余合并为扁平 Codes，导致「组件列表不能为空」。\n\n## 变更\n\n### ProductComponentsInput.cs\n- `List<ComponentItem> Components` → `List<CodeItem> Codes`\n- `ComponentItem`（含 `List<string> Codes`）→ `CodeItem`（含 `string CodeValue`）\n- 每个 CodeItem 自带 `ComponentProductId`、`ComponentUnit`、`CodeValue`\n\n### ProductComponentsService.cs\n- **Save**: 去掉嵌套循环，单层遍历 `input.Codes`；校验空 Codes →「组件编码不能为空」；校验所有 CodeValue 为空 →「请选择组件编码」\n- **AutoAssemble**: 按 `ComponentProductId` 分组后取随机编码填入 `CodeValue`，再调 Save\n\n### 编译\n- SAHG.Salt.Application: **0 Error**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "msg-20260513-005",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T12:00:00+08:00",
+  "payload": {
+    "subject": "商品组装编码关联 — 后端 + 前端实现",
+    "context": "将半成品实物编码与成品进行组装关联。一物一码，支持手动组装和一键自动组合",
+    "content": "## 参考文档\n- 需求: `AgentTeams/shared/requirements/002-商品组装编码关联.md`\n- 计划: `AgentTeams/shared/requirements/002-plan-商品组装编码关联.md`\n- 规范: `.claude/commands/fl-api-dev.md` (后端) + `.claude/commands/fl-html-dev.md` (前端)\n\n## 任务清单\n\n### 1. 新建实体 (Core)\n- `SAHG.Salt.Core/Produce/ProductComponents.cs` — 继承 BasicEntity: ProductId, ProductCode, ComponentProductId, ComponentQuantity, ComponentUnit, ICollection<ProductComponentCodes> Codes\n- `SAHG.Salt.Core/Produce/ProductComponentCodes.cs` — 继承 SaltEntity: ProductComponentId, CodeValue\n\n### 2. 新建 DTO (Application)\n- `Dto/ProductComponentsDto.cs` — 继承 HRM_CompanyEntityDto，含成品/半成品展示字段\n- `Dto/ProductComponentsInput.cs` — 入参\n\n### 3. 新建 Service (Application)\n- `IProductComponentsService.cs` + `ProductComponentsService.cs`\n- 方法: GetPageList(按成品分组), GetDetails, Save(校验编码唯一性), AutoAssemble(随机取未使用编码), Delete(软删除含子表), GetAvailableCodes(productId)\n\n### 4. 新建 Controller (WebAppApi)\n- `Areas/Produce/Controllers/ProductComponentsController.cs`\n- 所有 Action 用 `[PPMLog]`\n\n### 5. 注册 DbContext + AutoMapper\n- SaltDbContext.cs: 添加 DbSet<ProductComponents> + DbSet<ProductComponentCodes>\n- HRM_DtoMapping.cs: 双向映射\n\n### 6. 前端\n- `v2/views/productionManage/commonProductionStages/ProductComponents/index.html` — 列表，按成品分组，LayuiVue expand 展开组件\n- `v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html` — 手动组装\n- `v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html` — 一键自动组合\n\n## 关键注意\n- 新建 .cs 文件后必须添加到 .csproj + svn add\n- 编码唯一性: Save 时查 ProductComponentCodes 防重复\n- AutoAssemble: 随机匹配后展示结果让用户确认",
+    "files": [
+      "SAHG.Salt.Core/Produce/ProductComponents.cs",
+      "SAHG.Salt.Core/Produce/ProductComponentCodes.cs",
+      "SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs",
+      "SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "SAHG.Salt.EntityFramework/EntityFramework/SaltDbContext.cs",
+      "SAHG.Salt.Application/.../HRM_DtoMapping.cs",
+      "v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html"
+    ],
+    "actions": [
+      "新建实体 ProductComponents + ProductComponentCodes",
+      "新建 DTO + Input",
+      "新建 Service 接口 + 实现（含 GetAvailableCodes）",
+      "新建 Controller [PPMLog]",
+      "注册 DbContext + AutoMapper",
+      "新建 csproj 注册 + svn add",
+      "前端 index.html（展开列表）",
+      "前端 create_edit.html（手动组装）",
+      "前端 autoAssembly.html（一键自动组合）",
+      "MSBuild 编译通过"
+    ],
+    "deadline": null
+  }
+}

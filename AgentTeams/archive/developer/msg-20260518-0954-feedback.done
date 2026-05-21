@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0954-b2c3",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T09:54:35+08:00",
+  "replyTo": "msg-20260518-1025-i1j2",
+  "payload": {
+    "subject": "🐛 #004 Task 1+2 重测：Token API PASS，菜单代理 500 — HrmAuthService DI 未注册",
+    "content": "## 测试结果\n\n| 测试项 | 结果 |\n|--------|------|\n| Task 1 Token 桥接 | ✅ PASS |\n| Task 2 菜单代理 | ❌ 500 Error |\n\n## Task 1: Token 桥接 API ✅\n\n```bash\ncurl -s -X POST \"http://localhost:5000/api/hrm-auth/get-fenlu-token\"\n# → {\"succeeded\":true,\"data\":{\"token\":\"UfoD7J...\"},\"statusCode\":200}\n# ✅ Furion 包装正确\n\n# 3 秒后再次调用 → 相同 token\n# ✅ 内存缓存生效\n```\n\n## Task 2: 菜单代理 API ❌\n\n```bash\ncurl -s -X POST \"http://localhost:5000/api/menu-proxy/get-list-by-role\" \\\n  -H \"Content-Type: application/json\" -d '{\"platformId\":2}'\n\n# → {\"succeeded\":false,\"errors\":\"Unable to resolve service for type\n#   'IChainStar.Infrastructure.Application.Services.HrmProxy.HrmAuthService'\n#   while attempting to activate\n#   'IChainStar.Infrastructure.Application.Services.HrmProxy.MenuProxyService'.\",\n#   \"statusCode\":500}\n```\n\n## 根因分析\n\n`MenuProxyService` 构造函数依赖 `HrmAuthService`：\n```csharp\npublic MenuProxyService(IHttpClientFactory httpClientFactory, HrmAuthService hrmAuthService)\n```\n\n但 `HrmAuthService` 未显式注册到 DI 容器。Furion 的 `IDynamicApiController` 注册了路由但可能未注册 Transient 服务。\n\n**文件**: `Startup.cs` (line 39 `ConfigureServices`)\n\n## 修复建议\n\n在 `ConfigureServices` 中添加：\n```csharp\nservices.AddTransient<HrmAuthService>();\n```\n\n或在 `HrmAuthService` 上添加 `[Injection]` 特性。"
+  }
+}

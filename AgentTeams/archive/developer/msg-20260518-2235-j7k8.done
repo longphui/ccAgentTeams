@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260518-2235-j7k8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T22:35:00+08:00",
+  "payload": {
+    "subject": "#004 Task 14: 源码注释 '鸿冠' → '天津宏观世纪'",
+    "context": "#004",
+    "content": "## 背景\n\n用户纠正：项目名称是「天津宏观世纪」而非「鸿冠」。AgentTeams 文档已全部改名，现需要同步修改源码中的中文注释。\n\n## 涉及文件\n\n### 1. MenuProxyService.cs（天津宏观世纪后端）\n\n**文件**: `IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs`\n\n| 行 | 旧 | 新 |\n|----|----|----|\n| 23 | `获取合并后的菜单树（含鸿冠模块和 HRM 模块）` | `获取合并后的菜单树（含天津宏观世纪模块和 HRM 模块）` |\n| 89 | `parentId → parent（鸿冠前端组件使用 parent 字段）` | `parentId → parent（天津宏观世纪前端组件使用 parent 字段）` |\n| 102 | `鸿冠原生页面，路径不变` | `天津宏观世纪原生页面，路径不变` |\n| 145 | `适配鸿冠 app.js initMenu` | `适配天津宏观世纪 app.js initMenu` |\n\n### 2. Web.config（分路项目）\n\n**文件**: `caikuangzi.fenluwebproject/trunk/Web/Web/Web.config`\n\n| 行 | 旧 | 新 |\n|----|----|----|\n| 58 | `允许跨域资源共享，允许鸿冠前端访问` | `允许跨域资源共享，允许天津宏观世纪前端访问` |\n\n## 注意\n\n- 仅修改注释文本，不改变任何逻辑\n- MenuProxyService.cs 同时有 Task 13（startup 首页修复）在修改，注意不要冲突\n- 改完后编译通过即可，无需额外测试",
+    "files": [
+      "IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs",
+      "caikuangzi.fenluwebproject/trunk/Web/Web/Web.config"
+    ],
+    "actions": ["修改 MenuProxyService.cs 4 处注释", "修改 Web.config 1 处注释", "编译验证"],
+    "deadline": null
+  }
+}

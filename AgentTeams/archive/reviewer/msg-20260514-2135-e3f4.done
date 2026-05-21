@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-2135-e3f4",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T21:35:00+08:00",
+  "payload": {
+    "subject": "审查请求：ProductComponentsService DbFunctions.Like 改回 Contains",
+    "context": "#002",
+    "content": "## 变更内容\n将 `GetPageList` 中 3 处 `DbFunctions.Like` 改为 `Contains`，移除 `keyword` 拼接变量。\n\n## 审查重点\n1. `p.ProductName.Contains(input.Keywords)` 是否正确\n2. `c.CodeValue.Contains(input.Keywords)` 是否正确\n3. `pc.ProductCode.Contains(input.Keywords)` 是否正确\n4. `var keyword = \"%\" + input.Keywords + \"%\";` 已移除\n5. `using System.Data.Entity;` 保留（异步扩展方法 `ToListAsync` 等仍需要）\n6. 编译 0 Error\n\n## 涉及文件\n仅 1 个文件：`ProductComponentsService.cs`",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"]
+  }
+}

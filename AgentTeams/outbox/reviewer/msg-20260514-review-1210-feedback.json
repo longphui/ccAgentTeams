@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1300-a1b2",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T13:00:00+08:00",
+  "replyTo": "msg-20260514-1210-m7n8",
+  "payload": {
+    "subject": "✅ 审查通过：#001 #002 后端 XML 注释补充",
+    "content": "## 审查结论：通过\n\n### ProductComponentsService.cs（5/5 正确）\n| 方法 | 行号 | `<summary>` |\n|------|:---:|:---:|\n| GetPageList | L29-31 | ✅ 商品组装编码分页列表（按成品分组），含成品名称和组件名称 |\n| GetDetails | L77-79 | ✅ 获取单条商品组装编码详情（含成品名称、组件名称和编码集） |\n| Save | L109-111 | ✅ 手动组装 — 校验编码唯一性后保存成品与组件编码关联 |\n| AutoAssemble | L164-166 | ✅ 一键自动组合 — 从未使用编码中随机分配，校验不足后保存 |\n| Delete | L189-191 | ✅ 软删除商品组装记录及关联的编码子表 |\n\n### CodeGeneratorService.cs（2/2 正确）\n| 方法 | 行号 | `<param>` | `<returns>` |\n|------|:---:|:---:|:---:|\n| GetCodeRecordsByObject | L694-696 | ✅ | ✅ |\n| GetCodeRecordsForWorkOrder | L737-739 | ✅ | ✅ |\n\n### CodeGeneratorController.cs（2/2 正确）\n| 方法 | 行号 | `<summary>` |\n|------|:---:|:---:|\n| GetCodeRecords | L203-205 | ✅ 分页查询编码记录（按公司Id + 关键字） |\n| GetCodeRecordByCode | L215-217 | ✅ 根据编码值反查赋码对象信息 |\n\n编译 0 Error ✅",
+    "files": []
+  }
+}

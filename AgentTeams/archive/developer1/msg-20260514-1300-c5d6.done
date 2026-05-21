@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1300-c5d6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T13:00:00+08:00",
+  "payload": {
+    "subject": "排查编辑弹框 state 传参和数据加载链路",
+    "context": "#002",
+    "content": "## 问题\n编码组合列表页编辑按钮点击后，弹框无法显示原有数据。\n\n## 排查方向\n- index.html 编辑按钮 state 传参是否正确（state.id）\n- create_edit.html loadDetail 是否正常调用\n- 实体改造后（#007）表单绑定是否与新 DTO 结构匹配\n- 半成品/编码行的数据回填逻辑",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ],
+    "actions": [
+      "排查 state 传参和数据加载链路",
+      "确认表单字段绑定与新 DTO 对齐",
+      "修复后验证编辑弹框能正常回填数据"
+    ]
+  }
+}

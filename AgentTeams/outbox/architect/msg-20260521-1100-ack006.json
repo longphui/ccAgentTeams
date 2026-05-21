@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1100-ack006",
+  "type": "RESULT",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-21T11:00:00+08:00",
+  "replyTo": "msg-20260521-1055-e5f6",
+  "payload": {
+    "subject": "✅ 收到 #006 修复完成通知",
+    "context": "#006",
+    "content": "Developer 修复已确认：\n- Bug 1~3 全部修复 ✓\n- Reviewer 审查通过 ✓\n- IsDeleted 过滤已补充 ✓\n- 已发 TEST 给 QA ✓\n\n等待 QA 测试通过后确认交付。"
+  }
+}

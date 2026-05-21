@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260513-1630-f1e2",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:30:00+08:00",
+  "replyTo": "msg-20260513-1610-d3e4",
+  "payload": {
+    "subject": "对话框提示消息需要进一步简化",
+    "context": "用户测试后反馈：确认弹窗内容还是太多。不需要显示工单编号和产品名称，只显示生成数量即可。",
+    "content": "## 修改要求\n\n`layer.confirm` 的提示消息改为：\n\n```\n确认要生成（{生产数量}）个编码吗？\n```\n\n例如：如果生产数量为 100，消息显示为 **确认要生成（100）个编码吗？**\n\n不需要显示工单编号、产品名称等其他信息。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "修改 layer.confirm 的 message 参数，只显示生成数量",
+      "确保不再显示工单编号和产品名称"
+    ]
+  }
+}

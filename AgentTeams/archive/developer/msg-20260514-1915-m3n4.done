@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1915-m3n4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-14T19:15:00+08:00",
+  "payload": {
+    "subject": "暂停 AutoAssemble + 修复 IIS 部署问题",
+    "context": "#002",
+    "content": "## 1. 暂停 AutoAssemble（强制）\n自动组合功能暂停开发。用户需要重新梳理需求后再启动。Save 接口保留，AutoAssemble 相关代码可保留但不作为当前修复目标。\n\n## 2. 核心问题：DLL 未部署到 IIS\nQA 三轮测试均报告 Save/Update/Delete 全部返回空异常、中文搜索仍失败。读操作正常、写操作全部不可用 → 说明编译后的 DLL 未部署到 IIS 的 bin 目录。\n\n### 行动\n- MSBuild 编译整个解决方案（0 Error）\n- 确认 DLL 已复制到 IIS 站点 bin 目录\n- 重启 IIS 应用池 `8088_fenluapi`\n- curl 验证 Save 和 GetPageList(Keywords=有机肥) 可用\n\n## 3. 修复清单（编译+部署后验证）\n- Save DB 写入 → 不应返回空异常\n- Update → 不应返回空异常\n- GetPageList Keywords 中文搜索（有机肥/海格）→ 应返回匹配结果\n- GetDetails(id=6) → 应返回完整数据\n\n## 4. 无需处理\n- AutoAssemble 自动组合功能（暂停，等待需求澄清）",
+    "files": [],
+    "actions": [
+      "MSBuild 编译 0 Error",
+      "DLL 部署到 IIS bin 目录",
+      "重启 IIS 应用池 8088_fenluapi",
+      "curl 验证 Save + 中文搜索",
+      "修复后发 REVIEW + 发 TEST 给 QA"
+    ],
+    "deadline": null
+  }
+}

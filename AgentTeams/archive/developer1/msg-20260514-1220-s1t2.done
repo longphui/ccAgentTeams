@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1220-s1t2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T12:20:00+08:00",
+  "payload": {
+    "subject": "去掉半成品去重限制，只保留不显示成品的限制",
+    "context": "#002",
+    "content": "## 需求\n实体改造后每个编码独立携带 ComponentProductId，同一半成品可以添加多次（每次对应不同的编码），不需要去重限制。\n\n## 要求\n- 移除半成品下拉选项的「已选半成品去重」逻辑（之前通过 getComponentOptions(index) 排除已选项）\n- 只保留：成品本身不出现在半成品选项列表中\n- 其他已有逻辑不变",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ],
+    "actions": [
+      "移除半成品去重过滤逻辑",
+      "保留成品排除逻辑",
+      "验证同一半成品可被多次选择"
+    ]
+  }
+}

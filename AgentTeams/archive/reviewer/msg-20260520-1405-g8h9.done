@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260520-1405-g8h9",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "critical",
+  "timestamp": "2026-05-20T14:05:00+08:00",
+  "payload": {
+    "subject": "审查请求（紧急）：#004 hrm-proxy 修复手动拼接路径导致 404",
+    "context": "#004",
+    "content": "## 问题\n之前 hrm-proxy/index.html 手动拼接 `/v2/views/` 或 `/v2/views/manpowerManage/` 前缀，导致页面 404。\n\n## 修复\n去掉所有手动路径拼接逻辑，改为直接使用后端传来的完整路径：\n\n```javascript\n// 修复前（手动拼接，404）：\nlet targetUrl;\nif (menuName && menuName.startsWith(\"iframe_\")) {\n    targetUrl = hrmBaseUrl + \"/v2/views/\" + targetPage;\n} else {\n    targetUrl = hrmBaseUrl + \"/\" + targetPage;\n}\n\n// 修复后（后端传完整路径）：\nlet targetUrl = hrmBaseUrl + targetPage;\n```\n\n## 依赖\n后端 page 参数需传完整路径（如 `/v2/views/manpowerManage/staffManagement/index.html`）",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"]
+  }
+}

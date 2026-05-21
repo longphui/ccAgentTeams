@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260514-2010-o5p6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T20:10:00+08:00",
+  "replyTo": "msg-20260514-2000-review-feedback",
+  "payload": {
+    "subject": "审查请求（修订）：修复 3 个审查反馈问题",
+    "context": "#002",
+    "content": "## 修复内容（针对审查反馈 3 个问题）\n\n### 1. 序号列加 key=\"rowNo\" ✅\nL98: `{ title: \"序号\", width: \"60px\", type: \"number\", key: \"rowNo\", fixed: \"left\" }`\n\n### 2. 删除按钮 type=\"warning\" ✅\nL71: `<lay-button v-if=\"delType\" size=\"xs\" type=\"warning\" @click=\"deleteRow(row)\">删除</lay-button>`\n\n### 3. 权限控制 v-if ✅\n- 手动组装按钮加 `v-if=\"addType\"`\n- 删除按钮加 `v-if=\"delType\"`\n\n## 审查重点\n- key=\"rowNo\" 防止 type=\"number\" 覆盖 row.id\n- type=\"warning\" 橙色警告色\n- v-if 权限变量已在 data() 中定义",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260520-2330-f001",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-20T23:30:00+08:00",
+  "payload": {
+    "subject": "清理 #004 相关 .done 文件",
+    "context": "#004",
+    "content": "## 请执行\n\n#004 已交付。请检查本收件箱中以下 `.done` 文件是否与 #004 相关，相关则移入 `AgentTeams/archive/developer/`：\n\n- `msg-20260520-1445-q1w2.done`\n- `msg-20260520-reviewer-feedback-1.done`\n- `msg-20260520-reviewer-result-1.done`\n- `msg-20260520-reviewer-result-3.done`\n\n不相关的保留。完成后标记 `.done`。",
+    "files": [],
+    "actions": ["检查并归档 #004 相关 .done 文件到 archive/developer/"],
+    "deadline": null
+  }
+}

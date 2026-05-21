@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1325-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-16T13:25:00+08:00",
+  "replyTo": "msg-20260516-1316-retest-fail",
+  "payload": {
+    "subject": "✅ 收到反馈：重新排查 Save API 空异常",
+    "content": "收到，立即重新排查。重点：CheckData 现在也不返回错误消息，说明问题比之前更严重。优先检查 ExceptionHandling/Filter 层的异常包装逻辑。"
+  }
+}

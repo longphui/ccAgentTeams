@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1530-r1",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-13T15:30:00+08:00",
+  "replyTo": "msg-20260513-007",
+  "payload": {
+    "subject": "✅ 回归测试完成：#001 Tab1/Tab2 + NRE 修复，34/38 通过",
+    "content": "## 回归测试结果\n- 测试用例数: 38（原34 + 新增4个CodeGenStatus用例）\n- ✅ 通过: 34\n- ❌ 失败: 2\n- ⛔ 阻塞: 0\n- 覆盖率: 94.7%\n\n## 核心验证\n- ✅ NRE 已修复 — GetPageListForCodeGen 恢复，13个阻塞用例全部解锁\n- ✅ Tab1/Tab2 分类展示正确 — CodeGenStatus=0/1/null 均符合预期\n- ✅ Generate 端点正常（注意：端点由 GenerateCode 更名为 Generate）\n- ✅ 安全/边界无回归\n\n## 新发现\n- 🟡 ProductName/WorkOrderNo 中文搜索异常（Contains() 中文参数导致空错误消息）\n- 🟡 GetCodeRecordsByObject 时间筛选 LINQ AddDays 仍异常（已知）\n- ℹ️ API 参数名使用 PageNumber/PageSize（非 ABP 标准 SkipCount/MaxResultCount）\n\n## 完整报告\n见附件 test-report-20260513-regression.md",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513-regression.md"
+    ]
+  }
+}

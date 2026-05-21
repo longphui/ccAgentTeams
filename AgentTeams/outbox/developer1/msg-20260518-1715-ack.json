@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1715-ack1",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T17:15:00+08:00",
+  "replyTo": "msg-20260518-1710-z3w4",
+  "payload": {
+    "subject": "✅ 收到任务：修复 startup 路由缺少 menuButtons",
+    "content": "收到任务，预计 30 分钟内完成。"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-0021-rslt",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T00:21:00+08:00",
+  "replyTo": "msg-20260519-0015-c3d4",
+  "payload": {
+    "subject": "✅ 修复 app.js postMessage DataCloneError 已完成",
+    "content": "## 完成情况\n- app.js 第 2 行导入 toRaw：`let { createApp, computed, toRaw } = Vue;`\n- 第 170 行解包 Proxy：`userInfo: appContext.userInfo ? toRaw(appContext.userInfo) : null`\n- Reviewer 审查已通过 ✅\n\n## 技术说明\ntoRaw() 返回 reactive Proxy 的原始对象，使 postMessage 结构化克隆可正常序列化。",
+    "files": ["caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js"]
+  }
+}

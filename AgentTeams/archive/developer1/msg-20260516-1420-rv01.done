@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1420-rv01",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-16T14:20:00+08:00",
+  "replyTo": "msg-20260516-1410-f5g6",
+  "payload": {
+    "subject": "✅ 审查通过：codeRule Domain 前置检查 + 业务字段过滤",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（本次修改均为已有文件）\n- csproj 注册：N/A（前端 .html 文件）\n- 编译：N/A（前端文件）\n\n### 审查详情\n\n#### 🔒 安全检查：✅\n- 无 SQL 拼接（前端代码）\n- Vue 模板绑定自动转义 XSS\n- 无敏感信息泄露\n\n#### 🖥️ 前端规范：✅\n- 文件头注释、方法注释齐全（`// Domain 前置检查`、`// 过滤：仅显示当前领域...`）\n- 资源引入：`<script id=\"importresloader\" then=\"loadLayuiVue\">` 正确\n- 按钮：`lay-button` + `@click` 正确，无 `lay-link-button` 误用\n- `layer.confirm`：deleteItem 使用 `options.yes` 模式 ✅\n- `Http.invoke` 响应：使用 `if (res)` / `if (res?.states)` 判断，未检查 `res.success` ✅\n\n#### 🐛 高频 Bug 检查：✅\n- Domain 前置检查：`!this.entry.data.domain → layer.msg + return` 正确阻止弹框\n- 业务字段过滤：`f.domainCode === domain || f.domainCode === 'General'` 逻辑正确\n- 兜底：`_domain` 为空时显示全量列表，向后兼容\n- 边界：`state.value?._domain` 安全访问，state.value 为 null 不抛错\n\n#### 📐 架构一致性：✅\n- 对照决策 008：BizFieldDefinition 是 Domain 唯一数据源，下拉过滤完全符合设计\n- 对照需求 4.2.3 约束 1（Domain 前置检查）、约束 2（业务字段过滤）均已实现\n\n#### ⚠️ 预存问题（非本次变更引入，不阻塞通过）\n- `<lay-row>` / `<lay-col>` — LayuiVue 2.22.2 中不存在，r2624 初版已使用\n- `lay-table` 序号列 `type: \"number\"` 缺少 `key: \"rowNo\"`（create_edit.html:113）\n- `_domain` 在 `state.return()` 时未清理，JSON.stringify 后会传入后端（后端 DTO 忽略此字段，无实际影响）"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260516-1400-d1e2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:00:00+08:00",
+  "payload": {
+    "subject": "codeRule 添加子项：Domain 前置检查 + 业务字段过滤（仅显示 Domain + General）",
+    "context": "#003",
+    "content": "## 问题\n\n当前 codeRule 页面点击\"添加子项\"时，未检查 Domain 是否已选，业务字段下拉也未过滤，导致可选到其他领域的字段。\n\n## 任务\n\n### Step 1: Domain 前置检查\n\n点击\"添加子项\"按钮时，先检查 `rule.Domain` 是否有值：\n- 若为空 → `layer.msg(\"请先选择业务领域\")`，**不打开**子项弹框\n- 若已选 → 继续打开子项弹框\n\n### Step 2: 业务字段下拉过滤\n\n子项弹框中业务字段下拉选项只显示：\n- `DomainCode == rule.Domain`（当前领域）\n- `DomainCode == \"General\"`（基础领域，如 CompanyId 等所有领域共用的字段）\n\n示例：`rule.Domain = \"Product\"` 时，下拉显示 ProductName、ProductCode（DomainCode=Product）和 CompanyId（DomainCode=General），不显示 EmployeeName（DomainCode=Employee）。\n\n## 实现方式\n\n前端过滤即可，无需后端改动：\n1. 从已加载的 BizFieldDefinition 列表中 filter\n2. 若使用的是分页接口，需确保能获取全量列表做过滤（或调后端时传参数，由 Developer1 自行决定最简方案）\n\n## 参考\n\n- 需求：`shared/requirements/003-CodeGenerator优化.md` 第 4.2.3 节\n- 计划：`shared/requirements/003-plan-CodeGenerator优化.md` Task 13",
+    "files": [
+      "shared/requirements/003-CodeGenerator优化.md",
+      "shared/requirements/003-plan-CodeGenerator优化.md",
+      "v2/views/CodeGenerator/codeRule/create_edit.html"
+    ],
+    "actions": [
+      "添加子项按钮点击时先检查 Domain 是否已选，未选则提示并阻止弹框",
+      "业务字段下拉过滤：仅显示 rule.Domain + General 的字段",
+      "svn commit",
+      "完成后发 REVIEW 给 reviewer"
+    ],
+    "deadline": null
+  }
+}

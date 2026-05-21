@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1155-e5f6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:55:00+08:00",
+  "replyTo": "msg-20260514-1145-i0j1",
+  "payload": {
+    "subject": "✅ 排查结论：后端 ProductName/ComponentProductName 正常返回",
+    "content": "## 排查结果\n- DTO 定义正确：`ProductName`、`ComponentProductName` 属性均存在\n- `GetPageList` 逻辑正确：productIds 收集 → Product 批量查询 → 逐个赋值，流程无问题\n- 用户确认：接口实际返回了 ProductName 和 ComponentProductName 且有值\n\n## 结论\n后端无 Bug，问题可能在前端字段绑定或渲染层。"
+  }
+}

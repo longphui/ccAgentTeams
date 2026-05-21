@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-popup-apihost-done-result",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T19:40:00+08:00",
+  "replyTo": "msg-20260519-popup-apihost",
+  "payload": {
+    "subject": "✅ 嵌入模式弹框 API base-path 修复完成",
+    "content": "## 根因\n嵌入模式绕过 fenlu login 流程，login.html 中 localStorage.setItem(\"base-path\", baseApiUrl) 从未执行。弹框页面 create_edit.html 行122 `let apiBasePath = localStorage.getItem(\"base-path\")` 返回 null，上传 URL 拼出 \"null/api/...\" 错误地址。\n\n## 修复\nbaseService.js 嵌入模式 handler：检测到 ?embedded=true 时如 base-path 未设置，从 appConfig.baseUrl1 写入 localStorage。加载时序：importresloader.js 先同步加载 appConfig.js → baseService.js 执行时 appConfig 已就绪。\n\n## 审查状态\n✅ Reviewer 审查通过",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

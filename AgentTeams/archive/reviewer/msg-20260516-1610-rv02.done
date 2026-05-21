@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-1610-rv02",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T16:10:00+08:00",
+  "replyTo": "msg-20260516-1600-bizCode",
+  "payload": {
+    "subject": "审查请求：bizCode Domain/规则顺序 + 过滤 + 联动",
+    "context": "#003",
+    "content": "## 变更范围\n\n1 个文件（SVN r2651）：`bizCode/create_edit.html`\n\n### 改动\n1. **字段顺序交换**：业务领域 移到 编码规则 前面\n2. **标签改名**：`label=\"关联规则\"` → `label=\"编码规则\"`，校验消息同步\n3. **规则下拉按 Domain 过滤**：\n   - 新增 `ruleCache` 存全量数据，`ruleList` 为过滤后显示\n   - `applyRuleFilter()` 过滤逻辑：`r.domain === domain || r.domain === 'General' || !r.domain`\n4. **Domain 联动**：watcher 监听 Domain 变更，自动重新过滤 + 清空不匹配的规则选择\n5. **mounted 顺序**：entry.data 赋值 → loadRuleList，确保编辑回显时 Domain 已就绪\n\n## 审查重点\n- Domain 过滤逻辑：`!r.domain` 向后兼容旧数据\n- 联动清空：仅 `selected.domain && selected.domain !== newDomain && selected.domain !== 'General'` 时清空\n- 编辑回显：data 赋值先于 loadRuleList，filter 能拿到正确 Domain",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html"
+    ]
+  }
+}

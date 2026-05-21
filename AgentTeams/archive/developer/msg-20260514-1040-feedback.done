@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-1040-h3i4",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:40:00+08:00",
+  "payload": {
+    "subject": "代码缺少注释 — 违反 fl-api-dev.md 规范",
+    "content": "## 问题\n新写的 .cs 文件缺少注释。\n\n## 规范要求（fl-api-dev.md 第 64-70 行）\n- 类和接口：`/// <summary>说明用途</summary>`\n- public 属性：`/// <summary>字段含义</summary>`\n- public 方法：`/// <summary>方法用途</summary>`，复杂参数加 `<param>` 和 `<returns>`\n- Service/Controller 用 `#region` 分组\n\n## 要求\n检查本次 #002 所有新建/修改的 .cs 文件，补全注释。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ],
+    "actions": ["补全所有新文件的注释"],
+    "deadline": null
+  }
+}

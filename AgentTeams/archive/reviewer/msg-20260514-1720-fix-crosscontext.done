@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1720-fix-crosscontext",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:20:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 GetPageList 跨上下文 + 中文搜索",
+    "context": "#002",
+    "content": "## 修复内容\n\n### 问题 1：跨上下文错误\nKeywords 子查询中 `_productRep.GetAll()` 与 `_context` 混用 JOIN → EF 报「different contexts」。\n\n### 问题 2：中文搜索 -1 错误\nEF6 `Contains` 对 Unicode 处理不稳定（决策 #005）。\n\n## 修复方案\n\n将每个子查询拆为两步独立查询，每步只访问单一数据源：\n\n1. **keywordProductIds**: 通过 `_productRep.GetAll()` + `DbFunctions.Like` 查匹配商品 ID（已物化）\n2. **matchingProductNameIds**: 通过 `_context.ProductComponents` + `keywordProductIds.Contains()` 查成品 ID（已物化）\n3. **matchingIds**: 通过 `_context.ProductComponentCodes` + `keywordProductIds.Contains()` / `DbFunctions.Like(CodeValue)` 查组件 ID（已物化）\n4. 主查询: `DbFunctions.Like(ProductCode)` + 两个 ID 列表 `Contains`\n\n### 关键变更（ProductComponentsService.cs L40-56）\n- `_productRep.GetAll()` JOIN `_context.Xxx` → 拆为独立查询，无跨上下文 JOIN\n- `Contains()` → `DbFunctions.Like(field, \"%keyword%\")`（修复中文 Unicode）\n- 代码行数从 14 行变为 20 行，逻辑更清晰\n\n## 审查重点\n- [ ] 每步查询只用单一数据源（无跨上下文 JOIN）\n- [ ] 中文 Keywords 使用 `DbFunctions.Like` 而非 `Contains`\n- [ ] 搜索结果正确性：ProductName / ComponentProductName / CodeValue / ProductCode 四个维度\n- [ ] 空 Keywords 时跳过整个过滤块\n- [ ] 无 SQL 注入（参数化查询）\n\n## 编译\n✅ MSBuild 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

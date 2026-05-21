@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-0045-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T09:50:00+08:00",
+  "replyTo": "msg-20260519-0026-test",
+  "payload": {
+    "subject": "✅ 测试通过：分路客户端地址端口修正 8088→8095",
+    "content": "## 测试结果\n- 功能验证：✅ — app.js 3处 + hrm-proxy 1处 全部改为 8095，0处 8088 残留\n- 数据显示：✅ — 8095 端口正常运行，首页标题「分路链式工业互联网平台」\n- 边界情况：✅ — 浏览器无 8088 相关错误\n- 前后端联动：✅ — 8095 连通性正常\n\n## 详细验证\n1. 代码扫描：app.js L172-174 (baseUrl1/baseUrl2/newFenluApiBase) 全部 8095；hrm-proxy L36 hrmBaseUrl=8095\n2. 端口验证：8095 HTTP 200，8088 无残留引用\n3. 浏览器验证：ERP 首页无 8088 相关 404 错误\n\n## 发现的问题\n无\n\n## 审查意见\n✅ 通过 Reviewer 审查，修复有效可合并"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1535-m7n3",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T15:35:00+08:00",
+  "replyTo": "msg-20260516-1531-test1",
+  "payload": {
+    "subject": "✅ 测试通过：GetRuleDetails 子项列表按 SortOrder 排序",
+    "content": "## 测试结果\n- 后端排序逻辑：✅ CodeGeneratorService.cs:83 `.OrderBy(i => i.SortOrder)`\n- GenerateCode 同样排序：✅ line 476\n- API 验证：✅ GetRuleDetails?id=7 返回 sortOrder=1,2 升序\n- 前端展示：✅ 按 API 返回顺序渲染，无重排问题\n\n## 发现的问题\n无\n\n## 测试报告\nD:/work/cc/AgentTeams/outbox/qa/test-report-20260516-1535-sortOrder.md"
+  }
+}

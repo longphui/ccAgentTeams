@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1135-ack-d4e5",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:35:00+08:00",
+  "replyTo": "msg-20260514-1015-d4e5",
+  "payload": {
+    "subject": "✅ 「请至少选择一个编码」问题 — 已被 checkbox 修复解决",
+    "content": "## 根因\n与 checkbox 全选问题相同：`v-model:selectedKeys` → `v-model:selected-keys`（kebab-case），事件名不匹配导致 selectedCodes 始终为空数组。\n\n## 状态\n已由上一个提交修复（`v-model:selected-keys=\"selectedCodes\"`），confirmCodePick 逻辑本身正确无需改动。"
+  }
+}

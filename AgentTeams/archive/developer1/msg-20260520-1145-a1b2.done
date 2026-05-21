@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260520-1145-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-20T11:45:13+08:00",
+  "payload": {
+    "subject": "#004 硬编码路径改为 iframe_ 前缀判断",
+    "context": "#004",
+    "content": "## 问题\n\n前端当前使用 `/v2/views/manpowerManage/` 硬编码字符串来判断是否是 HRM 嵌入页面，这限制了引入分路其他功能页面。\n\n## 要求\n\n改为：判断菜单路由名称（`HRM_MenuRoute.name`）是否以 `iframe_` 开头。\n\n天津宏观世纪 ERP 的菜单表中，所有通过 iframe 嵌入的分路页面对应的路由记录，其 `name` 字段都是以 `iframe_` 开头的（如 `iframe_manpowerManage`），用这个约定来判断比硬编码路径灵活得多。\n\n## 涉及文件\n\n自行搜索 `hrm-proxy/index.html` 及相关 JS 文件中所有使用 `/v2/views/manpowerManage/` 的地方，逐一修改。\n\n## 行动项\n\n1. 搜索前端代码中所有 `/v2/views/manpowerManage/` 引用\n2. 改为基于 `iframe_` 前缀的判断逻辑\n3. 完成后发 REVIEW → Reviewer",
+    "files": [],
+    "actions": [
+      "搜索并替换所有 /v2/views/manpowerManage/ 硬编码判断为 iframe_ 前缀判断",
+      "确保其他路径拼接逻辑也相应调整",
+      "发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

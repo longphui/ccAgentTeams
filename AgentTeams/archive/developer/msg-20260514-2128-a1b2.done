@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260514-2128-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T21:28:00+08:00",
+  "payload": {
+    "subject": "ProductComponentsService: DbFunctions.Like 改回 Contains",
+    "context": "#002",
+    "content": "## 变更\n将 `GetPageList` 方法中的 `DbFunctions.Like` 全部改回 `Contains`，移除 `%` 通配符拼接。\n\n## 涉及位置\n`ProductComponentsService.cs` 第 38-58 行 Keywords 搜索段：\n- `DbFunctions.Like(p.ProductName, keyword)` → `p.ProductName.Contains(input.Keywords)`\n- `DbFunctions.Like(c.CodeValue, keyword)` → `c.CodeValue.Contains(input.Keywords)`\n- `DbFunctions.Like(pc.ProductCode, keyword)` → `pc.ProductCode.Contains(input.Keywords)`\n\n同时移除 `var keyword = \"%\" + input.Keywords + \"%\";` 这行（改用 input.Keywords 直接传参）。\n\n## 注意\n- `using System.Data.Entity;` 如果仅用于 DbFunctions 且移除后无其他引用，删除该 using\n- 编译通过 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ],
+    "actions": [
+      "三处 DbFunctions.Like 改为 Contains",
+      "移除 keyword 拼接变量",
+      "清理多余 using（如适用）",
+      "MSBuild 编译通过 0 Error"
+    ],
+    "deadline": null
+  }
+}

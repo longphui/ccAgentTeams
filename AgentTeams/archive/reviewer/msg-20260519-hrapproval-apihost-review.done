@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-hrapproval-apihost-review",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T21:10:00+08:00",
+  "payload": {
+    "subject": "审查请求：人事审批目录页面 — API 请求 host 修复",
+    "context": "#004",
+    "content": "## 根因\n嵌入模式下页面经 HRM 代理（port 8095）加载，但 `appConfig.baseUrl1/2/newFenluApiBase` 硬编码为 `localhost:8088`。\n\n`Http`/`HttpE`/`Http2` 三个对象的 `configration.baseUrl` 在初始化时从 `appConfig` 取值，之后所有 API 请求都发往 `localhost:8088`，而非当前页面 origin（`localhost:8095`），导致 cross-origin 或被 HRM 网关拦截。\n\n弹窗页面的 popup-apihost 修复只解决了 `base-path`（上传/图片 URL），未覆盖 `Http` 对象的 `configration.baseUrl`。\n\n## 修复\n`baseService.js` 嵌入模式 block 中，在 `Http` 对象创建前重写 `appConfig` 的 base URL：\n- `appConfig.baseUrl1` = `location.origin`\n- `appConfig.baseUrl2` = `location.origin`\n- `appConfig.newFenluApiBase` = `location.origin + '/api'`\n\n执行时序保证：`isEmbedded` 检测 → 修改 appConfig → `const Http = { baseUrl: appConfig.baseUrl1 }` 取值已修正。\n\n## 变更文件\n- `baseService.js` L24",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

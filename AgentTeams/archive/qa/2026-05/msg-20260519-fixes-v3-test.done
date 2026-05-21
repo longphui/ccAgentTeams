@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-fixes-v3-test",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T22:20:00+08:00",
+  "payload": {
+    "subject": "测试请求：离职模板按钮 + API host 修复 v3",
+    "context": "#004",
+    "content": "## 测试重点\n\n### 问题 1：离职模板按钮\n- 嵌入模式下，进入员工离职页面，点击「设置离职模板」按钮\n- 确认新浏览器标签页打开，URL 正确（如 `/User/Employee/ResignProof.html`）\n- 注意：需先清除 localStorage 中的 `base-path`（如果之前被设置为错误值）\n\n### 问题 2：API host\n- 清除 localStorage 后，重新通过 HRM 代理加载人事审批页面\n- 确认 API 请求发往正确地址（8088，非 8095）\n- 确认页面数据正常加载，无「网络错误」\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"
+    ]
+  }
+}

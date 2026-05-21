@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260518-0035-g9h0",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:35:00+08:00",
+  "payload": {
+    "subject": "测试请求：#004 Task 1+2+3 — Token桥接API + 菜单代理API + CORS",
+    "context": "#004",
+    "content": "## 测试重点\n\n### Task 1: Token 桥接 API\n- `curl POST /api/hrm-auth/get-fenlu-token` → 验证响应为 Furion 包装 `{\"succeeded\": true, \"data\": {\"token\": \"...\"}}`\n- 短时间内再次调用 → 验证缓存生效（token 不变）\n\n### Task 2: 菜单代理 API\n- `curl POST /api/menu-proxy/get-list-by-role -d '{\"platformId\":1}'` → 验证响应包含 `children` 和 `startup`\n- 检查 `children` 中 HRM 模块的 `path` 是否指向 `/views/hrm-proxy/index.html?page=...`\n- 检查每个节点有 `parent` 字段（非 `parentId`）\n- 检查 `menuButtons` 数组被保留\n- 若分路返回 `success: false` → 验证抛出有意义异常（非 NRE）\n\n### Task 3: CORS 配置\n- 浏览器 DevTools Network 面板 → 从鸿冠前端 (localhost:5021) 调用分路 API → 无 CORS 报错\n- `curl -X OPTIONS http://localhost:8088/api/HRM/MenuRoute/GetListByRole` → 验证返回 200（非 405）\n\n### 编译验证\n- `dotnet build honguan_erp.sln -c Debug` → 0 Error\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs",
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\Web.config",
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\Global.asax"
+    ]
+  }
+}

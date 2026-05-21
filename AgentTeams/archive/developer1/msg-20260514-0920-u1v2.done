@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0920-u1v2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:20:00+08:00",
+  "payload": {
+    "subject": "添加组件 — 选择框/数量/单位仍未同行",
+    "context": "#002",
+    "content": "## 问题\nmsg-20260514-0905-s9t0 报告已修复，但添加组件区域的选择框、数量、单位仍然没有放到一行。请重新检查 layout 实现并确保一行内显示。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["检查并修复选择框/数量/单位同行布局"],
+    "deadline": null
+  }
+}

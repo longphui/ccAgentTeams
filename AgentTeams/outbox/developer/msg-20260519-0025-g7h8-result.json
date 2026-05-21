@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-0050-r1s2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T00:50:00+08:00",
+  "replyTo": "msg-20260519-0025-g7h8",
+  "payload": {
+    "subject": "✅ baseService.js hrmToken 无限循环修复 已完成",
+    "content": "## 完成情况\n- 在 `isEmbedded` 检测后（第 5 行后）添加 hrmToken 从 URL 读取并写入 localStorage\n- URL 清理（安全考虑，避免 token 残留地址栏）\n- 代码位置正确：token 预设 → 后续 localStorage.getItem(\"token\") 检查不再为 null → 死循环解除\n\n## 审查状态\n✅ 已通过 Reviewer 审查（msg-20260519-0035-rvw）",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

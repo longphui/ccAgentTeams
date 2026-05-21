@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1500-a1b2",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "high",
+  "timestamp": "2026-05-13T15:00:00+08:00",
+  "payload": {
+    "subject": "架构决策同步：#001 CodeGenStatus 参数 + #002 租户隔离修复",
+    "content": "## 决策 #003: Tab1/Tab2 分类展示方案\n\n**选择**: 方案A — 后端新增 `CodeGenStatus` 可选参数\n- `null` = 全部（向后兼容）\n- `0` = 未生成编码（generatedCodeCount == 0）\n- `1` = 已生成编码（generatedCodeCount > 0）\n- 过滤在内存中完成（generatedCodeCount 是计算字段）\n- 过滤后再分页\n\n## 决策 #004: #002 租户隔离修复方案\n\n- GetDetails/Delete: 手动加 `x.CompanyId == companyId` 过滤条件\n- GetAvailableCodes: JOIN ProductComponents 父表以获取 CompanyId\n- 长期方案（不立即实施）: 让 ProductComponents 实现 IMustHaveCompany 接口\n\n## 当前状态\n\n| 任务 | 状态 | 负责人 |\n|------|------|--------|\n| #001 NRE Bug | ✅ 已修复 | Developer |\n| #001 codeList staticFilter | ✅ 已修复 | Developer |\n| #001 Tab1/Tab2 区分 | 🔧 已分派 | Developer (msg-20260513-1450-c1d2) |\n| #001 回归测试 | ⏳ 待 QA | QA |\n| #002 租户隔离修复 | 🔧 已分派 | Developer (msg-20260513-1455-e3f4) |\n| #002 分页修复 | 🔧 已分派 | Developer (同上) |\n| #002 GetAvailableCodes | 🔧 已分派 | Developer (同上) |\n| #002 复审 | ⏳ 待 Reviewer | Reviewer |\n\n## 下一步\n- Developer 处理 2 个新任务（需要用户 `/agent-developer` 触发）\n- QA 回归测试 #001（需要用户 `/agent-qa` 触发，先等 Developer 完成 #001 Tab1/Tab2 修复）\n- Reviewer 复审 #002（需要用户 `/agent-reviewer` 触发，先等 Developer 完成 #002 修复）",
+    "files": []
+  }
+}

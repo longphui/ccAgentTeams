@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1700-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T17:00:00+08:00",
+  "replyTo": "msg-20260513-1645-c3d4",
+  "payload": {
+    "subject": "✅ 收到任务：修复工单状态列空白",
+    "content": "收到。1 行修复：Adapt 后显式赋值 StatusName。预计 5 分钟。"
+  }
+}

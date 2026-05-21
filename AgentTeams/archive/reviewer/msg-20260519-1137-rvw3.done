@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1137-rvw3",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T11:37:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 menuButtons DataCloneError",
+    "context": "#004",
+    "content": "## 审查重点\n\n### 问题\n`menuButtons` 来自 `appContext.route.items[...].menuButtons`，是 Vue reactive Proxy 数组，postMessage 结构化克隆失败：\n```\nDataCloneError: Failed to execute 'postMessage' on 'Window': [object Array] could not be cloned.\n```\n\n### 修复\n`app.js` 第 180 行，展开为普通数组：\n```javascript\n// 改前\nmenuButtons: menuButtons\n// 改后\nmenuButtons: [...menuButtons]\n```\n\n与之前 Bug #2 的 `toRaw(userInfo)` 修复同一类问题（Vue Proxy 无法序列化）。",
+    "files": [
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js"
+    ]
+  }
+}

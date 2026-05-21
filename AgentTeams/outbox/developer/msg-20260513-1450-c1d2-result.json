@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-1520-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T15:20:00+08:00",
+  "replyTo": "msg-20260513-1450-c1d2",
+  "payload": {
+    "subject": "✅ 修复 #001 Tab1/Tab2 分类展示 已完成",
+    "content": "## 完成情况\n\n### 1. DTO 新增字段\n`WorkOrderProductionPageSearchInput.cs` — 新增 `int? CodeGenStatus`（null=全部, 0=未生成, 1=已生成）\n\n### 2. Service 过滤逻辑\n`ProduceWorkOrderService.GetPageListForCodeGen()`:\n- 当 `CodeGenStatus` 有值时，先完整获取所有数据（临时设 PageNumber=1, PageSize=int.MaxValue）\n- 计算 `generatedCodeCount` 后按 CodeGenStatus 过滤内存列表（0→count==0, 1→count>0）\n- 过滤后重新计数并应用原始分页参数\n- `CodeGenStatus` 为 null 时走原有逻辑（向后兼容）\n\n### 3. 前端\n- Tab1 `staticFilter1: { CodeGenStatus: 0 }` + `:static-filter=\"staticFilter1\"`\n- Tab2 `staticFilter2: { CodeGenStatus: 1 }` + `:static-filter=\"staticFilter2\"`\n\n### 编译\nMSBuild 通过 0 错误。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderProductionPageSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/index.html"
+    ]
+  }
+}

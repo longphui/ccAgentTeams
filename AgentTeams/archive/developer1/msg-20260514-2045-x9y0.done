@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-2045-x9y0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:45:00+08:00",
+  "payload": {
+    "subject": "隐藏自动组合按钮",
+    "context": "#002",
+    "content": "## 说明\n自动组合功能已暂停开发，前端隐藏「一键自动组合」按钮。用 `v-if=\"false\"` 或直接注释，保留代码不删除，方便后续恢复。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ],
+    "actions": [
+      "隐藏自动组合按钮（保留代码）"
+    ],
+    "deadline": null
+  }
+}

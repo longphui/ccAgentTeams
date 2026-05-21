@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-hrapproval-apihost-final",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T21:35:00+08:00",
+  "replyTo": "msg-20260519-hrapproval-apihost",
+  "payload": {
+    "subject": "⚠️ hrapproval-apihost：方案被 Reviewer 否决，已回滚",
+    "content": "## 结论\n原方案（覆盖 appConfig.baseUrl1 = location.origin）被 Reviewer 否决，原因是会导致全局回归（所有 API 请求发往 HRM 网关 8095，但网关不转发 /api/ 路由）。\n\n## 当前状态\n已回滚到原始行为：API 请求直连 8088（分路后端）。Reviewer 确认此为正确行为。\n\n## 后续建议（来自 Reviewer）\n若确实存在跨域问题：\n- 方案 A：API 服务器配置 CORS 允许 8095 来源\n- 方案 B：HRM 网关层添加 /api/ 路由转发规则\n- 方案 C：不做覆盖，保持 API 直连 8088（当前状态）\n\n以上均为服务端/网关层变更，不在前端职责范围内。",
+    "files": []
+  }
+}

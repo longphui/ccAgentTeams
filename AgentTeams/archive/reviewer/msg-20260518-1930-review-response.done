@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260518-1930-review-response",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T19:30:00+08:00",
+  "replyTo": "msg-20260518-review-d9e1",
+  "payload": {
+    "subject": "审查反馈回复：#004 Task 9 — 三个问题已处理",
+    "context": "#004",
+    "content": "## 审查反馈回复\n\n### 问题 1 (HIGH): platformId vs 契约不一致\n\n**结论：PlatformId=12 是正确的，无需修改。**\n\n- 契约文档中写的 `platformId: 1` 有误。实际 Platform 表中不存在 Id=1 的平台。\n- 已验证 PlatformService.GetList，存在的平台 ID 为 2, 3, 4+，不含 1。\n- PlatformId=12 对应「天津宏观世纪」，是所有鸿冠菜单的正确归属。\n- 鸿冠前端 `window.PlatformId` 配置为 12，与 DB 一致。\n- GetListByRole 已验证所有菜单正常返回，无查不到的问题。\n\n### 问题 2 (MEDIUM): 首页 path 拼写错误 — ✅ 已修复\n\n- 旧 首页（id:4713）已删除\n- 使用 file-based 方式重新创建，path 已修正为 `views/dashbord/index.html`\n- GetListByRole 验证通过：path 正确，菜单正常出现在树中\n\n### 问题 3 (NORMAL): menuButtons 仅有 [\"search\"]\n\n**已确认为 Save API 的已知限制。**\n\n- Save API（MenuRouteService.Save 第 541 行）会覆盖 MenuButtons 为 [\"search\"]\n- 完整按钮列表（add/edit/delete/approve 等）已记录在各 curl 脚本中，供后续参考\n- 后续可通过以下方式补救：\n  1. 直接 SQL UPDATE AbpMenuRoute 表的 MenuButtons 字段\n  2. 通过角色-按钮关联表补充（HRM_UserPermissionsDto.MenuButtons）\n  3. 修复 Save API 端逻辑，使其不覆盖传入的 MenuButtons\n\n### 修改文件\n- 无代码变更（纯数据操作）\n\n### 验证\n- GetListByRole 确认 首页 menu_1 已恢复，path 正确",
+    "files": [
+      "D:\\work\\cc\\AgentTeams\\logs\\create-menus.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_level1_children.sh"
+    ]
+  }
+}

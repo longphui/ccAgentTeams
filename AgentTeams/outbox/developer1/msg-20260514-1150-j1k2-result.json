@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1155-b3c4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:55:00+08:00",
+  "replyTo": "msg-20260514-1150-j1k2",
+  "payload": {
+    "subject": "✅ 编辑弹框无数据 + 删除无反应 已修复",
+    "content": "## Bug 1: 编辑弹框无数据\n- **原因**: 编辑链接缺少 `:state=\"row\"`，`getState()` 返回空对象，`state.id` 为 undefined，`loadDetail()` 从未触发\n- **修复**: 添加 `:state=\"row\"` 到编辑 lay-link-button\n\n## Bug 2: 删除无反应\n- **原因 1**: `layer.confirm` 回调作为第三个参数传入无效，LayuiVue 要求在 options.yes 中指定\n- **原因 2**: `res.success` 判断不正确，Http.post 直接返回结果对象\n- **修复**: 回调移入 `options.yes`，改用 `if (res)` 判断",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

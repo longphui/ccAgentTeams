@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-2313-t14test",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "normal",
+  "timestamp": "2026-05-18T23:13:00+08:00",
+  "payload": {
+    "subject": "测试请求：注释「鸿冠」→「天津宏观世纪」重命名",
+    "context": "#004",
+    "content": "## 测试重点\n- 仅注释修改，无功能变更，确认编译通过即可\n\n## 审查状态\n✅ 已通过编译 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/Web.config"
+    ]
+  }
+}

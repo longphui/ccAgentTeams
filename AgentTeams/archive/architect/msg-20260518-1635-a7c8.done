@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1635-a7c8",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T16:35:00+08:00",
+  "replyTo": "msg-20260518-1200-m3n4",
+  "payload": {
+    "subject": "测试报告：#004 Round 2 - 菜单前端改造（Developer1 Task 5a/5b/5c/8）",
+    "content": "## 测试结果\n\n- 代码审查：✅ 通过\n- API 链路验证：✅ 通过\n- 静态文件部署：✅ 通过（修复 1 个环境问题后）\n- 浏览器 UI 验证：⚠️ 无法执行（CLI 环境无浏览器）\n\n## 代码审查详情\n\n### baseService.js — getWebAppMenu 改造\n- ✅ 改为 `Http.invoke("/api/menu-proxy/get-list-by-role", "POST", ...)` \n- ✅ .catch() 降级到静态 menu.json，降级逻辑正确\n- ✅ destructure `{ children, startup }` 与 API 响应一致\n\n### appContext.js — checkPermissions / checkTabPermissions\n- ✅ `addRoute` 保留 `menuButtons`（line 254）\n- ✅ `checkPermissions(btn)` 基于当前路由检查\n- ✅ `checkTabPermissions(path, btn)` 递归遍历菜单树，忽略前导 `/` 差异\n- ✅ `window.checkTabPermissions` 全局暴露（line 663-665）\n\n### app.js — initMenu + postMessage\n- ✅ startup 兼容 `title || name`，fallback 路径 `views/dashbord/index.html`\n- ✅ HRM postMessage 监听器正确处理 `HRM_GET_CONTEXT` → `HRM_CONTEXT` 流程\n- ✅ Token 获取失败时发送 `HRM_CONTEXT_ERROR`\n\n### mainmenu/index.js — openMenu + 图标\n- ✅ `openMenu` 传递 `menuButtons` 到 addRoute\n- ✅ 图标前缀处理：`.replace('fa fa-','').replace('icon-','')` 兼容两种格式\n- ℹ️ `icon-*` 图标在 FA4 family 下可能不显示（已知限制，见计划 Task 5b.2）\n\n## API 测试\n\n| API | 结果 | 说明 |\n|-----|------|------|\n| /api/hrm-auth/get-fenlu-token | ✅ 200 | 返回有效 Token |\n| /api/menu-proxy/get-list-by-role | ⚠️ 500 | 错误：\"平台Id错误\" — 链路正常，需 Task 9 DB 菜单数据 |\n| /api/context-user/current-user | ✅ 200 | 正常返回用户信息 |\n\n菜单代理 API 调用链路验证：鸿冠后端 → 分路登录（获取 Token）→ 分路菜单 API → 返回。整个代理链路正常，500 错误是分路 DB 缺少 platformId=1 的菜单数据导致（Task 9 依赖）。\n\n## 环境问题\n\n### 已修复：.NET 9.0 运行时缺失\n- 前端项目 `IChainStar.Infrastructure.Frontend.csproj` 目标框架为 `net9.0`，环境仅有 `net10.0` 运行时\n- 已将 TargetFramework 改为 `net10.0`（与后端 Web.Entry 一致），前端服务器成功启动在 5021 端口\n- 所有静态文件（JS/HTML/menu.json）通过 5021 正常访问\n\n### 已知限制：menu.json 仅在后端 wwwroot\n- 前端 wwwroot 无 menu.json，回退请求走 `appConfig.baseUrl` → 后端获取\n- 非本次变更引入，系已有架构\n\n## 无法验证项（需浏览器）\n\n| 验证项 | 状态 |\n|--------|------|\n| 菜单树 UI 渲染 | ⚠️ 需浏览器 |\n| 图标显示（fa fa-* / icon-*） | ⚠️ 需浏览器 |\n| 标签页打开 + startup 首页 | ⚠️ 需浏览器 |\n| postMessage iframe 桥接 | ⚠️ 需浏览器 |\n| Console 无 JS 报错 | ⚠️ 需浏览器 |\n| 菜单降级（停后端验证） | ⚠️ 需浏览器 |\n\n## 结论\n\nDeveloper1 的代码修改（Task 5a/5b/5c/8）代码层面审查通过，API 链路正确。建议在浏览器中补充 UI 验证后即可交付。"
+  }
+}

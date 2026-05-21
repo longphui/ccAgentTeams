@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1250-y7z8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T12:50:00+08:00",
+  "payload": {
+    "subject": "Save 接口报「组件列表不能为空」— 验证逻辑未适配新实体",
+    "context": "#002",
+    "content": "## 问题\n前端已传 Codes，但 Save（Create/Update）接口返回「组件列表不能为空」错误。\n\n## 排查方向\n实体改造后（#007），ProductComponent 已移除 ComponentProductId/ComponentUnit/ComponentQuantity，ProductComponentCode 新增了这些字段。验证逻辑可能还在检查旧字段：\n- DTO CheckData() 中是否还校验旧的 Components 列表非空\n- Service Save 方法中是否还有旧实体验证\n- 新旧字段映射是否正确（前端传 Codes，后端是否正确接收）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs"
+    ],
+    "actions": [
+      "排查 DTO CheckData 和 Service Save 中的验证逻辑",
+      "修复为新实体结构的验证方式",
+      "编译通过 0 Error"
+    ]
+  }
+}

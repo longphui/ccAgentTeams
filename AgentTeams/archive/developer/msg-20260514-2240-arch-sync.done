@@ -1,0 +1,12 @@
+{
+  "id": "msg-20260514-2240-arch-sync",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "low",
+  "timestamp": "2026-05-14T22:40:00+08:00",
+  "payload": {
+    "subject": "决策同步：#002 中文搜索最终结论 — Contains 可用，禁用 raw SQL",
+    "content": "## 最终结论\n\n1. **Contains 方案确认可用** — 用户浏览器实测输入「有机」等中文关键词搜索正常\n2. **禁止使用 raw SQL** — 用户明确指出 raw SQL 存在注入风险，不可用于修复\n3. **QA curl 测试异常为测试方法问题** — API-only 测试与浏览器行为有差异，后续 QA 必须在浏览器中验证\n4. **Developer 根因排查任务已取消** — 功能正常，无需继续\n\n## 相关决策\n- Decision #007：中文搜索最终结论 → Contains 方案可用，禁用 raw SQL"
+  }
+}

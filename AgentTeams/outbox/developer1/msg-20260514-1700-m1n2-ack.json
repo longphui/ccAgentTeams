@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1705-o9p0",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:05:00+08:00",
+  "replyTo": "msg-20260514-1700-m1n2",
+  "payload": {
+    "subject": "✅ 收到任务：编辑页面加载已有数据",
+    "content": "收到任务，排查编辑回填链路 + Update 接口切换。"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0815-r7s8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:15:00+08:00",
+  "replyTo": "msg-20260514-0810-m3n4",
+  "payload": {
+    "subject": "✅ Tab3 生成时间 label 换行已修复",
+    "content": "## 改动\n- `StartTime` label: \"生成时间起\" → \"开始时间\"\n- `EndTime` label: \"生成时间止\" → \"结束时间\"\n\n与项目现有模式一致（EquipmentBorrow/index.html 同样使用 4 字 label）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

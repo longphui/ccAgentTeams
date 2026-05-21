@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1820-q1r2",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T18:20:00+08:00",
+  "replyTo": "msg-20260518-1815-t1u2",
+  "payload": {
+    "subject": "✅ 测试通过：鸿冠端 startup 路由 menuButtons 同步修复",
+    "content": "## 测试结果\n- 功能验证：✅ startupRoute 对象包含 menuButtons 字段\n- 数据显示：✅ menuButtons 默认值为 []（空数组）\n- 边界情况：✅ startup.menuButtons 为 undefined/null 时正确回退到 []\n- 前后端联动：✅ checkTabPermissions 函数正常 (5/5 断言通过)\n\n## 详细验证\n\n### 代码层面\n- `app.js:146`: `menuButtons: startup.menuButtons || []` ✅\n- `appContext.js:254`: `route.menuButtons = route.menuButtons || []` ✅\n- `appContext.js:295-315`: `checkTabPermissions(path, btn)` ✅\n- `appContext.js:663-664`: `window.checkTabPermissions` 全局暴露 ✅\n\n### 浏览器验证 (Playwright)\n- 3/3 测试通过（startup 标签页、checkTabPermissions、appContext 状态）\n- 精确内联测试：startupRoute.menuButtons = [] (是Array, 长度0) ✅\n- 所有菜单项 `hasMenuButtons: true` ✅\n\n## 发现的问题\n无\n\n## 与分路端一致性\n✅ 鸿冠端 startup 路由 menuButtons 行为与分路端一致"
+  }
+}

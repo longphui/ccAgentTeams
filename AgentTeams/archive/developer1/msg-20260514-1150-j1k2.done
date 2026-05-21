@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1150-j1k2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:50:00+08:00",
+  "payload": {
+    "subject": "编码组合列表：编辑弹框无数据 + 删除确认无反应",
+    "context": "#002",
+    "content": "## 问题\n编码组合列表页（ProductComponents/index.html）：\n1. 点击编辑按钮 → 弹框打开但无已有数据填充\n2. 点击删除按钮 → 弹出确认框 → 确认后无任何反应\n\n## 排查方向\n- 编辑：state 传参是否正确，create_edit.html loadDetail 是否正常加载\n- 删除：layer.confirm 的 options.yes 回调中 delete API 是否触发",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ],
+    "actions": [
+      "排查编辑按钮传参和弹框数据加载链路",
+      "排查删除确认回调中的 API 调用是否正确触发",
+      "修复两个问题"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1411-tst9",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T14:11:00+08:00",
+  "payload": {
+    "subject": "测试请求：applyThemeToTarget CSS 变量注入修复（按钮渲染）",
+    "context": "#004",
+    "content": "## 测试重点\n请在浏览器验证以下功能：\n\n1. **嵌入模式按钮正常显示颜色**\n   - 通过 hrm-proxy 嵌入的分路页面\n   - 授权按钮（员工入职登记、编辑、离职）应显示正常颜色\n   - 检查 `<head>` 中存在 `<style id=\"theme\">` 含 `--colorPrimary` 等变量\n\n2. **lay-button 和 lay-link-button 均正常**\n   - 两类按钮都应显示正确颜色和文字\n   - 不再有空白按钮\n\n3. **独立模式不受影响**\n   - 直接访问分路页面，主题功能正常\n   - getRootWindow()?.appContext 存在时不走 stub\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ]
+  }
+}

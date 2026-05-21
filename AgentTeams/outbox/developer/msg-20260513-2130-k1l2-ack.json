@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-2200-c3d4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T22:00:00+08:00",
+  "replyTo": "msg-20260513-2130-k1l2",
+  "payload": {
+    "subject": "✅ 收到任务：重构 GetCodeRecordsByObject",
+    "content": "收到任务。改动涉及：DTO 改造、Service 重构、新增业务封装端点、Controller 适配、前端适配。预计 1-2 小时完成。"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "msg-20260512-170323-a1b2",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-12T17:03:23Z",
+  "payload": {
+    "subject": "项目同步：分路系统前后端 + CodeGenerator 功能全貌",
+    "context": "Architect 已完成项目调研，Developer 需要熟悉前后端代码库和 CodeGenerator 实现细节",
+    "content": "## 你需要熟悉的两个项目\n\n### 1. 前端 — Vue 3 零构建架构\n- **路径**: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2`\n- **核心文件**: `app.js`(入口), `appContext.js`(全局状态), `baseService.js`(HTTP客户端), `resloader.js`(资源加载器)\n- **分析文档**: `claude_lh.md`（必读）\n- **UI 组件**: LayuiVue 2.22.2，核心 CRUD 组件是 `LayPageView`\n- **子页面模式**: 每个功能 = `index.html`(列表) + `create_edit.html`(表单)，通过 `importresloader.js` 动态加载资源\n- **跨页面通信**: `getState()` / `state.return()` / `appContext.states` Map\n- **API 调用**: `Http.post/get`（旧API返回 `{success, result}`）或 `Http2.post/get`（新API返回 `{succeeded, data}`）\n- **权限控制**: `appContext.route.checkTabPermissions(pathName, btn)`\n\n### 2. 后端 — .NET Framework 4.8 + ABP\n- **路径**: `D:/work/cc/caikuangzi.fenlu/trunk`\n- **分析文档**: `claude_lh.md`（必读）\n- **三层结构**: Core（实体继承 `HRM_CompanyEntity`）→ Application（Service + DTO 继承 `HRM_CompanyEntityDto`）→ WebAppApi（Controller 继承 `SaltControllerBase`）\n- **DI**: ABP 约定注册，`IXxxService` → `XxxService` 自动绑定\n- **仓储**: `IRepository<T>` 构造函数注入\n- **返回值**: 查询→`PagedListOutput<T>`，增删改→`OutDto`\n\n### 3. CodeGenerator 已实现内容\n\n**前端 5 模块 10 页面** (位于 `views/CodeGenerator/`):\n| 模块 | 文件 | 说明 |\n|------|------|------|\n| bizCode | index.html + create_edit.html | 业务编码标识 CRUD |\n| bizField | index.html + create_edit.html | 业务字段定义 CRUD |\n| codeRule | index.html + create_edit.html + item_form.html | 编码规则 + 子项管理 |\n| codeRecord | index.html + detail.html | 编码记录查询 + 反查 |\n| generate | index.html | 编码生成页 |\n\n**后端实体**: `CodeRule`, `CodeRuleItem`, `CodeRecord`, `CodeRecordObject`, `BizCodeIdentifier`, `BizFieldDefinition`\n**后端服务**: `CodeGeneratorService` (路径: `SAHG.Salt.Application/CodeGenerator/`)\n**后端控制器**: `CodeGeneratorController` (路径: `SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/`)\n\n**设计文档**:\n- 前端方案: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claudePlan/CodeGeneratorPlan.md`\n- 后端方案: `D:/work/cc/caikuangzi.fenlu/trunk/claudePlan/CodeGeneratorPlan.md`\n\n### 4. 关键开发规范\n- 注释强制要求：所有文件必须有文件头注释、方法注释、关键逻辑注释\n- 前端按钮规范：`lay-link-button` 用于导航（需 href+target），`lay-button` 用于纯动作（只需 @click）\n- 后端规范：`[HRMLog(\"操作描述\")]` 审计、`#region` 分组、`CheckData()` 验证\n- 前端测试地址: `http://localhost:8095/v2/views/CodeGenerator/{模块}/index.html`\n- 后端测试地址: `http://localhost:8088/api/CodeGenerator/CodeGenerator/{action}`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claude_lh.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/claude_lh.md",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claudePlan/CodeGeneratorPlan.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/claudePlan/CodeGeneratorPlan.md",
+      "D:/work/cc/AgentTeams/shared/context.json"
+    ],
+    "actions": [
+      "阅读 claude_lh.md 了解前后端架构和规范",
+      "阅读 CodeGeneratorPlan.md 了解 CodeGenerator 设计",
+      "浏览 CodeGenerator 实际代码，对比设计与实现差异",
+      "确认对技术栈和开发流程无疑问后回复 ACK"
+    ],
+    "deadline": null
+  }
+}

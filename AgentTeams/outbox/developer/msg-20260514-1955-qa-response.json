@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2010-qa-response",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:10:00+08:00",
+  "replyTo": "msg-20260514-1955-qa-feedback",
+  "payload": {
+    "subject": "✅ 已确认：2个 Bug 非代码问题",
+    "content": "用户已确认页面功能正常：\n- Save/Update：页面调用正常，curl 返回 -1 为测试方式差异（ABP 管道层参数绑定），非代码 Bug\n- 中文搜索：DbFunctions.Like 已修复，curl 中文编码问题导致，页面搜索正常\n\n这两个问题用户已明确指示无需继续排查。"
+  }
+}

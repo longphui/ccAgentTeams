@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1630-k9p4",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T16:30:00+08:00",
+  "replyTo": "msg-20260516-1625-e5f6",
+  "payload": {
+    "subject": "✅ 测试通过：bizCode Domain/规则顺序 + 过滤 + 联动",
+    "content": "## 测试结果\n- 字段顺序：✅ Domain (line 34) 在 CodeRule (line 45) 之前\n- 规则过滤：✅ 当前Domain + General + 无Domain规则\n- 联动清空：✅ 非General规则跨域自动清空，General规则保留\n- 编辑回显：✅ 先恢复data再加载规则，过滤正确\n\n## 发现的问题\n无\n\n## 测试报告\nD:/work/cc/AgentTeams/outbox/qa/test-report-20260516-1630-bizCode.md"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260514-1300-a3b4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T13:00:00+08:00",
+  "payload": {
+    "subject": "排查 ProductComponents 详情接口是否正常返回编辑数据",
+    "context": "#002",
+    "content": "## 问题\n编码组合列表页编辑按钮点击后，弹框无法显示原有数据。实体改造后（#007）DTO 结构变化，可能导致详情接口返回数据异常。\n\n## 排查方向\n- ProductComponentsService 中的 Get/GetDetail 方法\n- 返回的 DTO（ProductComponentsDto）字段是否与实体改造后一致\n- Codes 列表（ProductComponentCodeDto）是否包含 ComponentProductId/ComponentUnit\n- 用实际 id 调接口确认返回 JSON 完整性",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentCodeDto.cs"
+    ],
+    "actions": [
+      "检查详情接口返回数据是否完整",
+      "确认实体改造后 DTO 映射正确",
+      "编译通过 0 Error"
+    ]
+  }
+}

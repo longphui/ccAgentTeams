@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260520-2220-a1b2",
+  "type": "REVIEW",
+  "from": "qa",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-20T22:20:00+08:00",
+  "replyTo": "msg-20260520-1400-t001",
+  "payload": {
+    "subject": "审查：测试规范文档 + UI 交互测试示例",
+    "context": "#005",
+    "content": "## 交付物\n\n1. **`AgentTeams/shared/conventions/test-standards.md`** — 通用测试规范文档（覆盖 8 个章节 + 3 个附录）\n2. **`AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js`** — 供应商管理页面 UI 交互测试示例（6 个用例）\n\n## 规范文档覆盖内容\n\n- 测试层级定义（7 层，含工具/执行者/频率）\n- UI 交互测试规范（按钮/弹窗/表单/列表/权限/错误处理，含代码示例）\n- API 测试规范（模板 + 响应验证项 + 分路三种 API 格式速查 + curl 文件方式强制规范）\n- JS 函数测试规范（Vitest 纯函数 + Playwright 浏览器全局函数，含代码示例）\n- 测试命名与目录规范（spec 文件命名/用例命名/截图目录/报告目录）\n- 测试数据管理（Mock 数据/数据原则/契约同步）\n- 回归测试（命名/时机/REGESSION 标记）\n- 测试执行（本地命令/CI 规划）\n- 附录：测试文件分工、现有资产盘点（含缺口分析）、验收清单\n\n## 示例测试用例\n\n供应商管理 UI 交互测试包含 6 个用例：\n1. 页面加载验证\n2. Tab 切换\n3. 按钮权限数据验证\n4. 权限联动（有权限/无权限对比）\n5. 空列表不崩溃\n6. 响应式窗口缩放\n\n## 需要审查的内容\n\n- 规范文档是否覆盖了所有必需的测试维度\n- 规范是否符合项目实际情况（零构建工具、Vue 3 全局构建、iframe 嵌入）\n- 测试层级定义和分工是否合理\n- 示例测试用例是否符合规范标准\n- 是否有遗漏的关键测试场景",
+    "files": [
+      "AgentTeams/shared/conventions/test-standards.md",
+      "AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js"
+    ],
+    "actions": [
+      "审查 test-standards.md 规范文档",
+      "审查 supplierManage-ui-interaction.spec.js 示例测试",
+      "如有修改意见发 FEEDBACK 回 QA"
+    ]
+  }
+}

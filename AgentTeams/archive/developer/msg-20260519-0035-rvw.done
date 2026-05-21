@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-0035-rvw",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-19T00:35:00+08:00",
+  "replyTo": "msg-20260519-0030-c3d4",
+  "payload": {
+    "subject": "✅ 审查通过：baseService.js hrmToken 无限循环修复",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（baseService.js 为已跟踪文件，状态 M）\n- csproj 注册：无需注册（JS 文件）\n- 编译：JS 文件无需编译\n\n### 审查详情\n\n| 检查项 | 结果 |\n|--------|------|\n| 🔒 安全 | ✅ history.replaceState 清理 URL 中 token，不残留于浏览器地址栏 |\n| 📐 前端规范 | ✅ var 匹配文件现有风格（存量代码统一 var），注释齐全 |\n| 🐛 Bug 风险 | ✅ 代码位置正确（isEmbedded 后 → localStorage 写入 → token 检查前），URL 清理正则 `/[&?]hrmToken=[^&]*/` 覆盖开头/中间/末尾三种位置 |\n| 📐 架构 | ✅ 与决策 #009（Token 过期防控 postMessage 方案）一致 |\n| 🔗 API 契约 | ✅ 契约 E 字段 hrmToken 传递链路完整 |\n\n### 修改确认\n- 第 7-19 行：`isEmbedded` 块内新增 hrmToken 提取 + localStorage 写入 + URL 清理 ✅\n- 第 24 行：`window.parent` 正确（分路页面 → hrm-proxy iframe → hrm-proxy 再通过 window.top 转发至主窗口 app.js）\n\n### 兼容性\n- `URLSearchParams`：Chrome 49+ / Firefox 44+ / Safari 10.3+ / Edge 17+，与该代码库已使用的 fetch/async/await/arrow functions 要求一致\n- `history.replaceState`：已做能力检测 `if (window.history && window.history.replaceState)`\n\n### 小建议（不阻塞通过）\n- 正则 `/[&?]hrmToken=[^&]*/` 在 `&hrmToken=abc&` 场景会残留末尾 `&`，但 `URLSearchParams` 生成的 URL 不会产生此格式，影响可忽略"
+  }
+}

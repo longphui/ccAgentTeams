@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1200-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-20T12:00:00+08:00",
+  "replyTo": "msg-20260520-1145-c3d4",
+  "payload": {
+    "subject": "✅ 收到任务：MenuProxyService 硬编码路径改为 iframe_ 前缀判断",
+    "content": "收到任务，预计 0.5 小时完成。"
+  }
+}

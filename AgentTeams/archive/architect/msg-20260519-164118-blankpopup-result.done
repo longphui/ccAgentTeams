@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-blankpopup-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T18:35:00+08:00",
+  "replyTo": "msg-20260519-blankpopup-test",
+  "payload": {
+    "subject": "✅ 测试通过：iframe 嵌入模式弹框空白修复（代码审查）",
+    "content": "## 测试结果\n- 功能验证：✅ 代码审查通过（stub 完整，逻辑正确）\n- 数据显示：N/A（纯前端变更）\n- 边界情况：✅ states Map 模块级共享、stateKey 唯一性保证\n- 前后端联动：N/A\n\n## 代码审查发现\n旧版 `getAppContext()` 仅返回 `getRootWindow()?.appContext`，嵌入模式下为 undefined，导致所有弹框空白。\n\n新版增加了完整 stub（约 4KB 新增）：\n- `openPage()` — 用 LayuiVue.layer 创建弹框\n- `states` Map — 模块级共享，stateKey 用 Date.now()+random 保证唯一\n- `route.checkTabPermissions()` — 按钮权限检查\n- `theme.applyThemeToTarget()` / `getDefaultTheme()` — 主题支持\n- `menu` / `layout` / `openWindow` — 其他 stub\n\n## 浏览器验证\n⚠️ 天津宏观世纪 (5021) 服务不可用，无法在浏览器中实际验证嵌入模式弹框。代码逻辑审查通过，建议在 5021 恢复后进行浏览器端验收。"
+  }
+}

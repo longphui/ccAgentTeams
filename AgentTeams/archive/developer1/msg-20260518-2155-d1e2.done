@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260518-2155-d1e2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-18T21:55:00+08:00",
+  "payload": {
+    "subject": "#004 Task 11: 创建 menu.json 菜单降级文件",
+    "context": "#004",
+    "content": "## 背景\n\nQA E2E 测试发现：`wwwroot/menu.json` 不存在。当前 `getWebAppMenu()` 在后端不可用时回退到 `/menu.json`，但该文件缺失，导致降级场景下用户看到空菜单。\n\n## 任务\n\n在鸿冠前端项目 `wwwroot/` 下创建 `menu.json`，内容为当前菜单 API 返回的完整 JSON。\n\n### 操作步骤\n\n1. 从鸿冠后端菜单 API 获取最新菜单数据（即当前正常加载的菜单响应）\n2. 将响应 JSON 保存为 `wwwroot/menu.json`\n3. `svn add wwwroot/menu.json`（如需要）\n\n### 验收标准\n\n- [ ] `wwwroot/menu.json` 文件存在且格式正确\n- [ ] JSON 内容与当前 API 菜单响应一致（含 HRM iframe 路径 40 项 + 鸿冠原生 141 项 + 其他）\n- [ ] 文件通过 SVN 版本控制\n\n### 注意\n\n- 菜单数据应包含所有顶级模块（含"人力管理"）和所有子菜单项\n- 不要手动构造 JSON，直接从现有 API 响应导出",
+    "files": ["wwwroot/menu.json"],
+    "actions": ["从菜单 API 导出 JSON", "保存到 wwwroot/menu.json", "svn add"],
+    "deadline": null
+  }
+}

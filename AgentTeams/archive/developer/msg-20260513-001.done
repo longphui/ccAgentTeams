@@ -1,0 +1,34 @@
+{
+  "id": "msg-20260513-001",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:00:00+08:00",
+  "payload": {
+    "subject": "生产工单产品编码生成 — 后端 + 前端实现",
+    "context": "为 ProduceWorkOrder 每个产品生成唯一编码（一物一码），触发 GenerateCode API，支持多维度编码查询",
+    "content": "## 参考文档\n- 需求: `AgentTeams/shared/requirements/001-生产工单产品编码生成.md`\n- 计划: `AgentTeams/shared/requirements/001-plan-生产工单产品编码生成.md`\n- 规范: `.claude/commands/fl-api-dev.md` (后端) + `.claude/commands/fl-html-dev.md` (前端)\n\n## 后端任务 (8 个文件)\n\n### 1. 新建 DTO\n- `SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs` — 继承 `ProduceWorkOrderOutput`，加 `GeneratedCodeCount`(int) 属性\n- `SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs` — 继承 `BaseInput`，字段: ObjectType, ObjectId, WorkOrderNo, ProductName, CodeValue, StartTime, EndTime\n\n### 2. CodeGenerator 模块扩展\n- `ICodeGeneratorService.cs` — 在 #region 统一查询 中新增方法签名 `PagedListOutput<CodeRecordDto> GetCodeRecordsByObject(CodeRecordSearchInput input)`\n- `CodeGeneratorService.cs` — 实现: 从 CodeRecordObject 入口筛选 ObjectType + ObjectId，关联 CodeRecord 过滤 CompanyId/CodeValue/时间范围，若传入 WorkOrderNo/ProductName 则再关联 ProduceWorkOrder 过滤。复用已有 GetCodeRecords 的 DTO 组装模式（批量查 RuleName/BizCodeName 避免 N+1）\n- `CodeGeneratorController.cs` — 新增 `[HttpPost] [CommonLog(\"多维度查询编码记录\")]` Action，入参 `SaltRequest<CodeRecordSearchInput>`\n\n### 3. ProduceWorkOrder 模块扩展\n- `IProduceWorkOrderService.cs` — 新增 `Task<dynamic> GetPageListForCodeGen(WorkOrderProductionPageSearchInput input)`\n- `ProduceWorkOrderService.cs` — 实现: 复用 `GetWorkOrderPage(input, false)` 获取工单，再批量查 CodeRecordObjects (ObjectType=\"ProduceWorkOrder\") group by ObjectId 统计数量，用 ObjectMapper 转为 `WorkOrderCodeGenOutput` 填充 GeneratedCodeCount，返回 `PagedListOutput<WorkOrderCodeGenOutput>`\n- `ProduceWorkOrderController.cs` — 新增 `[HttpPost] [PPMLog(\"查询编码管理工单列表\")]` Action\n\n## 前端任务 (2 个文件)\n\n### 4. index.html — 三 Tab 主页面\n路径: `v2/views/productionManage/commonProductionStages/index.html`\n- Tab1「未生成编码」: lay-page-view → GetPageListForCodeGen，操作列「生成编码」按钮 → 弹确认框（工单号/产品名/数量）→ Http.post GenerateCode\n- Tab2「已生成编码」: lay-page-view → GetPageListForCodeGen，操作列「查询编码」→ lay-link-button 打开 codeList.html\n- Tab3「编码记录」: lay-page-view → GetCodeRecords\n- 规范: importresloader 加载，getAppContext() 取上下文，PageMaper: { totalCount: 'count' }，权限控制 addType\n\n### 5. codeList.html — 编码查询弹窗\n路径: `v2/views/productionManage/commonProductionStages/codeList.html`\n- lay-page-view → GetCodeRecordsByObject\n- 筛选: 工单编号/商品名称/编码值/生成时间范围\n- staticFilter 传 ObjectType + ObjectId (从 URL params 取)\n\n## 规范要点\n- 后端: DTO 继承 `HRM_CompanyEntityDto`，Service 注释完整，Controller 日志按模块选 attribute\n- 前端: 区块注释 `<!-- ===== xxx ===== -->`，lay-link-button 必须有 href + target=\"_popup\"\n- 编译: `cmd //c \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe\" \"D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.sln\" //t:Build //p:Configuration=Debug //v:q`\n\n## 完成后\n编译通过 + 浏览器验证后，发送 RESULT 到 outbox/developer/",
+    "files": [
+      "SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs",
+      "SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "SAHG.Salt.Application/Produce/IProduceWorkOrderService.cs",
+      "SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProduceWorkOrderController.cs",
+      "v2/views/productionManage/commonProductionStages/index.html",
+      "v2/views/productionManage/commonProductionStages/codeList.html"
+    ],
+    "actions": [
+      "创建 WorkOrderCodeGenOutput.cs + CodeRecordSearchInput.cs DTO",
+      "扩展 CodeGenerator 模块（接口/服务/控制器）新增 GetCodeRecordsByObject",
+      "扩展 ProduceWorkOrder 模块（接口/服务/控制器）新增 GetPageListForCodeGen",
+      "创建三 Tab 主页面 index.html（含确认弹窗 + GenerateCode 调用）",
+      "创建编码查询弹窗 codeList.html（多维度筛选）",
+      "MSBuild 编译通过"
+    ],
+    "deadline": null
+  }
+}

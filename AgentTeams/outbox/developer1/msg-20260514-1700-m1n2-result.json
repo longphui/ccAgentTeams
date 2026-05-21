@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1750-u5v6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:50:00+08:00",
+  "replyTo": "msg-20260514-1700-m1n2",
+  "payload": {
+    "subject": "✅ 编辑页面数据回填已修复（PascalCase 根因）",
+    "content": "## 根因\n`loadDetail` 用 **camelCase** 读 `GetDetails` 响应，但后端返回 **PascalCase**（和 `doSave` 提交的 `ProductId`/`Codes[].ComponentProductId` 一致）。所有字段读到 `undefined`，表单无法回填。\n\n## 修复\n`loadDetail` 全部改为 PascalCase 读取：\n- `d.productId` → `d.ProductId`\n- `d.productCode` → `d.ProductCode`\n- `d.codes` → `d.Codes`\n- `c.componentProductId` → `c.ComponentProductId`\n- `c.componentUnit` → `c.ComponentUnit`\n- `c.codeValue` → `c.CodeValue`\n\n## 附带修复\n- `doSave` 编辑时调 `Update` 接口（传 `data.Id`），新增调 `Save`\n- `created()` 串行加载：`loadProducts()` → `loadDetail()`\n- 回填后逐行异步加载 `availableCodes`\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

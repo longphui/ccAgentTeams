@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1715-q1r2",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:15:00+08:00",
+  "payload": {
+    "subject": "审查请求：编辑页面数据回填 + Update 接口",
+    "context": "#002",
+    "content": "## 审查重点\n请重点检查以下内容：\n\n### 1. 编辑数据加载链路\n- `created()`: loadProducts() → loadDetail(state.id) 串行，确保下拉选项先加载\n- `loadDetail`: 正确映射 d.productId / d.productCode / codes[].componentProductId / .componentUnit / .codeValue\n- 回填后为每行异步加载 availableCodes（GetAvailableCodes API）\n\n### 2. Save/Update 分流\n- `doSave()`: 通过 this.editId 判断新增/编辑\n  - 新增 → POST /api/Produce/ProductComponents/Save\n  - 编辑 → POST /api/Produce/ProductComponents/Update（data 含 Id）\n- 消息提示区分「保存成功」/「修改成功」\n\n### 3. SVN\n- ProductComponents/ 下 3 个文件均为 A 状态，无新增文件",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

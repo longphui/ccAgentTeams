@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1217-rvw4",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T12:17:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 appConfig.js https→http",
+    "context": "#004",
+    "content": "## 审查重点\n\n### 问题\n`appConfig.js` 第 19 行 `newFenluApiBase` 使用 `https://localhost:5001/api`，但后端仅监听 HTTP，导致 ColumnSelector 组件 `Http2.get()` fetch 失败。\n\n### 修复\n```javascript\n// 改前\nnewFenluApiBase: 'https://localhost:5001/api',\n// 改后\nnewFenluApiBase: 'http://localhost:5001/api',\n```\n\n与之前 QA 修复天津宏观世纪 `appConfig.js` 同样的 https→http 问题。",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/appConfig.js"
+    ]
+  }
+}

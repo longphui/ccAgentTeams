@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260514-1100-m9n0",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:00:00+08:00",
+  "replyTo": "msg-20260514-1050-k7l8",
+  "payload": {
+    "subject": "✅ queryType 已改为枚举",
+    "content": "## 改动\n\n### 新增\n- `AvailableCodeQueryType.cs` — 枚举：`Product`（成品）/ `Component`（组件）\n\n### 修改\n- `IProductComponentsService`: `string queryType` → `AvailableCodeQueryType queryType`\n- `ProductComponentsService`: 硬编码 `\"product\"` → `AvailableCodeQueryType.Product`，`\"component\"` → `AvailableCodeQueryType.Component`\n- `ProductComponentsController`: 参数类型同步改为枚举（ASP.NET Web API 自动绑定 query string）\n- `.csproj`: 注册新文件\n\n### 编译\n- MSBuild: **0 Error**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/AvailableCodeQueryType.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ]
+  }
+}

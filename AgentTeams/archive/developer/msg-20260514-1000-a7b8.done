@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1000-a7b8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:00:00+08:00",
+  "payload": {
+    "subject": "修正：只需排除已选编码，不用排除成品编码",
+    "context": "#002",
+    "content": "## 修正\nmsg-20260514-0955-z6a7 的改动 2（排除成品编码）取消。只需：GetAvailableCodes 接受已选编码列表参数，后端排除即可。",
+    "files": [],
+    "actions": ["取消排除成品编码", "只做已选编码后端排除"],
+    "deadline": null
+  }
+}

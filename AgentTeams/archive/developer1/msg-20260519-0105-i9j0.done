@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260519-0105-i9j0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T01:05:00+08:00",
+  "payload": {
+    "subject": "修复 config.js 跨域 parent.tab SecurityError 导致页面空白",
+    "context": "#004",
+    "content": "## 问题\n\nHRM 页面加载后空白，Console 报错：\n```\nUncaught SecurityError: Failed to read a named property 'tab' from 'Window':\nBlocked a frame with origin \"http://localhost:8095\" from accessing a cross-origin frame.\n```\n\n## 根因\n\n`component/layui-vue/config.js` 第 2 行：\n```javascript\nvar layerTopTab = parent.tab\n```\n\n分路页面（8095）被嵌入天津宏观世纪（5021）的 iframe 中，`parent.tab` 是跨域访问，浏览器拦截，整行抛异常阻断后续脚本执行。\n\n13+ 个 HRM 页面都加载了这个文件（staffInfo、staffRecord、organization 等）。\n\n## 修复\n\n将 `config.js` 第 2 行改为 try-catch 包裹：\n```javascript\nvar layerTopTab;\ntry {\n    layerTopTab = parent.tab;\n} catch(e) {\n    layerTopTab = null;\n}\n```\n\n> 不影响同域场景下的原有行为。",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/component/layui-vue/config.js"
+    ],
+    "actions": [
+      "config.js 第 2 行 parent.tab 改为 try-catch 包裹",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

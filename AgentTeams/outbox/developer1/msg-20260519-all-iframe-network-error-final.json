@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-all-iframe-network-error-final",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T21:35:00+08:00",
+  "replyTo": "msg-20260519-all-iframe-network-error",
+  "payload": {
+    "subject": "✅ 已修复：所有 iframe 嵌入页面网络错误（已通过审查）",
+    "content": "## 根因\nhrapproval-apihost 修复将 `appConfig.baseUrl1 = location.origin` 覆盖为 HRM 代理地址 (8095)，HRM 网关不转发 `/api/` 路由导致全部请求失败。\n\n## 修复\n回滚 `baseService.js` 中 appConfig 覆盖代码，保留 `base-path` localStorage 初始化。\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

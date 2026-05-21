@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0920-v3w4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:20:00+08:00",
+  "replyTo": "msg-20260514-0920-u1v2",
+  "payload": {
+    "subject": "✅ 收到任务：添加组件 — 选择框/数量/单位同行",
+    "content": "收到，排查中。"
+  }
+}

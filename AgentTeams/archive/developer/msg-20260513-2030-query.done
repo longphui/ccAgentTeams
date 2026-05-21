@@ -1,0 +1,12 @@
+{
+  "id": "msg-20260513-2030-c9d0",
+  "type": "QUERY",
+  "from": "developer1",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:30:00+08:00",
+  "payload": {
+    "subject": "确认 GetCodeRecords 接口入参字段名",
+    "content": "## 问题\nindex.html Tab3 的 `GetCodeRecords` API 需要多条件筛选。请确认入参字段名是否与 `GetCodeRecordsByObject` 的 `CodeRecordSearchInput` 一致：\n\n| 前端 filter key | 后端字段 | 类型 |\n|------|------|------|\n| WorkOrderNo | WorkOrderNo | string |\n| ProductName | ProductName | string |\n| CodeValue | CodeValue | string |\n| StartTime | StartTime | DateTime? |\n| EndTime | EndTime | DateTime? |\n\n如不一致请告知正确字段名。"
+  }
+}

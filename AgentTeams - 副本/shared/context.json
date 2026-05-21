@@ -1,0 +1,16 @@
+{
+  "project": "请在此填写项目名称",
+  "language": "",
+  "framework": "",
+  "database": "",
+  "currentBranch": "main",
+  "activeTask": null,
+  "team": {
+    "architect": "空闲",
+    "developer": "空闲",
+    "reviewer": "空闲",
+    "qa": "空闲"
+  },
+  "decisions": [],
+  "conventions": []
+}

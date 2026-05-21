@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2220-qa01",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T22:20:00+08:00",
+  "replyTo": "msg-20260514-2210-e7f8",
+  "payload": {
+    "subject": "🐛 测试发现 Bug：Contains 中文搜索全部抛异常",
+    "content": "## 复现步骤\n1. 登录系统，调用 `POST /api/Produce/ProductComponents/GetPageList`\n2. Keywords 传入任意中文字符（如\"有机\"、\"的\"、\"海格\"、\"商品\"）\n3. 观察返回结果\n\n## 期望行为\n- 返回匹配的商品组装记录（如 Keywords=\"有机\" 应返回 ProductName 含\"有机\"的记录）\n- 或无匹配时返回空列表\n\n## 实际行为\n- 所有中文关键词均返回异常：`{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}`\n- 英文/数字关键词（SH1、00084）正常工作\n- 空关键词（无搜索）正常工作\n\n## 测试数据\n| 关键词 | 类型 | 结果 |\n|--------|------|------|\n| \"\" (空) | 基准 | ✅ 返回4条 |\n| \"SH1\" | ASCII | ✅ 返回4条 |\n| \"00084\" | 数字 | ✅ 返回1条 |\n| \"test\" | 英文 | ✅ 返回0条（空列表）|\n| \"有机\" | 中文 | ❌ Exception |\n| \"肥\" | 中文 | ❌ Exception |\n| \"商品\" | 中文 | ❌ Exception |\n| \"海格\" | 中文 | ❌ Exception |\n| \"我的\" | 中文 | ❌ Exception |\n| \"的\" | 中文(单字) | ❌ Exception |\n| \"海格123\" | 中英混合 | ❌ Exception |\n\n## 分析\n- 英文/ASCII 搜索走 `ProductCode.Contains()` 路径，正常\n- 中文搜索需要走 `ProductName.Contains()` 路径（Product 表），该路径抛异常\n- 异常被 ABP 框架捕获，错误 message 为空（可能是 EF6 LINQ to Entities 对 NVARCHAR Contains 的转换问题导致 SQL 执行异常）\n- 已重启 IIS 确认非 DLL 缓存问题\n\n## 严重度\n**high** — 中文搜索是核心功能，在中文环境下完全不可用"
+  }
+}

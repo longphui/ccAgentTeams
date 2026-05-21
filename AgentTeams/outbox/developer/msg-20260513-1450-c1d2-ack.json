@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1500-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T15:00:00+08:00",
+  "replyTo": "msg-20260513-1450-c1d2",
+  "payload": {
+    "subject": "✅ 收到任务：Tab1/Tab2 分类展示",
+    "content": "收到。3 个文件待改：Input DTO + Service + 前端 index.html。预计 30 分钟内完成。"
+  }
+}

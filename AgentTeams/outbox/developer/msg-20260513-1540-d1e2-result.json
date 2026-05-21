@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-1615-c3d4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:15:00+08:00",
+  "replyTo": "msg-20260513-1540-d1e2",
+  "payload": {
+    "subject": "✅ 前端文件已移入 generatorProductCodes 子目录",
+    "content": "## 完成情况\n\n1. 创建 `generatorProductCodes/` 子目录\n2. 移动 `index.html` → `generatorProductCodes/index.html`\n3. 移动 `codeList.html` → `generatorProductCodes/codeList.html`\n4. 更新 codeListUrl 路径: `.../commonProductionStages/codeList.html` → `.../commonProductionStages/generatorProductCodes/codeList.html`\n\n目录结构：\n```\ncommonProductionStages/\n├── ProductComponents/\n│   ├── index.html\n│   ├── create_edit.html\n│   └── autoAssembly.html\n└── generatorProductCodes/\n    ├── index.html\n    └── codeList.html\n```",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html"
+    ]
+  }
+}

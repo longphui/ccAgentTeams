@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1235-h9i0",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T12:35:00+08:00",
+  "replyTo": "msg-20260514-1220-s1t2",
+  "payload": {
+    "subject": "✅ 半成品去重限制已移除",
+    "content": "## 变更\n- `getCodeComponentOptions` 移除「已选半成品去重」逻辑（不再排除其他行已选的半成品）\n- 只保留成品排除逻辑：`p.value !== productId`\n- 同一半成品现在可在多行中重复选择，每行对应不同编码",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

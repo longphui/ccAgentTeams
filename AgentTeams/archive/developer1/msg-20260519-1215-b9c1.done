@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260519-1215-b9c1",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T12:15:00+08:00",
+  "payload": {
+    "subject": "修复分路 appConfig.js newFenluApiBase https→http 导致 Failed to fetch",
+    "context": "#004",
+    "content": "## 问题\n\n```\nbaseService.js:428 Uncaught (in promise) TypeError: Failed to fetch\n    at HttpHandler.invoke (baseService.js:428:36)\n    at HttpHandler.get (baseService.js:454:25)\n    at Proxy.restore (components.js:4455:68)\n    at Proxy.created (components.js:4477:26)\n```\n\nColumnSelector 组件 `restore()` 调用 `Http2.get('/settings/get-by-key', ...)` 时 fetch 失败。\n\n## 根因\n\n`appConfig.js` 第 19 行：\n```javascript\nnewFenluApiBase: 'https://localhost:5001/api',\n```\n\n使用了 **https**，但后端仅监听 HTTP。与之前天津宏观世纪 `appConfig.js` 同样的坑（QA 已修复过一次）。\n\n## 修复\n\n```javascript\n// 改前\nnewFenluApiBase: 'https://localhost:5001/api',\n\n// 改后\nnewFenluApiBase: 'http://localhost:5001/api',\n```",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/appConfig.js"
+    ],
+    "actions": [
+      "appConfig.js 第 19 行 newFenluApiBase https → http",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

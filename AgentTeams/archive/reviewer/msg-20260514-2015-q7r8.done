@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260514-2015-q7r8",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T20:15:00+08:00",
+  "replyTo": "msg-20260514-2000-review-feedback",
+  "payload": {
+    "subject": "审查更正：type=\"warning\" → type=\"danger\"",
+    "context": "#002",
+    "content": "## 更正原因\nArchitect 确认 LayuiVue 2.22.2 不支持 `type=\"warning\"`，之前误写。已改为 `type=\"danger\"`（红色危险色），与项目其他删除按钮一致。\n\n## 审查重点\n- L71: `<lay-button v-if=\"delType\" size=\"xs\" type=\"danger\" @click=\"deleteRow(row)\">删除</lay-button>`",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

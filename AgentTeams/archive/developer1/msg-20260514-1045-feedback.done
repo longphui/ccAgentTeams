@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260514-1045-j5k6",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:45:00+08:00",
+  "payload": {
+    "subject": "代码缺少注释 — 违反 fl-html-dev.md 规范",
+    "content": "## 问题\n新写的 .html 文件缺少注释。\n\n## 规范要求（fl-html-dev.md）\n- 文件头：`<!-- 模块名 — 列表/表单页 功能说明 路由 -->`\n- 模板区块：`<!-- ===== 工具栏按钮 ===== -->`\n- JS data 属性：`// 权限控制` `// 分页映射`\n- methods 方法：`// 删除确认弹窗` `// 刷新当前页`\n- 复杂逻辑：`// 本地新增子项用 _key 标识，提交时过滤 id`\n\n## 要求\n检查本次 #002 所有新建/修改的 .html 文件，补全注释。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html"
+    ],
+    "actions": ["补全所有新文件的注释"],
+    "deadline": null
+  }
+}

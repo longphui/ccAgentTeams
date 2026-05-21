@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2010-q7r8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:10:00+08:00",
+  "replyTo": "msg-20260513-2005-f6g7",
+  "payload": {
+    "subject": "✅ layer.confirm 回调已修复",
+    "content": "## 改动\n- `showConfirm` 方法中 `layer.confirm` 第三个位置参数回调 → `options.yes` 回调\n- LayuiVue 的 `layer.confirm(content, options)` 只接受两个参数，确认回调必须在 `options.yes` 中",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

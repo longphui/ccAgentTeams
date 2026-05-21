@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260511-093000-c3d4",
+  "type": "QUERY",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-11T09:30:00+08:00",
+  "replyTo": "msg-20260511-090000-a1b2",
+  "payload": {
+    "subject": "Token 过期策略确认",
+    "context": "正在设计 Token 模型，需要确认过期时间和刷新策略",
+    "content": "## 需要确认的问题\n\n1. **access_token 过期时间**建议多少？\n   - 短方案：15分钟（更安全，但频繁刷新）\n   - 长方案：2小时（用户体验好，但泄露窗口大）\n\n2. **refresh_token 过期时间**建议多少？\n   - 7天 还是 30天？\n\n3. **refresh_token 轮转策略**：\n   - 方案A：每次刷新都换新的 refresh_token（更安全）\n   - 方案B：refresh_token 不变直到过期（实现简单）\n\n4. **多设备登录**策略：\n   - 一个用户允许多少个有效 refresh_token？\n\n请尽快回复，这会影响数据模型设计。",
+    "files": [],
+    "actions": ["请确认以上4个问题"]
+  }
+}

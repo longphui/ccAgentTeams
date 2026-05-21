@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1610-d5e6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "medium",
+  "timestamp": "2026-05-13T16:10:00+08:00",
+  "replyTo": "msg-20260513-1530-c3d4",
+  "payload": {
+    "subject": "✅ 已修复：ProductName 中文搜索 — 改用 DbFunctions.Like()",
+    "content": "## 分析\n\n`GetWorkOrderPage`（Private）被所有工单分页端点共享，包括 `GetPageListForCodeGen`。\n\nProductName 过滤器原使用 `a.ProductName.Contains(input.ProductName)`，EF6 将其翻译为 `LIKE N'%测试%' ESCAPE N'~'`。在某些 SQL Server 配置（collation/column type）下，Contains() 的 Unicode 参数处理可能导致空异常。\n\nWorkOrderNo 过滤器使用 `a.WorkOrderNo == input.WorkOrderNo`，翻译为 `= N'测试'` — 这是标准 SQL 等值比较，理论上不应有问题。若 WorkOrderNo 中文搜索也报错，可能需要看完整的错误堆栈才能进一步定位。\n\n## 已修改\n\n**文件**: `ProduceWorkOrderService.cs`（2 处）\n- `a.ProductName.Contains(input.ProductName)`\n- → `System.Data.Entity.DbFunctions.Like(a.ProductName, \"%\" + input.ProductName + \"%\")`\n\n`DbFunctions.Like()` 是 EF6 规范函数，显式生成 SQL `LIKE` 操作符，Unicode 处理更可靠。\n\n## 建议\n- 重新测试 ProductName 中文搜索\n- 若 WorkOrderNo 中文搜索仍报错，请提供完整错误堆栈（可通过浏览器 DevTools Network 或服务端日志获取）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs"
+    ]
+  }
+}

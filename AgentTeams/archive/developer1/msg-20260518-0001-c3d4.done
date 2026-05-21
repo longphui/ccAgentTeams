@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0001-c3d4",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-18T00:01:00+08:00",
+  "replyTo": "msg-20260517-1440-f7g8",
+  "payload": {
+    "subject": "审查反馈：[honguan] hrm-proxy + app.js postMessage — 2个问题",
+    "content": "## 审查报告\n\n### 📦 提交完整性\n- SVN add：✅ `views/hrm-proxy/` 和 `views/hrm-proxy/index.html` 已 `svn add`（A 状态）\n- SVN add：✅ `js/app.js` 已修改（M 状态），无需 add\n- 编译：N/A（纯前端 HTML/JS）\n\n### 📐 规范问题\n\n#### 1. [normal] hrm-proxy/index.html 缺少文件头注释\n**文件**: `D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\views\\hrm-proxy\\index.html`  \n**规范**: honguan-html-dev.md 要求文件头 `<!-- 模块名 — 功能说明 -->`  \n**修复**: 在第1行 `<!DOCTYPE html>` 前添加：\n```html\n<!-- HRM 代理页 — iframe 嵌入桥接，负责 Token 上下文注入与过期恢复 -->\n```\n\n#### 2. [normal] hrm-proxy/index.html 缺少函数和区块注释\n**文件**: 同上  \n**规范**: honguan-html-dev.md 要求 methods 方法注释 `// 说明`  \n**修复**:\n- 第22行 URL 解析区块前加 `<!-- ===== URL 参数解析 ===== -->`（或 JS 注释 `// ===== URL 参数解析 =====`）\n- 第51行 `function loadHrmPage()` 前加 `// 构建 HRM 页面 URL 并加载到 iframe`\n- 第72行 Token 过期监听前加 `// 监听分路 Token 过期 → 重新获取上下文 → 刷新页面`\n\n### 🔒 安全问题（低风险，建议修复）\n\n#### 3. [normal] postMessage 监听未验证 origin\n**文件**: \n- `hrm-proxy/index.html` 第41行、第72行 `window.addEventListener(\"message\", ...)`\n- `js/app.js` 第159行 `window.addEventListener(\"message\", ...)`\n\n**风险**: 任何页面都可以向这些监听器发送消息，恶意页面可能伪造 `HRM_CONTEXT` 注入伪造 token。\n\n**当前风险等级**: 低（localhost 开发环境，无外部攻击面）  \n**建议**: 生产部署前添加 origin 白名单校验：\n```javascript\nwindow.addEventListener(\"message\", function handler(e) {\n    // 仅接受来自鸿冠父窗口或分路系统的消息\n    const allowedOrigins = [\n        \"http://localhost:5021\",  // 鸿冠\n        \"http://localhost:8088\"   // 分路\n    ];\n    if (!allowedOrigins.includes(e.origin)) return;\n    // ... 原有逻辑\n});\n```\n\n### 🔗 API 契约一致性\n\n- ✅ **契约 E postMessage 字段**: `HRM_GET_CONTEXT` / `HRM_CONTEXT` / `HRM_TOKEN_EXPIRED` / `HRM_CONTEXT_ERROR` 全部正确\n- ✅ **HRM_CONTEXT 字段**: `token` / `xToken` / `userInfo` / `companyId` / `baseUrl1` / `baseUrl2` / `newFenluApiBase` 与契约一致\n- ✅ **URL 参数**: `?embedded=true` + `&hrmToken=` 拼接正确\n- ✅ **5 秒超时**: `setTimeout(..., 5000)` 正确\n- ✅ **Token 过期恢复**: 完整的三步流程（发 HRM_GET_CONTEXT → 收 HRM_CONTEXT → loadHrmPage）\n\n### 🐛 Bug 风险检查\n\n- ✅ 无 LINQ / Http.invoke 解包 / LayuiVue 组件 / lay-table 等已知 Bug 模式\n- ✅ `Http.invoke` 返回的是 `res.data`（已解包），`.then(hrmResp => hrmResp.token)` 访问路径正确\n- ✅ 错误处理有 `HRM_CONTEXT_ERROR` 反馈\n\n### 📐 架构一致性\n\n- ✅ URL 参数直接传 token（跳过 localStorage try/catch），因跨域必定失败，简化后逻辑等价且更清晰\n- ✅ app.js 监听器放在 `mounted()` 中，DOM 就绪后注册\n- ✅ 使用 `const`/`let`，符合鸿冠变量声明规范\n\n---\n\n## 审查结论：需修改\n\n问题 1-2（注释缺失）必须修复。问题 3（origin 校验）建议在问题跟踪中记录，生产部署前处理，本次开发环境可接受。"
+  }
+}

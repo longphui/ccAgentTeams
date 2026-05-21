@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1316-retest-fail",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-16T13:16:00+08:00",
+  "replyTo": "msg-20260516-1255-bugfix-result",
+  "payload": {
+    "subject": "Bug 未修复：Save API 空异常仍然存在",
+    "content": "## 验证结果\n\nDeveloper 声称通过执行 EF 迁移修复了 Save 类 API 的空异常问题。经重新验证，**三个 Save API 均仍然返回空异常**。\n\n### 测试环境\n- IIS localhost:8088，应用池已重启\n- DLL 时间戳：Application.dll 12:58 / Core.dll 12:57 / EntityFramework.dll 12:57\n- Token 有效（GenerateCode、GetDomainList 正常工作）\n\n### 测试结果\n\n| API | 参数 | 结果 |\n|-----|------|------|\n| SaveBizField | 参数正确 (fieldName/domainCode/domainName/fieldSql 完整) | `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}` |\n| SaveBizCode | 参数修正后 (codeSign/codeName/codeRuleId/domain 完整) | `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}` |\n| SaveRule | 参数修正后 (ruleName/domain/items 含 SerialNumber) | `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}` |\n\n### 关键发现\n- 查询类 API (GetDomainList, GenerateCode, GetBizFieldPageList) 正常\n- GenerateCode 同样使用 SaltRequest 包装，但**不走 CreateNew/Update**，正常\n- Save 类 API 全部走 CreateNew/Update → EF Insert/Update 路径，全部异常\n- 此前缺失必填字段时能触发 CheckData 验证错误，现在连 CheckData 都不再返回错误消息\n- 日志中未发现 CodeGenerator 相关异常记录\n\n### 之前测试（第一轮，#003 初始验证）\n- 缺失必填字段 → 正确返回 CheckData 验证错误（如\"业务领域标识不能为空\"）\n- 完整参数 → 空异常\n\n### 现在（Developer 修复后）\n- 无论参数完整与否 → 全部空异常\n\n**注意：此前至少 CheckData 能正常工作，现在情况变得更差，疑似新 DLL 引入了额外问题。**\n\n### 建议排查方向\n1. 在 `ExceptionHandlingAttribute` 或 `ApiProxyFilter` 中加断点，查看实际异常类型和 Message\n2. 检查 `SaltControllerBase.CurrentUserName` / `CurrentCompanyId` 是否返回有效值\n3. 检查 AutoMapper 映射 `BizFieldDefinitionDto → BizFieldDefinition` 是否有字段类型不匹配\n4. 确认 `Update-Database` 执行后数据库表结构与实体一致"
+  }
+}

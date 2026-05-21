@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260516-1450-sortOrder",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:55:00+08:00",
+  "payload": {
+    "subject": "GetRuleDetails 子项列表未按 SortOrder 排序",
+    "context": "#003",
+    "content": "## Bug\n\n`CodeGeneratorService.cs` 中 `GetRuleDetails` 返回的子项列表未按 `SortOrder` 排序，编辑页面上子项显示顺序混乱。\n\n## 根因\n\nLine 83：\n```csharp\nrule.Items = rule.Items.Where(i => !i.IsDeleted).ToList();\n```\n只过滤了软删除，缺少 `OrderBy`。\n\n对比 `GenerateCode`（Line 476）已正确排序：\n```csharp\nvar items = rule.Items.Where(i => !i.IsDeleted).OrderBy(i => i.SortOrder).ToList();\n```\n\n## 修复\n\nLine 83 改为：\n```csharp\nrule.Items = rule.Items.Where(i => !i.IsDeleted).OrderBy(i => i.SortOrder).ToList();\n```\n\n## 涉及文件\n\n- `SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs` — GetRuleDetails 方法",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ],
+    "actions": [
+      "GetRuleDetails 加 .OrderBy(i => i.SortOrder)",
+      "编译验证 Application.csproj 0 Error",
+      "svn commit",
+      "完成后发 REVIEW 给 reviewer"
+    ],
+    "deadline": null
+  }
+}

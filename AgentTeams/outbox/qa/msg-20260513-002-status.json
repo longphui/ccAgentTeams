@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-190000-c2d3",
+  "type": "STATUS",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T11:00:00Z",
+  "replyTo": "msg-20260513-002",
+  "payload": {
+    "subject": "测试计划与用例已就绪，等待 Developer 完成",
+    "content": "## 当前状态\n\n### 已完成\n- 消息 `msg-20260513-002` 已标记为 processing\n- 读取需求文档 `001-生产工单产品编码生成.md`\n- 读取实施计划 `001-plan-生产工单产品编码生成.md`\n- 分析现有后端代码（ProduceWorkOrderController / CodeGeneratorController / Service 层 / DTO 层）\n- 确认前端文件尚未创建（expected，Developer 待开始）\n\n### 已产出\n- 测试计划: `outbox/qa/test-plan-20260513.md` — 4 个测试维度，32+ 用例\n- 测试用例: `outbox/qa/test-cases-20260513.md` — 详细用例含入参/期望/严重度\n\n### 用例覆盖\n| 维度 | 用例数 | 状态 |\n|------|--------|------|\n| 接口测试（API） | 15 | 待执行 |\n| 前端验证（UI） | 9 | 待执行 |\n| 安全测试（Security） | 5 | 待执行 |\n| 边界测试（Edge） | 5 | 待执行 |\n| **合计** | **34** | |\n\n### 关键测试用例\n- TC-API-012/013: GenerateCode 单条/批量生成（核心功能）\n- TC-UI-005: 确认弹窗 → 生成编码 → 列表刷新（核心流程）\n- TC-SEC-001~003: SQL 注入（高优先级安全）\n- TC-SEC-004: 越权访问（高优先级安全）\n- TC-EDGE-002: Count > 1000（边界保护）\n\n## 阻塞项\n- **等待 Developer 完成 Task 1-7（后端 DTO + Service + Controller 实现 + 前端两个页面 + 编译部署）**\n- Developer 完成后即可立即开始执行测试",
+    "files": [
+      "outbox/qa/test-plan-20260513.md",
+      "outbox/qa/test-cases-20260513.md"
+    ]
+  }
+}

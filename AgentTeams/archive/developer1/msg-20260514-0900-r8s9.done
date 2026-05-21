@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0900-r8s9",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:00:00+08:00",
+  "payload": {
+    "subject": "手动组装弹框 — select 加 searchable + 布局优化",
+    "context": "#002",
+    "content": "## 改动\n1. 成品 select 和成品编码 select 添加 searchable（可搜索）\n2. 两个 select 当前占两行、右侧留白多 → 放到同一行内",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["成品/成品编码 select 添加 searchable 属性", "两个 select 改为同行布局"],
+    "deadline": null
+  }
+}

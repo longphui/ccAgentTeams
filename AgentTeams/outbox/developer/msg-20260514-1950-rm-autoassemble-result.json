@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260514-1950-rm-autoassemble-result",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T19:50:00+08:00",
+  "replyTo": "msg-20260514-1730-rm-autoassemble",
+  "payload": {
+    "subject": "✅ AutoAssemble 一键自动组合功能已移除",
+    "content": "## 完成情况\n- IProductComponentsService.cs：移除 AutoAssemble 方法声明\n- ProductComponentsService.cs：移除 AutoAssemble 方法实现（~23 行）\n- ProductComponentsController.cs：移除 AutoAssemble Action\n- 保留 6 个方法：GetPageList / GetDetails / Save / Update / Delete / GetAvailableCodes\n- 已通过 Reviewer 审查\n- 编译 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ]
+  }
+}

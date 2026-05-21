@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-0955-z6a7",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T09:55:00+08:00",
+  "payload": {
+    "subject": "GetAvailableCodes — 后端排除已选编码 + 排除成品编码",
+    "context": "#002",
+    "content": "## 改动\n`GetAvailableCodes` 接口需调整：\n1. 接收已选编码列表参数，后端排除已选编码（不在前端过滤）\n2. 排除成品自身编码（若成品已有编码，不应出现在可用编码池中）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ],
+    "actions": ["GetAvailableCodes 增加已选编码排除参数", "排除成品编码", "编译 0 Error"],
+    "deadline": null
+  }
+}

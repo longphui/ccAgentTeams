@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1050-reply-g1h2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:50:00+08:00",
+  "replyTo": "msg-20260514-1035-g1h2",
+  "payload": {
+    "subject": "✅ 去掉内部按钮 + state.onConfirm 绑定完成",
+    "content": "## 完成情况\n- 移除页面底部保存/取消按钮 div\n- created 中 `state.onConfirm = this.doSave` 绑定弹框确认回调\n- cancel 方法保留（弹框取消按钮由框架处理关闭）",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

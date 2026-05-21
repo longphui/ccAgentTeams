@@ -1,0 +1,27 @@
+{
+  "id": "msg-20260513-002",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:00:00+08:00",
+  "payload": {
+    "subject": "生产工单产品编码生成 — 测试验证",
+    "context": "Developer 完成后端+前端实现后，QA 负责接口测试和浏览器验证",
+    "content": "## 参考文档\n- 需求: `AgentTeams/shared/requirements/001-生产工单产品编码生成.md`\n- 计划: `AgentTeams/shared/requirements/001-plan-生产工单产品编码生成.md`\n\n## 测试环境\n- API: `http://localhost:8088`，账号 hongbin/123456，公司 2026\n- 前端: `http://localhost:8095/v2/views/productionManage/commonProductionStages/index.html`\n- IIS 应用池: 8088_fenluapi\n\n## 测试用例\n\n### 1. 接口测试\n- 先 Login 获取 Token\n- `POST /api/Produce/ProduceWorkOrder/GetPageListForCodeGen` — 返回工单列表含 generatedCodeCount\n- `POST /api/CodeGenerator/CodeGenerator/GetCodeRecordsByObject` — 按 ObjectType=ProduceWorkOrder 查询，测试各筛选条件（工单号/商品/编码值/时间范围）\n- `POST /api/CodeGenerator/CodeGenerator/Generate` — CodeSign=ProductCode，Objects 含 ProduceWorkOrder+Product\n\n### 2. 前端验证\n- 页面加载 → 三个 Tab 正常切换\n- Tab1 未生成编码 → 列表正确 → 点击生成编码 → 确认弹窗信息正确 → 确认后提示成功\n- Tab2 已生成编码 → 列表正确 → 点击查询编码 → 弹窗打开，筛选正常\n- Tab3 编码记录 → 列表正确\n\n### 3. 安全测试\n- SQL 注入: 搜索框输入 `' OR '1'='1`\n- 越权: 修改 ObjectId 查其他公司工单编码\n\n### 4. 边界测试\n- Count=0 或 Count>1000 时 GenerateCode 应报错\n- 工单无 ProductCode 配置时 GenerateCode 应报错\n\n## 完成后\n发送 RESULT (含测试报告) 到 outbox/qa/",
+    "files": [
+      "AgentTeams/shared/requirements/001-生产工单产品编码生成.md"
+    ],
+    "actions": [
+      "登录获取 Token",
+      "测试 GetPageListForCodeGen 接口",
+      "测试 GetCodeRecordsByObject 接口（含各筛选维度）",
+      "测试 GenerateCode 接口（ProductCode）",
+      "浏览器验证前端三 Tab 页面",
+      "安全测试（SQL注入/越权）",
+      "边界测试（Count 范围/配置缺失）",
+      "输出测试报告"
+    ],
+    "deadline": null
+  }
+}

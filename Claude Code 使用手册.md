@@ -1,0 +1,213 @@
+# Claude Code 使用手册
+
+## 目录
+
+- [一、常用斜杠命令](#一常用斜杠命令)
+- [二、快捷键](#二快捷键)
+- [三、交互模式](#三交互模式)
+- [四、启动参数](#四启动参数)
+- [五、项目配置（CLAUDE.md）](#五项目配置claudemd)
+- [六、MCP 接入](#六mcp-接入)
+- [七、Skill（技能）](#七skill技能)
+- [八、SubAgent（子代理）](#八subagent子代理)
+- [九、Plugin（插件）](#九plugin插件)
+- [十、实用技巧](#十实用技巧)
+
+---
+
+## 一、常用斜杠命令
+
+### 会话管理
+
+| 命令 | 说明 |
+|------|------|
+| `/clear` | 清空当前对话历史，重新开始 |
+| `/compact [提示词]` | 压缩对话历史，释放上下文空间。可追加提示词精确控制压缩范围 |
+| `/resume` | 恢复之前的对话 |
+| `/fork` | 分叉当前会话，复制一份单独处理。适合尝试不同方案，互不干扰 |
+| `/btw` | 临时侧边对话，不打断主线任务，同时节省 Token |
+| `/exit` | 退出 Claude Code |
+
+### 开发辅助
+
+| 命令 | 说明 |
+|------|------|
+| `/review` | 请求代码审查，让 Claude 检查当前改动 |
+| `/rewind` | 回滚代码到上一个版本 |
+| `/model` | 选择模型 |
+| `/context` | 查看当前上下文占用情况 |
+| `/cost` | 查看当前会话已消耗的 Token 数量 |
+| `/tasks` | 查看后台任务 |
+
+### 配置与扩展
+
+| 命令 | 说明 |
+|------|------|
+| `/init` | 在项目根目录生成 CLAUDE.md 项目级全局配置文件 |
+| `/mcp` | 查看已支持的 MCP Server |
+| `/hooks` | 查看和管理钩子，可在命令执行前后插入自定义命令 |
+| `/agents` | 创建和管理子 Agent |
+| `/plugin` | 下载插件，包括 Skill、Agent、MCP 等能力扩展 |
+
+### 其他
+
+| 命令 | 说明 |
+|------|------|
+| `!` | 切换到 Bash 模式，可直接输入终端命令 |
+
+---
+
+## 二、快捷键
+
+| 快捷键 | 说明 |
+|--------|------|
+| `Alt + Enter` | 换行（输入多行内容时使用） |
+| `Ctrl + L` | 清屏，但保留对话历史 |
+| `Ctrl + C` | 中断 Claude 当前回答 |
+| `Ctrl + G` | 打开编辑器输入命令，关闭编辑器标签后自动将内容填入命令行 |
+| `Esc` | 退出当前选择菜单（如选模型时） |
+| `Esc + Esc` | 回滚代码（等同于 `/rewind`） |
+| `Tab` | 自动补全 / 切换选项 |
+| `Shift + Tab` | 切换交互模式（见下方"交互模式"章节） |
+
+---
+
+## 三、交互模式
+
+通过 `Shift + Tab` 在以下三种模式间循环切换：
+
+| 模式 | 标识 | 说明 |
+|------|------|------|
+| 默认模式 | `?` | 每次编辑代码前都会询问确认，适合需要精细控制的场景 |
+| 自动编辑 | `accept edits` | 自动同意所有编辑，不再逐次确认，适合信任 Claude 输出的场景 |
+| 规划模式 | `plan mode` | 只讨论方案，不执行任何实际操作，适合前期分析和方案设计 |
+
+---
+
+## 四、启动参数
+
+| 参数 | 说明 |
+|------|------|
+| `claude` | 启动新对话 |
+| `claude -c` | 继续上次的对话 |
+| `claude -p <提示词>` | 非交互模式（`--print`），输出响应后直接退出，适合管道和脚本调用 |
+| `claude --dangerously-skip-permissions` | 跳过所有权限确认，Claude 将直接执行命令（谨慎使用） |
+
+---
+
+## 五、项目配置（CLAUDE.md）
+
+执行 `/init` 会在项目根目录生成一个 `CLAUDE.md` 文件。它的本质是一套预先写好的 Prompt，用于为当前项目定义全局规则和约定。
+
+**典型用途：**
+
+- 指定项目的代码风格和命名规范
+- 声明项目的技术栈和依赖版本
+- 定义 Claude 应遵循的开发约定（如测试要求、提交格式等）
+- 排除不需要 Claude 处理的目录或文件
+
+也可以在用户目录 `~/.claude/CLAUDE.md` 创建全局配置，对所有项目生效。
+
+---
+
+## 六、MCP 接入
+
+MCP（Model Context Protocol）允许 Claude Code 连接外部工具和服务，扩展 Claude 的能力边界。
+
+**接入步骤：**
+
+1. 安装对应服务的 MCP 工具包（需查看官方文档）
+2. 输入 `/mcp`，选择对应的 MCP Server
+3. 完成授权
+4. 在提示词中传入页面地址即可使用，例如：
+
+```
+基于 http://mcp-server.com/your-page 改当前界面
+```
+
+---
+
+## 七、Skill（技能）
+
+Skill 是可复用的能力模块，存放在 `~/.claude/skills/<技能名>/SKILL.md`。
+
+### 7.1 SKILL.md 文件结构
+
+```yaml
+---
+name: pptx                                    # Skill 名称
+description: "描述该 Skill 的功能和触发场景"     # 功能描述，用于自动匹配
+license: Proprietary
+---
+
+# PPTX Skill
+
+## Quick Reference
+
+| Task | Guide |
+|------|-------|
+| Read/analyze content | `python -m markitdown presentation.pptx` |
+| Edit or create from template | Read [editing.md](editing.md) |
+| Create from scratch | Read [pptxgenjs.md](pptxgenjs.md) |
+
+---
+## Reading Content
+（此处编写 Skill 的具体使用说明）
+```
+
+### 7.2 调用方式
+
+| 方式 | 说明 |
+|------|------|
+| 自动匹配 | Claude Code 会根据 description 自动识别并调用对应 Skill |
+| 手动调用 | 输入 `/技能名`，例如 `/pptx` |
+
+### 7.3 参考资料
+
+- 官方示例：<https://github.com/anthropics/skills/blob/main/skills/pptx/SKILL.md>
+
+---
+
+## 八、SubAgent（子代理）
+
+SubAgent 拥有独立的上下文（Context），可独立完成子任务，不占用主对话空间。适合将复杂任务拆解为多个并行子任务。
+
+### 8.1 创建 SubAgent
+
+1. 输入 `/agents`，根据提示创建
+2. 创建完成后会在 `.claude/agents/` 目录下生成配置文件，如 `.claude/agents/code-review.md`
+
+### 8.2 配置文件格式
+
+```yaml
+---
+name: code-review                     # Agent 名称
+description: "Use this to review code."  # 能力描述
+model:                                # 指定使用的模型（可选）
+color: green                          # 执行时输出的标识颜色
+---
+```
+
+### 8.3 调用方式
+
+| 方式 | 说明 |
+|------|------|
+| 自动匹配 | Claude Code 会根据 description 自动调度 |
+| 手动调用 | 输入 `/agent名`，例如 `/code-review` |
+
+---
+
+## 九、Plugin（插件）
+
+通过 `/plugin` 命令可以下载一系列能力扩展，包括 Skill、Agent、MCP 等。插件是获取社区能力和官方工具的主要途径，安装后即可通过对应的命令或自动匹配使用。
+
+---
+
+## 十、实用技巧
+
+- **善用 `/compact`**：对话过长时及时压缩，避免上下文溢出导致回答质量下降。
+- **利用 CLAUDE.md 定制行为**：把项目规范写进配置，让 Claude 每次都遵守，减少重复说明。
+- **SubAgent 拆分复杂任务**：将大任务拆成多个子 Agent 并行执行，提升效率且互不干扰。
+- **Ctrl + G 编写长提示词**：需要输入多行、复杂的指令时，用编辑器编写比直接在终端输入更方便。
+- **plan mode 先规划再执行**：面对复杂需求，先切换到规划模式讨论方案，确认后再切回默认模式执行。
+- **`/btw` 临时提问**：想问个不相干的问题但不打断当前工作流时，用侧边对话最合适。

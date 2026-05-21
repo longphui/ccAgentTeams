@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-2156-r1",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T21:56:00+08:00",
+  "replyTo": "msg-20260514-2128-a1b2",
+  "payload": {
+    "subject": "✅ DbFunctions.Like → Contains 已完成",
+    "content": "## 完成情况\n- 三处 `DbFunctions.Like` 已改为 `Contains`\n- `%` 通配符拼接已移除\n- 编译通过 0 Error\n- ✅ 审查通过（Reviewer msg-20260514-2205-7a1b）\n- 📤 已发送 TEST 给 QA（msg-20260514-2156-z1y2）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

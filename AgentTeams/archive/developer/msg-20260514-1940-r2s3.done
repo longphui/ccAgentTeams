@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1940-r2s3",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:40:00+08:00",
+  "payload": {
+    "subject": "排查工单状态查询失效",
+    "context": "#001",
+    "content": "## 问题\n未生成编码页面，工单列表的工单状态查询失效。用户怀疑是之前 Statuss 改名为 Status 导致。\n\n## 排查\n- 检查 GetWorkOrderPage 接口中 Status 字段的过滤逻辑\n- 确认前端传入的字段名与后端 DTO 属性名一致\n- 确认数据库字段名和 DTO 映射正确",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ],
+    "actions": [
+      "排查 Status 过滤失效原因",
+      "修复后编译 0 Error",
+      "curl 验证状态筛选正常"
+    ],
+    "deadline": null
+  }
+}

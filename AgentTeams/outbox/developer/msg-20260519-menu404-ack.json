@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1640-ack1",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T16:40:00+08:00",
+  "replyTo": "msg-20260519-menu404",
+  "payload": {
+    "subject": "✅ 收到任务：人事审批菜单 URL 修复",
+    "content": "收到任务，预计 1 小时内完成。正在排查菜单 URL 数据源。"
+  }
+}

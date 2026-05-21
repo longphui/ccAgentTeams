@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260513-1950-d4e5",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:50:00+08:00",
+  "payload": {
+    "subject": "工单状态筛选参数名回退：Status → Statuss",
+    "context": "#001",
+    "content": "## 变更\n\n之前改的 `Statuss` → `Status` 需要回退。后端入参 `WorkOrderProductionPageSearchInput` 中属性名是 `Statuss`（双 s），前后端一致，无需修改。\n\n如果已经改成了 `Status`，请改回 `Statuss`。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "确认 filters1 中字段名为 Statuss（双 s），如已改为 Status 则回退"
+    ]
+  }
+}

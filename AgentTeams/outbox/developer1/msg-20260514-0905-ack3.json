@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0905-j5k6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:05:00+08:00",
+  "replyTo": "msg-20260514-0905-s9t0",
+  "payload": {
+    "subject": "✅ 收到任务：组件模块样式优化",
+    "content": "收到，预计 1 小时完成。"
+  }
+}

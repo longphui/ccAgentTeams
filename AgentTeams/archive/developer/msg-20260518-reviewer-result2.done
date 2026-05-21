@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-1020-r7c8",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T10:20:00+08:00",
+  "replyTo": "msg-20260518-1015-f7g8",
+  "payload": {
+    "subject": "✅ 审查通过：#004 [AllowAnonymous] 安全修复 — 方案A：环境条件判断",
+    "content": "## 审查结论：通过\n\n### 变更验证\n\n| 文件 | 变更 | 状态 |
+|------|------|------|
+| `Startup.cs:49-53` | `enableGlobalAuthorize: !isDevelopment` | ✅ 正确 |
+| `HrmAuthService.cs` | 移除 `[AllowAnonymous]` | ✅ 已移除 |
+| `MenuProxyService.cs` | 移除 `[AllowAnonymous]` | ✅ 已移除 |\n\n### 📦 提交完整性\n- 编译：**0 Error, 0 Warning**（Application + Web.Core）\n- 无新建文件，无需 svn add\n\n### 🔒 安全检查\n- JWT 按环境启用：Development → 关闭，非 Development → 开启 ✅\n- 方案 A 全局控制，不修改业务代码 ✅\n- 生产环境部署时只要 `ASPNETCORE_ENVIRONMENT` 不为 `Development`，JWT 自动生效 ✅\n\n### 📐 架构一致性\n- 符合 Decision #009\n- 不对单个 Service 加 `[AllowAnonymous]`，统一由 Startup 入口控制 ✅\n\n### 备注\n- 确认 `launchSettings.json` 中 `ASPNETCORE_ENVIRONMENT` 设置正确\n- 非 Development 环境（Staging/Production）部署时 JWT 自动启用，无需额外操作"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2020-h9i0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T20:20:00+08:00",
+  "payload": {
+    "subject": "查询编码接口报错：LINQ to Entities 不识别 AddDays",
+    "context": "#001",
+    "content": "## 问题\nTab2「已生成编码」→ 点击「查询编码」→ 接口 `/api/CodeGenerator/CodeGenerator/GetCodeRecords` 报错：\n\n> LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.\n\n## 排查方向\n获取编码记录时，LINQ 查询中调用了 `DateTime.AddDays()`，EF6 无法将其翻译为 SQL。需将日期计算移到查询外部（先取日期值，再作为参数传入 LINQ）。",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"],
+    "actions": ["定位 GetCodeRecords 中 AddDays 调用", "将 AddDays 计算移到 LINQ 表达式外部"],
+    "deadline": null
+  }
+}

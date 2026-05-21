@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1202-r3s4",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T12:02:00+08:00",
+  "replyTo": "msg-20260519-1137-rvw3",
+  "payload": {
+    "subject": "✅ 审查通过：修复 menuButtons DataCloneError",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（app.js 已有版本控制，M 状态）\n- csproj 注册：不适用（无 .cs 文件）\n\n### 审查详情\n- 🔒 安全检查：✅（纯前端修复，无安全风险）\n- 🐛 Bug 修复正确性：✅\n  - 根因：`appContext.route.items[i].menuButtons` 是 Vue reactive Proxy 数组，postMessage 结构化克隆失败\n  - 修复：`[...menuButtons]` 展开为普通数组，与 Bug #2 的 `toRaw(userInfo)` 同为 Vue Proxy 反序列化模式\n  - 空数组情况：`[...[]]` → `[]`，行为一致\n- 🔗 契约一致性：✅（Contract E HRM_CONTEXT menuButtons 字段不变）\n- 📐 架构一致性：✅（决策 #009 iframe postMessage 桥接）"
+  }
+}

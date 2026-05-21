@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0820-n4o5",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T08:20:00+08:00",
+  "payload": {
+    "subject": "手动组装弹框 — 商品 select 和编码 select 无选项",
+    "context": "#002",
+    "content": "## 问题\n手动组装弹框（create_edit.html）中：\n1. 商品下拉选择没有选项\n2. 编码下拉选择没有选项\n\n## 排查方向\n检查商品 select 和编码 select 的数据源 API 是否正常调用，以及下拉组件的选项绑定是否正确。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["排查商品 select 数据加载", "排查编码 select 数据加载", "修复后验证下拉选项正常显示"],
+    "deadline": null
+  }
+}

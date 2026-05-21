@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-0002-c3d4",
+  "type": "ALERT",
+  "from": "reviewer",
+  "to": "all",
+  "priority": "critical",
+  "timestamp": "2026-05-13T00:00:00Z",
+  "payload": {
+    "subject": "🚨 发现高危安全漏洞：CodeGeneratorService 动态 SQL 注入",
+    "content": "## 漏洞详情\n\n**文件**: `SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs` 第 573 行\n\n```csharp\nvar sql = $\"SELECT [{def.SourceField}] FROM [{def.SourceTable}] WHERE Id = @p0\";\nvar result = context.Database.SqlQuery<string>(sql, bizId).FirstOrDefault();\n```\n\n**风险**: `SourceTable` 和 `SourceField` 来自 `BizFieldDefinition` 表的用户配置数据。虽然有注释称\"来自管理端配置\"，但 `@p0` 仅参数化了 `WHERE Id = @p0` 中的 `bizId`，**表名和字段名直接拼入 SQL 字符串**。\n\n**攻击场景**: 若管理员账号被攻破（或内部恶意管理员），可在 `BizFieldDefinition.SourceTable` 中注入 `Orders; DROP TABLE CodeRecords; --` 等恶意 SQL。\n\n**修复方案**:\n1. 对 `SourceTable` 和 `SourceField` 做白名单正则校验（`^[a-zA-Z_][a-zA-Z0-9_]*$`）\n2. 在 DTO 的 `CheckData()` 中添加校验\n3. 或改用 Entity Framework 动态查询（`context.Set<T>().SqlQuery(...)` + 参数化）\n\n**影响范围**: 所有使用 `BizFieldDefinition` 的业务编码生成流程",
+    "files": ["outbox/reviewer/review-report-20260513.md"]
+  }
+}

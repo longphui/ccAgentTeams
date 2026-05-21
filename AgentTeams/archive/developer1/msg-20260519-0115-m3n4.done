@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260519-0115-m3n4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T01:15:00+08:00",
+  "payload": {
+    "subject": "将 menuButtons 权限传递到嵌入的分路页面",
+    "context": "#004",
+    "content": "## 问题\n\n嵌入的分路 HRM 页面无法控制按钮权限。`getAppContext()` stub 始终返回 true，所有按钮全显示。\n\n根因：menuButtons 在天津宏观世纪菜单中有正确值（如 员工信息: [\"add\",\"update\",\"delete\",\"search\",\"import\"]），但传到嵌入的分路页面这条链路断了。\n\n## 修复链路\n\n### Step 1: app.js — HRM_CONTEXT 响应中加入 menuButtons\n\n在 `mounted()` 的 message handler 中（约 L158-184），获取当前路由的 menuButtons：\n\n```javascript\nconst currentRouteId = appContext.route.currentRoute;\nconst currentRouteItem = appContext.route.items.find(r => r.id === currentRouteId);\nconst menuButtons = currentRouteItem?.menuButtons || [];\n```\n\n在 postMessage 的 HRM_CONTEXT 对象中加字段：\n```javascript\nmenuButtons: menuButtons\n```\n\n### Step 2: hrm-proxy/index.html — 接收并转发 menuButtons\n\n在 HRM_CONTEXT 消息处理中保存 menuButtons：\n```javascript\nlet menuButtons = [];\n// 在消息监听器中:\nmenuButtons = e.data.menuButtons || [];\n```\n\n在 `loadHrmPage()` 中追加 URL 参数：\n```javascript\nif (menuButtons.length > 0) {\n    targetUrl += \"&menuButtons=\" + encodeURIComponent(menuButtons.join(\",\"));\n}\n```\n\n### Step 3: 分路 util.js — getAppContext() stub 使用真实权限\n\n替换 `checkTabPermissions` 的硬编码 `return true` 为从 URL 读取：\n\n```javascript\nconst urlParams = new URLSearchParams(location.search);\nconst menuButtonsStr = urlParams.get(\"menuButtons\");\nconst menuButtons = menuButtonsStr ? menuButtonsStr.split(\",\") : [];\n// checkTabPermissions 改为:\ncheckTabPermissions: function(pathName, btn) {\n    return menuButtons.indexOf(btn) >= 0;\n},\n```\n\n## 验证\n1. 打开天津宏观世纪 ERP，点击「员工信息」\n2. 页面应正常加载，且「员工入职登记」「编辑」「导入员工信息」等按钮按权限显示/隐藏\n3. 对比 menu.json 中员工信息的 menuButtons 配置与实际页面按钮",
+    "files": [
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js",
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html",
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ],
+    "actions": [
+      "app.js HRM_CONTEXT 加入 menuButtons（从 currentRoute 获取）",
+      "hrm-proxy/index.html 接收 menuButtons 并追加到分路页面 URL",
+      "分路 util.js getAppContext() stub 从 URL 读取 menuButtons 控制权限",
+      "SVN 暂存所有修改",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

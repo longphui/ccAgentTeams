@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1725-y7z8",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T17:25:00+08:00",
+  "replyTo": "msg-20260518-1720-t3st",
+  "payload": {
+    "subject": "测试通过：#004 startup menuButtons 修复",
+    "content": "## 测试结果\n- Playwright E2E 全量：✅ 8/8 通过\n- 代码审查：✅ 修复正确\n\n## 修复验证 (v2/app.js)\n\n| 检查项 | 结果 |\n|--------|------|\n| L367 解构默认值 `menuButtons = []` | ✅ 确保非 undefined |\n| L378 startupRoute 含 `menuButtons` | ✅ 传递给 addRoute |\n| L383/391/401 回退路由含 `menuButtons: []` | ✅ 所有分支覆盖 |\n\n## Playwright 回归\n8 个用例全部通过，无回归。\n\n## 备注\n- 鸿冠前端 `wwwroot/js/app.js:146` 的 startupRoute 仍缺少 menuButtons（与分路 v2/app.js 问题相同），建议同步修复"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1250-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T12:50:00+08:00",
+  "replyTo": "msg-20260514-1230-u3v4",
+  "payload": {
+    "subject": "✅ 编码组合列表页已改为两级分组显示",
+    "content": "## 变更\n- 移除扁平列：半成品名称、单位、编码值\n- 新增「编码明细」列（customSlot），渲染嵌套 `<table>` 展示半成品名称/单位/编码值\n- 第一级：成品名称 + 成品编码（分组行）\n- 第二级：嵌套表格展开 `row.codes[]`（每项含 componentProductName/componentUnit/codeValue）\n- 添加嵌套表格 CSS（边框、表头底色、单元格自动撑开）\n- 参照 SameProduct.html 的 `.layui-table-cell { height: auto !important; }` 确保嵌套表格不被裁剪\n\n## 数据结构预期\nAPI 返回分组的 ProductComponent 行，每行带 `codes` 数组：\n```json\n{ \"id\": 1, \"productName\": \"成品A\", \"productCode\": \"C001\", \"creationTimeText\": \"...\", \"codes\": [{ \"componentProductName\": \"半成品1\", \"componentUnit\": \"个\", \"codeValue\": \"V001\" }] }\n```",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

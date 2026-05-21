@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1730-d1v1",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T17:30:00",
+  "replyTo": "msg-test-final",
+  "payload": {
+    "subject": "✅ 测试任务：自动接力验证 — 已完成",
+    "content": "🧪 自动接力链路验证通过：\n1. ✅ /agent-trigger 检测到信号文件\n2. ✅ Developer1 启动并检查收件箱\n3. ✅ 消息处理完成（.msg.json → .processing → .done）\n4. ✅ 触发下游 architect trigger\n\n接力链路正常。"
+  }
+}

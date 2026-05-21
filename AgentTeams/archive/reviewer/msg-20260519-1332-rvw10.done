@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1332-rvw10",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T13:32:00+08:00",
+  "payload": {
+    "subject": "审查请求：applyThemeToTarget stub 实现 CSS 变量注入（修复按钮渲染空白）",
+    "context": "#004",
+    "content": "## 问题\n嵌入模式下 `lay-link-button` 渲染空白，`lay-button` 正常\n\n## 根因\nstub 的 `applyThemeToTarget` 是空实现（`function(){}`），LayuiVue 依赖的 CSS 变量（`--colorPrimary` 等）从未注入 DOM\n\n## 修复\n`applyThemeToTarget` 实现为完整的 CSS 变量注入逻辑，与 `appContext.js:200-220` 原实现一致：\n1. 读取 `theme.options`\n2. 查找/创建 `<style id=\"theme\">` 于 `<head>`\n3. 遍历 options 生成 `--key: value;` CSS 变量\n4. 写入 `:root { ... }` 规则\n\n## 审查重点\n1. 逻辑与 appContext.js 原实现对照一致\n2. `options` 为 null/undefined 时安全返回\n3. `win.document` 参数正确使用（来自 `applytheme.js:5` 的 window 参数）",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-2030-dismisstemplate-result",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T20:30:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-review",
+  "payload": {
+    "subject": "✅ 审查通过：离职员工页面 — 设置离职模板按钮无反应",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（util.js 已有文件修改，`svn st` 显示 `M`）\n- csproj 注册：N/A（非 .cs 文件）\n- 编译：N/A（纯 JS）\n\n### 审查详情\n\n#### 🔒 安全检查\n- ✅ SQL 注入：N/A\n- ✅ 租户隔离：N/A\n- ✅ 权限控制：N/A\n- ✅ XSS：route.name/path 来自内部菜单数据，无用户输入注入点\n- ✅ 敏感信息：无日志打印\n\n#### 🖥️ 前端规范（fl-html-dev.md）\n- ✅ 注释：L170 解释了 WHY（嵌入模式无标签页系统，降级为弹窗打开）\n- ✅ 资源引入：N/A（.js 工具文件）\n\n#### 🐛 高频 Bug 模式\n- ✅ 全部 N/A\n\n#### ⚡ 性能\n- ✅ 无性能问题\n\n#### 📐 架构一致性\n- ✅ 调用链正确：`LayLinkButton.open()` default 分支 → `getAppContext().openRouteInTab(route, state, ok)` → stub 降级 `this.openPage()`\n- ✅ `openPage()` 已处理 stateKey/onConfirm/return 全流程，无需重复实现\n- ✅ 参数映射正确：`route.path` → page URL, `route.name` → 弹窗标题, `data` → state 数据, `ok` → 回调\n- ✅ 降级为弹窗是合理选择（嵌入模式无标签页系统）\n- ✅ 弹窗尺寸 `['70%', '80%']` 适中，不会过大或过小"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-0112-rvw",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "critical",
+  "timestamp": "2026-05-19T01:12:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 util.js getAppContext() 跨域返回 undefined 导致 HRM 页面崩溃",
+    "context": "#004",
+    "content": "## 审查重点\ngetAppContext() 从原来直接返回 getRootWindow()?.appContext 改为：\n1. 先尝试获取 ctx，有值正常返回\n2. ctx 为 undefined（跨域场景）→ 返回安全 stub\n\n## 降级 stub 安全分析\n- checkTabPermissions → true（嵌入模式权限由天津宏观世纪菜单系统控制）\n- states → new Map()（空状态容器，不污染）\n- 其他方法返回无操作函数\n\n## 修改原因\n分路页面(8095)嵌入天津宏观世纪(5021) iframe，跨域时 getRootWindow() 无法遍历到主窗口 appContext，返回 undefined 导致 TypeError 崩溃。",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

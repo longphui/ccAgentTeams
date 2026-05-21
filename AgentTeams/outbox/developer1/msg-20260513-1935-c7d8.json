@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-1935-c7d8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:35:00+08:00",
+  "replyTo": "msg-20260513-1930-a1b2",
+  "payload": {
+    "subject": "✅ 工单状态筛选字段名 Statuss → Status 已完成",
+    "content": "## 完成情况\n\n- `generatorProductCodes/index.html` line 81: `filters1` 中 `Statuss` → `Status`\n- 搜索整个前端项目确认：仅此文件在 #001 功能中使用 `Statuss`，其他 10 处 `Statuss` 出现在 produceManagePicking/warehouseManagement 等无关模块，属各自 API 的既定拼写约定，未修改\n\n变更后：Tab1 筛选器发送 `Status` 参数而非 `Statuss`，与后端 `ProduceWorkOrder.Status` 字段名一致。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"]
+  }
+}

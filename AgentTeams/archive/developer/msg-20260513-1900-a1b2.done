@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-1900-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:00:00+08:00",
+  "payload": {
+    "subject": "移除编码数量列 — 去掉 GeneratedCodeCount 和 COUNT 联查",
+    "context": "#001",
+    "content": "## 背景\n\n编码数量判断结果只有两种：0（未生成）或等于 PlannedProductionNum（已生成），无中间态，显示无意义，且 COUNT 联查拖慢速度。\n\n## 改动\n\n### 后端 — GetPageListForCodeGen\n1. 删除 CodeRecordObjects 的 COUNT 批量查询（约 8 行）\n2. `WorkOrderCodeGenOutput` 不再需要 `GeneratedCodeCount` 字段，移除赋值\n3. CodeGenStatus 过滤改为 SQL 级别：\n   - CodeGenStatus=0 → `WHERE NOT EXISTS (SELECT 1 FROM CodeRecordObjects WHERE ObjectType='ProduceWorkOrder' AND ObjectId = wo.Id AND !IsDeleted)`\n   - CodeGenStatus=1 → `WHERE EXISTS (...)`\n   - null → 不过滤\n4. 去掉 CodeGenStatus 的内存过滤逻辑（之前全表查出来再过滤、重新分页）\n\n### 前端 — index.html\n1. Tab1/Tab2 columns 去掉 `编码数量` 列\n2. 去掉 `<template v-slot:codeCount>` 模板\n3. 如果之前为了调试加了 `id`/`productId` 列，也一并去掉\n\n### DTO\n1. `WorkOrderCodeGenOutput` 去掉 `GeneratedCodeCount` 属性（如已添加的话）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "后端：删除 COUNT 联查 + GeneratedCodeCount 字段",
+      "后端：CodeGenStatus 过滤改为 SQL EXISTS/NOT EXISTS",
+      "前端：去掉编码数量列和 codeCount 模板",
+      "前端：如加了调试用的 id/productId 列也去掉",
+      "编译通过 0 Error"
+    ]
+  }
+}

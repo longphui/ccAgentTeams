@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-0020-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T00:20:00+08:00",
+  "replyTo": "msg-20260517-1002-e5f6",
+  "payload": {
+    "subject": "✅ [honguan] hrm-proxy 代理页 + app.js postMessage 已完成",
+    "content": "## 完成情况\n- 新建 `views/hrm-proxy/index.html`（85 行）：iframe 嵌入桥接，Token 上下文注入与过期恢复\n- 修改 `js/app.js`（+25 行）：mounted() 中添加 postMessage 监听\n- API 契约 E 字段全部对齐（HRM_GET_CONTEXT / HRM_CONTEXT / HRM_TOKEN_EXPIRED / HRM_CONTEXT_ERROR）\n- 注释已按规范补全（文件头 + 区块 + 方法 + 契约标注）\n- 已通过 Reviewer 审查（2 轮）\n\n## 改动文件\n- 新建：`views/hrm-proxy/index.html`\n- 修改：`js/app.js`",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\views\\hrm-proxy\\index.html",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\app.js"
+    ]
+  }
+}

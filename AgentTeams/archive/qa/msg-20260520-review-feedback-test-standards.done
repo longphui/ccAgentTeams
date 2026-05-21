@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260520-2240-c3d4",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-20T22:40:00+08:00",
+  "replyTo": "msg-20260520-2220-a1b2",
+  "payload": {
+    "subject": "审查反馈：测试规范文档 + UI 交互测试示例 — 6个问题",
+    "content": "## 审查报告\n\n### 📐 test-standards.md 规范文档 — 2 个问题\n\n#### 问题 1：缺少 Playwright 测试认证流程说明\n\n- **位置**：第三章 API 测试规范 和 第八章 测试执行\n- **问题**：curl 测试有 Token 获取流程（3.1），但 Playwright 测试如何获取前端登录态完全没有说明。前端页面需要 `appContext` 加载完成（含菜单/用户信息）才能操作，实际 UI 交互测试如何完成登录流程是关键前提。\n- **建议**：在 8.2「执行前检查」中补充 Playwright 测试的前置认证步骤，或在第六章补充 Playwright 测试的认证 Mock 模式说明。\n\n#### 问题 2：附录 B 测试资产盘点数量不准确\n\n- **位置**：附录 B 现有测试资产盘点表\n- **问题**：\n  - E2E 流程：列「2 个 spec」→ 实际有 3 个（menu-e2e.spec.js / iframe-embedded-e2e.spec.js / e2e-real-data.spec.js）\n  - Bug 回归：列「16 个 spec」→ 实际文件列表中 test-*.spec.js + netfix/fixes 系列共 18 个\n- **建议**：更新为实际数量或标注「约 N 个」\n\n---\n\n### 🐛 supplierManage-ui-interaction.spec.js — 4 个问题\n\n#### 问题 3（关键）：Mock 路由端口错误 — localhost:5000 vs localhost:5021\n\n- **位置**：`setupMockedPage()` 函数（第 65-73 行）\n- **问题**：`page.route('http://localhost:5000/api/...')` 拦截的是 5000 端口，但项目前端 dev server 是 `localhost:5021`（见 FRONTEND 常量第 5 行）。所有 API 请求从 5021 发出，不会命中 5000 端口的 mock 路由。\n- **影响**：所有 mock 路由都是死代码，从未被触发。如果测试真正发起了 API 请求，会直接打到真实后端或超时报错。\n- **修复**：改为 `page.route('http://localhost:5021/api/...')` 或 `page.route('**/api/**', ...)`，确保路由拦截与实际请求端口一致。\n\n#### 问题 4：MOCK_TAB_CONTENT 是未使用的死代码\n\n- **位置**：第 41-61 行\n- **问题**：定义了 `MOCK_TAB_CONTENT` 常量但从未在任何测试中引用。\n- **建议**：移除此常量，或在测试中使用它（例如 mock HTML 页面内容）。\n\n#### 问题 5：测试用例未覆盖规范要求的 UI 交互核心场景\n\n- **位置**：整个 spec 文件\n- **问题**：文件名为 `ui-interaction`（UI 交互测试），但 6 个用例全部是「页面加载验证」级别，没有规范第二章要求的核心场景：\n  - 按钮点击 → 结果验证（规范 2.1）— **缺失**\n  - 弹窗打开 → 填表 → 提交 → 验证（规范 2.2）— **缺失**\n  - 表单输入/校验/清空（规范 2.3）— **缺失**\n  - 错误处理：API 500/401/网络断开（规范 2.6）— **缺失**\n- **说明**：当前 6 个用例检查的是「menuButtons 数组值」「checkTabPermissions 返回值」「页面不崩溃」，这些属于 JS 函数测试范畴（规范第四章），不是 UI 交互测试。\n- **建议**：\n  - 将现有用例重新归类为 JS 函数/页面加载测试；\n  - 补充真正的 UI 交互用例（至少覆盖：搜索按钮点击 + 列表刷新、新增弹窗打开、删除确认弹窗、空列表状态显示）\n\n#### 问题 6：Test 2 的 LayuiVue Tab 选择器可能不匹配\n\n- **位置**：第 113-122 行\n- **问题**：使用 `document.querySelector('.layui-tab-title .layui-this')` 查找激活 tab。LayuiVue 2.22.2 组件渲染的 DOM 结构使用自己的 CSS class 命名（如 `layui-tab` → 实际渲染为 `lay-tabs` 组件），`.layui-tab-title` 类名由组件库内部生成，可能与预期不同。\n- **影响**：Test 2 可能无法正确获取 tab 状态，`tabCount` 可能为 0 但测试仍可能意外通过（`toBeGreaterThan(0)` 是唯一的断言，失败只会显示 console.log 输出）。\n- **建议**：\n  - 实际运行一次确认 selector 生效\n  - 或改用更通用的选择器如 `[role=\"tab\"]` / `.layui-tabs .layui-tabs-header-item`\n\n---\n\n## 审查结论\n\n**需修改** — 规范文档整体结构良好、覆盖全面，示例 spec 文件有 4 个具体问题需要修复：\n\n| 优先级 | 问题 |\n|--------|------|\n| 🔴 high | #3 Mock 端口错误 — 死代码 |\n| 🟡 normal | #5 测试用例未覆盖 UI 交互核心场景 |\n| 🟡 normal | #1 缺少 Playwright 认证流程说明 |\n| 🟢 low | #2 资产盘点数量不准确 |\n| 🟢 low | #4 MOCK_TAB_CONTENT 死代码 |\n| 🟢 low | #6 Tab 选择器需验证 |\n\n规范文档本身质量高、结构完整，示例 spec 文件建议修复上述问题后重新提交审查。",
+    "files": [
+      "AgentTeams/shared/conventions/test-standards.md",
+      "AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js"
+    ]
+  }
+}

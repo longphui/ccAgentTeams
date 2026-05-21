@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260520-1200-fix1",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-20T12:00:00+08:00",
+  "payload": {
+    "subject": "#004 紧急修复：MenuProxyService 不要 strip 路径前缀",
+    "context": "#004",
+    "content": "## 问题\n\n之前的实现中，`MenuProxyService.cs` 用 `Contains(\"/v2/views/manpowerManage/\")` 识别 iframe 页面后，`Replace` 掉前缀得到\"相对路径\"传给前端。然后前端 `hrm-proxy/index.html` 又把这个前缀加回来。\n\n**这是多余操作**，而且现在改了 `iframe_` 前缀判断后，代理页没正确加回前缀，导致页面 404。\n\n## 正确做法\n\n识别到 `name` 以 `iframe_` 开头的路由后：\n- **不要** strip 路径前缀\n- 把完整路径（如 `/v2/views/manpowerManage/staffManagement/index.html`）原样传给前端\n- 前端只需拼上分路客户端 host 即可\n\n## 行动项\n\n1. 去掉 `Replace(\"/v2/views/manpowerManage/\", \"\")` 的 strip 逻辑\n2. 完整路径直接传给前端\n3. 编译通过 0 Error\n4. 通知 Developer1 联调确认",
+    "files": ["IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"],
+    "actions": [
+      "去掉路径前缀 strip 逻辑，完整路径原样传递",
+      "编译通过 0 Error",
+      "发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

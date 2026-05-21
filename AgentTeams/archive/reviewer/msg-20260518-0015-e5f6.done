@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-0015-e5f6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:15:00+08:00",
+  "payload": {
+    "subject": "审查请求（修订）：[honguan] hrm-proxy 代理页 + app.js postMessage 监听",
+    "context": "#004",
+    "content": "## 修订内容\n修复 Reviewer 反馈的注释问题：\n1. ✅ 添加文件头注释 `<!-- HRM 代理页 — iframe 嵌入桥接，负责 Token 上下文注入与过期恢复 -->`\n2. ✅ 添加区块注释 `// ===== URL 参数解析 =====`\n3. ✅ 添加方法注释 `// 构建 HRM 页面 URL 并加载到 iframe`\n4. ✅ 添加 Token 过期监听注释 `// 监听分路 Token 过期 → 重新获取上下文 → 刷新页面`\n5. ✅ 添加超时处理注释 `// 超时处理（5 秒未收到 HRM_CONTEXT 响应）`\n6. ✅ 所有 postMessage 调用注释标注对应契约 E 字段\n\norigin 校验问题（低风险）已在问题跟踪记录，生产部署前处理。",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\views\\hrm-proxy\\index.html",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\app.js"
+    ]
+  }
+}

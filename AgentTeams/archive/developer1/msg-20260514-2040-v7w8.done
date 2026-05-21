@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-2040-v7w8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T20:40:00+08:00",
+  "payload": {
+    "subject": "补充 addType/delType 权限变量定义",
+    "context": "#002",
+    "content": "## 问题\n删除按钮加了 `v-if=\"delType\"` 但没有定义 `delType` 变量，导致按钮不显示。同样 `addType` 也未定义。\n\n## 修复\n在 data() 中定义 `addType` 和 `delType`，并用 `checkTabPermissions()` 初始化，参考项目中其他页面的权限控制写法。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ],
+    "actions": [
+      "data() 中定义 delType、addType",
+      "checkTabPermissions 初始化",
+      "确认删除按钮显示"
+    ],
+    "deadline": null
+  }
+}

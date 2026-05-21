@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-2210-e7f8",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-14T22:10:00+08:00",
+  "payload": {
+    "subject": "测试请求：ProductComponentsService DbFunctions.Like → Contains",
+    "context": "#002",
+    "content": "## 测试重点\n请验证以下功能：\n- 商品组装编码分页列表关键词搜索（ProductName / CodeValue / ProductCode 三字段模糊匹配）\n- `Contains` 中文搜索功能正常（已知限制：EF6 对 Unicode 处理不稳定，用户已接受）\n\n## 审查状态\n✅ 已通过 Reviewer 审查\n\n## 变更范围\n仅 `ProductComponentsService.cs` 的 `GetPageList` 方法",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"]
+  }
+}

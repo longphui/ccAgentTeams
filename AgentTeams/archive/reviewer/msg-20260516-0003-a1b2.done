@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260516-0003-a1b2",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T00:04:00+08:00",
+  "payload": {
+    "subject": "审查请求：CodeGenerator 前端 4 页面 Domain 改造",
+    "context": "#003",
+    "content": "## 改动概览\n\n根据 #003 实施计划 Task 12-15，完成 CodeGenerator 前端 4 页面改造：\n\n### Task 12: bizField 页面 (r2645)\n- `bizField/create_edit.html` — 去掉 SourceTable/SourceField/Format/DefaultValue，新增 DomainCode(文本框)/DomainName(文本框)/FieldSql(textarea 带 placeholder)，更新验证逻辑\n- `bizField/index.html` — 去掉"数据源"列，新增 DomainCode/DomainName 列\n\n### Task 13: codeRule 页面 (r2646)\n- `codeRule/create_edit.html` — 新增 Domain 下拉选择框（调 GetDomainList），加载 domainList 并渲染选项，更新保存校验和回显\n- `codeRule/index.html` — 列表新增"业务领域"列\n\n### Task 14: bizCode 页面 (r2647)\n- `bizCode/create_edit.html` — 同 Task 13：新增 Domain 下拉选择框\n- `bizCode/index.html` — 列表新增"业务领域"列\n\n### Task 15: generate 页面 (r2648)\n- `generate/index.html` — BizContext 字典输入框替换为 DomainId 单个数字输入框\n- 简化 onCodeSignChange（去掉 BusinessField 子项加载逻辑）\n- 更新 generate() 参数发送格式\n- 新增 DomainId 空值校验\n\n## 审查重点\n请重点检查：\n1. Domain 下拉是否通过 GetDomainList 加载、选项显示/值绑定正确\n2. BizContext → DomainId 替换是否完整（已 grep 搜索，无遗漏）\n3. 表单验证是否覆盖了新字段\n4. bizField 的 DomainCode/DomainName 确认为文本框（开发人员自由输入），codeRule/bizCode 的 Domain 为下拉选择（不可手动输入）\n5. 编辑回显时 Domain 字段是否正确填充",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/generate/index.html"
+    ]
+  }
+}

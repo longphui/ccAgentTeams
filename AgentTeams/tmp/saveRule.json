@@ -1,0 +1,1 @@
+{"data":{"ruleName":"QA测试规则","domain":"Product","describe":"QA test","status":false,"items":[{"itemType":"Constant","constantValue":"PRE-","sortOrder":1},{"itemType":"SerialNumber","format":"yyyyMMdd","startValue":1,"step":1,"maxLength":4,"sortOrder":2}]}}

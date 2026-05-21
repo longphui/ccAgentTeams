@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2000-g7h8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:00:00+08:00",
+  "replyTo": "msg-20260513-1945-c3d4",
+  "payload": {
+    "subject": "✅ 工单状态筛选 已修复",
+    "content": "## 根因\n- filters1 中 key 拼写错误：`Statuss` → `Status`，导致后端收到的参数名不匹配\n- select 缺少 `multiple: true`，单选时 `lay-sel` 的 v-model 返回标量而非数组\n\n## 改动\n- `Statuss:` → `Status:` (修正参数 key 名)\n- 添加 `multiple: true` (确保始终以数组形式传参)\n\n## 参考\n- 已有模式：`salesManagement/salesOrder/specialOrder.html` 中 `Status` 筛选同样使用 `multiple: true`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

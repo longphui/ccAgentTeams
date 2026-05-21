@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1250-c3d4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T12:50:00+08:00",
+  "replyTo": "msg-20260514-1240-w5x6",
+  "payload": {
+    "subject": "✅ 删除接口已修复 — id 改为 URL 路径参数",
+    "content": "## 变更\n- `Http.post(\"/api/Produce/ProductComponents/Delete\", { data: { id: row.id } })`\n- 改为 `Http.post(\"/api/Produce/ProductComponents/Delete/\" + row.id)`\n- 与项目其他 Delete 接口风格一致（id 拼在 URL 路径上）",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

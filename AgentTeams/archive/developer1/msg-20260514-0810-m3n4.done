@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0810-m3n4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:10:00+08:00",
+  "payload": {
+    "subject": "Tab3 生成时间起/止 label 换行修复",
+    "context": "#001",
+    "content": "## 问题\n编码记录 Tab3 查询条件中，「生成时间起」「生成时间止」的 label 文字换行了。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"],
+    "actions": ["修复生成时间起/止 label 不换行"],
+    "deadline": null
+  }
+}

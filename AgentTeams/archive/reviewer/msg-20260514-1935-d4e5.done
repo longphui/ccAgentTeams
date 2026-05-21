@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1935-d4e5",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:35:00+08:00",
+  "payload": {
+    "subject": "审查请求：删除按钮改为警告色",
+    "context": "#002",
+    "content": "## 变更内容\nProductComponents/index.html 删除按钮加 `type=\"warning\"`，显示为橙色警告色。\n\n## 审查重点\n- lay-button type 属性值正确（warning）",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

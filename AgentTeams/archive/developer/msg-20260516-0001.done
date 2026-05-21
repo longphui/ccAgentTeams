@@ -1,0 +1,38 @@
+{
+  "id": "msg-20260516-0001",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-16T00:00:00+08:00",
+  "payload": {
+    "subject": "CodeGenerator 后端优化：StartValue修复 + 软删除过滤 + Domain重构",
+    "context": "#003",
+    "content": "## 任务范围\n\n根据 `shared/requirements/003-CodeGenerator优化.md` 和 `shared/requirements/003-plan-CodeGenerator优化.md`，完成 CodeGenerator 模块后端全部优化。\n\n## 分 Phase A 和 Phase B\n\n### Phase A：快速修复（可并行）\n\n**Task 1 — StartValue 修复：**\n- `CodeService/ICodeService.cs`：新增 `void InitCounter(string key, long value)` 方法声明\n- `CodeService/ICodeService.cs` 中的 `CodeService` 类：实现 `_database.StringSet(key, value, when: When.NotExists)`\n- `CodeGeneratorService.cs`：`GenerateCode` 方法的 Step 1，foreach 循环内，`BatchGenerateCode` 之前加 `codeService.InitCounter(redisKey, sp.StartValue - sp.Step)`\n\n**Task 2 — 软删除子项过滤：**\n- `CodeGeneratorService.cs` → `GetRuleDetails`：Map 前加 `rule.Items = rule.Items.Where(i => !i.IsDeleted).ToList()`\n- `CodeGeneratorService.cs` → `GenerateCode`：`var items = rule.Items.Where(i => !i.IsDeleted).OrderBy(...)` \n\nPhase A 每步完成后编译验证：`cmd //c \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\MSBuild\\Current\\Bin\\MSBuild.exe\" \"D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.Application\\SAHG.Salt.Application.csproj\" //t:Build //p:Configuration=Debug //v:q`\n\n### Phase B：Domain 重构（严格按顺序）\n\n**Task 4 → 5 → 6/7/8/9/10 → 3 → 11**\n\n1. **Task 4** — Core 实体层：\n   - `BizFieldDefinition.cs`：删 SourceTable/SourceField/Format/DefaultValue，加 DomainCode(string64)、DomainName(string256)、FieldSql(string)\n   - `CodeRule.cs`：加 Domain(string64)\n   - `BizCodeIdentifier.cs`：加 Domain(string64)\n   - 编译 Core 项目\n\n2. **Task 5** — DTO 层：\n   - `BizFieldDefinitionDto.cs`：同步字段变更，CheckData 校验 FieldSql+DomainCode 非空\n   - `CodeRuleDto.cs`：加 Domain，CheckData 加非空校验\n   - `BizCodeIdentifierDto.cs`：加 Domain\n   - `GenerateCodeInput.cs`：删 BizContext(Dictionary)，改为 `long DomainId`\n   - 编译 Application 项目\n\n3. **Task 6** — AutoMapper：无需改动（同名字段自动映射），跳过\n\n4. **Task 7** — 重写 ResolveBusinessField + 适配 GenerateCode：\n   - `ResolveBusinessField(string fieldSql, long domainId)` — 直接执行 FieldSql + `new SqlParameter(\"@domainId\", domainId)`，返回 `result ?? string.Empty`\n   - `GenerateCode` Step 2 中 BusinessField 处理：查 fieldDef，校验 `fieldDef.DomainCode != \"General\" && fieldDef.DomainCode != rule.Domain` 时抛异常，然后 `ResolveBusinessField(fieldDef.FieldSql, input.DomainId)`\n\n5. **Task 8** — SaveRule Domain 校验：在 `input.CheckData()` 之后新增 BusinessField 子项的 Domain 一致性校验（遍历 bfItems，查 repoBizField，DomainCode 不匹配且非 General 则抛异常）\n\n6. **Task 9** — SaveBizField 字段替换：属性赋值改为 DomainCode/DomainName/FieldSql\n\n7. **Task 10** — GetDomainList 接口：\n   - **新建** `Dto/DomainOptionDto.cs`（DomainCode + DomainName）\n   - `ICodeGeneratorService.cs` 加 `IList<DomainOptionDto> GetDomainList()`\n   - `CodeGeneratorService.cs` 实现：查 DISTINCT DomainCode, DomainName FROM BizFieldDefinition WHERE IsDeleted!=true\n   - 新文件注册到 .csproj + svn add\n\n8. **Task 3** — 数据库迁移：用 Add-Migration 生成迁移 → Update-Database → 手动 SQL 补历史数据 DomainCode/DomainName\n\n9. **Task 11** — Controller：新增 `[HttpGet] GetDomainList()` Action\n   - 全解决方案编译：`cmd //c \"...\\MSBuild.exe\" \"...\\SAHG.Salt.sln\" //t:Build //p:Configuration=Debug //v:q`\n\n### 编译检查点\n- CP1（Application.csproj）：Task 1,2,5,7,8,9,10 各步完成后\n- CP2（Core.csproj）：Task 4 完成后\n- CP3（SAHG.Salt.sln）：Task 11 完成后\n\n### 提交\n每个 Task 完成后单独 svn commit，格式：`[CodeGenerator] <简短描述>`\n先 `svn up` 再提交。新文件必须 svn add + 注册 csproj。",
+    "files": [
+      "shared/requirements/003-CodeGenerator优化.md",
+      "shared/requirements/003-plan-CodeGenerator优化.md",
+      "SAHG.Salt.Core/CodeGenerator/BizFieldDefinition.cs",
+      "SAHG.Salt.Core/CodeGenerator/CodeRule.cs",
+      "SAHG.Salt.Core/CodeGenerator/BizCodeIdentifier.cs",
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/BizFieldDefinitionDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/CodeRuleDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/BizCodeIdentifierDto.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/GenerateCodeInput.cs",
+      "SAHG.Salt.Application/CodeGenerator/Dto/CodeGeneratorDtoMapping.cs",
+      "SAHG.Salt.Application/CodeService/ICodeService.cs",
+      "SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ],
+    "actions": [
+      "Phase A: Task 1（StartValue 修复）+ Task 2（软删除过滤），完成后编译验证并 svn commit",
+      "Phase B: 严格按 Task 4→5→7→8→9→10→3→11 顺序执行，每步编译验证",
+      "Task 10 新建 DomainOptionDto.cs，必须注册 .csproj + svn add",
+      "Task 3 迁移后手动执行 SQL 补历史数据 DomainCode/DomainName",
+      "Task 11 最后全解决方案编译 0 Error 后 svn commit",
+      "完成后发 REVIEW 给 reviewer"
+    ],
+    "deadline": null
+  }
+}

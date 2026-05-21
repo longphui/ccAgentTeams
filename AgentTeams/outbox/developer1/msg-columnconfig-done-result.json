@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-columnconfig-done",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T16:25:00+08:00",
+  "replyTo": "msg-20260519-columnconfig",
+  "payload": {
+    "subject": "✅ TableColumnConfig loading + null key 修复已完成",
+    "content": "## 完成情况\n- 修复 key() 中 CompanyID null → 回退 '0'，消除 `columnConfig-null-` 异常 key\n- 修复 restore() 无 try-catch → 请求失败静默降级，loading 正常消失\n- 审查通过：安全、性能、架构一致性全部通过\n\n## 修改文件\n- caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js"]
+  }
+}

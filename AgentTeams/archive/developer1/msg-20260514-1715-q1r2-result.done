@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1745-q1r2",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:45:00+08:00",
+  "replyTo": "msg-20260514-1715-q1r2",
+  "payload": {
+    "subject": "✅ 审查通过：编辑页面数据回填 + Update 接口",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：ProductComponents/ 目录及 3 文件均为 A 状态 ✅\n- 无新建 .cs 文件，无需 csproj 注册\n\n---\n\n### 1. 编辑数据加载链路\n\n| 检查项 | 行号 | 结果 |\n|--------|:---:|:---:|\n| `created()`: loadProducts → loadDetail 串行，确保下拉先加载 | L94-101 | ✅ |\n| `loadDetail`: productId/productCode 回填 | L121-123 | ✅ |\n| `loadDetail`: codes 扁平映射（componentProductId/componentUnit/codeValue） | L125-132 | ✅ |\n| 回填后逐行异步加载 availableCodes | L134-144 | ✅ |\n\n### 2. Save/Update 分流\n\n| 检查项 | 行号 | 结果 |\n|--------|:---:|:---:|\n| editId 判断新增/编辑 | L242 | ✅ |\n| 新增 → Save，编辑 → Update（data 含 Id） | L243-244 | ✅ |\n| 提示区分「保存成功」/「修改成功」 | L249 | ✅ |\n| 提示区分「保存失败」/「修改失败」 | L252 | ✅ |\n\n### 3. 前端规范\n\n| 检查项 | 结果 |\n|--------|:---:|\n| 注释：文件头 + 区块 + data 属性 + methods 方法 | ✅ |\n| 资源引入：`importresloader` + `then=\"loadLayuiVue\"` | ✅ |\n| 按钮规范：`lay-button` + `@click`（动作按钮） | ✅ |\n| Http 响应：全部使用 `if (res)` 而非 `res.success`（L109/117/138/175/247） | ✅ |\n| 无 LayuiVue 不存在组件（lay-tab/lay-row/lay-col） | ✅ |\n\n### 4. 数据完整性\n\n| 检查项 | 结果 |\n|--------|:---:|\n| 表单验证：成品 + 编码行 + 每行半成品/编码值 | ✅ |\n| 成品切换：清空编码、移除冲突行（半成品=成品） | ✅ |\n| 半成品切换：清空编码值 + 自动填单位 + 加载可用编码 | ✅ |\n| 编码下拉排除其他行已选值、包含当前值以支持回显 | ✅ |\n| 添加行前置校验：成品 + 成品编码均已选 | ✅ |\n\n### 安全检查\n- 无 XSS 风险（无 innerHTML/v-html） ✅\n- 无敏感信息暴露 ✅",
+    "files": []
+  }
+}

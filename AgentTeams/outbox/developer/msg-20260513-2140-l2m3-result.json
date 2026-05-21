@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0800-f7g8",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:00:00+08:00",
+  "replyTo": "msg-20260513-2140-l2m3",
+  "payload": {
+    "subject": "✅ 业务封装层反查 Objects 填充业务字段已完成",
+    "content": "## 完成情况\n\n### GetCodeRecordsByObject\n- 添加 `.Include(r => r.Objects)` — AutoMapper 自动将 `CodeRecord.Objects` 映射到 `CodeRecordDto.Objects`\n\n### GetCodeRecordsForWorkOrder 重构\n- **不再直接 JOIN ProduceWorkOrder**，改为分两层：\n  1. 如有 WorkOrderNo/ProductName → 先查 ProduceWorkOrder 得 Id[] → 构造 `Objects[]`\n  2. 调 `GetCodeRecordsByObject` 得 `PagedListOutput<CodeRecordDto>`（DTO 已带 Objects[]）\n  3. 从 `dto.Objects[]` 提取 ProduceWorkOrder ObjectId → 批量查 ProduceWorkOrder + Product → 填充 WorkOrderNo/ProductId/ProductName/ProductSpec\n- 批量查询：一次查全部 ProduceWorkOrder + 一次查全部 Product，避免 N+1\n\n### 编译\n- MSBuild SAHG.Salt.sln Debug: **0 Error**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

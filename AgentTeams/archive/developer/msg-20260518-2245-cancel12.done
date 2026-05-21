@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-2245-c12",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T22:45:00+08:00",
+  "payload": {
+    "subject": "⚠️ 撤销 Task 12: 反斜杠路径修复",
+    "context": "#004",
+    "content": "## 撤销\n\n**Task 12 反斜杠路径修复 — 撤销，不执行。**\n\n原因：49 个反斜杠路径在分路 P6 中，属于分路旧数据，不动避免引发其他问题。之前的 SQL 修复方案作废。\n\nTask 13 (startup) 和 Task 14 (注释改名) 照常执行。",
+    "actions": ["停止 Task 12 SQL 修复", "Task 13+14 继续"]
+  }
+}

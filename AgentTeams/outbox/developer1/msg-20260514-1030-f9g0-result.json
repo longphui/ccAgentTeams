@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1050-reply-f9g0",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:50:00+08:00",
+  "replyTo": "msg-20260514-1030-f9g0",
+  "payload": {
+    "subject": "✅ 半成品 select 添加 searchable 完成",
+    "content": "## 完成情况\n- 半成品 select 添加 `:show-search=\"true\"` 属性",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

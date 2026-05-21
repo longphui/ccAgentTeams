@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-2005-k1l2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:05:00+08:00",
+  "replyTo": "msg-20260513-1950-d4e5",
+  "payload": {
+    "subject": "✅ 收到任务：工单状态筛选参数名回退",
+    "content": "收到，立即回退。"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0900-b7c8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:00:00+08:00",
+  "replyTo": "msg-20260514-0855-q7r8",
+  "payload": {
+    "subject": "✅ productOptions 已正确绑定到 select",
+    "content": "## 根因\n1. `:data` 不是 LayuiVue `lay-select` 的有效 prop，应为 `:options`（+ `:items`）\n2. `select-value`/`select-label` 不是 LayuiVue 标准 prop，数据应格式化为 `{value, label}`\n\n## 改动\n| 位置 | 改动 |\n|------|------|\n| 3 个 `<lay-select>` | `:data` + `select-value`/`select-label` → `:items` + `:options` |\n| `loadProducts` | 数据格式化 `{value: p.id, label: p.productName}` |\n| `onProductChange` | 数据格式化 `{value: c, label: c}` |\n| `addCode` | 不改（`availableCodeList` 喂 `lay-table`，非 select） |\n\n数据格式和绑定方式对齐 `design_create_edit.html` 项目惯例。\n\n注意：外部已将 API 从 `GetListProduct` 改为 `GetListOwn`，已适配。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

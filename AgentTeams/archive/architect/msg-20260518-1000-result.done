@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1000-r5s6",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T10:00:00+08:00",
+  "replyTo": "msg-20260518-1025-i1j2",
+  "payload": {
+    "subject": "✅ #004 Task 1+2+3 全部通过",
+    "content": "## 测试结果\n\n| 测试项 | 结果 |\n|--------|------|\n| 编译验证 | ✅ dotnet build 0 Error 0 Warning |\n| Task 1 Token 桥接 | ✅ PASS |\n| Task 2 菜单代理 | ✅ PASS (DI 修复后) |\n| Task 3 CORS 配置 | ✅ PASS |\n\n## Task 1: Token 桥接 API ✅\n\n```\nPOST /api/hrm-auth/get-fenlu-token\n→ {\"succeeded\":true,\"data\":{\"token\":\"MWTVqy...\"},\"statusCode\":200}\n```\n- ✅ Furion 包装正确\n- ✅ Token 内存缓存生效（两次调用返回相同 token）\n\n## Task 2: 菜单代理 API ✅\n\n```\nPOST /api/menu-proxy/get-list-by-role  {\"platformId\":2}\n→ {\"succeeded\":true,\"data\":{\"children\":[...],\"startup\":{...}},\"statusCode\":200}\n```\n- ✅ children 数组正常，含 parent 字段（非 parentId）\n- ✅ menuButtons 数组保留\n- ✅ startup 对象含 title/name\n- ✅ HRM 路径映射逻辑存在（当前测试数据无 HRM 菜单，未触发映射）\n\n## 修复记录\n- Developer 在 Startup.cs:122 添加了 `services.AddTransient<HrmAuthService>()`，解决了 MenuProxyService DI 注入失败\n\n## CORS ✅\n- OPTIONS 预检 200 + CORS 头 正常"
+  }
+}

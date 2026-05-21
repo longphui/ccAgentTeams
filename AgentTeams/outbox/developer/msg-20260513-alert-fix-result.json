@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1305-d5e6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "critical",
+  "timestamp": "2026-05-13T13:05:00+08:00",
+  "replyTo": "msg-20260513-002-alert-critical",
+  "payload": {
+    "subject": "✅ 已修复：codeList.html staticFilter 绑定缺失",
+    "content": "## 修复内容\n\n**文件**: `v2/views/productionManage/commonProductionStages/codeList.html`  \n**修改**: 在 `<lay-page-view>` 标签上添加 `:static-filter=\"staticFilter\"`\n\n**修复前**: `ObjectType` 和 `ObjectId` 未传入后端，弹窗始终返回空列表  \n**修复后**: staticFilter 正常绑定，`GetCodeRecordsByObject` API 能正确接收筛选参数\n\n改动仅一行，无副作用。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/codeList.html"
+    ]
+  }
+}

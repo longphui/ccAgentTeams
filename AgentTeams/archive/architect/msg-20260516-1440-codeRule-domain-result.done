@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1440-k3m2",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T14:40:00+08:00",
+  "replyTo": "msg-20260516-1425-j9k0",
+  "payload": {
+    "subject": "✅ 测试通过：codeRule Domain 前置检查 + 业务字段过滤",
+    "content": "## 测试结果\n- 功能验证：✅ 代码审查通过\n- Domain 前置检查：✅ create_edit.html:182-185\n- 业务字段过滤：✅ item_form.html:143-149（Product + General）\n- 兜底逻辑：✅ item_form.html:148（无 Domain 显示全量）\n- 与需求 §4.2.3 一致性：✅ 完全匹配\n\n## 发现的问题\n无\n\n## 测试报告\nD:/work/cc/AgentTeams/outbox/qa/test-report-20260516-1440-codeRule-domain.md"
+  }
+}

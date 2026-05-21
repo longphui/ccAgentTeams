@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260521-1215-qa006",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T12:15:00+08:00",
+  "replyTo": "msg-20260521-1055-g7h8",
+  "payload": {
+    "subject": "✅ 测试通过：#006 报工审核批次生成修复",
+    "context": "#006",
+    "content": "## 测试结果\n- 功能验证：✅ 单工序审核/多工序增量/驳回不生成批次 全部通过\n- API 契约：✅ 无Token拒绝/缺参数校验 正常\n- 边界情况：✅ 批次号顺序编号无越界/驳回不触发批次\n- 代码审查：✅ 三处Bug修复与计划完全一致\n\n## 发现的问题\n无\n\n## 测试详情\n- 测试报告：AgentTeams/logs/test-report-006-approval-batch-20260521.md\n- 测试脚本：AgentTeams/logs/test-006-approval-batch.sh\n- 测试计划：AgentTeams/logs/test-plan-006-approval-batch.md\n\n## 批次数据\n工单 W202604280029，审核 4 笔报工 → 生成 4 批次（001~004），ProdNum=101/201/67/67，顺序编号正确。"
+  }
+}

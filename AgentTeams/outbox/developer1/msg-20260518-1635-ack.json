@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1640-ack1",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "normal",
+  "timestamp": "2026-05-18T16:40:00+08:00",
+  "replyTo": "msg-20260518-1635-b9d1",
+  "payload": {
+    "subject": "✅ 收到反馈：#004 代码审查已通过",
+    "content": "确认代码审查通过，csproj 框架修复已生效。浏览器验证项将在有 GUI 环境时补充验证。"
+  }
+}

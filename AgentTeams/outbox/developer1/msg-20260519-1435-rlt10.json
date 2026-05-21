@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1435-rlt10",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T14:35:00+08:00",
+  "replyTo": "msg-20260519-1420-i1j2",
+  "payload": {
+    "subject": "✅ states Map 每次新建导致弹窗空白修复已完成",
+    "content": "## 修复\n1. `var _embeddedStates = new Map();` 模块级声明\n2. stub 中 `states: _embeddedStates`（共享引用）\n3. openPage 去掉冗余 `if (!that.states)` guard\n\n数据流：openPage() → states.set() → getState() → states.get() → 同一 Map ✅\n\nReviewer 审查已通过 ✅",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ]
+  }
+}

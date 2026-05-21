@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1443-tst11",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T14:43:00+08:00",
+  "payload": {
+    "subject": "测试请求：newFenluApiBase 端口 5001→8088 修正",
+    "context": "#004",
+    "content": "## 测试重点\n1. 分路 API 请求正常（如 /settings/get-by-key）\n   - 不应再报网络错误\n   - 请求应发到 localhost:8088 而非 5001\n2. 天津宏观世纪 API 请求不受影响\n   - hrm-proxy 相关请求仍走 5021 端口\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/appConfig.js"
+    ]
+  }
+}

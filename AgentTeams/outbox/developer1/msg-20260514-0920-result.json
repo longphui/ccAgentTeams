@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0930-x5y6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:30:00+08:00",
+  "replyTo": "msg-20260514-0920-u1v2",
+  "payload": {
+    "subject": "✅ 添加组件行布局已修复",
+    "content": "## 根因\n`lay-row`/`lay-col` 在 LayuiVue 2.22.2 中渲染不可靠（与 `<lay-tab>` 类似问题），不生成 flex 容器导致列堆叠。\n\n## 改动\n- 组件行（半成品/数量/单位/删除）：`<lay-row>`/`<lay-col>` → `<div style=\"display:flex;align-items:flex-end;gap:10px;\">`\n- 编码选择行：`<lay-row>`/`<lay-col>` → 普通 `<div>`\n- 与成品 select 行（line 16）使用同一 flex 方案",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

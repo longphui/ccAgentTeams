@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260513-1645-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T16:45:00+08:00",
+  "payload": {
+    "subject": "修复工单状态列空白 — StatusName 未映射到 DTO",
+    "context": "用户测试发现 Tab1/Tab2 工单列表的「工单状态」列显示空白。前端模板和字段绑定正确（customSlot: statusName），后端 DTO 也有 StatusName 属性，问题出在 GetPageListForCodeGen 的 AutoMapper 映射环节。",
+    "content": "## 根因分析\n\n`ProduceWorkOrderService.GetPageListForCodeGen` 中（约第 1637-1646 行）：\n\n```csharp\nvar outputList = list.Select(item =>\n{\n    item.StatusName = StringExtension.GetDescription(...);  // ✅ 设置了 item.StatusName\n    var dto = item.Adapt<WorkOrderCodeGenOutput>();          // ⚠️ Adapt 创建新对象\n    dto.GeneratedCodeCount = ...;                             // ✅ 显式设置 dto.GeneratedCodeCount\n    return dto;                                              // ❌ dto.StatusName 未被显式赋值\n}).ToList();\n```\n\n`item.StatusName` 设置在原始对象上，但 `Adapt<>()` 创建了新 `dto`。`GeneratedCodeCount` 在 `dto` 上显式赋值了，而 `StatusName` 没有。AutoMapper 的 `CreateMap<ProduceWorkOrderOutput, WorkOrderCodeGenOutput>()` 可能未自动映射该字段。\n\n## 修复方案\n\n在 `Adapt<>()` 之后显式赋值 `dto.StatusName`：\n\n```csharp\nvar dto = item.Adapt<WorkOrderCodeGenOutput>();\ndto.StatusName = item.StatusName;              // 显式赋值\ndto.GeneratedCodeCount = ...;\n```\n\n或者检查 AutoMapper 映射配置是否正确传递了 StatusName（在 `HRM_DtoMapping.cs` 中），确保 `CreateMap<ProduceWorkOrderOutput, WorkOrderCodeGenOutput>()` 包含 StatusName 映射。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/HRM/Dto/HRM_DtoMapping.cs"
+    ],
+    "actions": [
+      "方案A（推荐）：在 Adapt 后显式赋值 dto.StatusName = item.StatusName",
+      "方案B：检查并修复 HRM_DtoMapping.cs 中 CreateMap<ProduceWorkOrderOutput, WorkOrderCodeGenOutput> 的 StatusName 映射",
+      "编译通过 0 Error",
+      "验证 Tab1/Tab2 工单状态列显示正确"
+    ]
+  }
+}

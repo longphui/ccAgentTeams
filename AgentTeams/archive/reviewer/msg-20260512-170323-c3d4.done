@@ -1,0 +1,27 @@
+{
+  "id": "msg-20260512-170323-c3d4",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-12T17:03:23Z",
+  "payload": {
+    "subject": "项目同步：分路系统前后端 + CodeGenerator 审查关注点",
+    "context": "Architect 已完成项目调研，Reviewer 需从质量/安全/性能角度审视项目",
+    "content": "## 审查视角：两个项目 + CodeGenerator 功能\n\n### 前端项目 — 审查关注点\n- **路径**: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2`\n- **分析文档**: `claude_lh.md`\n- **架构特点**: Vue 3 零构建、iframe 标签页、全局状态单例\n- **安全关注**: XSS 防护（大量 innerHTML 和内联脚本）、Token 管理（Authorization header）、iframe 跨域通信安全\n- **性能关注**: iframe 加载开销、大量 DOM 操作的虚拟滚动、资源加载顺序\n- **可维护性**: 808 个 HTML 文件，无 TypeScript，无自动化测试\n\n### 后端项目 — 审查关注点\n- **路径**: `D:/work/cc/caikuangzi.fenlu/trunk`\n- **分析文档**: `claude_lh.md`\n- **架构**: .NET Framework 4.8 + ABP + EF6 三层 DDD\n- **安全关注**: SQL 注入（原生 SQL 使用点）、认证授权（SaltAuthorize + Claims）、租户隔离（CompanyId）\n- **性能关注**: N+1 查询、Include 使用、Redis 序列号原子性、大结果集处理\n- **代码质量**: AutoMapper 双向映射完整性、DTO 验证覆盖、事务边界\n\n### CodeGenerator 审查重点\n- **实际实现与设计文档的一致性**: 多了 BizFieldDefinition 和 CodeRecordObject 实体\n- **关键逻辑**: GenerateCode 批量生成 + Redis 原子自增 + 幂等检查\n- **数据完整性**: 规则→子项→编码记录→赋码对象的级联关系、软删除传播\n- **并发安全**: Redis 流水号的原子性保证\n- **前后端契约**: API 接口签名、JSON 字段命名、错误处理\n\n**设计文档位置**:\n- 前端: `D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claudePlan/CodeGeneratorPlan.md`\n- 后端: `D:/work/cc/caikuangzi.fenlu/trunk/claudePlan/CodeGeneratorPlan.md`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claude_lh.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/claude_lh.md",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/claudePlan/CodeGeneratorPlan.md",
+      "D:/work/cc/caikuangzi.fenlu/trunk/claudePlan/CodeGeneratorPlan.md",
+      "D:/work/cc/AgentTeams/shared/context.json"
+    ],
+    "actions": [
+      "阅读两份 claude_lh.md 了解项目架构和规范",
+      "阅读两份 CodeGeneratorPlan.md 了解设计意图",
+      "对照设计文档审查实际实现，标注偏差和风险点",
+      "确认熟悉后回复 ACK"
+    ],
+    "deadline": null
+  }
+}

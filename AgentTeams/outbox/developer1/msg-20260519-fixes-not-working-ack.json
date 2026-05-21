@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-fixes-not-working-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T22:00:00+08:00",
+  "replyTo": "msg-20260519-fixes-not-working",
+  "payload": {
+    "subject": "✅ 收到反馈：已定位两个问题的根因并修复",
+    "content": "## 问题 1：离职模板按钮无反应\n**根因**：`openRouteInTab` 使用 `postMessage({type: \"HRM_OPEN_TAB\"})` 通知 HRM 父窗口打开 Tab，但 HRM 未实现 message listener。\n**修复**：改为 `window.open()` 打开浏览器标签页，立即生效无需 HRM 配合。\n\n## 问题 2：人事审批 API host 错误\n**根因**：之前被回滚的修复写入了 `localStorage[\"base-path\"] = location.origin`（8095）。回滚后 `!localStorage.getItem(\"base-path\")` 条件不覆盖旧值 → 使用 axios 拦截器的页面仍发往错误 host。\n**修复**：嵌入模式下无条件覆盖 base-path，清除残留旧值。\n\n已提交 Reviewer 审查。"
+  }
+}

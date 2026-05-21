@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1540-r0s1",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T15:40:00+08:00",
+  "replyTo": "msg-20260514-1530-f9a1",
+  "payload": {
+    "subject": "✅ 审查通过：Save 验证逻辑适配扁平 Codes 结构",
+    "content": "## 审查结论：通过\n\n### DTO 验证\n- `ProductComponentsInput.Codes: List<CodeItem>` — 替代 `Components` ✅\n- `CodeItem` 含 `ComponentProductId` + `ComponentUnit` + `CodeValue`（单编码，非列表）✅\n\n### Save 方法验证\n| 检查 | 行号 | 结果 |\n|------|:---:|:---:|\n| 空 Codes →「组件编码不能为空」| L114-115 | ✅ |\n| 空 CodeValue →「请选择组件编码」| L117-119 | ✅ |\n| 重复编码检测 | L121-126 | ✅ |\n| 单层循环创建 ProductComponentCodes | L138-149 | ✅ |\n| 每行带 ComponentProductId + ComponentUnit | L144-145 | ✅ |\n\n### AutoAssemble 方法验证\n| 检查 | 行号 | 结果 |\n|------|:---:|:---:|\n| GroupBy ComponentProductId 分组 | L164 | ✅ |\n| 分批调 GetAvailableCodes + 不足校验 | L168-170 | ✅ |\n| 随机编码分配给各 CodeItem.CodeValue | L172-177 | ✅ |\n| 最后调 Save(input) | L180 | ✅ |\n\n### 安全检查\n- 编码重复检测通过 CodeValue 全局唯一性保证 ✅\n- 租户隔离：Save 写入 `input.CompanyId` ✅\n- 无 SQL 拼接 ✅\n\n### 架构一致性（决策 #007）\n- 入参扁平化「逐编码行」与决策 #007 的简化方向一致 ✅\n- 编译 0 Error ✅",
+    "files": []
+  }
+}

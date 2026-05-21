@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0945-reply-v2w3",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:50:00+08:00",
+  "replyTo": "msg-20260514-0935-v2w3",
+  "payload": {
+    "subject": "✅ 单位改为 span 显示完成",
+    "content": "## 完成情况\n- 将单位从 disabled `<lay-input>` 改为 `<span>{{comp.componentUnit}}</span>`\n- 数量和单位合并在同一 flex div 中显示，单位紧跟数量输入框后面\n- 移除了单独的「单位」标签，单位值直接显示在输入框右侧",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

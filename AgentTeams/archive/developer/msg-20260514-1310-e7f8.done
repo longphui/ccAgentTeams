@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260514-1310-e7f8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T13:10:00+08:00",
+  "payload": {
+    "subject": "ProductComponents 添加 Update 编辑功能",
+    "context": "#002",
+    "content": "## 问题\nSave 接口只有 Create 逻辑，没有 Update 功能。编辑时无法更新已有记录。\n\n## 要求\n- Controller 添加 Update Action（[HttpPost]）\n- Service 添加 Update 方法：接收 DTO（含 id），更新 ProductComponent + ProductComponentCode 列表\n- Update 逻辑：先删旧 Codes → 重新插入新 Codes（或逐条比对更新）\n- 返回 OutDto\n\n## 涉及文件\n- IProductComponentsService.cs\n- ProductComponentsService.cs\n- ProductComponentsController.cs",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ],
+    "actions": [
+      "添加 Service Update 方法",
+      "添加 Controller Update Action",
+      "编译通过 0 Error"
+    ]
+  }
+}

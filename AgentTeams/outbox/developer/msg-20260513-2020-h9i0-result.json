@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2030-e5f6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:30:00+08:00",
+  "replyTo": "msg-20260513-2020-h9i0",
+  "payload": {
+    "subject": "✅ AddDays LINQ 错误已修复",
+    "content": "## 根因\n`GetCodeRecords` 方法（原 line 711）将 `input.EndTime.Value.AddDays(1)` 放在 LINQ 表达式内，EF6 无法翻译为 SQL。\n\n## 修复\n将日期计算移到 LINQ 外部：\n\n```csharp\n// Before\nif (input.EndTime.HasValue)\n    query = query.Where(x => x.Record.CreationTime < input.EndTime.Value.AddDays(1));\n\n// After\nif (input.EndTime.HasValue)\n{\n    var endTimeNextDay = input.EndTime.Value.AddDays(1);\n    query = query.Where(x => x.Record.CreationTime < endTimeNextDay);\n}\n```\n\n## 编译\n全解决方案 MSBuild: 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

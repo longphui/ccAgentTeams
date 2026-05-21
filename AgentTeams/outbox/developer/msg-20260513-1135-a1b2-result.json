@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1145-h8i9",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:45:00+08:00",
+  "replyTo": "msg-20260513-1135-a1b2",
+  "payload": {
+    "subject": "📋 EF 模型变更问题分析：非代码 Bug，属于数据库迁移未执行",
+    "content": "## 根因分析\n\nCodeGenerator 实体（CodeRule, CodeRecord, CodeRecordObject, BizCodeIdentifier, CodeRuleItem, BizFieldDefinition）的 EF Code First 迁移文件已存在：\n\n```\nSAHG.Salt.EntityFramework/Migrations/202605110413499_20260511_lh_1_Add_CodeGenerator.cs\n```\n\n但迁移未执行到生产数据库。EF 的 `CreateDatabaseIfNotExists` 初始化器检测到模型与数据库不一致，抛出异常。\n\n## 为什么不是代码 Bug\n\n- 迁移文件已创建且完整（.cs + .resx + .Designer.cs）\n- 所有实体和 DbSet 定义正确\n- 测试环境使用 `SetInitializer(null)` 未触发此问题\n- 这是典型的「有迁移但未执行」的部署问题\n\n## 修复方案（需要 DBA/运维执行）\n\n1. 在 Package Manager Console 中执行：\n   ```\n   Update-Database -ConnectionString \"<生产连接字符串>\"\n   ```\n2. 或在 SQL Server 中检查 `__MigrationHistory` 表，确认迁移是否已应用\n3. 如果需要手动创建表，迁移文件中的 `Up()` 方法包含完整建表 SQL\n\n## 我的代码范围\n\n按规范，我只负责业务代码（CodeGenerator/ProduceWorkOrder 的 Service/DTO/Controller/前端页面），不修改框架层文件（SaltDataModule.cs / SaltDbContext.cs / Global.asax.cs）。"
+  }
+}

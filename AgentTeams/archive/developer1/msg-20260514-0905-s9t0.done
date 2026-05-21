@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0905-s9t0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:05:00+08:00",
+  "payload": {
+    "subject": "添加组件模块 — 样式优化 + 单位默认值 + 同行布局",
+    "context": "#002",
+    "content": "## 改动\n1. 添加组件区域样式优化，整洁一些\n2. 单位默认显示半成品的 `minUnit`，不用用户输入\n3. 选择框、数量、单位放到同一行",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["优化添加组件区域样式", "单位改为默认取 minUnit，不可编辑", "选择框/数量/单位同行布局"],
+    "deadline": null
+  }
+}

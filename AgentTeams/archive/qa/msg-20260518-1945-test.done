@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-1945-test",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T19:45:00+08:00",
+  "payload": {
+    "subject": "测试请求：鸿冠模块菜单数据（#004 Task 9）",
+    "context": "#004",
+    "content": "## 测试重点\n\n请验证以下功能：\n- 使用 hongbin 账号登录鸿冠前端，确认所有模块菜单可见\n- 点击首页菜单，确认路径正确（dashbord/index.html，非 index/html）\n- 展开各模块子菜单，确认层级关系正确\n- 点击 iframe 菜单项，确认页面正常加载\n- 确认菜单按钮权限正确显示\n\n## 审查状态\n✅ 已通过 Reviewer 二次审查",
+    "files": []
+  }
+}

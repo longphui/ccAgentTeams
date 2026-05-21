@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0950-y5z6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T09:50:00+08:00",
+  "payload": {
+    "subject": "编码选择弹框 — checkbox 全选 + 数量限制 + 排除已选",
+    "context": "#002",
+    "content": "## 问题\n半成品编码选择弹框内：\n1. 点击任一 checkbox 都会全选所有编码\n2. 选择数量不能超过半成品数量\n3. 已被选中的编码应从选项中排除",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["修复 checkbox 全选 bug", "限制选择数量不超过半成品数量", "已选编码从列表中排除"],
+    "deadline": null
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260521-1055-e5f6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-21T10:55:00+08:00",
+  "replyTo": "msg-20260521-1000-task006",
+  "payload": {
+    "subject": "✅ #006 报工审核批次生成修复 已完成",
+    "context": "#006",
+    "content": "## 完成情况\n\n### Bug 1 修复：ProductionNum 计算错误\n- 恢复 `productionNum = Min(各阶段完成量)` 逻辑（r4539 正确算法）\n- 条件改为 `productionNum > alreadyBatched`（同类量比较）\n- `ProductionNum = productionNum - alreadyBatched`（增量差额）\n- 查询加 `!a.IsDeleted` 过滤（Reviewer 反馈修正）\n\n### Bug 2 修复：批次号越界\n- `batches.Count + 1` 顺序编号替代 Substring 解析\n\n### Bug 3 修复：死代码清理\n- 删除 `maxStepNum` / `maxStepNumStages`\n\n## 审查状态\n✅ 已通过 Reviewer 审查，已发送 TEST 给 QA",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenlu\\trunk\\SAHG.Salt.Application\\Produce\\ProduceReportingWorkService.cs"
+    ]
+  }
+}

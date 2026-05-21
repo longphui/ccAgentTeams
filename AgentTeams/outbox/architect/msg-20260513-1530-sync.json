@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1530-sync",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "normal",
+  "timestamp": "2026-05-13T15:30:00+08:00",
+  "payload": {
+    "subject": "决策同步：#001/#002 修复完成，QA + Reviewer 已分派",
+    "content": "## 当前状态\n\n| 功能 | 阶段 | 负责人 | 状态 |\n|------|------|--------|------|\n| #001 工单编码 | 回归测试 | QA | 📥 收件箱有任务 (msg-007) |\n| #002 商品组装 | 复审 | Reviewer | 📥 收件箱有任务 (msg-008) |\n\n## #001 修复清单\n- ✅ NRE (AutoMapper 映射缺失)\n- ✅ codeList 弹窗 staticFilter 绑定\n- ✅ Tab1/Tab2 CodeGenStatus 分类展示\n\n## #002 修复清单\n- ✅ GetDetails/Delete 租户隔离 (CompanyId 过滤)\n- ✅ GetAvailableCodes JOIN 父表租户过滤\n- ✅ GetPageList Skip/Take 分页\n- ✅ Delete LastModificationUserId 传参\n- ✅ GetDetails 产品查询优化\n\n## 下一步\n1. 用户触发 `/agent-qa` 执行 #001 回归测试\n2. 用户触发 `/agent-reviewer` 执行 #002 复审\n3. 两者通过后 #001/#002 可交付",
+    "files": []
+  }
+}

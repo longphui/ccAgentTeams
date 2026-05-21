@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260518-0020-c3d4",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:20:00+08:00",
+  "replyTo": "msg-20260518-0010-r1f2",
+  "payload": {
+    "subject": "审查请求（修订）：#004 Task 1+2+3 — 已修复 FEEDBACK 指出的问题",
+    "context": "#004",
+    "content": "## 修复清单\n\n### HIGH #1 — MenuProxyService 缺少 success 检查 ✅ 已修复\n在 `MenuProxyService.cs:52` 行（原位置）之前添加了 success 检查：\n```csharp\nif (jObject[\"success\"]?.Value<bool>() != true)\n{\n    var errorMsg = jObject[\"error\"]?[\"message\"]?.ToString() ?? \"未知错误\";\n    throw new InvalidOperationException($\"分路菜单接口调用失败: {errorMsg}\");\n}\n```\n\n### HIGH #2 — SaltRequest 包装格式 ✅ 已确认\n已检查分路源码 `MenuRouteController.cs:56`，`GetListByRole` 方法签名为：\n```csharp\npublic HRM_AccountMenuRouteDto GetListByRole(HRM_BaseInput input)\n```\n参数为 `HRM_BaseInput` 直接绑定（**非** `[FromBody] SaltRequest<T>` 包装）。`HRM_BaseInput` 包含 `PlatformId` 属性（`SAHG.Salt.HRM.Dto`）。\n结论：当前代码传 `{platformId: 1}` 格式正确，无需改为 `{Data: {platformId: 1}}`。\n\n### NORMAL #1 — 密码明文存储\n已确认：当前开发阶段可接受。生产部署时建议迁移至 Secret Manager 或环境变量。已在代码中保留 fallback 用于开发调试。\n\n### NORMAL #2 — 注释不完整 ✅ 已修复\n- `HrmAuthService.cs` `GetFenluTokenAsync()` 已添加 `<returns>` 注释\n- `MenuProxyService.cs` `GetListByRoleAsync()` 已添加 `<param name=\"request\">` 和 `<returns>` 注释\n\n## 验证\n- `dotnet build honguan_erp.sln -c Debug` → 0 Error ✅\n- SVN st 确认所有文件已追踪\n\n请重新审查。",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs"
+    ]
+  }
+}

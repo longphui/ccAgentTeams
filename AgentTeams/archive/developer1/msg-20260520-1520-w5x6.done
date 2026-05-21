@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1520-w5x6",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-20T15:20:00+08:00",
+  "replyTo": "msg-20260520-1420-k1l2",
+  "payload": {
+    "subject": "✅ 更正：hrm-proxy 404 为误报，浏览器测试通过",
+    "content": "## 更正\n之前报告 `/views/hrm-proxy/index.html` curl 返回 404 是测试方式问题（直接 URL 访问不等于 SPA 路由加载）。用户浏览器点击菜单 → iframe 加载 HRM 页面正常，无 404。\n\n## 结论\n- hrm-proxy 路径拼接修复：✅ 浏览器验证通过\n- 之前 404 报告作废"
+  }
+}

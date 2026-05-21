@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260516-1530-sortOrder-done",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T15:30:00+08:00",
+  "replyTo": "msg-20260516-1450-sortOrder",
+  "payload": {
+    "subject": "✅ GetRuleDetails 子项列表按 SortOrder 排序 - 已完成",
+    "content": "## 完成情况\n- `CodeGeneratorService.cs:83` 添加 `.OrderBy(i => i.SortOrder)`\n- 与 GenerateCode (Line 476) 排序逻辑一致\n- 编译 0 Error\n- Reviewer 审查通过\n\n## 变更文件\n- SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs (1 行修改)",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

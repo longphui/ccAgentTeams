@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1700-c3d4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T17:00:00+08:00",
+  "replyTo": "msg-20260513-1645-c3d4",
+  "payload": {
+    "subject": "✅ 工单状态列空白已修复",
+    "content": "## 根因\n`GetPageListForCodeGen` 中 `item.StatusName` 设置后，`Adapt<>()` 创建新 `dto` 未自动映射该字段。`GeneratedCodeCount` 有显式赋值，`StatusName` 遗漏了。\n\n## 修复\n```csharp\nvar dto = item.Adapt<WorkOrderCodeGenOutput>();\ndto.StatusName = item.StatusName;              // ← 新增\ndto.GeneratedCodeCount = ...;\n```\n\n编译 0 Error。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs"
+    ]
+  }
+}

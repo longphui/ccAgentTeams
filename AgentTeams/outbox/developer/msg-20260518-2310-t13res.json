@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260518-2310-t13res",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T23:10:00+08:00",
+  "replyTo": "msg-20260518-2230-h5i6",
+  "payload": {
+    "subject": "✅ #004 Task 13 已完成 — startup 首页路径修复",
+    "context": "#004",
+    "content": "## 完成情况\n- 修改 `MenuProxyService.TransformStartup()` 方法，将 `startup.path` 硬编码为 `views/dashbord/index.html`（天津宏观世纪首页）\n- 不再随分路 startup 的 path 变动，确保用户登录后默认打开天津宏观世纪首页\n- 编译通过 0 Error\n\n## 变更文件\n- `MenuProxyService.cs` — TransformStartup() 方法：移除 HRM path 映射逻辑，改为固定路径",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"]
+  }
+}

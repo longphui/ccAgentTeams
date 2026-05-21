@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-1510-sortOrder-review",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T15:10:00+08:00",
+  "replyTo": "msg-20260516-1450-sortOrder",
+  "payload": {
+    "subject": "审查请求：GetRuleDetails 子项列表按 SortOrder 排序",
+    "context": "#003",
+    "content": "## 变更\n`CodeGeneratorService.cs` Line 83：添加 `.OrderBy(i => i.SortOrder)`\n\n```diff\n- rule.Items = rule.Items.Where(i => !i.IsDeleted).ToList();\n+ rule.Items = rule.Items.Where(i => !i.IsDeleted).OrderBy(i => i.SortOrder).ToList();\n```\n\n## 审查重点\n- OrderBy 与 GenerateCode (Line 476) 排序逻辑一致\n- 无新增文件，仅一行修改",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

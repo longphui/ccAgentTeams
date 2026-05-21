@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260513-1640-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:40:00+08:00",
+  "payload": {
+    "subject": "修改编码记录列表列 — 替换规则名称/业务编码为工单商品信息",
+    "context": "用户反馈第三个Tab（编码记录）中"规则名称"和"业务编码"对用户无意义，需改为工单号、商品Id、商品名称、商品规格、编码值。",
+    "content": "## 当前状态\n\n`columns3` 当前列：序号 | 编码值 | **规则名称** | **业务编码** | 生成时间\n\n## 目标\n\n改为：序号 | **工单号** | **商品Id** | **商品名称** | **商品规格** | 编码值 | 生成时间\n\n（去掉规则名称和业务编码，新增工单号、商品Id、商品名称、商品规格）\n\n## 涉及文件\n\n### 后端\n- `CodeRecordDto` — 新增字段：WorkOrderNo、ProductId、ProductName、ProductSpec\n- `CodeGeneratorService.GetCodeRecords` — 通过 `Objects` 集合关联查询 ProduceWorkOrder 及商品表，填充新字段\n  - 关联路径：CodeRecord → CodeRecordObject (ObjectType + ObjectId) → ProduceWorkOrder → Product\n\n### 前端\n- `v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html` — 更新 `columns3` 数组\n\n## 注意事项\n- 编码记录可能关联多种 ObjectType，对于非工单类型的记录，新字段返回空即可\n- 保持现有 BaseInput 分页参数不变\n- 前端 key 名与后端 DTO 字段名一致（camelCase）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordDto.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "CodeRecordDto 新增 WorkOrderNo / ProductId / ProductName / ProductSpec 字段",
+      "GetCodeRecords 中 JOIN ProduceWorkOrder 和 Product 表填充新字段",
+      "前端 columns3 移除 ruleName/bizCodeName，新增 workOrderNo/productId/productName/productSpec",
+      "编译通过 0 Error"
+    ]
+  }
+}

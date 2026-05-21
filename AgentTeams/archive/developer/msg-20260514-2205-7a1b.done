@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2205-7a1b",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T22:05:00+08:00",
+  "replyTo": "msg-20260514-2135-e3f4",
+  "payload": {
+    "subject": "✅ 审查通过：ProductComponentsService DbFunctions.Like → Contains",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（仅修改已有文件）\n- csproj 注册：无新建 .cs 文件\n- 编译：✅ 0 Error（仅 MSB3277 警告，预存问题）\n\n### 审查详情\n\n#### 🔒 安全检查 ✅\n- SQL 注入：无字符串拼接 SQL，全部 LINQ 参数化\n- 租户隔离：所有查询均带 `CompanyId` 过滤\n- 权限控制：Controller 所有 Action 均有 `[PPMLog]` 审计\n- XSS / 敏感信息：不涉及\n\n#### 📐 后端规范 ✅\n- 类和方法有 `<summary>` 注释\n- 返回类型：Save/Update/Delete → `OutDto`，GetDetails → `TDto`，GetAvailableCodes → `List<string>`\n- Service 继承 `SaltAppServiceBase`\n- 软删除 `entity.Delete()` / `code.Delete()` 用法正确\n\n#### 🔄 Contains 变更验证 ✅\n1. `p.ProductName.Contains(input.Keywords)` (line 41) — ✅ 正确\n2. `c.CodeValue.Contains(input.Keywords)` (line 51) — ✅ 正确\n3. `pc.ProductCode.Contains(input.Keywords)` (line 54) — ✅ 正确\n4. `var keyword = \"%\" + input.Keywords + \"%\";` — ✅ 已移除\n5. `using System.Data.Entity;` (line 9) — ✅ 保留（`ToListAsync` 等异步扩展需要）\n\n#### 🐛 高频 Bug 模式 ✅\n- 无 `DateTime.AddDays()` / `string.IsNullOrWhiteSpace()` 在 LINQ 表达式内\n- 无 `Http.invoke` 响应解包问题（仅后端）\n- 无不兼容组件引用\n- `Contains` 中文搜索：符合决策 #005（已知限制，用户接受）\n\n#### ⚡ 性能 ✅\n- 产品、编码均批量查询，无 N+1 循环 DB 调用\n- 租户隔离通过主查询 `CompanyId` 过滤保证\n\n#### 📐 架构一致性 ✅\n- 决策 #007（简化）：ComponentProductId/ComponentUnit 在 Code 级别正确\n- 决策 #005（Contains 回退）：正确实施\n\n### 💡 建议（不阻塞）\n- `GetPageList` 返回类型为 `dynamic`，建议改为 `PagedListOutput<ProductComponentsDto>`（预存问题）\n- Service 缺少 `#region` 方法分组（预存问题）"
+  }
+}

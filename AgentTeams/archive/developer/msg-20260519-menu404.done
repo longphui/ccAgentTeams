@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-menu404",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:15:00+08:00",
+  "payload": {
+    "subject": "人事审批4个页面空白：菜单URL指向localhost:5021而非代理分路地址",
+    "context": "#004",
+    "content": "## 现象\n\n人事审批目录下 4 个页面全部空白打不开：\n\n1. 审批管理\n2. 转账申请\n3. 离职申请\n4. 审批人设置\n\n浏览器报错：\n```\nGET http://localhost:5021/User/Approval/Application.html?_=1779178389365 404 (Not Found)\n```\n\n## 分析\n\nURL 指向了 `localhost:5021/User/Approval/...`，这是旧版路径。按照 #004 HRM 集成方案，这些页面应该通过 HRM 代理/iframe 转发到分路系统的对应页面，而不是访问 5021 的旧路径。\n\n## 行动项\n\n1. 排查菜单数据中这 4 个菜单项的 URL 配置（数据库或 HRM API 返回的菜单数据）\n2. 修正 URL，使其正确走 HRM 代理/嵌入式模式到达分路页面\n3. 验证：点击这 4 个菜单项，页面正常加载不再 404",
+    "files": [],
+    "actions": ["排查菜单 URL 数据来源", "修正 4 个菜单项 URL 指向分路代理", "浏览器验证页面正常加载"],
+    "deadline": null
+  }
+}

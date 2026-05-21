@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0955-reply-x4y5",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:55:00+08:00",
+  "replyTo": "msg-20260514-0945-x4y5",
+  "payload": {
+    "subject": "✅ 编码选择弹框搜索功能已完成",
+    "content": "## 完成情况\n- 弹框内添加 `<lay-input>` 搜索框，支持 clearable 清除\n- 新增 `filteredCodeList` computed 属性，根据 `codeSearchText` 实时过滤编码列表\n- table 的 data-source 绑定为 `filteredCodeList` 而非原始 `availableCodeList`\n- 每次打开弹框时自动重置搜索文本",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

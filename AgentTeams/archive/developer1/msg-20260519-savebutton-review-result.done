@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1902-savebutton-result",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T19:02:00+08:00",
+  "replyTo": "msg-20260519-savebutton-review",
+  "payload": {
+    "subject": "✅ 审查通过：iframe 嵌入模式保存按钮 callback 修复",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（util.js 是已有文件修改，`svn st` 显示 `M`）\n- csproj 注册：N/A（非 .cs 文件）\n- 编译：N/A（纯 JS 文件）\n\n### 审查详情\n\n#### 🔒 安全检查\n- ✅ SQL 注入：N/A（无数据库操作）\n- ✅ 租户隔离：N/A\n- ✅ 权限控制：N/A（stub 工具函数）\n- ✅ XSS：stateKey 由 Date.now()+random 生成，formPageUrl 来自内部菜单数据，无用户输入注入点\n- ✅ 敏感信息：无日志打印\n\n#### 🖥️ 前端规范（fl-html-dev.md）\n- ✅ 资源引入：N/A（util.js 是工具库，非页面文件）\n- ✅ 按钮规范：N/A\n- ✅ layer.confirm：N/A\n- ✅ 注释：N/A（本次变更未涉及注释修改）\n\n#### 🐛 高频 Bug 模式\n- ✅ LINQ 不兼容方法：N/A\n- ✅ Http.invoke 响应解包：N/A\n- ✅ LayuiVue 不存在组件：N/A\n- ✅ lay-table 序号列：N/A\n\n#### ⚡ 性能\n- ✅ 无性能问题\n\n#### 📐 架构一致性\n- ✅ `state.onConfirm` 初始化 `undefined` → 表单页 mounted 时赋值 → callback 调用，流程正确\n- ✅ callback 逻辑与 appContext.js 真实 openPage（L580-625）逐项对比一致：\n  - `onConfirm` 类型检查 ✅\n  - 返回值 falsy → 不关闭（表单验证失败阻止关闭）✅\n  - 返回值 `true` → 关闭 + ok(true) ✅\n  - 返回值 Promise → then 中根据结果决定关闭 ✅\n  - 返回值对象（非 Promise）→ 关闭 + ok(res) ✅\n  - 无 onConfirm → 关闭 + ok() ✅\n  - 取消按钮 → 直接关闭 ✅\n- ✅ 覆盖新增+编辑两种场景（onConfirm 由表单页赋值，state.return() 关闭弹窗并回调）\n\n#### ⚠️ 附注（不阻塞通过）\n\n**extraBtns 未接入 btn 数组（已有问题）**：\n`state.extraBtns = []` 已定义但未像 appContext.js 那样 `...moreBtns` 展开到 btn 数组中。这意味着通过嵌入模式 stub 打开的弹窗不支持自定义额外按钮。这是 pre-existing gap，非本次修复引入。若后续需要，参照 appContext.js L618 补一行即可。"
+  }
+}

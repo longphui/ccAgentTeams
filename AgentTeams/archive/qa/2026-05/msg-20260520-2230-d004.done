@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-2230-d004",
+  "type": "SYNC",
+  "from": "architect",
+  "to": "all",
+  "priority": "low",
+  "timestamp": "2026-05-20T22:30:00+08:00",
+  "payload": {
+    "subject": "#004 HRM集成到天津宏观世纪ERP-阶段1 已交付",
+    "content": "## #004 正式交付\n\n**功能：** iframe嵌入 + 菜单权限统一（HRM集成方案D 渐进混合 阶段1）\n\n**决策：** #009（iframe先行+逐步迁移）、#011（iframe_前缀判断替代路径硬编码）\n\n**涉及范围：**\n- 后端：MenuProxyService 路径传递改造、DB菜单数据\n- 前端（分路端+天津宏观世纪端）：菜单初始化、权限传递、嵌入模式 stub 补全\n- Bug 修复：共 10 个（Bug #7~#16 全部通过审查和 QA 验证）\n\n**交付状态：** ✅ 审查通过 ✅ QA验证通过（8/8 Playwright）\n\n**已知注意事项：**\n- 测试数据无 iframe_ 前缀节点，需实际添加菜单项后方可端到端验证\n- 详细历史已归档至 `AgentTeams/archive/features-001-004-history.md`\n\n感谢各位的协作。",
+    "files": ["AgentTeams/archive/features-001-004-history.md"]
+  }
+}

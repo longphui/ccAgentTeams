@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-2010-o5p6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:10:00+08:00",
+  "replyTo": "msg-20260513-2005-f6g7",
+  "payload": {
+    "subject": "✅ 收到任务：修复 layer.confirm 回调",
+    "content": "收到，立即修复。"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260513-1710-d5e6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T17:10:00+08:00",
+  "payload": {
+    "subject": "修复编码记录中新列数据空白 — 工单/商品信息获取失败",
+    "context": "用户测试发现 Tab3 编码记录中工单号、商品Id、商品名称、商品规格四列全部空白。用户分析指出：不能仅靠 GetCodeRecords 中通过 CodeRecordObject 反查工单信息，需要确认生成编码时是否正确存储了赋码对象关联。",
+    "content": "## 问题现象\n\nTab3 编码记录列表中，新增的四个列（工单号/商品Id/商品名称/商品规格）全部空白。\n\n## 用户分析\n\n> 获取编码列表的接口，不能用编码的赋码对象属性去获取对应的信息，或者是你没有把正确的赋码对象id和对象名回传给生成编码接口。\n\n即问题可能出在两个环节：\n1. **生成编码时**（`CodeGeneratorService.GenerateCode`）— 前端已传 `Objects: [{ObjectType:\"ProduceWorkOrder\", ObjectId: row.id}, {ObjectType:\"Product\", ObjectId: row.productId}]`，但后端是否正确持久化了 CodeRecordObject？\n2. **查询编码列表时**（`GetCodeRecords`）— 通过 CodeRecordObject 反查 ProduceWorkOrder 的 JOIN 是否正确？ObjectId 值和 ProduceWorkOrder.Id 是否匹配？\n\n## 排查步骤\n\n1. 检查 `GenerateCode` / `GenerateCodeInput` — 确认 Objects 参数是否被正确解析并存入 `CodeRecordObjects` 表\n2. 检查存入的 ObjectId 值 — 前端传的 `row.id` 是否为正确的工单 Id？对比 ProduceWorkOrder 表确认\n3. 检查 `GetCodeRecords` 的 JOIN — CodeRecordObjects.ObjectId 是否匹配 ProduceWorkOrder.Id\n4. 如 JOIN 方案确有缺陷，考虑备选：在生成编码时直接将工单号/商品信息冗余写入新的 CodeRecord 扩展字段\n\n## 前端传参确认\n\n```javascript\n// showConfirm 中传给 Generate API 的参数：\nvar data = {\n    CodeSign: \"ProductCode\",\n    Count: row.plannedProductionNum,\n    Objects: [\n        { ObjectType: \"ProduceWorkOrder\", ObjectId: row.id },\n        { ObjectType: \"Product\", ObjectId: row.productId }\n    ]\n};\n```\n\n`row.id` 和 `row.productId` 来自 `GetPageListForCodeGen` 返回的 `WorkOrderCodeGenOutput`，需确认这两个字段值是否正确传递。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/GenerateCodeInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordDto.cs"
+    ],
+    "actions": [
+      "排查 GenerateCode — 检查 Objects 是否正确持久化到 CodeRecordObjects 表",
+      "排查 GetCodeRecords — 验证 JOIN 条件和 ObjectId 值匹配",
+      "如果 JOIN 方案不可行，改为生成编码时直接冗余存储工单/商品信息",
+      "修复后验证 Tab3 四列数据正常显示"
+    ]
+  }
+}

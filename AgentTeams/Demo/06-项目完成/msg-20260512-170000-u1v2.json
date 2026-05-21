@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260512-170000-u1v2",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-12T17:00:00+08:00",
+  "replyTo": "msg-20260512-103000-o5p6",
+  "payload": {
+    "subject": "✅ JWT 认证模块测试全部通过",
+    "content": "## 测试报告\n\n### 测试环境\n- Go 1.22 / PostgreSQL 16 / Redis 7\n- 测试框架：testify + httptest\n\n### 功能测试 — 8/8 ✅\n\n| # | 用例 | 结果 | 响应时间 |\n|---|------|------|----------|\n| 1 | 正常登录 | ✅ | 45ms |\n| 2 | 错误密码 | ✅ | 38ms |\n| 3 | Token 验证 | ✅ | 12ms |\n| 4 | 过期 token | ✅ | 15ms |\n| 5 | Token 刷新 | ✅ | 52ms |\n| 6 | 刷新轮转 | ✅ | 48ms |\n| 7 | 登出 | ✅ | 35ms |\n| 8 | 多设备限制 | ✅ | 42ms |\n\n### 安全测试 — 4/4 ✅\n\n| # | 用例 | 结果 |\n|---|------|------|\n| 9 | 无 token 访问 | ✅ 401 |\n| 10 | 伪造 token | ✅ 401 |\n| 11 | SQL 注入 | ✅ 无注入点 |\n| 12 | 暴力破解 | ⚠️ 无限次尝试（非阻塞项）|\n\n### 性能测试 ✅\n| 指标 | 目标 | 实际 |\n|------|------|------|\n| P50 | - | 42ms |\n| P95 | - | 186ms |\n| P99 | <500ms | 287ms |\n\n### 遗留问题\n- 暴力破解未限制（建议后续版本添加 rate limiting）\n\n### 结论\n**批准发布。** 🚀",
+    "files": [
+      "outbox/qa/test-report-20260512.md",
+      "outbox/qa/test-report-20260512.html"
+    ]
+  }
+}

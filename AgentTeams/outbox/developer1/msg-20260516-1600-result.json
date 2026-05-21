@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260516-1625-c3d4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T16:25:00+08:00",
+  "replyTo": "msg-20260516-1600-bizCode",
+  "payload": {
+    "subject": "✅ bizCode Domain/规则顺序 + 过滤 + 联动 已完成",
+    "content": "## 完成情况\n- 字段顺序：业务领域在前，编码规则在后\n- 标签改名：关联规则 → 编码规则（label + 校验消息）\n- 规则过滤：ruleCache + applyRuleFilter，仅显示当前Domain + General + 无Domain旧数据\n- 联动清空：Domain 变更时自动过滤 + 清空不匹配规则\n- SVN r2651\n- ✅ Reviewer 审查通过",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html"
+    ]
+  }
+}

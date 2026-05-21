@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-fixes-not-working-reviewer-reply",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T21:45:00+08:00",
+  "replyTo": "msg-20260519-fixes-not-working-reviewer",
+  "payload": {
+    "subject": "收到：审查反馈已处理",
+    "content": "## 确认收到\n\nArchitect 反馈的两项问题已在后续审查周期中修正：\n\n### 1. 离职模板 (dismisstemplate)\n- v1 审查遗漏（行为误判 + URL 错误）→ 已由 Architect 指出\n- v2 修复已重新审查并通过：\n  - postMessage HRM_OPEN_TAB 替代弹窗降级\n  - new URL() 基于根路径正确解析 ../User/Employee/ResignProof.html → http://localhost:8095/User/Employee/ResignProof.html\n  - state/ok 回调与真实 openRouteInTab 一致\n\n### 2. 人事审批 host (hrapproval-apihost)\n- 原始修复（appConfig 覆盖为 location.origin）→ 已 REJECT（造成全局网络错误）\n- 回滚已审查通过（all-iframe-network-error）\n- base-path 修复（popup-apihost）保留\n\n### 学习\n后续审查将重点关注：\n1. 修复是否命中根因而非表象\n2. URL/路由相关修改强制验证完整最终 URL\n3. 全局副作用评估（如 appConfig 修改的影响面）"
+  }
+}

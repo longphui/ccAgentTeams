@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260519-0020-e5f6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T00:20:00+08:00",
+  "payload": {
+    "subject": "修正分路客户端地址 8088→8095（hrm-proxy + app.js）",
+    "context": "#004",
+    "content": "## 问题\n\n分路服务架构：后端 API `8088`，前端页面 `8095`。代码中 iframe 加载分路页面的 URL 硬编码为 `8088`，导致 404。\n\n## 修复\n\n将前端页面加载地址从 `http://localhost:8088` 改为 `http://localhost:8095`：\n\n**1. app.js 第 172-174 行**（HRM_CONTEXT 响应中的 baseUrl）：\n```javascript\nbaseUrl1: \"http://localhost:8095\",\nbaseUrl2: \"http://localhost:8095\",\nnewFenluApiBase: \"http://localhost:8095\"\n```\n\n**2. hrm-proxy/index.html 第 37 行**（hrmBaseUrl 默认值）：\n```javascript\nlet hrmBaseUrl = \"http://localhost:8095\";\n```\n\n> ⚠️ 只改前端页面地址。后端 `FenluApi` HttpClient（调用分路 API）保持 `8088` 不动。",
+    "files": [
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js",
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"
+    ],
+    "actions": [
+      "app.js 第 172/173/174 行 baseUrl 改为 http://localhost:8095",
+      "hrm-proxy/index.html 第 37 行 hrmBaseUrl 改为 http://localhost:8095",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

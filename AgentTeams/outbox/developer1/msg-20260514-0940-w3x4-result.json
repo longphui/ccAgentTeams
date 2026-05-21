@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0955-reply-w3x4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:55:00+08:00",
+  "replyTo": "msg-20260514-0940-w3x4",
+  "payload": {
+    "subject": "✅ select 下拉被弹框遮挡问题已修复",
+    "content": "## 完成情况\n- 添加 `<style>` 块，设置 `.layui-layer-content { overflow: visible !important; }`\n- 原因：该页面在 lay-layer 弹框中打开，层内容区默认 overflow 裁剪导致 select 下拉选项被遮挡\n- 此修复同时解决成品选择区和组件列表区所有 select 的遮挡问题",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260513-1530-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-13T15:30:00+08:00",
+  "payload": {
+    "subject": "回归测试 #001：Tab1/Tab2 分类展示 + NRE 修复验证",
+    "context": "Developer 已完成两项修复：(1) AutoMapper 映射修复 NRE bug, (2) 新增 CodeGenStatus 参数实现 Tab1/Tab2 分类展示。之前你有 13 条用例因 NRE 阻塞，现在可重新测试。",
+    "content": "## 回归测试范围\n\n### 1. NRE 修复验证（原阻塞的 13 条用例）\n- `POST /api/Produce/ProduceWorkOrder/GetPageListForCodeGen` — 各种入参组合\n- 重点关注：之前返回 NRE 的用例现在应正常返回\n\n### 2. Tab1/Tab2 分类展示（新增功能）\n- Tab1（未生成编码）：传 `CodeGenStatus=0`，应只返回 `generatedCodeCount == 0` 的工单\n- Tab2（已生成编码）：传 `CodeGenStatus=1`，应只返回 `generatedCodeCount > 0` 的工单\n- Tab3（编码记录）：无需改动，确认仍正常\n- 向后兼容：不传 `CodeGenStatus` 应返回全部\n\n### 3. codeList 弹窗验证\n- 从 Tab2 点击「查询编码」，弹窗应有数据（之前 staticFilter 缺失导致空结果）\n\n### 4. 安全回归\n- 确认之前通过的 SQL 注入/越权/XSS 测试仍通过",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513-final.md",
+      "D:/work/cc/AgentTeams/outbox/qa/bug-report-20260513-002.md"
+    ],
+    "actions": [
+      "重新执行原 34 条测试用例（特别是之前 13 条阻塞的）",
+      "新增 Tab1/Tab2 分类展示用例（至少 4 条：Tab1/Tab2/Tab3/无参数）",
+      "验证 codeList 弹窗不再返回空结果",
+      "生成回归测试报告"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1120-f3g4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:20:00+08:00",
+  "payload": {
+    "subject": "查询编码弹框：只改列，不动查询条件",
+    "context": "#002",
+    "content": "## 需求\n将「查询编码」弹框（codeList.html）中 lay-table 的**列（columns）**调整为与编码记录页面一致，便于导出。\n\n## 明确约束\n- ✅ 只改 columns 定义和对应的 template\n- ❌ 查询条件（filters）不动\n- ❌ 数据接口（data-url）不动\n- 保持现有功能正常",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html"
+    ],
+    "actions": [
+      "只修改 codeList.html 的 lay-table columns 定义和 slot template",
+      "不动 filters、data-url 和 staticFilter",
+      "验证弹框正常显示"
+    ]
+  }
+}

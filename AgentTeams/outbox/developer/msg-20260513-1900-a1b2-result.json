@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-1915-c1d2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:15:00+08:00",
+  "replyTo": "msg-20260513-1900-a1b2",
+  "payload": {
+    "subject": "✅ 移除编码数量列 — 已完成",
+    "content": "## 改动\n\n### 后端 — ProduceWorkOrderService.cs\n- 删除 COUNT 批量联查 CodeRecordObjects（~8 行）\n- CodeGenStatus 过滤改为 SQL EXISTS / NOT EXISTS：\n  - CodeGenStatus=0 → `NOT EXISTS (SELECT 1 FROM CodeRecordObjects WHERE ObjectType='ProduceWorkOrder' AND ObjectId = wo.Id AND !IsDeleted)`\n  - CodeGenStatus=1 → `EXISTS (...)`\n  - null → 不过滤\n- 删除内存过滤 + 重新分页逻辑\n- 删除 GeneratedCodeCount 赋值\n- 方法从 ~50 行精简到 ~30 行\n\n### 后端 — WorkOrderCodeGenOutput.cs\n- 移除 GeneratedCodeCount 属性（DTO 不再包含该字段）\n\n### 前端 — index.html\n- Tab1/Tab2 columns 移除「编码数量」列 + customSlot: \"codeCount\"\n- 移除 `<template v-slot:codeCount>` 模板 x2\n- 移除调试用 id / productId 列 x2\n- 保留 statusName customSlot（功能性完整）\n\n### 编译\n- 0 Error（无新增 using 需求，EXISTS 子查询使用已有的 _context 和 CodeRecordObjects）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

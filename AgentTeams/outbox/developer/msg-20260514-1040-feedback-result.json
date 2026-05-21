@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260514-1050-x9y0",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:50:00+08:00",
+  "replyTo": "msg-20260514-1040-h3i4",
+  "payload": {
+    "subject": "✅ 注释已补全",
+    "content": "## 修改清单\n\n| 文件 | 修改 |\n|------|------|\n| `IProductComponentsService.cs` | 合并重复 summary，补全 `<param>` + `<returns>` |\n| `ProductComponentsService.cs` | `GetAvailableCodes` 补全注释 |\n| `CodeGeneratorService.cs` | `GetCodeRecordsByObject` / `GetCodeRecordsForWorkOrder` 补全注释 |\n| `CodeGeneratorController.cs` | `GetCodeRecordsByObject` / `GetCodeRecordsForWorkOrder` Action 补全注释 |\n\n## 编译\n- MSBuild: **0 Error**，警告从 10762 降至 10757",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ]
+  }
+}

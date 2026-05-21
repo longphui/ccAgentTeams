@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1035-g1h2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:35:00+08:00",
+  "payload": {
+    "subject": "去掉页面内部保存/取消按钮",
+    "context": "#002",
+    "content": "## 改动\n手动组装弹框外层已有确认/取消按钮，页面内部的保存和取消按钮重复，去掉。\n\n保存逻辑改为绑定到弹框的确认回调（`state.onConfirm`），取消直接用弹框取消。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["去掉页面底部保存/取消按钮", "保存逻辑绑定到 state.onConfirm"],
+    "deadline": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1005-reply-y5z6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:05:00+08:00",
+  "replyTo": "msg-20260514-0950-y5z6",
+  "payload": {
+    "subject": "✅ checkbox 全选 + 数量限制 + 排除已选 已完成",
+    "content": "## 完成情况\n1. **checkbox 全选 bug**: table 添加 `v-model:selectedKeys=\"selectedCodes\"` + `row-key=\"codeValue\"`，LayuiVue 表格需要这两个属性才能正确跟踪单行选中状态\n2. **数量限制**: confirmCodePick 中新增校验 `selectedCodes.length > comp.componentQuantity`，超出时提示\n3. **排除已选**: addCode 中已过滤 `comp.codes` 中的已选编码（`allCodes.filter(c => !used.includes(c.codeValue))`），此项无需额外修改\n4. confirmCodePick 适配：selectedCodes 现在是字符串数组（row-key），forEach 直接 push 字符串",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

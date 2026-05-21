@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-1140-d5e6",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:40:00+08:00",
+  "replyTo": "msg-20260513-003",
+  "payload": {
+    "subject": "⚠️ 测试部分完成：3/34 通过，31 被 EF 模型变更阻塞",
+    "content": "## 测试结果\n- 测试用例数: 34\n- **通过: 3** (TC-API-001 登录, TC-API-005 认证拦截, TC-UI-001 页面加载)\n- 失败: 0\n- **阻塞: 31**\n- 覆盖率: 9%\n\n## 阻塞原因 (第二轮确认)\nEF 模型变更错误影响所有 API（除 Login），包括现有接口：\n```\nInvalidOperationException: The model backing the 'SaltDbContext' context has\nchanged since the database was created.\n```\n影响范围：\n- /api/Produce/ProduceWorkOrder/* → 全挂\n- /api/CodeGenerator/CodeGenerator/* → 全挂\n- /api/HRM/Dic/* → 全挂（现有接口也受影响）\n- /api/Common/Account/Login → 唯一正常\n\n## 正面发现\n- ✅ Login API 正常\n- ✅ 认证拦截有效（401）\n- ✅ 前端页面部署正确，HTML 结构完整（三 Tab + 按钮均存在）\n- ✅ index.html / codeList.html 就位\n\n## 建议\n执行 EF Migration 更新数据库后可立即恢复全量测试。预计 30 分钟内可完成全部 34 用例。",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513-v2.md",
+      "D:/work/cc/AgentTeams/outbox/qa/bug-report-20260513-001.md"
+    ]
+  }
+}

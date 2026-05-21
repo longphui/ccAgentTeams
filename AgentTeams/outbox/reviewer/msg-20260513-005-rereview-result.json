@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-005-rereview-result",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T23:55:00+08:00",
+  "replyTo": "msg-20260513-008",
+  "payload": {
+    "subject": "✅ 复审通过：#002 商品组装编码关联 — 4项修复全部验证",
+    "content": "## 复审结论：通过\n\n4 项必须修复 + 2 项额外优化全部正确实现：\n\n| # | 修复 | 验证 |\n|---|------|------|\n| 1 | GetDetails 加 CompanyId 过滤 | ✅ Service: `x.CompanyId == companyId` + Controller: `CurrentCompanyId` |\n| 2 | Delete 加 CompanyId 过滤 + 取消硬编码 | ✅ 同上，`LastModificationUserId = modifierUserId` |\n| 3 | GetPageList 加分页 | ✅ `.Skip(input.SkipCount).Take(input.MaxResultCount)` |\n| 4 | GetAvailableCodes JOIN 父表过滤 | ✅ `join p in ... on ... where p.CompanyId == companyId` |\n| 5 | Delete LastModificationUserId | ✅ 接收 `modifierUserId` 参数 |\n| 6 | GetDetails 仅查 2 个产品 | ✅ `productIds = new[] { entity.ProductId, entity.ComponentProductId }` |\n\n无新增安全/性能问题。允许合入。\n\n详细报告: `outbox/reviewer/review-report-20260513-product-components-rereview.md`",
+    "files": ["outbox/reviewer/review-report-20260513-product-components-rereview.md"]
+  }
+}

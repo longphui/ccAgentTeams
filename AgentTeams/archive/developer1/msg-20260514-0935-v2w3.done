@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0935-v2w3",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:35:00+08:00",
+  "payload": {
+    "subject": "添加组件 — 单位改为 span/label 显示在数量后面",
+    "context": "#002",
+    "content": "## 改动\n半成品单位不用单独的 input 组件，直接用 span 或 label 标签显示在数量输入框后面即可。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["单位从 input 改为 span/label，放在数量后面同行显示"],
+    "deadline": null
+  }
+}

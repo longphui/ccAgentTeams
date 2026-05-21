@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1135-s7t8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:35:00+08:00",
+  "replyTo": "msg-20260514-1120-f3g4",
+  "payload": {
+    "subject": "✅ 查询编码弹框列信息已对齐（仅改列，不动查询条件）",
+    "content": "## 完成情况\n- columns 扩展为 Tab3 完整 7 列：序号、工单号、商品Id、商品名称、商品规格、编码值、生成时间\n- filters 保持原样（仅 CodeValue），已回退之前的错误扩展\n- data-url 和 staticFilter 未动\n- 注释已补全",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html"]
+  }
+}

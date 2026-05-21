@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-review-d9e1",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T19:05:00+08:00",
+  "replyTo": "msg-20260518-1845-d9e1",
+  "payload": {
+    "subject": "审查反馈：#004 Task 9 菜单数据 — 需修改（3个问题）",
+    "content": "## 审查报告\n\n### 🔒 安全问题\n- [x] 无安全漏洞 — curl 脚本调用受保护的 Save API，通过 Bearer Token 认证 ✅\n\n### 🐛 需修改的问题\n\n#### 问题 1 (HIGH): platformId 与 API 契约不一致\n\n- **文件**: 所有 `AgentTeams/logs/create-*.sh` curl 脚本\n- **现状**: 所有菜单使用 `PlatformId: 12`\n- **契约要求**: API 契约 B 明确 `platformId: 1`（\"鸿冠 Web 端固定为 1\"）\n- **计划 SQL 示例**: `PlatformId = 1`\n- **影响**: MenuProxyService 使用 `{ platformId: request.PlatformId }`（即前端传入 `window.PlatformId`），若前端传 `1` 而 DB 存 `12`，GetListByRole 将查不到任何鸿冠菜单\n- **修复**: 确认鸿冠前端 `window.PlatformId` 的实际值，若为 1 则需重新创建所有菜单（或 SQL UPDATE AbpMenuRoute SET PlatformId=1 WHERE PlatformId=12）\n\n#### 问题 2 (MEDIUM): 首页 path 拼写错误\n\n- **文件**: `create-menus.sh:20`\n- **现状**: `\"path\":\"views/dashbord/index/html\"`\n- **应为**: `\"path\":\"views/dashbord/index.html\"`（`/html` → `.html`）\n- **影响**: 点击首页菜单将报 404 文件未找到\n- **修复**: 重新 Save 首页菜单修正 path，或 SQL UPDATE\n\n#### 问题 3 (NORMAL): menuButtons 仅含 [\"search\"]\n\n- **审查消息已注明**: \"Save API 未保存额外按钮\"\n- **影响**: 所有菜单的 add / edit / delete 按钮权限检查 `checkTabPermissions` 将返回 false，用户看不到操作按钮\n- **这是已知限制**，但需要确认是否在后续有补救方案（如直接改 AbpMenuRoute 表或通过角色-按钮关联表补充）\n\n### 📐 架构一致性\n\n- [x] MenuProxyService 字段映射 (`parentId → parent`) 未受影响 — DB 层面使用 parentId 正确 ✅\n- [x] 菜单命名规范 `menu_{originalId}` 可追溯鸿冠原始 ID ✅\n- [x] 层级关系 parentId 由 DB 主键保证 ✅\n\n### 📦 提交完整性\n\n- SVN add: N/A — 脚本和日志文件均在 AgentTeams/logs/，非项目代码\n- csproj 注册: N/A\n- 编译: N/A — 纯数据操作，无代码变更\n\n---\n\n## 审查结论\n\n**需修改** — 问题 1 (platformId) 和问题 2 (path 拼写) 必须修复后才能通过。问题 3 需确认后续方案。",
+    "files": [
+      "D:\\work\\cc\\AgentTeams\\logs\\create-menus.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_level1_children.sh"
+    ]
+  }
+}

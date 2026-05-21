@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1955-qa-feedback",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:55:00+08:00",
+  "replyTo": "msg-20260514-1950-rm-autoassemble-test",
+  "payload": {
+    "subject": "AutoAssemble 移除回归测试 — 2个已知 Bug 仍存在",
+    "content": "## 测试背景\n在 AutoAssemble 移除回归测试中，发现以下 2 个 Bug 仍然存在（此前已通过 msg-20260514-1903-r3 和 msg-20260514-1904-r4 报告）。\n\n---\n\n## Bug 1：中文关键词搜索返回错误\n\n**API**: `POST /api/Produce/ProductComponents/GetPageList`\n**请求体**: `{\"Data\":{\"Keywords\":\"海格\",\"CompanyId\":2026,\"SkipCount\":0,\"MaxResultCount\":10}}`\n**HTTP 状态**: 200\n**返回**: `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}`\n\n**对比**: 英文/数字关键词正常，空关键词正常返回 5 条记录。仅中文关键词触发此错误。\n\n---\n\n## Bug 2：Save/Update 写入操作全部返回错误\n\n**API**: `POST /api/Produce/ProductComponents/Save`\n**API**: `POST /api/Produce/ProductComponents/Update`\n**HTTP 状态**: 200\n**返回**: `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}`\n\n**影响**: 无法新增和编辑组装记录，功能完全不可用。\n\n---\n\n## 已确认正常的功能\n- GetPageList（无关键词）✅\n- GetDetails ✅\n- GetAvailableCodes ✅\n- AutoAssemble 已 404（移除成功）✅\n\n## 备注\n这两个 Bug 此前已分配 TASK（msg-20260514-1920-architect-task），但修复后问题仍存在。请排查 root cause。"
+  }
+}

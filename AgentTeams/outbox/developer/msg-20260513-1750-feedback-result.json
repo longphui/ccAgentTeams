@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1847-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T18:47:00+08:00",
+  "replyTo": "msg-20260513-1750-feedback",
+  "payload": {
+    "subject": "✅ 收到反馈：GenerateCode 端已排查",
+    "content": "## 排查结论\n\nGenerateCode 中 CodeRecordObject 创建逻辑（line 546-552）为：\n```csharp\nObjectId = o.ObjectId,\n```\n直接复制 input.Objects[i].ObjectId，无硬编码或覆盖。\n\n## 实际根因\n\n很可能是前端 `row.id` 被 lay-table 组件污染。`type: \"number\"` 的序号列未指定 key，lay-table 可能默认使用 `\"id\"` 作为 key 并将行号(rowIndex+1)写入 `row.id`。第一行行号为 1，符合「所有 ObjectId = 1」。\n\n## 已采取的修复（msg-20260513-1710-d5e6）\n- 序号列加 `key: \"rowNo\"` 避免 key 冲突\n- Tab1/Tab2 新增 `id` 和 `productId` 列（可观测验证）\n- showConfirm 中深克隆 row 去除响应式代理\n- 添加 console.log 用于浏览器调试",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

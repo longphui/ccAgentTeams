@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1630-r1s1",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T16:30:00+08:00",
+  "payload": {
+    "subject": "审查请求：#002 详情接口排查 + Update功能 + Keywords查询，#001 编码规则校验",
+    "context": "#002",
+    "content": "## #002 改动\n\n### 1300: 详情接口排查\n- GetDetails/GetPageList 返回数据完整：`codes[].componentProductId/componentUnit/componentProductName` 均正常\n- 结论：后端 API 正确，前端弹框需适配新 DTO 结构（字段从根级下沉到 codes[] 内）\n\n### 1310: Update 编辑功能\n- `ProductComponentsInput` 新增 `Id` 字段\n- `IProductComponentsService` / Service 新增 `Update(input, modifierUserId, modifier)`\n- 逻辑：查实体 → 校验编码 → 查重(排除自身) → 软删旧 Codes → 插入新 Codes → 保存\n- Controller 新增 `[HttpPost] Update` Action\n\n### 1320: Keywords 模糊查询\n- DB 查询层面过滤（非分页后内存过滤）：\n  - `ProductCode` 直接在 query.Where 匹配\n  - `ComponentProductName` 通过子查询找出匹配的 ProductComponentId，再 filter 主查询\n- count 在 filter 后取值，保证分页正确\n\n## #001 改动\n\n### 1330: 编码规则校验\n- `ICodeGeneratorService` / Service 新增 `CheckCodeRule(codeSign, companyId)` → `OutDto`\n- 未配置返回 `States=false, Tips=\"请先配置编码规则\"`\n- Controller 新增 `[HttpGet] CheckCodeRule`\n\n## 编译\n- SAHG.Salt.sln: **0 Error**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ]
+  }
+}

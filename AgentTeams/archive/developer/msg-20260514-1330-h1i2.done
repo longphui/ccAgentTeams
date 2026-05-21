@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1330-h1i2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T13:30:00+08:00",
+  "payload": {
+    "subject": "生成编码前验证 productCode 编码规则是否已配置",
+    "context": "#001",
+    "content": "## 需求\n生成编码时，先检查当前 productCode 是否已配置编码规则。若未配置，接口应返回明确的状态/提示供前端展示。\n\n## 要求\n- 在生成编码接口（或增加一个校验接口）中查询编码规则配置\n- 未配置时返回可识别的错误状态（如 OutDto.States=false + Tips=\"请先配置编码规则\"）\n- 不阻塞正常流程，仅增加前置校验\n\n## 涉及文件\n- CodeGeneratorService.cs — 生成编码方法\n- CodeGeneratorController.cs — 如需要新接口",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ],
+    "actions": [
+      "在生成编码逻辑前增加编码规则配置检查",
+      "未配置时返回明确的 OutDto(States=false, Tips)",
+      "编译通过 0 Error"
+    ]
+  }
+}

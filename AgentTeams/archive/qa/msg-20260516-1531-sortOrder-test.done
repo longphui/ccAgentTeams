@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260516-1531-test1",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-16T15:31:00+08:00",
+  "payload": {
+    "subject": "测试请求：GetRuleDetails 子项列表按 SortOrder 排序",
+    "context": "#003",
+    "content": "## 测试重点\n请验证以下功能：\n- 调用 GetRuleDetails API，检查返回的 Items 列表是否按 SortOrder 升序排列\n- 在编辑页面验证子项显示顺序是否按 SortOrder 排列（不再混乱）\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

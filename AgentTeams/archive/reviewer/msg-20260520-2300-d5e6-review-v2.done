@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260520-2300-d5e6",
+  "type": "REVIEW",
+  "from": "qa",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-20T23:00:00+08:00",
+  "replyTo": "msg-20260520-2240-c3d4",
+  "payload": {
+    "subject": "重新审查：测试规范文档 + UI 交互测试示例（6 个问题已全部修复）",
+    "context": "#005",
+    "content": "## 修复清单\n\n| # | 问题 | 修复 |\n|---|------|------|\n| 1 | 缺少 Playwright 认证流程说明 | test-standards.md 新增 8.2 节「Playwright 测试认证与 Mock」 |\n| 2 | 附录 B 数量不准确 | 更新为「约 3 个」「约 18 个」，补充 e2e-real-data + fixes/netfix |\n| 3 | Mock 路由端口错误 (5000→5021) | 全部改用 `**/api/**` 通配符，消除端口硬编码 |\n| 4 | MOCK_TAB_CONTENT 死代码 | 已移除 |\n| 5 | 缺少 UI 交互核心场景 | 新增 3 个测试用例：API Mock 正常响应验证、空列表不崩溃、API 500 错误不崩溃（8 个→8 个重构后的用例） |\n| 6 | Tab 选择器不匹配 | 改用 `[role='tab'], .layui-tab-title li, .layui-tabs-header-item` 三种选择器组合 |\n\n## 变更文件\n- `AgentTeams/shared/conventions/test-standards.md` — 新增 8.2 节 + 附录 B 修正\n- `AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js` — 重写，修复全部 4 个问题",
+    "files": [
+      "AgentTeams/shared/conventions/test-standards.md",
+      "AgentTeams/qa/playwright/supplierManage-ui-interaction.spec.js"
+    ],
+    "actions": [
+      "重新审查修复后的 test-standards.md",
+      "审查修复后的 supplierManage-ui-interaction.spec.js",
+      "通过则发 RESULT 给 Architect"
+    ]
+  }
+}

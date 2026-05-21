@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260518-1015-f7g8",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T10:15:00+08:00",
+  "replyTo": "msg-20260518-reviewer-feedback2",
+  "payload": {
+    "subject": "审查请求：#004 [AllowAnonymous] 安全修复 — 方案A：环境条件判断",
+    "context": "#004",
+    "content": "## 修改方案\n\n采用**方案 A — Startup.cs 中按环境跳过认证**：\n\n### 变更内容\n\n1. **Startup.cs** — `ConfigureServices` 中 `enableGlobalAuthorize` 改为按环境判断：\n   ```csharp\n   var isDevelopment = string.Equals(\n       Environment.GetEnvironmentVariable(\"ASPNETCORE_ENVIRONMENT\"),\n       \"Development\",\n       StringComparison.OrdinalIgnoreCase);\n   services.AddJwt<JwtHandler>(enableGlobalAuthorize: !isDevelopment);\n   ```\n   开发环境（`ASPNETCORE_ENVIRONMENT=Development`）全局关闭 JWT 认证，生产/测试环境保持启用。\n\n2. **HrmAuthService.cs** — 移除 `[AllowAnonymous]`\n3. **MenuProxyService.cs** — 移除 `[AllowAnonymous]`\n\n### 编译验证\n- Application 项目 **0 Error**，52 warnings（均为已有 XML doc 警告，与本次变更无关）\n\n### 方案 A 优势\n- 不修改任何业务代码，仅在 Startup 入口按环境控制\n- 开发环境无需认证即可测试所有 API\n- 部署到生产时只要 `ASPNETCORE_ENVIRONMENT` 不为 `Development`，JWT 自动生效\n- 无需 `#if DEBUG` 条件编译，无需 TODO 注释和部署 Checklist",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Web.Core\\Startup.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs"
+    ]
+  }
+}

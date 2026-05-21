@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1930-p7q8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T19:30:00+08:00",
+  "payload": {
+    "subject": "删除按钮改为警告色",
+    "context": "#002",
+    "content": "编码组合列表页面（ProductComponents/index.html），删除按钮改为警告色（橙色）。参考 LayuiVue `lay-button` 的 `type` 属性，设为 `type=\"warning\"`。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ],
+    "actions": [
+      "删除按钮 type 改为 warning",
+      "svn add（如有新文件）"
+    ],
+    "deadline": null
+  }
+}

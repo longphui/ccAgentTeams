@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-0020-d5e6",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:20:00+08:00",
+  "payload": {
+    "subject": "测试请求：[honguan] hrm-proxy 代理页 + app.js postMessage 监听",
+    "context": "#004",
+    "content": "## 测试重点\n请在浏览器验证以下功能：\n\n### hrm-proxy 代理页\n1. 访问 `/views/hrm-proxy/index.html?page=staffManagement/staffInfo/index.html` → HRM 页面正常加载（非登录页）\n2. 缺少 page 参数 → 显示友好错误提示\n3. 5 秒超时 → 显示超时提示\n\n### app.js postMessage 监听\n1. 鸿冠启动后无 console 报错\n2. DevTools Console 手动执行 `window.postMessage({type: \"HRM_GET_CONTEXT\"}, \"*\")` → 收到 HRM_CONTEXT 响应\n\n### Token 过期恢复\n1. 模拟 Token 过期 → iframe 发 HRM_TOKEN_EXPIRED → 自动恢复\n\n## 审查状态\n✅ 已通过 Reviewer 审查（2 轮）",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\views\\hrm-proxy\\index.html",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\app.js"
+    ]
+  }
+}

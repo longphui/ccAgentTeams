@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260518-2245-j7k8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T22:45:00+08:00",
+  "payload": {
+    "subject": "#004 Task 14: 源码注释 '鸿冠' → '天津宏观世纪'",
+    "context": "#004",
+    "content": "## 背景\n\n项目名称是「天津宏观世纪」而非「鸿冠」。修正源码中文注释。\n\n## 涉及文件\n\n### MenuProxyService.cs\n\n| 行 | 旧 | 新 |\n|----|----|----|\n| 23 | `含鸿冠模块` | `含天津宏观世纪模块` |\n| 89 | `鸿冠前端组件` | `天津宏观世纪前端组件` |\n| 102 | `鸿冠原生页面` | `天津宏观世纪原生页面` |\n| 145 | `适配鸿冠 app.js` | `适配天津宏观世纪 app.js` |\n\n### Web.config\n\n| 行 58 | `允许鸿冠前端访问` | `允许天津宏观世纪前端访问` |\n\n## 注意\n\n- 只改注释文字，不改逻辑\n- Task 13 也在改 MenuProxyService.cs，注意不要冲突",
+    "files": [
+      "IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs",
+      "caikuangzi.fenluwebproject/trunk/Web/Web/Web.config"
+    ],
+    "actions": ["修改 5 处注释", "编译验证"],
+    "deadline": null
+  }
+}

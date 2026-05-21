@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1750-apihost-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T17:50:00+08:00",
+  "replyTo": "msg-20260519-popup-apihost-test",
+  "payload": {
+    "subject": "✅ 测试通过：嵌入模式弹框 API base-path 修复",
+    "content": "## 测试结果\n- 代码审查：✅ — 修复逻辑正确、覆盖全面\n- 依赖追踪：✅ — base-path 被 8+ 个页面使用，修复覆盖所有场景\n- Token 处理：✅ — 嵌入模式 Token 提取/存储/清理/Tokn 过期处理完整\n- 浏览器验证：⚠️ 需在图形界面环境下验证 Network 面板\n\n## 详细验证\n\n### 1. 新增嵌入模式初始化 (lines 1-24)\n三件事：\n- Token 提取：从 URL `hrmToken` 参数 → localStorage\n- URL 清理：replaceState 清除 token 参数\n- **base-path 设置**：`appConfig.baseUrl1` → localStorage('base-path')\n\n### 2. base-path 消费者追踪\n| 页面 | 用途 |\n|------|------|\n| scanRegister/index.html | imgUrl = base-path + imgPath |\n| design_create_edit.html | apiBasePath, baseImagesUrl |\n| designLibrary/*.html (x3) | apiBasePath, baseImagesUrl |\n| ProfileEdit.html | baseUrl |\n| Details.html | baseUrl |\n| staffInfo/index.html | apiBasePath (x2) |\n| productConfig/index.html | baseImagesUrl |\n\n### 3. onTokenExpired 嵌入处理 (lines 26-34)\n- 嵌入模式 → postMessage('HRM_TOKEN_EXPIRED') 通知父窗口刷新\n- 非嵌入模式 → 原有 login.html 跳转\n\n### 4. appConfig 值确认\n- baseUrl1: `http://localhost:8088`\n- newFenluApiBase: `http://localhost:8088/api`\n- base-path 设为 baseUrl1（与其他页面一致）\n\n## 发现的问题\n无"
+  }
+}

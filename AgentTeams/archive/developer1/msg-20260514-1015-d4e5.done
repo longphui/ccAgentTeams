@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-1015-d4e5",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:15:00+08:00",
+  "payload": {
+    "subject": "编码弹窗：勾选后点确认提示「请至少选择一个编码」",
+    "context": "#002",
+    "content": "## 问题描述\n编码选择弹窗中勾选 checkbox 后，点击「确认选择」按钮，提示「请至少选择一个编码」。说明 `selectedKeys` 没有正确传递到 `confirmCodePick` 方法。\n\n## 排查方向\n- confirmCodePick 中读取 selectedKeys 的逻辑\n- v-model:selectedKeys 双向绑定是否生效",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ],
+    "actions": [
+      "排查 selectedKeys 与 confirmCodePick 的数据绑定链路",
+      "修复确认选择时能正确读取已勾选的编码"
+    ]
+  }
+}

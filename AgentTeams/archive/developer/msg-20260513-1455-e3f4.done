@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260513-1455-e3f4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-13T14:55:00+08:00",
+  "payload": {
+    "subject": "修复 #002 租户隔离漏洞 + 分页失效 + 性能问题",
+    "context": "Reviewer 审查 #002 发现 2 个 critical 租户隔离漏洞 + 2 个 high 性能问题，必须立即修复。",
+    "content": "## 架构决策\n\n### 1. 租户隔离（Critical）\n\n`ProductComponents` 继承 `BasicEntity → SaltEntity → Entity`。`SaltEntity` 未实现 `IMustHaveCompany`，ABP 不会自动过滤租户。必须手动在所有查询中加 `CompanyId`。\n\n**修复范围**：\n- `GetDetails`：查询条件从 `x.Id == id && !x.IsDeleted` 改为 `x.Id == id && x.CompanyId == companyId && !x.IsDeleted`\n- `Delete`：同上\n- Controller 对应 Action 需传入 `CurrentCompanyId`\n- `GetAvailableCodes`：不能用 `ProductComponentCodes` 直接查（子表无 CompanyId），必须 JOIN 父表 `ProductComponents`：\n  ```\n  from c in _context.ProductComponentCodes\n  join p in _context.ProductComponents on c.ProductComponentId equals p.Id\n  where !c.IsDeleted && !p.IsDeleted && p.CompanyId == companyId\n  select c.CodeValue\n  ```\n\n### 2. 分页修复（High）\n\n`GetPageList` 的 `ToListAsync()` 前缺少 `.Skip(input.SkipCount).Take(input.MaxResultCount)`，导致全量返回。修复：在 `OrderByDescending` 后加 Skip/Take。\n\n### 3. 其他\n- `Delete` 中 `LastModificationUserId = 0` 改为传入实际修改者 ID（与其他方法一致）\n- `GetDetails` 中产品查询改为只查 2 个相关产品而非全量\n\n## 涉及文件\n- `SAHG.Salt.Application/Produce/ProductComponentsService.cs` — 主要修复\n- `SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs` — 传入 CurrentCompanyId",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ],
+    "actions": [
+      "GetDetails/Delete 查询加 CompanyId 过滤，Controller 传入 CurrentCompanyId",
+      "GetAvailableCodes 改为 JOIN ProductComponents 父表以过滤租户",
+      "GetPageList 加 Skip/Take 修复分页",
+      "Delete 的 LastModificationUserId 改为传入参数",
+      "GetDetails 产品查询只查 2 个相关产品",
+      "MSBuild 编译通过"
+    ],
+    "deadline": null
+  }
+}

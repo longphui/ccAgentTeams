@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260520-1315-fix1",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-20T13:15:00+08:00",
+  "replyTo": "msg-20260520-1200-fix1",
+  "payload": {
+    "subject": "审查请求（紧急）：#004 MenuProxyService 去掉路径前缀 strip，完整路径原样传递",
+    "context": "#004",
+    "content": "## 改动内容\n\n### 移除路径前缀剥离逻辑\n- **iframe_ 分支**：`originalPath` 原样传给 `page` 参数，不再调用 `StripFenluPathPrefix`\n- **移除方法**：删除 `StripFenluPathPrefix` 方法（无其他调用方）\n\n### 行为变化\n- 之前：`/v2/views/manpowerManage/staffManagement/index.html` → page=`manpowerManage/staffManagement/...`\n- 现在：`/v2/views/manpowerManage/staffManagement/index.html` → page=`/v2/views/manpowerManage/staffManagement/...`\n\n### URL 示例\n`/views/hrm-proxy/index.html?page=/v2/views/manpowerManage/staffManagement/staffInfo/index.html&name=iframe_staffManagement`\n\n## 编译\n✅ Application 项目 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"
+    ]
+  }
+}

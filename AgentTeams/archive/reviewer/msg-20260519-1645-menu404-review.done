@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-1645-menu404-review",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:45:00+08:00",
+  "payload": {
+    "subject": "审查请求：人事审批4个菜单项URL修复",
+    "context": "#004",
+    "content": "## 问题\n人事审批目录下 4 个页面（审批管理、转账申请、离职申请、审批人设置）URL 指向旧路径 `../User/Approval/...`，导致 404。\n\n## 修改内容\n\n### 1. MenuProxyService.cs — 添加 legacy 路径转换\n- 新增 `else if (originalPath.Contains(\"../User/Approval/\"))` 分支\n- 将旧 HRM MVC 路径转换为 hrm-proxy 代理页，使用 `type=legacy` 参数\n- 例: `../User/Approval/Application.html` → `/views/hrm-proxy/index.html?type=legacy&page=User/Approval/Application.html`\n\n### 2. hrm-proxy/index.html — 支持 legacy 模式\n- 解析新参数 `type=legacy`\n- legacy 模式直接将 targetPage 拼接到 baseUrl（不添加 `/v2/views/manpowerManage/` 前缀）\n- 非 legacy 模式保持原有行为（拼接 v2 前缀）\n\n## 审查重点\n- 路径转换逻辑是否正确，有无遗漏其他旧路径模式\n- `hrm-proxy/index.html` 中 legacy URL 拼接是否符合分路系统实际路径结构\n- 菜单按钮权限（menuButtons）是否正确传递",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs",
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"
+    ]
+  }
+}

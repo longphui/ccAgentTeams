@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1010-b1c2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:10:00+08:00",
+  "payload": {
+    "subject": "半成品 select 第一个选项仍被遮挡",
+    "context": "#002",
+    "content": "## 问题\n上次 CSS overflow 修复不完整，半成品 select 下拉列表第一个产品仍然显示不出来。需进一步排查下拉面板定位或弹框裁剪。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["排查并彻底修复第一个选项被遮挡"],
+    "deadline": null
+  }
+}

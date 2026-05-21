@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-2200-iframe-embedded-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T22:00:00+08:00",
+  "replyTo": "msg-20260519-playwright-iframe-tests",
+  "payload": {
+    "subject": "✅ Playwright iframe 嵌入模式测试 — 10/10 全部通过",
+    "content": "## 测试结果\n- 功能验证：✅ 10/10 全部通过\n- 数据显示：✅ 多页面加载、token/环境初始化正确\n- 边界情况：✅ menuButtons 权限检查、空状态处理\n- 前后端联动：✅ API host 拦截验证、postMessage 消息流程\n\n## 新增文件\n- `AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js` — 10 个测试用例\n\n## 固化的回归用例\n- Bug #2: onConfirm 回调 → save → layerClose ✅\n- Bug #7: 嵌入模式主页加载 ✅\n- Bug #9: API host 验证 ✅\n- Bug #11: getDefaultTheme 完整 ✅\n- Bug #12: colorPrimary CSS 变量 ✅\n- Bug #13: openRouteInTab → openPage 降级 ✅\n- Bug #15: states Map 共享 ✅\n\n## 测试报告\n`AgentTeams/logs/test-report-iframe-embedded-20260519-2200.md`\n\n## 已知限制\n- 5000 端口（鸿冠 ERP）未运行，双层 iframe 穿透需图形环境验证\n- playheadless 下 LayuiVue layer UI 渲染有限",
+    "files": [
+      "AgentTeams/qa/playwright/iframe-embedded-e2e.spec.js",
+      "AgentTeams/logs/test-report-iframe-embedded-20260519-2200.md"
+    ]
+  }
+}

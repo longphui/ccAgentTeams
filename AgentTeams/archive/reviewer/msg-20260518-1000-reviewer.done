@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-1000-d4e5",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T10:00:00+08:00",
+  "replyTo": "msg-20260518-0954-feedback",
+  "payload": {
+    "subject": "审查请求：#004 HrmAuthService DI 注册修复",
+    "context": "#004",
+    "content": "## 修复内容\n\nQA 发现 `MenuProxyService` 500 Error：`HrmAuthService` 未注册到 DI 容器。\n\n### 变更\n- **Startup.cs**: 添加 `services.AddTransient<HrmAuthService>()` + `using` 引用\n\n### 编译\n- Application 项目 **0 Error, 0 Warning**\n\n### QA 测试\n- Task 1 Token 桥接 ✅ PASS",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Web.Core\\Startup.cs"
+    ]
+  }
+}

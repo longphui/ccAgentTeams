@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-dismisstemplate-v2-review",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T21:00:00+08:00",
+  "payload": {
+    "subject": "审查请求（v2）：离职员工页面 — 设置离职模板 openRouteInTab 修复",
+    "context": "#004",
+    "content": "## 上一版问题\n1. 行为错误：降级为弹窗而非 Tab 页签\n2. URL 拼接错误：相对路径 ../User/Employee/ResignProof.html 基于 iframe 页面路径解析，拼出 `/v2/views/manpowerManage/staffManagement/User/Employee/ResignProof.html`\n\n## 修复内容\n### 行为修正\n- `openRouteInTab` 改为通过 `parent.postMessage({type: \"HRM_OPEN_TAB\", url, title})` 通知父窗口 HRM 系统打开 Tab 页签\n- 同时处理 stateKey 存入 states Map，保证目标页面能通过 `getState()` 获取数据\n\n### URL 修正\n- 从 `document.referrer` 提取 HRM 系统根路径作为 base URL（兜底 `location.origin`）\n- 用 `new URL(route.path, baseUrl + '/')` 基于根路径解析，避免叠加当前页面路径\n- 结果：`../User/Employee/ResignProof.html` → `http://HRM_HOST/User/Employee/ResignProof.html`\n\n## 变更文件\n- `util.js` L169\n\n## 审查重点\n- URL 解析逻辑是否正确\n- postMessage 消息格式是否合理\n- state/ok 回调处理是否与真实 openRouteInTab 一致",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

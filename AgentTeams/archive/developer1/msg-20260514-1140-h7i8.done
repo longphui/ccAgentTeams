@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1140-h7i8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:40:00+08:00",
+  "payload": {
+    "subject": "编码组装列表页显示成品名称和半成品名称",
+    "context": "#002",
+    "content": "## 问题\n编码组装列表页（ProductComponents/index.html）中成品名称和半成品名称列为空。后端 DTO 已返回 `ProductName` 和 `ComponentProductName` 字段（来自 ProductComponentsService.GetPageList L53-54）。\n\n## 要求\n- 检查 index.html 列表的 lay-table columns 和 template\n- 确保成品名称列和半成品名称列正确定义并绑定字段\n- 如果 columns 缺少这两列，补充完整",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ],
+    "actions": [
+      "检查模板中 ProductName / ComponentProductName 列的 key 绑定",
+      "排查 slot template 是否有正确的字段引用",
+      "修复后验证列表正常显示名称"
+    ]
+  }
+}

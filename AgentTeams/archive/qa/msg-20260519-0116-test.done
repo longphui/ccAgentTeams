@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-0116-test",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T01:16:00+08:00",
+  "payload": {
+    "subject": "测试请求：util.js getAppContext() 跨域降级 stub",
+    "context": "#004",
+    "content": "## 测试重点\n- 打开天津宏观世纪 ERP → 点击任意 HRM 菜单项\n- 页面应正常加载，不再出现 `Cannot read properties of undefined (reading 'route')`\n- 验证 13+ HRM 页面均正常工作\n\n## 修复内容\nutil.js getAppContext() 跨域时返回安全降级 stub 替代 undefined\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

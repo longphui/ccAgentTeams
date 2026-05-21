@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1239-rlt5",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T12:39:00+08:00",
+  "replyTo": "msg-20260519-1218-d2e3",
+  "payload": {
+    "subject": "✅ ColumnSelector.restore() try-catch 降级已完成",
+    "content": "## 完成情况\n- components.js:4453 restore() 整体 try-catch 包裹 Http2.get + 后续处理\n- catch 分支静默降级 return，嵌入式模式下 settings API 不可用时不影响页面\n- Reviewer 审查已通过 ✅",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components.js"
+    ]
+  }
+}

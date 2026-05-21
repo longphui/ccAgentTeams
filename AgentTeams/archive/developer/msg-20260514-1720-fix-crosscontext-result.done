@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1750-fix-crosscontext",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:50:00+08:00",
+  "replyTo": "msg-20260514-1720-fix-crosscontext",
+  "payload": {
+    "subject": "✅ 审查通过：GetPageList 跨上下文修复 + 中文搜索",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN：`ProductComponentsService.cs` 状态 M（已修改，非新建）\n- csproj：无新增 .cs 文件，无需注册\n- 编译：developer 已确认 MSBuild 0 Error\n\n---\n\n### 修复验证：跨上下文错误\n\n**问题**：`_productRep.GetAll()` 与 `_context` 混用 JOIN → EF 报「different contexts」\n\n**修复**（L40-58）：拆为三步独立查询，每步只访问单一数据源\n\n| 步骤 | 查询 | 数据源 | 结果 |\n|:---:|------|--------|:---:|\n| 1 | `_productRep.GetAll()` + `DbFunctions.Like(ProductName)` | Product 仓储 | L42-44 ✅ |\n| 2 | `_context.ProductComponents` + `keywordProductIds.Contains(ProductId)` | SaltDbContext | L46-49 ✅ |\n| 3 | `_context.ProductComponentCodes` + ID 列表 / `DbFunctions.Like(CodeValue)` | SaltDbContext | L51-54 ✅ |\n| 4 | 主查询 `DbFunctions.Like(ProductCode)` + 两个 ID 列表 | SaltDbContext | L56-58 ✅ |\n\n**每步只用单一数据源，无跨上下文 JOIN** ✅\n\n---\n\n### 修复验证：中文搜索（决策 #005）\n\n| 检查项 | 行号 | 旧 | 新 | 结果 |\n|--------|:---:|-----|-----|:---:|\n| ProductName 搜索 | L42-44 | `Contains(keyword)` | `DbFunctions.Like(p.ProductName, keyword)` | ✅ |\n| CodeValue 搜索 | L52-53 | — | `DbFunctions.Like(c.CodeValue, keyword)` | ✅ |\n| ProductCode 搜索 | L56 | `Contains(keyword)` | `DbFunctions.Like(pc.ProductCode, keyword)` | ✅ |\n\n**所有中文搜索改为 `DbFunctions.Like`，生成 SQL LIKE 语句** ✅\n\n---\n\n### 四个搜索维度验证\n\n| 维度 | 实现路径 | 结果 |\n|------|---------|:---:|\n| ProductCode（成品编码） | 主查询 `DbFunctions.Like(pc.ProductCode, keyword)` | ✅ |\n| ProductName（成品名称） | Step1 匹配产品名 → Step2 筛选 ProductComponents | ✅ |\n| ComponentProductName（组件名） | Step1 匹配产品名 → Step3 `keywordProductIds.Contains(ComponentProductId)` | ✅ |\n| CodeValue（编码值） | Step3 `DbFunctions.Like(c.CodeValue, keyword)` | ✅ |\n\n---\n\n### 安全检查\n\n| 检查项 | 结果 |\n|--------|:---:|\n| SQL 注入：`DbFunctions.Like` 生成参数化查询，无字符串拼接 | ✅ |\n| 租户隔离：主查询 + Step2 均带 `pc.CompanyId == input.CompanyId` | ✅ |\n| 空 Keywords：跳过整个过滤块（L38） | ✅ |\n\n### 性能检查\n\n| 检查项 | 结果 |\n|--------|:---:|\n| 无 N+1 查询 | ✅ |\n| `keywordProductIds` 物化后在 Step2/3 复用 | ✅ |\n| count 在 Keywords 过滤后计算（L61） | ✅ |\n| 相比旧代码多 1 次查询（3→4），作为解耦跨上下文的代价可接受 | ✅ |\n\n### 架构一致性\n- 决策 #005（中文搜索用 DbFunctions.Like）：全部 3 处 Contains 已替换 ✅\n- 四步查询逻辑清晰，注释充分 ✅",
+    "files": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1015-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:15:00+08:00",
+  "payload": {
+    "subject": "半成品选项独立克隆 + 动态排除 + 添加组件前校验",
+    "context": "#002",
+    "content": "## 改动\n1. 半成品下拉选项不能和成品共用 `productOptions`，需克隆一份独立数组\n2. 半成品选项动态排除：\n   - 已选为成品的产品\n   - 已被前面组件行选为半成品的产品\n3. 添加组件前校验：未选择成品及成品编码时，提示用户先选择",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["克隆 productOptions 为半成品独立选项", "用 computed 动态排除已选成品和已选半成品", "addComponent 前校验成品和编码已选"],
+    "deadline": null
+  }
+}

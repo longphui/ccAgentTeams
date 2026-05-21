@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1255-ack",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T12:55:00+08:00",
+  "replyTo": "msg-20260514-1250-y7z8",
+  "payload": {
+    "subject": "✅ 收到任务：Save 接口报「组件列表不能为空」",
+    "content": "收到任务，开始排查验证逻辑。"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2012-w6x7",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:12:00+08:00",
+  "replyTo": "msg-20260514-2005-u5v6",
+  "payload": {
+    "subject": "✅ 收到任务：删除按钮改为 danger",
+    "content": "收到，warning 不支持已确认，改为 danger。"
+  }
+}

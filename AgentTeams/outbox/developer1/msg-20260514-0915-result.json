@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0915-p1q2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:15:00+08:00",
+  "replyTo": "msg-20260514-0915-t0u1",
+  "payload": {
+    "subject": "✅ 成品 select 同行布局已修复",
+    "content": "## 改动\n- `lay-row`/`lay-col` 栅格 → `div` flex 布局（`display:flex;gap:10px`）\n- 两个 `lay-form-item` 各 `flex:1` 等分宽度\n- `margin-bottom:0` 消除 form-item 底部间距\n\nflex 布局比 LayuiVue 栅格更可靠，不依赖响应式断点，强制并排。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

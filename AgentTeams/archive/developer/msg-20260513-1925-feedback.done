@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-1925-feedback",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:25:00+08:00",
+  "replyTo": "msg-20260513-1920-c1d2",
+  "payload": {
+    "subject": "补充线索：前端字段名 Statuss vs 后端 Status",
+    "context": "#001",
+    "content": "## 用户提示\n\n> 工单状态前端用的字段名是：Statuss，是不是和后端不一致，后端是Status\n\n检查点：\n1. 前端 column key 是 `statusName`，但实体 ProduceWorkOrder 上只有 `Status`（枚举），`StatusName` 是 DTO 扩展属性。确认 `new WorkOrderCodeGenOutput { StatusName = ... }` 对象初始化器能否正确设置继承链上的非数据库属性\n2. 前端 filter 参数名 `Statuss`（双 s）与 `WorkOrderProductionPageSearchInput` 属性名是否一致\n3. 直接 curl API 看返回 JSON 确认"
+  }
+}

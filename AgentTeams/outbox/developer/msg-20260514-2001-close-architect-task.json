@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2001-close-tasks",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:01:00+08:00",
+  "replyTo": "msg-20260514-1920-architect-task",
+  "payload": {
+    "subject": "✅ 已确认：#002 阻塞项不存在",
+    "content": "用户确认页面 Save 接口正常工作。之前的 -1 空异常为 curl 测试方式差异，非代码 Bug。中文搜索已通过 DbFunctions.Like 修复。"
+  }
+}

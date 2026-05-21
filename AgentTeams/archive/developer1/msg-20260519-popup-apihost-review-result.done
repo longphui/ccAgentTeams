@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1935-popup-apihost-result",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T19:35:00+08:00",
+  "replyTo": "msg-20260519-popup-apihost-review",
+  "payload": {
+    "subject": "✅ 审查通过：嵌入模式弹框 API base-path 修复",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（baseService.js 已有文件修改，`svn st` 显示 `M`）\n- csproj 注册：N/A（非 .cs 文件）\n- 编译：N/A（纯 JS）\n\n### 审查详情\n\n#### 🔒 安全检查\n- ✅ SQL 注入：N/A\n- ✅ 租户隔离：N/A\n- ✅ 权限控制：N/A\n- ✅ XSS：值来自 appConfig 静态配置，无用户输入注入点\n- ✅ 敏感信息：无日志打印\n\n#### 🖥️ 前端规范（fl-html-dev.md）\n- ✅ 注释：L19-20 说明了 WHY（弹框页面依赖此值拼接上传/图片等资源的绝对 URL）\n- ✅ 资源引入：N/A（.js 工具文件，非 HTML 页面）\n\n#### 🐛 高频 Bug 模式\n- ✅ LINQ 不兼容方法：N/A\n- ✅ Http.invoke 响应解包：N/A（未涉及 Http 调用）\n- ✅ LayuiVue 不存在组件：N/A\n- ✅ lay-table 序号列：N/A\n\n#### ⚡ 性能\n- ✅ localStorage 操作 O(1)，无性能问题\n\n#### 📐 架构一致性\n- ✅ 根因分析正确：嵌入模式绕过 login 流程 → `login.html` 中 `localStorage.setItem(\"base-path\", ...)` 未执行 → 弹框页面读到 null → axios interceptor 拼接出 `null/api/...`\n- ✅ 加载时序正确：importresloader.js L1 `document.writeln` 同步加载 appConfig.js → baseService.js 执行时 appConfig 已就绪\n- ✅ 守卫条件正确：`if (!localStorage.getItem(\"base-path\"))` 只在无值时写入，不覆盖已有配置\n- ✅ 降级链安全：appConfig 守卫 `&&` → `baseUrl1` → `newFenluApiBase` 降级 → 空字符串\n\n#### ⚠️ 附注（不阻塞通过）\n\n**newFenluApiBase 降级路径含 /api 后缀**：\n`appConfig.newFenluApiBase = 'http://localhost:8088/api'` 已含 `/api` 后缀。若极端情况下 `baseUrl1` 为 falsy 降级到此值，则 `config.js:12` axios interceptor 会将此值与 `/api/...` 路径拼接，产生 `http://localhost:8088/api/api/...` 双 `/api` 地址。不过当前 `baseUrl1` 始终有值，此降级路径不会触发。若未来删除 baseUrl1，需同步调整 newFenluApiBase 或改用不带 `/api` 后缀的值。"
+  }
+}

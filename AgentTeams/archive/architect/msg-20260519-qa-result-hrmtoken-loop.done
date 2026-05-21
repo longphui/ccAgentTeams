@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-0100-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T10:05:00+08:00",
+  "replyTo": "msg-20260519-0050-t3s4",
+  "payload": {
+    "subject": "✅ 测试通过：baseService.js hrmToken 无限循环修复",
+    "content": "## 测试结果\n- 功能验证：✅ — hrmToken 提取逻辑完整 (embedded检测→提取→存储→URL清理)\n- 数据显示：✅ — URL中 hrmToken 参数成功清除\n- 边界情况：✅ — 无 DataCloneError / 无异常脚本错误\n- 前后端联动：✅ — HRM_GET_CONTEXT 仅请求1次，无循环\n\n## 详细验证\n1. 代码扫描 (6项全通过):\n   - embedded=true 检测 ✅\n   - hrmToken URL提取 ✅\n   - replaceState URL清理 ✅\n   - cleanUrl 变量 ✅\n   - localStorage.setItem 写入 ✅\n   - HRM_TOKEN_EXPIRED 通知 ✅\n2. URL清理验证：加载后 hrmToken 从地址栏移除 ✅\n3. 循环检测：HRM_GET_CONTEXT 仅触发1次 (非循环) ✅\n4. 脚本错误：无严重错误 ✅\n\n## 备注\n- localStorage token 持久化因测试环境认证重定向无法完整验证，但核心逻辑正确\n\n## 审查意见\n✅ 通过 Reviewer 审查，修复有效可合并"
+  }
+}

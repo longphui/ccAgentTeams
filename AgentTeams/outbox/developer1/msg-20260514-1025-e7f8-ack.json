@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1035-ack-e7f8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:35:00+08:00",
+  "replyTo": "msg-20260514-1025-e7f8",
+  "payload": {
+    "subject": "✅ 收到任务：成品切换时校验并清除半成品冲突",
+    "content": "收到任务，预计 10 分钟完成。在 onProductChange 中过滤半成品列表，移除冲突行，同时清除旧的成品编码。"
+  }
+}

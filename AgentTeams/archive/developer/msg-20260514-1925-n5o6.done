@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260514-1925-n5o6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-14T19:25:00+08:00",
+  "payload": {
+    "subject": "排查 Save/Update DB 写入空异常（DLL 已部署）",
+    "context": "#002",
+    "content": "## 更新\nIIS 部署目录 DLL 已确认是最新编译版本，排除部署问题。空异常是代码层面 Bug。\n\n## 现象\nSave/Update 返回 `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}`，message 为空说明异常被框架捕获但未暴露详细信息。\n\n## 排查方向\n- Save 方法中 `_productComponentsRep.InsertAsync()` 和 `SaveChangesAsync()` 是否抛异常\n- 实体 CreateNew() 初始化是否缺必要字段\n- ProductComponentCodes 子表的 EF 映射是否正确\n- 是否有 ABP 的 ValidateFeature 或权限拦截\n- 检查 Ioc 注册，IRepository<ProductComponentCodes> 是否已注入\n- 在 Save 方法中加 try-catch 打日志看具体异常\n\n## 行动\n- 排查并修复 Save 写入空异常\n- 修复后同样检查 Update\n- 编译 0 Error\n- curl 验证 Save 正常返回 States=true\n- 中文搜索问题同步排查（DbFunctions.Like 代码确认已写入但 QA 测不通过）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs"
+    ],
+    "actions": [
+      "排查 Save 写入空异常根因",
+      "修复代码",
+      "编译 0 Error",
+      "curl 验证 Save + 中文搜索",
+      "修复后发 REVIEW + TEST 给 QA"
+    ],
+    "deadline": null
+  }
+}

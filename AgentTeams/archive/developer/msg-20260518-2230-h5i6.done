@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260518-2230-h5i6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T22:30:00+08:00",
+  "payload": {
+    "subject": "#004 Task 13: 修复 startup 首页指向分路页面",
+    "context": "#004",
+    "content": "## 背景\n\nQA E2E 测试发现 menu API 返回的 `startup` 指向分路工作台页面：\n```\n/v2/views/workbenches/index-v2.html\n```\n\n用户确认：首页应改为天津宏观世纪自己的首页 `views/dashbord/index.html`。\n\n## 任务\n\n在天津宏观世纪后端 `MenuProxyService.TransformStartup()` 中，覆盖 startup.path 为天津宏观世纪首页。\n\n### 改动位置\n\n**文件**: `IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs`\n\n在 `TransformStartup` 方法中，无论分路返回什么 startup，path 固定为：\n```csharp\nresult[\"path\"] = \"views/dashbord/index.html\";\n```\n\n### 参考\n\n当前 `TransformStartup` 逻辑（Task 2 实现）：\n- 对 HRM path（含 `/v2/views/manpowerManage/`）→ 转换为 hrm-proxy 路径\n- 对非 HRM path → 原样保留\n\n现在需要追加规则：**startup 始终指向天津宏观世纪首页**（不再透传分路的 startup）。\n\n### 验收标准\n\n- [ ] 用户登录后默认打开 `views/dashbord/index.html`（天津宏观世纪首页）\n- [ ] 不再是分路的 `/v2/views/workbenches/index-v2.html`\n- [ ] 编译通过 0 Error\n- [ ] 菜单其他功能不受影响",
+    "files": ["IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"],
+    "actions": ["修改 TransformStartup 固定 path 为 views/dashbord/index.html", "编译验证", "curl 验证 startup 字段"],
+    "deadline": null
+  }
+}

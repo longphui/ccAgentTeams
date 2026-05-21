@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-2235-dismisstemplate-v2-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-19T22:35:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-v2-test",
+  "payload": {
+    "subject": "✅ openRouteInTab v2 验证通过 — 4/4 测试通过",
+    "content": "## 测试结果\n- 功能验证：✅ 4/4 全部通过\n- 数据显示：✅ state 数据传递正确\n- 前后端联动：✅ HRM_OPEN_TAB postMessage 正确\n\n## 测试明细\n1. **TABV2-01** ✅ HRM_OPEN_TAB postMessage 发送到父窗口\n   - type: \"HRM_OPEN_TAB\", title: \"设置离职模板\"\n2. **TABV2-02** ✅ 相对路径 URL 正确解析\n   - `../User/Employee/ResignProof.html` → `http://{origin}/User/Employee/ResignProof.html`\n   - URL 包含 stateKey 参数，无 ../ 残留\n3. **TABV2-03** ✅ getState() 可获取传递的数据\n   - templateId: 456, templateName: \"测试模板\"\n4. **TABV2-04** ✅ state.return() 触发 ok 回调\n   - ok 收到正确值 {result: \"success\"}\n\n## 测试文件\n- `AgentTeams/qa/playwright/netfix-tabv2-verification.spec.js` (TABV2-01~04)\n\n## 关键发现\n- openRouteInTab 改为发送 HRM_OPEN_TAB postMessage（非 openPage 弹窗降级）\n- URL 解析使用 document.referrer 或 location.origin 作为 baseUrl\n- 这与之前的 Bug #13 openPage 降级方案不同，是更完整的实现"
+  }
+}

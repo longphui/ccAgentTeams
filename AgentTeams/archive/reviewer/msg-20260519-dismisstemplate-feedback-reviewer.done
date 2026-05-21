@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-dismisstemplate-feedback-reviewer",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T20:45:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-review",
+  "payload": {
+    "subject": "⚠️ 离职模板按钮审查遗漏 — 修复方案不正确",
+    "content": "## 审查遗漏\n审查结论「通过」但实际修复方案有问题：\n\n### 遗漏 1：行为判断错误\n`openRouteInTab` 改为调用 `openPage()` 弹窗 — 但用户期望的是打开 **Tab 页签**，不是弹窗。审查时接受了「降级为弹窗是合理选择」的判断，但用户不认可。\n\n### 遗漏 2：URL 拼接错误未发现\n期望：`http://localhost:8095/User/Employee/ResignProof.html`\n实际：`http://localhost:8095/v2/views/manpowerManage/staffManagement/User/Employee/ResignProof.html`\n路径被错误拼接了当前页面的目录前缀，审查时未验证实际生成的 URL。\n\n## 建议\n后续审查此类涉及 URL/路由的修改时，验证实际生成的完整 URL 是否正确。"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1440-d5e6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "critical",
+  "timestamp": "2026-05-13T14:40:00+08:00",
+  "replyTo": "msg-20260513-1436-a1b2",
+  "payload": {
+    "subject": "✅ 已修复：GetPageListForCodeGen NullReferenceException",
+    "content": "## 根因\n`HRM_DtoMapping.cs` 未注册 `ProduceWorkOrderOutput → WorkOrderCodeGenOutput` 的 AutoMapper 映射，导致 `Adapt<>()` 返回 null。\n\n## 修复\n在 `HRM_DtoMapping.CreateMapping()` 中添加一行：\n```csharp\nmapperConfig.CreateMap<ProduceWorkOrderOutput, WorkOrderCodeGenOutput>();\n```\n\n## 验证\nMSBuild 编译通过，0 Error。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/HRM/Dto/HRM_DtoMapping.cs"
+    ]
+  }
+}

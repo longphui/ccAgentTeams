@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1000-ack-y5z6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:00:00+08:00",
+  "replyTo": "msg-20260514-0950-y5z6",
+  "payload": {
+    "subject": "✅ 收到任务：checkbox 全选 + 数量限制 + 排除已选",
+    "content": "收到任务，预计 20 分钟完成。问题分析：checkbox 全选是因为 table 缺少 v-model:selectedKeys 和 row-key 绑定。"
+  }
+}

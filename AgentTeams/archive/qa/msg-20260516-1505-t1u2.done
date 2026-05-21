@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-1505-t1u2",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-16T15:05:00+08:00",
+  "payload": {
+    "subject": "测试请求：CodeGenerator 后端优化（#003 Phase A+B）",
+    "context": "#003",
+    "content": "## 测试重点\n\n### Phase A — 快速修复\n- **Task 1 — StartValue 修复**：新建规则 SerialNumber StartValue=100，生成编码 → 预期首次 0100/0101/0102，再次生成 0103/0104/0105\n- **Task 2 — 软删除过滤**：创建规则加 3 子项，编辑软删除 1 个 → GetRuleDetails 预期返回 2 子项，GenerateCode 预期 2 子项参与拼接\n\n### Phase B — Domain 重构\n- **BizFieldDefinition**：管理页 CRUD 新字段（DomainCode/DomainName/FieldSql），旧字段（SourceTable/SourceField/Format/DefaultValue）已删除\n- **CodeRule Domain 校验**：选 Domain=\"Product\"，添加 BusinessField 引用 DomainCode=\"Employee\" 的子项 → 预期保存失败，提示 Domain 不一致\n- **CodeRule Domain 校验**：选 Domain=\"Product\"，添加 BusinessField 引用 DomainCode=\"Product\" 的子项 → 预期保存成功\n- **GenerateCode**：用 DomainId 替代 BizContext，仅传 DomainId=456 → 预期编码正常生成\n- **GetDomainList**：GET /api/CodeGenerator/CodeGenerator/GetDomainList → 预期返回去重的 DomainCode+DomainName 列表\n- **SaveRule / SaveBizCode 编辑模式**：编辑已有记录，修改 Domain 值后保存 → 预期再次打开时 Domain 为新值（非旧值）\n\n### 接口路由\n- 生成编码：POST /api/CodeGenerator/CodeGenerator/Generate\n- Domain 列表：GET /api/CodeGenerator/CodeGenerator/GetDomainList\n- 规则 CRUD：POST /api/CodeGenerator/CodeGenerator/SaveRule\n- BizCode CRUD：POST /api/CodeGenerator/CodeGenerator/SaveBizCode\n- BizField CRUD：POST /api/CodeGenerator/CodeGenerator/SaveBizField\n\n## 测试环境\n- IIS: http://localhost:8088\n- 账号: hongbin / 123456\n- 公司: 2026\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-dismisstemplate-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T20:05:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-task",
+  "payload": {
+    "subject": "✅ 收到任务：离职员工页面 — 设置离职模板按钮无反应",
+    "content": "收到任务，已定位根因，预计 30 分钟内完成修复。"
+  }
+}

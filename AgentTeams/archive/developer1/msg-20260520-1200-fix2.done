@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260520-1200-fix2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-20T12:00:00+08:00",
+  "payload": {
+    "subject": "#004 紧急修复：hrm-proxy 不要手动拼接 /v2/views/ 前缀",
+    "context": "#004",
+    "content": "## 问题\n\n`hrm-proxy/index.html` 之前自己拼 `/v2/views/manpowerManage/` 前缀来构造 iframe URL。这个前缀应该由后端直接给完整路径，前端只需要拼上分路客户端 host。\n\n现在因为改了 `iframe_` 判断逻辑，代理页没正确加回前缀，**导致页面 404**。\n\n## 正确做法\n\n后端传来的是完整路径（如 `/v2/views/manpowerManage/staffManagement/index.html`），前端只需：\n\n```\n分路host + 完整路径 + query参数\n```\n\n**不要再自己拼 `/v2/views/xxx/` 前缀。**\n\n## 行动项\n\n1. 找到 `hrm-proxy/index.html` 中拼接 `/v2/views/manpowerManage/` 的代码\n2. 改为直接使用后端传来的完整路径\n3. 只需拼上分路客户端 host\n4. 完成后验证 iframe 页面不再 404\n5. 发 REVIEW → Reviewer",
+    "files": [],
+    "actions": [
+      "去掉 hrm-proxy 里手动拼接 /v2/views/ 前缀的逻辑",
+      "直接用后端传来的完整路径 + host",
+      "验证 404 修复",
+      "发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

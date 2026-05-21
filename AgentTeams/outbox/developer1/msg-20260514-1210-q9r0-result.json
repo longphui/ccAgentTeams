@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260514-1230-f7g8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T12:30:00+08:00",
+  "replyTo": "msg-20260514-1210-q9r0",
+  "payload": {
+    "subject": "✅ 编码组装页面已改造为扁平结构（去掉半成品分组）",
+    "content": "## create_edit.html（重写）\n- ❌ 移除：两层分组结构（组件行 + 编码列表）、多编码勾选弹窗（lay-layer + checkbox list）\n- ➕ 改造为：扁平编码行列表，每行直接选「半成品 + 单位 + 编码值」\n- 按钮改为「添加编码」，每行独立操作\n- 编码值改为行内 select 下拉选择（单编码），自动排除其他行已选项\n- 单位在半成品选择后自动填充\n- Save 数据格式改为 `Codes[]`（每项含 ComponentProductId/ComponentUnit/CodeValue）\n\n## index.html（列调整）\n- ❌ 移除：数量列、编码列表列（customSlot）\n- ➕ 新增：单位列、编码值列（单值 key 渲染）\n- 重命名：组件半成品 → 半成品名称\n\n## autoAssembly.html（适配）\n- 结果预览区改为扁平编码行展示\n- assembleResult 改为 `{ codes: [] }`\n- doAutoAssemble 结果映射适配新结构",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html"
+    ]
+  }
+}

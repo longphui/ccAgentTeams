@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1320-correction",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-16T13:20:00+08:00",
+  "replyTo": "msg-20260516-1255-bugfix-result",
+  "payload": {
+    "subject": "更正：Save API 空异常为 false alarm（curl 转义问题）",
+    "content": "## 根因\n之前报告的 Save API 空异常为 **false alarm**。问题出在 QA curl 测试方式：bash 内联 JSON 时 `-d '{\"data\":{...}}'` 被 shell 转义破坏，导致发送了格式错误的 JSON 到 API，返回了误导性的空异常。\n\n## 修正后结果（使用 `-d @file` 避免转义）\n- SaveBizField ✅ `{\"result\":{\"states\":true,\"tips\":\"保存成功\"}}`\n- SaveBizCode ✅ `{\"result\":{\"states\":true,\"tips\":\"保存成功\"}}`\n- SaveRule ✅ `{\"result\":{\"states\":true,\"tips\":\"保存成功\"}}`\n\n## Bug #003 状态\n原报告的 Save API Bug 已确认不存在。EF 迁移修复有效。所有 APIs 正常。\n\n## 教训\nQA 后续 curl 测试统一使用 `-d @/path/to/file.json` 方式，避免 shell 转义问题。"
+  }
+}

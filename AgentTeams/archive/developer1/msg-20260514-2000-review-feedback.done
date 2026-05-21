@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2000-review-feedback",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T20:00:00+08:00",
+  "replyTo": "msg-20260514-1935-d4e5",
+  "payload": {
+    "subject": "审查反馈：index.html — 3个问题（1个必须修复）",
+    "content": "## 审查报告\n\n### 🐛 Bug 风险（必须修复）\n\n- [x] **lay-table 序号列缺少 key=\"rowNo\"**\n  - 文件: `index.html:98`\n  - 当前: `{ title: \"序号\", width: \"60px\", type: \"number\", fixed: \"left\" }`\n  - 问题: `type: \"number\"` 会覆盖 `row.id`，导致后续操作（如删除）拿到的 `row.id` 是序号值而非数据库 ID\n  - 修复: 添加 `key: \"rowNo\"` → `{ title: \"序号\", width: \"60px\", type: \"number\", key: \"rowNo\", fixed: \"left\" }`\n\n### 📐 规范问题\n\n- [x] **删除按钮 type 未实际修改**\n  - 文件: `index.html:71`\n  - 当前: `<lay-button size=\"xs\" type=\"danger\" @click=\"deleteRow(row)\">删除</lay-button>`\n  - 审查要求说改为 `type=\"warning\"`（橙色警告色），但文件中仍是 `type=\"danger\"`（红色）\n  - `type=\"warning\"` 是 LayuiVue 有效值，改动合理。请实际执行修改。\n\n- [x] **权限变量未使用**\n  - `addType` / `updType` / `delType`（L85-87）已定义但模板中未用 `v-if` 控制按钮显隐\n  - 建议: 在删除按钮加 `v-if=\"delType\"`，手动组装按钮加 `v-if=\"addType\"`\n\n### ⚠️ 非阻塞发现（本次不强制，但建议处理）\n\n- [x] **autoAssembly.html 死引用**\n  - Lines 48-51: `autoAssemblyUrl()` 仍引用 `autoAssembly.html`\n  - 后端 AutoAssemble 接口已移除（返回 404），前端入口仍存在。用户点击会看到空页面。\n  - 建议: 移除\"一键自动组合\"按钮和 `autoAssemblyUrl()` 方法（或另开任务处理）\n\n---\n\n## 审查清单\n\n### 🔒 安全检查\n- [x] SQL 注入: N/A（前端页面）\n- [x] 租户隔离: N/A\n- [x] 权限控制: ⚠️ 变量已定义但未使用\n- [x] XSS: ✅ Vue 模板自动转义\n- [x] 敏感信息: ✅\n\n### 🖥️ 前端规范检查\n- [x] 注释: ✅ 文件头、区块、方法注释齐全\n- [x] 资源引入: ✅ importresloader + then=\"loadLayuiVue\"\n- [x] 按钮规范: ✅ lay-link-button + lay-button 正确\n- [x] 权限控制: ⚠️ 变量已定义但模板未使用 v-if\n- [x] layer.confirm: ✅ yes 回调在 options 内\n\n### 🐛 项目高频 Bug 模式\n- [x] Http.invoke 响应解包: ✅ 使用 `if (res)` 而非 `res.success`\n- [x] LayuiVue 不可用组件: ✅ 未使用 lay-tab/lay-row/lay-col\n- [x] lay-table 序号列: ❌ 缺少 `key: \"rowNo\"`\n- [x] LINQ 不兼容: N/A\n\n### 📦 提交完整性\n- SVN add: ✅ 4 个文件已 `svn add`（目录 + autoAssembly.html + create_edit.html + index.html）\n- 编译: N/A（纯前端 HTML）\n\n---\n\n## 审查结论: **需修改**\n\n必须修复项: lay-table 序号列加 `key: \"rowNo\"`（否则删除功能会删错记录）。\n修改后重新提交 REVIEW。"
+  }
+}

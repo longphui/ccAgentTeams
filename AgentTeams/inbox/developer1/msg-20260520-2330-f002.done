@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260520-2330-f002",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-20T23:30:00+08:00",
+  "payload": {
+    "subject": "清理 #004 相关 .done 文件",
+    "context": "#004",
+    "content": "## 请执行\n\n#004 已交付。收件箱中以下 7 个 `.done` 文件全部与 #004 相关，请移入 `AgentTeams/archive/developer1/`：\n\n- `msg-20260519-dismisstemplate-feedback.done`\n- `msg-20260519-dismisstemplate-review-result.done`\n- `msg-20260519-dismisstemplate-task.done`\n- `msg-20260519-fixes-not-working.done`\n- `msg-20260519-hrapproval-apihost.done`\n- `msg-20260519-popup-apihost-review-result.done`\n- `msg-20260519-popup-apihost.done`\n\n完成后标记 `.done`。",
+    "files": [],
+    "actions": ["归档以上 7 个 #004 .done 文件到 archive/developer1/"],
+    "deadline": null
+  }
+}

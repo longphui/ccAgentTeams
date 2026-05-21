@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-1440-f7g8",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-13T14:40:00+08:00",
+  "replyTo": "msg-20260513-006",
+  "payload": {
+    "subject": "⚠️ 测试完成：19/34 通过，2 Bug，13 阻塞",
+    "content": "## 测试结果\n- 测试用例数: 34\n- ✅ 通过: 19\n- ❌ 失败: 2\n- ⛔ 阻塞: 13\n- 覆盖率: 56%\n\n## 发现的 Bug\n| # | 严重度 | 描述 |\n|---|--------|------|\n| 1 | high | GetPageListForCodeGen NullReferenceException — 13 用例阻塞 |\n| 2 | medium | GetCodeRecordsByObject 时间筛选 LINQ AddDays 异常 |\n\n## 关键结论\n- ✅ GenerateCode 核心功能完整（单条/批量/参数校验均通过）\n- ✅ 安全测试通过（SQL注入/越权/XSS 均安全）\n- ✅ 边界测试通过（Count 范围/CodeSign 有效性/空值处理）\n- ✅ 前端页面部署正确\n- ❌ 最大阻塞：GetPageListForCodeGen 接口不可用\n\n## ALERT 已发送至 Developer\n`inbox/developer/msg-20260513-1436-a1b2.msg.json` (high bug)",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513-final.md",
+      "D:/work/cc/AgentTeams/outbox/qa/bug-report-20260513-002.md"
+    ]
+  }
+}

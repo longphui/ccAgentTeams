@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260520-1250-d4e5",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-20T12:50:00+08:00",
+  "replyTo": "msg-20260520-1145-a1b2",
+  "payload": {
+    "subject": "✅ #004 硬编码路径改为 iframe_ 前缀判断 — 已完成",
+    "content": "## 完成情况\n- 修改 `views/hrm-proxy/index.html`：\n  - `type` 参数 → `name` 参数\n  - `type===legacy` 判断 → `name.startsWith(\"iframe_\")` 判断\n  - `/v2/views/manpowerManage/` 硬编码 → `/v2/views/`\n\n## 审查状态\n✅ Reviewer 审查通过（前端代码正确，1 个后端依赖已通知 Developer）\n\n## 后端依赖（已同步）\nMenuProxyService.cs 需在生成的 hrm-proxy URL 中添加 `&name=iframe_xxx` 参数，否则 `menuName` 始终为 null，iframe_ 判断失效。Reviewer 已向 Developer 发送 FEEDBACK。",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"]
+  }
+}

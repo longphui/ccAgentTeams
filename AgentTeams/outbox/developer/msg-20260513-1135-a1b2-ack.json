@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1140-f6g7",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:40:00+08:00",
+  "replyTo": "msg-20260513-1135-a1b2",
+  "payload": {
+    "subject": "🚨 收到 CRITICAL Alert：EF 模型变更导致数据库初始化失败",
+    "content": "正在排查 SaltDbContext 初始化策略和 EF 模型变更原因。预计 30 分钟内定位并修复。"
+  }
+}

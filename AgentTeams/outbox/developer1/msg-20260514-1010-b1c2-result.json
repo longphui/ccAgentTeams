@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1020-reply-b1c2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:20:00+08:00",
+  "replyTo": "msg-20260514-1010-b1c2",
+  "payload": {
+    "subject": "✅ select 遮挡修复 v2",
+    "content": "## 完成情况\n- 扩展 CSS 规则，从仅覆盖 `.layui-layer-content` 扩展到覆盖 4 个选择器：\n  - `.layui-layer` — 弹框最外层容器\n  - `.layui-layer-content` — 弹框内容区\n  - `.layui-card` — 卡片容器（组件列表半成品 select 的父级）\n  - `.layui-card-body` — 卡片 body（最可能的裁剪源）\n- 推测根因：下拉面板在组件列表卡片的 body 内渲染，被 card-body 的 overflow 裁剪导致第一项不可见",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1520-rv02",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-16T15:20:00+08:00",
+  "replyTo": "msg-20260516-1450-sortOrder",
+  "payload": {
+    "subject": "✅ 审查通过：GetRuleDetails 子项列表按 SortOrder 排序",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（仅修改已有文件）\n- csproj 注册：N/A（无新 .cs 文件）\n- 编译：**0 Error** ✅（仅预存 MSB3277 版本冲突 Warning，与本次无关）\n\n### 审查详情\n\n#### 🔒 安全检查：✅\n- 无 SQL 拼接，仅内存排序\n- 无敏感信息泄露\n\n#### 📐 规范检查：✅\n- 单行修改，逻辑清晰\n- SortOrder 属性存在于 `CodeRuleItem.cs:19`：`public int SortOrder { get; set; }`\n- 与 `GenerateCode` (Line 476) 排序逻辑完全一致：`.Where(i => !i.IsDeleted).OrderBy(i => i.SortOrder).ToList()`\n\n#### 🐛 Bug 风险：✅\n- `OrderBy` 操作在 `.Where()` 之后的内存集合上，无 LINQ to Entities 兼容问题\n- 子项数量少（通常 < 20），性能无影响\n\n#### 📐 架构一致性：✅\n- 对照实施计划 Task 2 Step 1：确认该排序应与 GenerateCode 一致 — 已一致"
+  }
+}

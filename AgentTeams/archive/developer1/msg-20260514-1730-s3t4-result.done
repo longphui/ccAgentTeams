@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1740-s3t4",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:40:00+08:00",
+  "replyTo": "msg-20260514-1730-s3t4",
+  "payload": {
+    "subject": "✅ 审查通过：PascalCase 字段名修复",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（已有文件修改）\n- csproj：N/A（前端文件）\n\n---\n\n### 变更验证\n\n**根因**：`loadDetail` 用 camelCase 读取 `GetDetails` API 响应，但 C# JSON.NET 默认序列化为 PascalCase，导致所有字段读到 `undefined`。\n\n**修复**（L121-131）：6 处字段名改为 PascalCase\n\n| 行 | 旧 | 新 |\n|:---:|-----|-----|\n| 121 | `d.productId` | `d.ProductId` |\n| 123 | `d.productCode` | `d.ProductCode` |\n| 125 | `d.codes` | `d.Codes` |\n| 127 | `c.componentProductId` | `c.ComponentProductId` |\n| 128 | `c.componentUnit` | `c.ComponentUnit` |\n| 129 | `c.codeValue` | `c.CodeValue` |\n\n**一致性**：`loadDetail` 读取字段名 ≡ `doSave` 提交字段名（全部 PascalCase） ✅\n\n### 前端规范\n- Http 响应：`if (res)` ✅\n- 注释：充分 ✅\n- 资源引入：`importresloader` ✅\n\n### 安全检查\n- 无 XSS 风险 ✅",
+    "files": []
+  }
+}

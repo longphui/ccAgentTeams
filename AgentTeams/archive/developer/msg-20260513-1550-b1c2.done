@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260513-1550-b1c2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T15:50:00+08:00",
+  "payload": {
+    "subject": "修复 Bug：generatorProductCodes/index.html Tab 切换失效",
+    "context": "用户实测页面，lay-tabs + lay-tab-pane 三个 Tab 全部堆叠显示在同一页面，无 Tab 切换效果。",
+    "content": "## 问题\n\n`generatorProductCodes/index.html` 使用 `<lay-tabs v-model=\"activeTab\" type=\"card\">` + `<lay-tab-pane id=\"1/2/3\">`，但三个 Tab 面板同时可见，没有切换行为。\n\n## 排查方向\n\n1. 检查 LayuiVue 2.22.2 的 `lay-tabs` / `lay-tab-pane` 组件 API 是否正确使用（prop 名是否用 `id` 还是 `name`）\n2. 检查该版本是否需要额外的 CSS 或 JS 依赖\n3. 检查项目内是否有其他页面成功使用了 `lay-tabs`，对比差异\n4. 如果用 `lay-tabs` 无法解决，考虑降级为手动 Tab 切换（`v-if` / `v-show` + 按钮切换 activeTab）\n\n## 成功标准\n\n- 浏览器打开页面，默认只显示 Tab1 内容\n- 点击 Tab2/Tab3 标签切换对应内容\n- 确认弹窗（lay-layer）正常工作",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html",
+      "D:/work/cc/AgentTeams/outbox/architect/bug-report-20260513-004.md"
+    ],
+    "actions": [
+      "排查 lay-tabs / lay-tab-pane API 用法",
+      "修复 Tab 切换功能",
+      "浏览器验证三个 Tab 正常切换"
+    ],
+    "deadline": null
+  }
+}

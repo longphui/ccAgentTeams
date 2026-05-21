@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1945-s3t4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:45:00+08:00",
+  "payload": {
+    "subject": "工单列表查询参数 Statuss 改为 Status",
+    "context": "#001",
+    "content": "## 问题\n未生成编码页面工单列表，工单状态查询失效。\n\n## 原因\n后端已把字段名从 Statuss 改为 Status，前端查询参数还在用旧名 `Statuss`，导致过滤不生效。\n\n## 行动\n- 工单列表查询请求中，把 `Statuss` 参数名改为 `Status`\n- 确认状态筛选下拉框的选项值和传参一致",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "查询参数 Statuss → Status",
+      "确认筛选功能恢复"
+    ],
+    "deadline": null
+  }
+}

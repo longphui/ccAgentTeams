@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-1445-f7g8",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "critical",
+  "timestamp": "2026-05-13T14:45:00+08:00",
+  "replyTo": "msg-20260513-004-alert-tenant",
+  "payload": {
+    "subject": "✅ 已修复：租户隔离漏洞 — GetDetails/Delete 缺少 CompanyId 过滤",
+    "content": "## 修复内容\n\n### 修改文件 (3)\n\n1. **IProductComponentsService.cs** — 接口签名增加 companyId 参数\n   - `GetDetails(int id)` → `GetDetails(int id, int companyId)`\n   - `Delete(int id, string modifier)` → `Delete(int id, int companyId, string modifier)`\n\n2. **ProductComponentsService.cs** — 查询增加 CompanyId 过滤\n   - `GetDetails` (line 66): `FirstOrDefault(x => x.Id == id && x.CompanyId == companyId && !x.IsDeleted)`\n   - `Delete` (line 159): `FirstOrDefault(x => x.Id == id && x.CompanyId == companyId && !x.IsDeleted)`\n\n3. **ProductComponentsController.cs** — 传入 CurrentCompanyId\n   - `GetDetails`: `_service.GetDetails(id, CurrentCompanyId)`\n   - `Delete`: `_service.Delete(id, CurrentCompanyId, CurrentUserName)`\n\n### 未采用 IMustHaveCompany 方案\n该接口需要修改 Core 实体继承链，属于框架层面改动，按用户指令「只编写任务代码」不碰框架。手动 CompanyId 过滤已足够防护。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ]
+  }
+}

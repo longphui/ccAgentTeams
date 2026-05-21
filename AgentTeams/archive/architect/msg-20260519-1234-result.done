@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1234-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T12:40:00+08:00",
+  "replyTo": "msg-20260519-1234-tst4",
+  "payload": {
+    "subject": "✅ 测试通过：https→http 修复验证",
+    "content": "## 测试结果\n- 功能验证：✅ — appConfig.js 全部使用 http://localhost，无 https:// 残留\n- 数据显示：✅ — ERP + HRM 页面正常加载\n- 边界情况：✅ — 无 Failed to fetch / SSL 错误\n- 前后端联动：✅ — 3个HRM页面fetch错误均为0\n\n## 详细验证\n1. 代码扫描: appConfig.js 全部使用 http://localhost，无https残留 ✅\n2. ERP控制台: Failed to fetch/SSL错误=0 ✅\n3. HRM 页面验证 (3/3 无fetch错误):\n   - staffInfo ✅\n   - staffRecord ✅\n   - tab_index ✅\n\n## 发现的问题\n无\n\n## 审查意见\n✅ 通过 QA 验证，https→http 修复有效可合并"
+  }
+}

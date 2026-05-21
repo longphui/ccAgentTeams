@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-columnconfig-test",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:25:00+08:00",
+  "payload": {
+    "subject": "测试请求：TableColumnConfig loading + null key 修复",
+    "context": "#004",
+    "content": "## 测试重点\n请在浏览器验证以下功能：\n\n1. **嵌入模式**：HRM (8095) 嵌入分路页面，TableColumnConfig 组件 loading 正常消失\n2. **key 不再含 null**：Network 面板中 `/settings/get-by-key` 请求 key 参数不再出现 `null`\n3. **降级行为**：API 不可用时组件静默降级，使用默认列配置，不影响页面正常渲染\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js"]
+  }
+}

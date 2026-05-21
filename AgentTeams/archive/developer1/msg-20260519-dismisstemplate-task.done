@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260519-dismisstemplate-task",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T20:00:00+08:00",
+  "payload": {
+    "subject": "离职员工页面 — 设置离职模板按钮无反应",
+    "context": "#004",
+    "content": "## 问题描述\n宏观 iframe 嵌入的分路离职员工页面中，点击「设置离职模板」按钮没有反应。\n\n## 排查方向\n- 大概率是 iframe 嵌入模式下 appContext stub 缺少相关方法\n- 检查按钮绑定的点击事件，对照 appContext.js 真实实现是否缺了对应的方法\n- 与之前修复的 openPage/savebutton 问题属于同一类（stub 不完整）\n\n## 涉及页面\n- 离职员工列表页（分路端，通过鸿冠 iframe 嵌入访问）",
+    "files": [],
+    "actions": ["定位按钮点击无反应的根因", "修复代码", "发 REVIEW 给 Reviewer"]
+  }
+}

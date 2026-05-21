@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1615-d4e5",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:15:00+08:00",
+  "replyTo": "msg-20260513-1550-b1c2",
+  "payload": {
+    "subject": "✅ Tab 切换失效 Bug 已修复",
+    "content": "## 根因\nLayuiVue 2.x 的 `lay-tab-pane` 组件使用 `name` 属性标识面板（不是 `id`），使用 `title` 属性设置标签文字（不是 `label`）。原代码使用了错误的 prop 名导致三个面板无关联、全部堆叠显示。\n\n## 修复内容\n```html\n<!-- 修复前 -->\n<lay-tab-pane id=\"1\" label=\"未生成编码\">\n<lay-tab-pane id=\"2\" label=\"已生成编码\">\n<lay-tab-pane id=\"3\" label=\"编码记录\">\n\n<!-- 修复后 -->\n<lay-tab-pane name=\"1\" title=\"未生成编码\">\n<lay-tab-pane name=\"2\" title=\"已生成编码\">\n<lay-tab-pane name=\"3\" title=\"编码记录\">\n```\n\n## 排查过程\n1. 搜索 LayuiVue 2.22.2 文档确认 `lay-tab-pane` 的 prop API — 确认使用 `name` + `title`\n2. 对比项目内其他页面（无现成参考，本项目首次使用 lay-tabs）\n3. 查看 LayuiVue 源码确认组件 props 定义",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260517-1001-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-17T10:01:00+08:00",
+  "payload": {
+    "subject": "#004 [fl] 分路前端：baseService.js ?embedded=true Token过期防控",
+    "context": "#004",
+    "content": "## 概述\n修改分路 `baseService.js`，新增 `?embedded=true` 嵌入模式。Token 失效时发 `postMessage` 而非跳转登录页。\n\n## 实施计划\n详细步骤见：`D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-plan-HRM集成到鸿冠ERP-阶段1.md` 的 Task 4 节。\n\n## 改动文件\n`D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\baseService.js`\n\n## 改动内容（约 20 行新增）\n\n### 1. 文件顶部（Http 定义之前）新增\n```javascript\nvar isEmbedded = (function() {\n    var m = location.search.match(/[?&]embedded=true/);\n    return !!m;\n})();\n\nfunction onTokenExpired() {\n    if (isEmbedded) {\n        window.parent.postMessage({ type: \"HRM_TOKEN_EXPIRED\" }, \"*\");\n        return;\n    }\n    getRootWindow().location.href = \"/login.html\";\n}\n```\n\n### 2. 替换 4 处跳转\n找到所有 `getRootWindow().location.href = \"/login.html\"` 替换为 `onTokenExpired()`：\n- 启动时 token 检查（约 line 435）\n- Http.errorHandler 中 401 处理（2 处：`res.error.code == \"401\"` 和 `case 401`）\n- HttpE.errorHandler 中 401 处理\n- Http2.errorHandler 中 401 处理\n\n非嵌入模式行为完全不变。\n\n## 验证\n1. 非嵌入模式：行为与改前完全一致\n2. 嵌入模式：`localStorage.removeItem(\"token\")` 后刷新 → 不发跳转，发 postMessage\n3. `svn st` 确认只有 baseService.js 变动",
+    "files": [
+      "D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-HRM集成到鸿冠ERP-阶段1.md",
+      "D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-plan-HRM集成到鸿冠ERP-阶段1.md",
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\baseService.js"
+    ],
+    "actions": [
+      "baseService.js 新增 isEmbedded 检测 + onTokenExpired 函数",
+      "替换 4 处 location.href = '/login.html' 为 onTokenExpired()",
+      "svn st 确认变更",
+      "非嵌入模式回归验证"
+    ],
+    "deadline": null
+  }
+}

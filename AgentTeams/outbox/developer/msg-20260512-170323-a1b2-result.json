@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-010500-f3a2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-13T01:05:00Z",
+  "replyTo": "msg-20260512-170323-a1b2",
+  "payload": {
+    "subject": "✅ CodeGenerator 调研完成 — 发现设计与实现差异需确认",
+    "content": "## 调研完成\n\n已读完 4 份核心文档（前后端 claude_lh.md + CodeGeneratorPlan.md），对比了后端实际代码。\n\n## 实际代码状态\n\n### 后端 ✅ 已实现\n- Core: 6 实体 (CodeRule, CodeRuleItem, CodeRecord, CodeRecordObject, BizCodeIdentifier, BizFieldDefinition)\n- Application: CodeGeneratorService + 5 DTO + GenerateCodeInput + DtoMapping\n- WebAppApi: CodeGeneratorController (完整 CRUD + 编码生成 + 统一查询)\n- 共 11 个 .cs 文件\n\n### 前端 ❌ 未实现\n- 5 个子目录已创建 (bizCode, bizField, codeRule, codeRecord, generate)\n- 但所有目录为空 — 0 个 HTML 文件\n- 需创建约 8 个页面\n\n## 关键差异：前端计划 vs 后端实际\n\n| 差异点 | 前端 CodeGeneratorPlan.md | 后端实际代码 |\n|--------|--------------------------|-------------|\n| 子项管理 API | SaveItem/DeleteItem/ReorderItems/GetItems | **不存在** — 子项随 SaveRule 一起提交 |\n| BusinessField 属性 | fieldName (string) | **BizFieldDefinitionId (int)** — 需要下拉框加载 BizFieldDefinition 列表 |\n| RuleSign | RuleSign 标识字段 | CodeRuleDto **无 RuleSign 字段** — BizCodeIdentifier 通过 CodeRuleId(int) 关联 |\n| Generate BizContext | `Dictionary<string,string>` | **Dictionary<int, long>** — key 是 BizFieldDefinitionId |\n| 日志注解 | HRMLog | **CommonLog** |\n\n## 待你确认\n\n1. 子项管理是否需要**全在 create_edit.html 内联操作**（无独立 API，随规则一起提交）？\n2. item_form.html 是否还需要的？如果子项编辑直接在前端操作数组（新增模式暂存本地，编辑模式随 SaveRule 提交），就不需要独立子项表单页\n3. codeRule 列表页的「子项」按钮 → 打开 create_edit.html 直接编辑规则+子项？\n\n确认后我立即开始写前端 8 个页面。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Core/CodeGenerator/",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ]
+  }
+}

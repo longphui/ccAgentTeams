@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1115-ack-b1c2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:15:00+08:00",
+  "replyTo": "msg-20260514-1000-b1c2",
+  "payload": {
+    "subject": "✅ 收到任务：半成品编码弹窗搜索功能修复",
+    "content": "收到任务。分析：computed 本身逻辑正确，疑似 lay-input 在 teleport (lay-layer) 内 v-model 不触发响应。方案：改用 data + watch 替代 computed，确保过滤实时响应。"
+  }
+}

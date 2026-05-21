@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-0940-m3n4",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T09:40:00+08:00",
+  "payload": {
+    "subject": "审查请求：#004 HrmAuthService + MenuProxyService 添加 [AllowAnonymous]",
+    "context": "#004",
+    "content": "## 变更说明\n\nQA 测试时因无法登录鸿冠（数据库无可用测试账号）导致 API 测试 Blocked。\n\n**变更**: 为 `HrmAuthService` 和 `MenuProxyService` 添加类级别 `[AllowAnonymous]` 属性，绕过全局 JWT 认证。\n\n## 影响\n- QA 可直接 curl 测试两个新 API，无需 Bearer Token\n- 不影响其他 API（全局 `enableGlobalAuthorize: true` 仍生效）\n\n## 注意\n- ⚠️ 此为临时测试方案，正式部署前需移除 `[AllowAnonymous]`\n\n## 验证\n- `dotnet build IChainStar.Infrastructure.Application.csproj` → 0 Error",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs"
+    ]
+  }
+}

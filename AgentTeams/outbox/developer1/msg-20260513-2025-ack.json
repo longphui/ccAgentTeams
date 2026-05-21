@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-2025-a7b8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:25:00+08:00",
+  "replyTo": "msg-20260513-2025-i9j0",
+  "payload": {
+    "subject": "✅ 收到任务：调整弹窗和 Tab3 筛选条件",
+    "content": "收到，预计 1 小时完成。需先与 Developer 确认 Tab3 接口字段名。"
+  }
+}

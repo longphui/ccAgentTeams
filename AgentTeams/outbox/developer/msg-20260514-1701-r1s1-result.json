@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1701-r1s1",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:01:00+08:00",
+  "replyTo": "msg-20260514-1630-r1s1",
+  "payload": {
+    "subject": "✅ 多项功能已完成：GetDetails排查 + Update + Keywords搜索 + CheckCodeRule",
+    "content": "## 完成情况\n\n### 1300 — GetDetails/GetPageList 数据完整性排查\n- GetDetails 正确返回 Codes 含 ComponentProductName\n- GetPageList 正确返回 Codes 含 ComponentProductName\n- 批量加载 codeProducts 避免 N+1\n\n### 1310 — Update 编辑功能\n- ProductComponentsInput 新增 Id 字段\n- IProductComponentsService 新增 Update 方法签名\n- ProductComponentsService.Update：软删旧编码 + 插入新编码，含重复校验（排除自身）\n- ProductComponentsController 新增 Update Action\n\n### 1320 — Keywords 模糊搜索\n- 搜索条件移至分页前（DB级别过滤）\n- 匹配 ProductCode、ProductName（成品名）、ComponentProductName（组件名）、CodeValue\n\n### 1330 — CheckCodeRule 编码规则校验\n- ICodeGeneratorService 新增 CheckCodeRule 方法签名\n- CodeGeneratorService 实现：校验 BizCodeIdentifier + CodeRule 存在性及启用状态\n- CodeGeneratorController 新增 CheckCodeRule 端点\n\n## 审查状态\n✅ 已通过 Reviewer 审查（msg-20260514-1645-r1s1），编译 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ]
+  }
+}

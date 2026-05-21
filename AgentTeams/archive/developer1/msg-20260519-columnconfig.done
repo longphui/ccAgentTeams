@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260519-columnconfig",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T15:00:00+08:00",
+  "payload": {
+    "subject": "table-column-config：get-by-key loading 不消失 + key 含 null",
+    "context": "#004",
+    "content": "## 现象\n\n嵌入模式下（HRM 8095 嵌入分路页面），TableColumnConfig 组件调用 `Http2.get('/settings/get-by-key', ...)` 时：\n\n1. **loading 一直转不消失** — 请求失败后 loading 状态未清除\n2. **key 中包含 `null`** — 请求 URL 为 `columnConfig-null-/v2/views/manpowermanage/staffmanagement/staffinfo/index.html`\n\n## 相关文件\n\n- `caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js`\n\n## 行动项\n\n1. 排查 CompanyID 为 null 的原因（嵌入模式下 localStorage 跨域隔离）\n2. 添加 fetch 失败时的错误降级，清除 loading 状态\n3. 浏览器验证：嵌入模式下 loading 正常消失，不再有 null key 请求",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js"
+    ],
+    "actions": ["排查 CompanyID null 原因并修复", "添加 fetch 失败降级清除 loading", "浏览器验证"],
+    "deadline": null
+  }
+}

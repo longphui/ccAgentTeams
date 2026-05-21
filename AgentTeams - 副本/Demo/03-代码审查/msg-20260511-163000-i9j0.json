@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260511-163000-i9j0",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-11T16:30:00+08:00",
+  "replyTo": "msg-20260511-150000-g7h8",
+  "payload": {
+    "subject": "⚠️ 审查报告：发现3个安全问题需修复",
+    "content": "## 安全审查报告\n\n### 🔴 严重 — 必须修复\n\n#### 1. SQL 注入风险 — `service.go:42`\n```go\n// ❌ 危险：直接拼接SQL\nquery := \"SELECT * FROM users WHERE username = '\" + username + \"'\"\n```\n**修复方案**：使用参数化查询\n```go\n// ✅ 安全：参数化查询\nrow := db.QueryRow(\"SELECT * FROM users WHERE username = $1\", username)\n```\n\n#### 2. 密码存储 — `service.go:58`\n密码使用了 bcrypt，cost=12 ✅ 符合要求。但注册时未校验密码强度：\n- 未要求最小长度（建议 ≥8 位）\n- 未要求包含大小写+数字\n**修复方案**：在 handler 层添加密码强度校验。\n\n### 🟡 警告 — 建议修复\n\n#### 3. 错误信息泄露 — `handler.go:85`\n```go\n// ❌ 泄露了具体错误原因\nc.JSON(401, gin.H{\"error\": \"token expired at 2026-05-10\"})\n```\n**修复方案**：返回通用错误信息\n```go\n// ✅ 不泄露细节\nc.JSON(401, gin.H{\"error\": \"invalid or expired token\"})\n```\n\n### 🟢 通过项\n- ✅ JWT 签名验证正确使用 RS256\n- ✅ refresh_token 轮转逻辑正确\n- ✅ 重放攻击检测（已失效 token 被重用则撤销所有 token）\n- ✅ CORS 头配置正确\n\n## 总结\n| 等级 | 数量 |\n|------|------|\n| 🔴 严重 | 1 |\n| 🟡 警告 | 2 |\n| 🟢 通过 | 4 |\n\n修复后可复审。",
+    "files": ["outbox/reviewer/security-review-report.md"],
+    "actions": [
+      "修复 SQL 注入：改用参数化查询",
+      "添加密码强度校验",
+      "修改错误信息不泄露细节"
+    ]
+  }
+}

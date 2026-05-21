@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260516-0006-g7h8",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-16T15:01:00+08:00",
+  "payload": {
+    "subject": "测试请求：CodeGenerator 前端 Domain 改造",
+    "context": "#003",
+    "content": "## 测试重点\n\n请在浏览器验证以下功能：\n\n### bizField (业务字段定义)\n- [ ] 新增：表单显示 DomainCode/DomainName/FieldSql（无 SourceTable/SourceField/Format/DefaultValue 旧字段）\n- [ ] 验证：不填必填项提交 → 提示错误 + 不关闭弹窗\n- [ ] 验证：填全必填项提交 → 成功 + 弹窗关闭\n- [ ] 列表：显示 DomainCode/DomainName 列（无 数据源 列）\n- [ ] 编辑：回显 DomainCode/DomainName/FieldSql\n\n### codeRule (编码规则)\n- [ ] Domain 为下拉选择（不可手动输入）\n- [ ] 下拉选项从后端加载，显示 DomainName，值为 DomainCode\n- [ ] 不选 Domain 提交 → 提示错误\n- [ ] 列表显示 Domain 列\n- [ ] 编辑回显 Domain 值\n\n### bizCode (业务编码标识)\n- [ ] Domain 为下拉选择（同 codeRule）\n- [ ] 下拉选项正常加载\n- [ ] 不选 Domain 提交 → 提示错误\n- [ ] 列表显示 Domain 列\n- [ ] 编辑回显 Domain 值\n\n### generate (编码生成)\n- [ ] 界面无旧的「业务字段参数」多行动态输入框\n- [ ] 显示「领域聚合根Id」单数字输入框\n- [ ] 不填 DomainId 点击生成 → 提示错误\n- [ ] 填 DomainId 生成 → 正常返回结果\n- [ ] 结果可复制、一键复制\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "v2/views/CodeGenerator/bizField/create_edit.html",
+      "v2/views/CodeGenerator/bizField/index.html",
+      "v2/views/CodeGenerator/codeRule/create_edit.html",
+      "v2/views/CodeGenerator/codeRule/index.html",
+      "v2/views/CodeGenerator/bizCode/create_edit.html",
+      "v2/views/CodeGenerator/bizCode/index.html",
+      "v2/views/CodeGenerator/generate/index.html"
+    ]
+  }
+}

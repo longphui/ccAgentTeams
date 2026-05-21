@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1650-c4d5",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:50:00+08:00",
+  "replyTo": "msg-20260513-1630-f1e2",
+  "payload": {
+    "subject": "✅ 确认弹窗消息已简化",
+    "content": "## 改动\n`layer.confirm` 消息从「工单编号+产品名称+生成数量」简化为：\n```javascript\n'确认要生成（' + row.plannedProductionNum + '）个编码吗？'\n```\n不再显示工单编号和产品名称。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

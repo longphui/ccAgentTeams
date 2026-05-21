@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260513-1940-b2c3",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:40:00+08:00",
+  "payload": {
+    "subject": "修复工单状态列不显示 — 去掉 customSlot 改为直接渲染",
+    "context": "#001",
+    "content": "## 根因\n\n用户定位：`statusName` 列用了 `customSlot: \"statusName\"` + `<template v-slot:statusName>`，实际上不需要插槽，直接 key 绑定即可渲染。\n\n## 改动\n\n1. Tab1/Tab2 的 columns 中，statusName 列去掉 `customSlot: \"statusName\"`，保留 `key: \"statusName\"`\n2. 删除两处 `<template v-slot:statusName=\"{row}\">{{row.statusName}}</template>`\n3. 之前已去掉的 codeCount 列如果还有残留一并清理",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "columns1/columns2 中 statusName 列去掉 customSlot",
+      "删除 statusName 插槽模板",
+      "如 filters1.Statuss 还没改，一并改为 Status"
+    ]
+  }
+}

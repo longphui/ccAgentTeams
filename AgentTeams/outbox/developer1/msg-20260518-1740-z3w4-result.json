@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-1740-z3w4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T17:40:00+08:00",
+  "replyTo": "msg-20260518-1710-z3w4",
+  "payload": {
+    "subject": "✅ 分路端 startup 路由 menuButtons 修复 — 已完成",
+    "content": "## 完成情况\n- v2/app.js initMenu() startup 路由已补充 menuButtons 字段\n- 分路端使用解构默认值 + 三分支覆盖模式\n- QA Playwright 验证通过 (8/8 用例)\n\n## 文件\n- D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/app.js",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/app.js"]
+  }
+}

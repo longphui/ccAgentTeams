@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1443-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T14:48:00+08:00",
+  "replyTo": "msg-20260519-1443-tst11",
+  "payload": {
+    "subject": "✅ 测试通过：newFenluApiBase 端口 5001→8088 修正",
+    "content": "## 测试结果\n- 功能验证：✅ — newFenluApiBase: 'http://localhost:8088/api'，无 5001 残留\n- 数据显示：✅ — 3 个 HRM 页面网络错误均为 0\n- 边界情况：✅ — hrm-proxy ERP (5021) 不受影响\n- 前后端联动：✅ — 页面加载无 Failed to fetch / ERR_ 错误\n\n## 详细验证\n1. 代码扫描: appConfig.js newFenluApiBase = 'http://localhost:8088/api' | 5001 残留=0 ✅\n2. HRM 页面 (3/3 0网络错误):\n   - staffInfo: 0 网络错误 ✅\n   - staffRecord: 0 网络错误 ✅\n   - tab_index: 0 网络错误 ✅\n3. ERP (5021) hrm-proxy: 无 ERR_/fetch 错误 ✅\n\n## 发现的问题\n无\n\n## 审查意见\n✅ 通过 QA 验证，newFenluApiBase 端口修正有效可合并"
+  }
+}

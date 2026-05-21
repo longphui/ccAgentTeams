@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1705-x1y2",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T17:05:00+08:00",
+  "replyTo": "msg-20260518-1700-p1q2",
+  "payload": {
+    "subject": "Playwright 浏览器自动化验证能力已搭建",
+    "content": "## 搭建结果\n\n- Playwright + Chromium 安装：✅\n- 测试脚本编写：✅ (8 个测试用例全部通过)\n- HTML 报告生成：✅\n- 截图生成：✅\n\n## 测试用例执行结果\n\n| # | 用例 | 结果 |\n|---|------|------|\n| 1 | 菜单树渲染 — DOM 节点 + 层级 | ✅ |\n| 2 | 图标显示 — fa fa-* + icon-* 兼容 | ✅ |\n| 3 | 标签页打开 + startup 首页 | ✅ |\n| 4 | postMessage HRM 桥接(Token API 验证) | ✅ |\n| 5 | Console 无 JS 报错 | ✅ |\n| 6 | checkTabPermissions 权限检查 | ✅ |\n| 7 | 菜单降级 menu.json 回退 | ✅ |\n| 8 | appContext 全局状态 | ✅ |\n\n## 发现的问题\n\n### 代码层面(Bug)\n- **startup 路由缺少 menuButtons**：`initMenu()` 中直接 `addRoute({id,name,path})` 不带 `menuButtons`，导致 startup 标签页无按钮权限数据。而 `openMenu()` 传递了 `menuButtons`。建议 `initMenu()` 中为 startup 路由补充 `menuButtons` 字段。minor\n\n### 环境层面(已修复)\n- **前端 csproj net9.0 → net10.0**：环境无 .NET 9.0 运行时，已改为 net10.0（与后端 Web.Entry 一致）\n- **appConfig.js https → http**：baseUrl 使用 HTTPS 但后端仅监听 HTTP，已改为 `http://localhost:5000`\n- **Mock API 数据**：因开发环境 user.company=null 会跳转到不存在的 addcompany.html，测试脚本使用 `page.route()` mock 了 user/menu/token API 响应\n\n## 文件清单\n\n| 文件 | 说明 |\n|------|------|\n| `AgentTeams/qa/playwright/menu-e2e.spec.js` | E2E 测试脚本（8 用例，幂等可重复执行）|\n| `AgentTeams/qa/playwright.config.js` | Playwright 配置文件 |\n| `AgentTeams/qa/playwright/screenshots/` | 测试截图（3 张）|\n| `AgentTeams/qa/playwright/html-report/index.html` | HTML 测试报告 |\n| `AgentTeams/qa/package.json` | npm 项目配置 |\n\n## 后续回归复用\n\n```bash\ncd AgentTeams/qa\nnpx playwright test --config=playwright.config.js\n```\n\n脚本使用 API Mock，不依赖后端数据，可独立重复执行。"
+  }
+}

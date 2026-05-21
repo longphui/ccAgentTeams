@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260514-1920-architect-task",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-14T19:20:00+08:00",
+  "payload": {
+    "subject": "修复 #002 两个阻塞项：中文搜索失败 + Save/Update/AutoAssemble 写入异常",
+    "context": "#002",
+    "content": "## 背景\n\nQA 已完成最新一轮测试，发现两个 blocking 问题：\n\n---\n\n### 阻塞 1：中文搜索仍失败（regression）\n\n`ProductComponentsService.GetPageList` 的 Keywords 搜索在上一轮改为 `DbFunctions.Like` 后，跨上下文错误已修复，但中文搜索仍返回空结果。\n\n| 测试用例 | 关键词 | 预期 | 实际 |\n|----------|--------|------|------|\n| ProductName 搜索 | 有机肥 | 匹配记录 | 空异常 |\n| ComponentProductName 搜索 | 海格 | 匹配记录 | 空异常 |\n| ProductCode/CodeValue 英文搜索 | — | 正常 | ✅ |\n| 空 Keywords | — | 返回 4 条 | ✅ |\n| 跨上下文错误 | — | 不报错 | ✅ |\n\n**排查方向**：\n- `DbFunctions.Like(p.ProductName, keyword)` 生成的是 SQL `LIKE N'%keyword%'` 还是 `LIKE '%keyword%'`？\n- SQL Server 中 NVARCHAR 字段用 LIKE 匹配中文需要 `N` 前缀\n- 检查生成的 SQL（SQL Profiler 或 EF 日志）确认 LIKE 模式是否正确\n- 可能原因：`_productRep.GetAll()` 的 Product 实体的 `ProductName` 属性没有正确映射为 NVARCHAR\n\n---\n\n### 阻塞 2：Save / Update / AutoAssemble 全部返回异常\n\nQA 和 Developer1 报告这三个接口全部不可用，前端新增/编辑/删除全链路被阻塞。\n\n**排查方向**：\n- 最新 DLL 是否已部署到 IIS？（执行 `appcmd stop/start` 重启应用池）\n- 数据库连接是否正常？\n- 检查 IIS 应用池日志或 Windows Event Log\n- 可能涉及 `ProductComponents` 表的 CompanyId / ProductId 外键约束\n\n---\n\n## 要求\n\n1. 两个问题都修复（或确认根因并给出修复方案）\n2. 编译通过 0 Error\n3. 修复后通知 QA（发 TEST 消息到 `inbox/qa/`）\n4. 完成后发 REVIEW 给 Reviewer\n\n## 优先级\ncritical — 两个阻塞项导致 #002 全链路无法验证",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ],
+    "actions": [
+      "排查并修复 GetPageList 中文搜索（ProductName/ComponentProductName 返回空）",
+      "排查并修复 Save/Update/AutoAssemble 写入异常",
+      "MSBuild 编译通过 0 Error",
+      "通知 QA 重新测试"
+    ],
+    "deadline": null
+  }
+}

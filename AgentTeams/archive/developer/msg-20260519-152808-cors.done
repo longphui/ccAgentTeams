@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-152808-cors",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-19T15:28:08+08:00",
+  "payload": {
+    "subject": "修复 CORS：8088 API 不允许来自 8095 (HRM) 的跨域请求",
+    "context": "#004",
+    "content": "## 现象\n\n嵌入模式下，分路页面（通过 iframe 嵌入在 HRM `localhost:8095`）调用 `http://localhost:8088/api/settings/get-by-key` 时，浏览器报 CORS 错误：\n\n```\nAccess to fetch at 'http://localhost:8088/api/settings/get-by-key?...' from origin 'http://localhost:8095' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.\n```\n\n## 行动项\n\n1. 排查 CORS 配置，允许 `http://localhost:8095` 来源的跨域请求\n2. 确保 OPTIONS 预检请求正确返回 CORS 头\n3. 编译通过 0 Error\n4. curl 验证：OPTIONS 预检返回 `Access-Control-Allow-Origin` 头",
+    "files": [],
+    "actions": ["排查并修复 CORS 配置", "编译通过", "curl 验证 OPTIONS 返回正确的 CORS 头"],
+    "deadline": null
+  }
+}

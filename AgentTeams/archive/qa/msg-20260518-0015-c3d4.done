@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260518-0015-c3d4",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:15:00+08:00",
+  "payload": {
+    "subject": "测试请求：[fl] baseService.js ?embedded=true Token过期防控",
+    "context": "#004",
+    "content": "## 测试重点\n请在浏览器验证以下功能：\n- 非嵌入模式（URL 不带 `?embedded=true`）：Token 失效 → 正常跳转登录页\n- 嵌入模式（URL 带 `?embedded=true`）：Token 失效 → 不发跳转，发 postMessage({type: \"HRM_TOKEN_EXPIRED\"})\n\n## 测试步骤\n1. 访问分路任意页面，**不带** `?embedded=true`，手动执行 `localStorage.removeItem(\"token\")` → 确认跳转到 `/login.html`\n2. 访问分路任意页面，**带** `?embedded=true`（如 `/v2/views/xxx/index.html?embedded=true`），手动执行 `localStorage.removeItem(\"token\")` 后触发 API 调用 → 确认不发跳转，DevTools Console 可见 postMessage\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\baseService.js"
+    ]
+  }
+}

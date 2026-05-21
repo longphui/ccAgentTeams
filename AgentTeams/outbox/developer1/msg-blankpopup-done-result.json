@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-blankpopup-done",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T18:25:00+08:00",
+  "replyTo": "msg-20260519-blankpopup",
+  "payload": {
+    "subject": "✅ iframe 嵌入模式弹框空白系统性修复完成",
+    "content": "## 根因\n`util.js` getAppContext() 嵌入模式 stub 从未存储到 `window.appContext`。弹框 `getRootWindow()?.appContext` 找不到父窗口 stub → 创建空白 stub → getState() undefined → state.value TypeError → Vue 挂载失败。\n\n## 修复\n`util.js:138`: `window.appContext = stub;` — 弹框通过 `getRootWindow()?.appContext` 找到父窗口 stub，共享 `_embeddedStates`。覆盖所有嵌入模式弹框。\n\n## 审查状态\n✅ Reviewer 审查通过（5 个边界场景全部验证）\n\n## 影响范围\n系统性修复 — 宏观系统 iframe 内所有分路页面的新增/编辑弹框",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

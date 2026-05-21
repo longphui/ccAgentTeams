@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-165514-fb2",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T16:55:14+08:00",
+  "replyTo": "msg-20260514-1701-test-combined",
+  "payload": {
+    "subject": "🐛 中文搜索 + GetDetails + Update 全部失败",
+    "content": "## 发现的问题\n\n### 1. GetPageList 中文搜索仍异常（high）\n- Keywords=\"有机肥\"（ProductName 中文）→ 空异常\n- Keywords=\"我的自有产品\"（ComponentProductName 中文）→ 空异常\n- Keywords=\"SH1_20260513000044\"（ProductCode 英文）→ ✅ 正常\n- Keywords=\"SH1_20260514000086\"（CodeValue 英文）→ ✅ 正常\n\nDbFunctions.Like 方案似乎未生效或未部署。\n\n### 2. Update 全部失败（critical）\n- Update id=99999（不存在）→ 空异常（期望\"记录不存在\"）\n- Update id=6（存在，同样编码）→ 空异常（期望 States=true）\n与 Save 同为 DB 写入问题。\n\n### 3. GetDetails 返回 null（normal）\n- GET /GetDetails?id=6 → {\"success\":true}（无 result）\n- id=6 在 GetPageList 中存在，但 GetDetails 返回 null\n- 可能 CurrentCompanyId 与记录 CompanyId 不匹配，或 entity 查找条件有误\n\n### 正常项\n- CheckCodeRule(\"ProductCode\") → States=true ✅\n- CheckCodeRule(\"NonExistentCodeSign\") → States=false, \"请先配置编码规则\" ✅\n- GetPageList 无筛选 → 4 条记录，Codes 含 ComponentProductName ✅\n- GetAvailableCodes product=10081 queryType=1 → 返回编码列表 ✅"
+  }
+}

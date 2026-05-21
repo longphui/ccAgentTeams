@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1900-fb3",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:00:00+08:00",
+  "replyTo": "msg-20260514-1800-test-crosscontext",
+  "payload": {
+    "subject": "🐛 中文搜索仍失败，Save/Update/AutoAssemble 全部不可用",
+    "content": "## 跨上下文修复 ✅\nGetPageList 不再报「different contexts」错误，所有请求正常返回。\n\n## 中文搜索 ❌\n- Keywords=\"有机肥\" → {\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}\n- Keywords=\"海格\" → 同上空异常\n- 数据中确实存在「有机肥粉剂」「我的自有产品海格123」等中文内容\n- Keywords=\"SH1\"（英文）→ ✅ 正常返回 4 条\n- Keywords 无匹配 → ✅ 返回空列表无报错\n\n## Save/Update/AutoAssemble 仍全部不可用 ❌\n与上一轮报告一致，所有 DB 写入操作返回空错误。\n\n## 建议\n中文搜索的 DbFunctions.Like 和 Save/Update 写操作可能都还未部署最新 DLL。"
+  }
+}

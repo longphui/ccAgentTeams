@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-0026-test",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T00:26:00+08:00",
+  "payload": {
+    "subject": "测试请求：修正分路客户端地址 8088→8095",
+    "context": "#004",
+    "content": "## 测试重点\n- 打开天津宏观世纪 ERP（http://localhost:5021/）\n- 点击 HRM 菜单，iframe 应正常加载分路页面（非 404）\n- 分路前端页面容器端口 8095 需运行\n\n## 修改内容\napp.js + hrm-proxy/index.html 端口 8088→8095（仅前端页面地址，后端 API 保持 8088）\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js",
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"
+    ]
+  }
+}

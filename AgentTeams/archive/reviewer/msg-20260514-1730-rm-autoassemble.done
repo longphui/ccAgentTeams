@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260514-1730-rm-autoassemble",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:30:00+08:00",
+  "payload": {
+    "subject": "审查请求：移除 AutoAssemble 一键自动组合功能",
+    "context": "#002/#007",
+    "content": "## 变更内容\n按用户要求移除 AutoAssemble 一键自动组合功能。\n\n### 移除位置\n| 文件 | 移除内容 |\n|------|----------|\n| IProductComponentsService.cs | AutoAssemble 方法声明 |\n| ProductComponentsService.cs | AutoAssemble 方法实现（27行） |\n| ProductComponentsController.cs | AutoAssemble Action |\n\n### 保留功能\n- Save / Update / Delete / GetPageList / GetDetails / GetAvailableCodes 不变\n\n## 编译\n✅ MSBuild 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ]
+  }
+}

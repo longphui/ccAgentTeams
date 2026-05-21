@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260513-1945-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:45:00+08:00",
+  "payload": {
+    "subject": "修复工单状态筛选 — 单选值改为数组传递",
+    "context": "#001",
+    "content": "## 问题\n\n工单状态筛选是 select 多选，后端用数组接收，但前端选中单个值时传的是标量而不是数组，导致后端报错。\n\n## 修复\n\n确保 `lay-page-view` 的 select 筛选器在单选时也以数组形式传参。检查 filters1 中 Statuss/Status 的配置是否正确标记为多选模式。\n\n## 参考\n\n如果 lay-page-view 的 select 默认单选，需要确认是否有 `multiple` 或类似属性控制。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "检查 select 筛选器的多选配置",
+      "确保传给后端的 Statuss/Status 始终是数组"
+    ]
+  }
+}

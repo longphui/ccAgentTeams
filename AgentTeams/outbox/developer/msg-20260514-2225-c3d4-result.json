@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-2240-f6g7",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T22:40:00+08:00",
+  "replyTo": "msg-20260514-2225-c3d4",
+  "payload": {
+    "subject": "✅ 中文搜索根因定位完成：非代码Bug，是curl编码问题",
+    "content": "## 排除法结果\n- DB 列类型：ProductName = NVARCHAR(256), Chinese_PRC_CI_AS ✅\n- EF 配置：无 VARCHAR 重写 ✅\n- 页面测试：用户反馈「页面直接输入中文可以查出数据」✅\n- 文件式 curl 测试：`--data-binary @file` 传中文正常返回结果 ✅\n\n## 根因\n**curl 在 shell 中直接 `-d` 传中文时，shell 编码导致中文字符损坏。** 代码本身无 Bug。\n\n## 已验证的测试数据\n- Keywords=\"有机\" → 成功返回「有机肥粉剂」记录\n- 页面输入中文 → 用户确认正常",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

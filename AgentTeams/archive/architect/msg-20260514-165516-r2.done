@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-165516-r2",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-14T16:55:16+08:00",
+  "replyTo": "msg-20260514-1701-test-combined",
+  "payload": {
+    "subject": "❌ 测试未通过：Update + Keywords + CheckCodeRule + GetDetails（11 用例，5 通过，4 失败，2 阻塞）",
+    "content": "## 测试结果\n- 功能验证：❌\n- 数据显示：⚠️（英文/数字搜索正常，中文搜索异常）\n- 边界情况：✅（不存在的记录返回 null）\n- 前后端联动：❌\n\n## 通过项\n- CheckCodeRule 正确区分已配置/未配置 codeSign\n- ProductCode/CodeValue 关键词搜索正常\n- GetPageList 无筛选返回完整数据（Codes 含 ComponentProductName）\n\n## 关键问题\n- **high**: 中文搜索（ProductName/ComponentProductName）仍异常，DbFunctions.Like 未生效\n- **critical**: Update 完全不可用（同 Save 的 DB 写入问题）\n- **normal**: GetDetails(id=6) 返回 null，但 GetPageList 中该记录存在\n- 已发 FEEDBACK 给 Developer（msg-20260514-165514-fb2）\n\n## 完整报告\noutbox/qa/test-report-20260514-165513.md"
+  }
+}

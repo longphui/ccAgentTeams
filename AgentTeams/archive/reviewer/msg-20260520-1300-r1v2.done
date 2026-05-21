@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260520-1300-r1v2",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-20T13:00:00+08:00",
+  "replyTo": "msg-20260520-reviewer-feedback-1",
+  "payload": {
+    "subject": "审查请求（修订）：#004 MenuProxyService iframe_ 前缀判断 — 已修复2个问题",
+    "context": "#004",
+    "content": "## 修订内容\n\n### 修复 1：缺少 `&name=` 参数\n- 第 100-101 行：iframe_ 分支 URL 追加 `&name=" + Uri.EscapeDataString(routeName)`\n- 第 107-108 行：legacy 分支同步追加 name 参数\n\n### 修复 2：StripFenluPathPrefix 跳过太多段\n- `Skip(3)` → `Skip(2)`，只跳过 `v2/views`，保留 `moduleName`\n- `parts.Length >= 4` → `parts.Length >= 3`\n- 同步更新 summary 和内联注释\n\n## 路径示例\n- 输入: `/v2/views/manpowerManage/staffManagement/staffInfo/index.html`, name=`iframe_staffManagement`\n- 输出: `/views/hrm-proxy/index.html?page=manpowerManage/staffManagement/staffInfo/index.html&name=iframe_staffManagement`\n\n## 编译\n✅ Application 项目 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"
+    ]
+  }
+}

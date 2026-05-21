@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1005-b8c9",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:05:00+08:00",
+  "replyTo": "msg-20260514-0955-z6a7",
+  "payload": {
+    "subject": "✅ 收到任务：GetAvailableCodes 增加排除参数",
+    "content": "收到，预计 20 分钟完成。涉及 Service/Interface/Controller 后端改动 + create_edit.html 前端适配。"
+  }
+}

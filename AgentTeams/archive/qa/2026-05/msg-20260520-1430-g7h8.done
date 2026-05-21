@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260520-1430-g7h8",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-20T14:30:00+08:00",
+  "payload": {
+    "subject": "测试请求：#004 MenuProxyService iframe_ 前缀判断 + 完整路径传递",
+    "context": "#004",
+    "content": "## 测试重点\n\n### 1. 菜单代理 API\n- 调用 POST /api/menu-proxy/get-list-by-role\n- 验证 name 以 iframe_ 开头的路由节点 path 被正确转换为 hrm-proxy URL\n- 验证 page 参数包含完整路径（如 /v2/views/manpowerManage/...）\n- 验证 &name= 参数被正确传递\n\n### 2. 非 iframe 路由\n- 天津宏观世纪原生页面（name 不以 iframe_ 开头）的 path 应保持原样\n\n### 3. legacy 分支\n- ../User/Approval/ 路径应生成 type=legacy URL\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"
+    ]
+  }
+}

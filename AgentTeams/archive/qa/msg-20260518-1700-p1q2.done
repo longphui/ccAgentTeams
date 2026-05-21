@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260518-1700-p1q2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T17:00:00+08:00",
+  "payload": {
+    "subject": "搭建 Playwright 浏览器自动化验证能力",
+    "context": "#004",
+    "content": "## 目标\n\n安装 Playwright 并编写测试脚本，使 CLI 环境能完成浏览器 UI 验证。\n\n## 环境搭建\n\n```bash\nnpm install playwright @playwright/test\nnpx playwright install chromium\n```\n\n## 测试脚本要求\n\n编写 `AgentTeams/qa/playwright/menu-e2e.spec.js`，覆盖以下验证项：\n\n1. **菜单树渲染** — 访问首页，验证菜单 DOM 节点存在、层级正确\n2. **图标显示** — 验证 fa fa-* 和 icon-* 图标的 class 属性正确\n3. **标签页打开 + startup 首页** — 点击菜单项验证标签页创建和默认首页加载\n4. **postMessage iframe 桥接** — 验证 HRM_GET_CONTEXT → HRM_CONTEXT 消息流程\n5. **Console 无 JS 报错** — 收集 console.error，断言数组为空\n6. **菜单降级** — 停掉后端服务，验证降级到 menu.json 静态文件\n7. **checkTabPermissions** — 调用 window.checkTabPermissions() 验证返回值\n\n## 技术要求\n\n- 使用 headless Chromium（`headless: true`）\n- 关键步骤截图，输出到 `AgentTeams/qa/playwright/screenshots/`\n- 使用 `@playwright/test` 输出 HTML 报告\n- 前端地址：`http://localhost:5021`\n- 测试脚本写好一次，后续回归复用\n\n## 验收标准\n\n- 所有测试用例通过或明确标记 skip（注明原因）\n- 截图和报告路径写入 RESULT\n- 脚本可重复执行（幂等）",
+    "files": [
+      "AgentTeams/qa/playwright/menu-e2e.spec.js",
+      "AgentTeams/inbox/architect/msg-20260518-1635-a7c8.done"
+    ],
+    "actions": [
+      "npm install playwright @playwright/test",
+      "npx playwright install chromium",
+      "编写 menu-e2e.spec.js 测试脚本",
+      "启动前端服务器 (dotnet run, 5021端口)",
+      "执行测试: npx playwright test",
+      "输出截图 + HTML 报告路径"
+    ],
+    "deadline": null
+  }
+}

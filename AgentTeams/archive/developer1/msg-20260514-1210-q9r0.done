@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260514-1210-q9r0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T12:10:00+08:00",
+  "payload": {
+    "subject": "编码组装页面改造——去掉半成品分组，逐编码操作",
+    "context": "#002",
+    "content": "## 架构变化\n见 `shared/decisions/007-ProductComponent简化.md`\n\nProductComponent 不再有半成品分组。每个 ProductComponentCode 直接携带自己的 ComponentProductId 和 Unit。页面不需要两层结构。\n\n## 前端改动\n\n### create_edit.html（重点改造）\n- ❌ 移除：组件行（半成品+数量+编码列表）的两层结构\n- ➕ 改造为：扁平的编码行列表，每行直接选「半成品 + 单位 + 编码值」\n- 页面上不再需要「添加组件」按钮——改为「添加编码」\n- 不再有多编码勾选弹窗——逐行操作\n\n### index.html（列表页）\n- 调整列定义：移除旧的 ComponentProductName/ComponentUnit 列（如已有）\n- 确认新数据结构下列展示正确\n\n### autoAssembly.html\n- 检查自动组装流程是否受实体变化影响",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/autoAssembly.html"
+    ],
+    "actions": [
+      "create_edit.html：去掉两层分组结构，改为扁平编码行",
+      "index.html：调整列定义对齐新实体",
+      "autoAssembly.html：检查并适配",
+      "注释补充（按 fl-html-dev.md 规范）"
+    ]
+  }
+}

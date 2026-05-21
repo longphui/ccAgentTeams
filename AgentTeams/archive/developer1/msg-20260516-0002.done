@@ -1,0 +1,30 @@
+{
+  "id": "msg-20260516-0002",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-16T00:00:00+08:00",
+  "payload": {
+    "subject": "CodeGenerator 前端适配：4页面改造（Domain + FieldSql + DomainId）",
+    "context": "#003",
+    "content": "## 任务范围\n\n根据 `shared/requirements/003-CodeGenerator优化.md` 和 `shared/requirements/003-plan-CodeGenerator优化.md`（Task 12-15），完成 CodeGenerator 前端 4 个页面的改造。\n\n**前端仓库**：`D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\views\\CodeGenerator\\`\n\n**依赖**：等待 Developer 完成后端 Task 11（GetDomainList API 上线）后再开始，需要新 API 接口：\n- `GET /api/CodeGenerator/CodeGenerator/GetDomainList` → 返回 `[{DomainCode, DomainName}]`\n- GenerateCode 入参从 `BizContext` 改为 `DomainId`\n\n---\n\n## Task 12: bizField 页面改造\n\n**目录**：`bizField/`\n\n**表单改造**：\n- 去掉 4 个旧字段：SourceTable、SourceField、Format、DefaultValue\n- 新增 3 个字段：\n  - `DomainCode` — 文本输入框，必填，开发人员自由输入\n  - `DomainName` — 文本输入框，必填，开发人员自由输入\n  - `FieldSql` — 多行文本框（textarea），必填，placeholder 示例：`SELECT ProductName FROM Products WHERE Id = @domainId`\n- 保留：FieldName、Description\n\n**列表改造**：去掉 SourceTable/SourceField/Format 列，新增 DomainCode、DomainName 列\n\n---\n\n## Task 13: codeRule 页面改造\n\n**目录**：`codeRule/`\n\n**表单改造**：\n- 新增 `Domain` 下拉选择框，调 `GET /api/CodeGenerator/CodeGenerator/GetDomainList` 获取选项\n- 选项显示 `DomainName`，值为 `DomainCode`\n- 用户不可手动输入（使用 select/combobox 组件）\n\n**列表改造**：新增 `Domain` 展示列\n\n---\n\n## Task 14: bizCode 页面改造\n\n**目录**：`bizCode/`\n\n**同 Task 13**：表单新增 Domain 下拉选择框 + 列表新增 Domain 列\n\n---\n\n## Task 15: generate 页面 + 所有调用方适配\n\n**目录**：`generate/` + 所有调用 GenerateCode API 的页面\n\n**参数替换**：\n- 去掉 `BizContext`（字典输入框）\n- 改为 `DomainId`（数字输入框）\n\n调用 GenerateCode API 时参数从：\n```javascript\n{ CodeSign: \"ProductCode\", Count: n, BizContext: { 123: productId }, Objects: [...] }\n```\n改为：\n```javascript\n{ CodeSign: \"ProductCode\", Count: n, DomainId: productId, Objects: [...] }\n```\n\n**搜索所有调用方**：grep 搜索 `BizContext` 关键字，确保全部替换为 `DomainId`\n\n---\n\n## 提交\n每个 Task 完成后单独 svn commit，格式：`[CodeGenerator] <简短描述>`",
+    "files": [
+      "shared/requirements/003-CodeGenerator优化.md",
+      "shared/requirements/003-plan-CodeGenerator优化.md",
+      "v2/views/CodeGenerator/bizField/",
+      "v2/views/CodeGenerator/codeRule/",
+      "v2/views/CodeGenerator/bizCode/",
+      "v2/views/CodeGenerator/generate/"
+    ],
+    "actions": [
+      "等待 Developer 完成后端（GetDomainList API 可用 + GenerateCode 入参变更）",
+      "Task 12: bizField 表单改 3 字段 + 列表改列 → svn commit",
+      "Task 13: codeRule 表单加 Domain 下拉 + 列表加列 → svn commit",
+      "Task 14: bizCode 表单加 Domain 下拉 + 列表加列 → svn commit",
+      "Task 15: generate 页面 + 所有调用方 BizContext→DomainId → svn commit",
+      "完成后发 REVIEW 给 reviewer"
+    ],
+    "deadline": null
+  }
+}

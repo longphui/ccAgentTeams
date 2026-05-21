@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1135-a1b2",
+  "type": "ALERT",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:35:00+08:00",
+  "payload": {
+    "subject": "🐛 CRITICAL：EF 模型变更导致数据库初始化失败，整个 API 不可用",
+    "content": "## 复现步骤\n1. 重启 IIS 应用池 `8088_fenluapi`\n2. 访问 `POST /api/Common/Account/Login`\n3. 返回 500 错误\n\n## 错误信息\n```\nInvalidOperationException: The model backing the 'SaltDbContext' context has changed since the database was created.\n```\n\n## 根因\n新增的 CodeGenerator 相关实体（CodeRecordObject 等）改变了 EF 模型，数据库未执行 Migration。\n\n## 期望行为\nAPI 正常响应，Login 返回 Token。\n\n## 实际行为\n所有 API 接口返回 500，应用完全不可用。\n\n## 环境信息\n- OS: Windows 10\n- .NET Framework: 4.8\n- 错误位置: SaltDbContext.cs:1407\n- 测试账号: hongbin/123456\n- IIS 站点: 8088_fenluapi",
+    "files": ["D:/work/cc/AgentTeams/outbox/qa/bug-report-20260513-001.md"]
+  }
+}

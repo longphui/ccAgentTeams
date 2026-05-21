@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260517-1435-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-17T14:35:00+08:00",
+  "replyTo": "msg-20260517-1001-c3d4",
+  "payload": {
+    "subject": "✅ 收到任务：[fl] 分路前端 baseService.js ?embedded=true",
+    "content": "收到任务，预计 0.25 小时完成。"
+  }
+}

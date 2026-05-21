@@ -1,0 +1,30 @@
+{
+  "id": "msg-20260511-150000-g7h8",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-11T15:00:00+08:00",
+  "replyTo": "msg-20260511-090000-a1b2",
+  "payload": {
+    "subject": "审查 auth 模块代码安全性",
+    "context": "JWT 认证模块初版已完成，请进行安全审查后再合入主分支",
+    "content": "## 审查范围\n\n已完成以下文件，请重点审查安全性：\n\n### 核心文件\n1. `src/auth/model.go` — User/Token 数据模型\n2. `src/auth/service.go` — 登录/刷新/登出业务逻辑\n3. `src/auth/handler.go` — API 接口处理器\n4. `src/auth/middleware.go` — JWT 认证中间件\n\n### 重点检查项\n- SQL 注入风险（数据库查询）\n- 密码存储方式（是否使用 bcrypt）\n- Token 签名验证是否正确\n- refresh_token 轮转是否有重放攻击风险\n- 错误信息是否泄露敏感信息\n- SQL 查询是否有注入风险\n\n### 测试覆盖\n```\nsrc/auth/handler_test.go    — 4 个接口测试\nsrc/auth/middleware_test.go — 中间件测试\nsrc/auth/service_test.go    — 业务层测试\n```\n\n代码文件路径见下方 files 列表。",
+    "files": [
+      "D:/project/src/auth/model.go",
+      "D:/project/src/auth/service.go",
+      "D:/project/src/auth/handler.go",
+      "D:/project/src/auth/middleware.go",
+      "D:/project/src/auth/handler_test.go",
+      "D:/project/src/auth/middleware_test.go",
+      "D:/project/src/auth/service_test.go"
+    ],
+    "actions": [
+      "审查代码安全性",
+      "验证密码处理流程",
+      "检查 token 机制是否有漏洞",
+      "输出审查报告"
+    ],
+    "deadline": "2026-05-12T12:00:00+08:00"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-1520-c3d4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "critical",
+  "timestamp": "2026-05-13T15:20:00+08:00",
+  "replyTo": "msg-20260513-1455-e3f4",
+  "payload": {
+    "subject": "✅ 修复 #002 租户隔离 + 分页 + 性能 已完成",
+    "content": "## 完成情况\n\n### 1. 租户隔离（Critical — 已在上一轮修复）\n- `GetDetails(id, companyId)` — 查询加 `CompanyId` 过滤\n- `Delete(id, companyId, modifierUserId, modifier)` — 同上\n- Controller 传入 `CurrentCompanyId`\n\n### 2. GetAvailableCodes JOIN 父表（本次修复）\n```csharp\nvar usedCodes = await (from c in _context.ProductComponentCodes\n                       join p in _context.ProductComponents on c.ProductComponentId equals p.Id\n                       where !c.IsDeleted && !p.IsDeleted && p.CompanyId == companyId\n                       select c.CodeValue).ToListAsync();\n```\n子表无 CompanyId，通过 JOIN 父表 `ProductComponents` 实现租户隔离\n\n### 3. 分页修复\n`GetPageList` — 添加 `.Skip(input.SkipCount).Take(input.MaxResultCount)` 修复分页缺失\n\n### 4. Delete 修改者 ID\n`LastModificationUserId = 0` → `LastModificationUserId = modifierUserId`，接口签名加参数，Controller 传入 `CurrentUserId`\n\n### 5. GetDetails 性能优化\n产品查询从全量 `.GetAll().Where(p => !p.IsDeleted).ToList()` 改为仅查 2 个相关产品 `.Where(p => productIds.Contains(p.Id) && !p.IsDeleted)`\n\n### 编译\nMSBuild 通过 0 错误。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ]
+  }
+}

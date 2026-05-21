@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260513-2230-d5e6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T22:30:00+08:00",
+  "replyTo": "msg-20260513-2130-k1l2",
+  "payload": {
+    "subject": "✅ GetCodeRecordsByObject 重构 + 业务封装端点已完成",
+    "content": "## 完成情况\n\n### 1. CodeRecordSearchInput 重构\n- 移除 ObjectType、ObjectId、WorkOrderNo、ProductName\n- 新增 `List<AssignObjectInfo> Objects`（匹配任一即返回）\n- 保留 CodeValue、StartTime、EndTime\n\n### 2. GetCodeRecordsByObject 重写\n- 从 `context.CodeRecords` 出发，通过 `r.Objects.Any(...)` 关联导航属性过滤\n- 使用 `Contains` 将 ObjectType[]/ObjectId[] 转为 SQL IN，EF6 可翻译\n- 代码由 60 行精简为 40 行\n\n### 3. 新增业务封装端点\n- 新 DTO: `CodeRecordWorkOrderSearchInput`（WorkOrderNo/ProductName/CodeValue/StartTime/EndTime）\n- 新 Service: `GetCodeRecordsForWorkOrder` — JOIN ProduceWorkOrder，填充 DTO 的 WorkOrderNo/ProductId/ProductName/ProductSpec\n- 新 Controller Action: `GetCodeRecordsForWorkOrder`\n\n### 4. 前端适配\n- codeList.html: `staticFilter` 从 `{ObjectType, ObjectId}` 改为 `{Objects: [{ObjectType, ObjectId}]}`\n- index.html Tab3: `data-url` → `GetCodeRecordsForWorkOrder`\n\n### 5. 编译\n- MSBuild SAHG.Salt.sln Debug: **0 Error**\n\n### 兼容性\n- codeList.html 弹窗不受影响，仍走 GetCodeRecordsByObject",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordWorkOrderSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

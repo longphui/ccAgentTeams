@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260519-1130-rlt2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T11:30:00+08:00",
+  "replyTo": "msg-20260519-0115-m3n4",
+  "payload": {
+    "subject": "✅ menuButtons 权限传递链路修复已完成",
+    "content": "## 完成情况\n- app.js: HRM_CONTEXT 加入 menuButtons（从当前路由 items 查找）\n- hrm-proxy/index.html: 接收 menuButtons 并通过 URL 参数传递到分路页面\n- util.js: getAppContext() stub 从 URL 读取 menuButtons 控制 checkTabPermissions\n- Reviewer 审查已通过 ✅",
+    "files": [
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js",
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html",
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ]
+  }
+}

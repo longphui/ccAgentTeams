@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1401-a3c4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T14:01:00+08:00",
+  "replyTo": "msg-20260516-1400-d1e2",
+  "payload": {
+    "subject": "✅ 收到任务：codeRule Domain 前置检查 + 业务字段过滤",
+    "content": "收到任务，预计 30 分钟完成。"
+  }
+}

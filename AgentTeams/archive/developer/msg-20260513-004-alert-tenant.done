@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-004-alert-tenant",
+  "type": "ALERT",
+  "from": "reviewer",
+  "to": "all",
+  "priority": "critical",
+  "timestamp": "2026-05-13T23:50:00+08:00",
+  "replyTo": "msg-20260513-007",
+  "payload": {
+    "subject": "🚨 发现租户隔离漏洞：#002 商品组装编码 — GetDetails/Delete 无 CompanyId 过滤",
+    "content": "## 漏洞详情\n\n**根因**: `ProductComponents` 继承 `BasicEntity → SaltEntity → Entity`，`SaltEntity` 仅实现 `ISoftDelete`，**未实现 `IMustHaveCompany`**，ABP 不会自动应用租户过滤器。\n\n### 受影响方法\n\n1. **GetDetails** (`ProductComponentsService.cs:66`):\n   ```csharp\n   var entity = _context.ProductComponents.FirstOrDefault(x => x.Id == id && !x.IsDeleted);\n   ```\n   仅按 Id + IsDeleted 查询，无 CompanyId。任意租户用户遍历 ID 即可读取其他公司组装记录。\n   Controller 侧也未传入 `CurrentCompanyId`。\n\n2. **Delete** (`ProductComponentsService.cs:159`):\n   ```csharp\n   var entity = _context.ProductComponents.FirstOrDefault(x => x.Id == id && !x.IsDeleted);\n   ```\n   同上，可跨租户软删除数据。\n\n### 修复方案\n\n**所有按 Id 查询的方法**增加 `CompanyId` 过滤：\n```csharp\nvar entity = _context.ProductComponents.FirstOrDefault(x => x.Id == id && x.CompanyId == companyId && !x.IsDeleted);\n```\n\nController 需传入 `CurrentCompanyId`：\n```csharp\npublic ProductComponentsDto GetDetails(int id) {\n    return _service.GetDetails(id, CurrentCompanyId);\n}\n```\n\n**长期**: 考虑给 `ProductComponents` 实现 `IMustHaveCompany` 接口以启用 ABP 全局租户过滤器。\n\n详细审查报告: `outbox/reviewer/review-report-20260513-product-components.md`",
+    "files": ["outbox/reviewer/review-report-20260513-product-components.md"]
+  }
+}

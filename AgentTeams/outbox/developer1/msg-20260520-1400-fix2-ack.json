@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1400-fix2-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-20T14:00:00+08:00",
+  "replyTo": "msg-20260520-1200-fix2",
+  "payload": {
+    "subject": "✅ 收到任务：#004 紧急修复 hrm-proxy 路径拼接",
+    "content": "收到紧急任务，预计 15 分钟完成修复。"
+  }
+}

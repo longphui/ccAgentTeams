@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0030-r3a4",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-18T00:30:00+08:00",
+  "replyTo": "msg-20260518-0020-c3d4",
+  "payload": {
+    "subject": "✅ 审查通过：#004 Task 1+2+3 — Token桥接API + 菜单代理API + CORS",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：`HrmAuthService.cs`、`MenuProxyService.cs`、`hrm-proxy/index.html`、`Global.asax`（4 新建 + 3 修改）\n- csproj 注册：SDK 风格项目，.cs 自动包含\n- 编译：**0 Error, 0 Warning**\n\n### 审查详情\n\n#### 🔒 安全检查\n- SQL 注入：✅ N/A（HTTP 代理，无 SQL 操作）\n- 租户隔离：✅ N/A（外部 API 调用）\n- 权限控制：✅ 全局 JWT Bearer + `[ApiDescriptionSettings(Groups = [\"Infra\"])]`\n- XSS：✅ N/A\n- 敏感信息：⚠️ 开发阶段明文密码可接受，生产部署前迁移至 Secret Manager\n\n#### 📐 后端规范\n- 注释完整：✅ 类/方法/DTO 均含 `/// <summary>`、`<param>`、`<returns>`\n- 返回类型：✅ `HrmTokenDto` 强类型 / 匿名对象（Furion 自动包装）\n- Service 模式：✅ `IDynamicApiController` + `[ApiDescriptionSettings]`\n- 路由：✅ `[HttpPost(\"get-fenlu-token\")]` / `[HttpPost(\"get-list-by-role\")]`\n\n#### 🐛 上次反馈问题验证\n- HIGH #1（success 检查）：✅ `MenuProxyService.cs:54-58` 已添加\n- HIGH #2（SaltRequest 包装）：✅ 已查分路源码确认 `GetListByRole(HRM_BaseInput)` 无 SaltRequest 包装\n- NORMAL #2（注释）：✅ `<returns>` 和 `<param>` 已补充\n\n#### 🔗 API 契约一致性\n- 契约 A：✅ `POST /api/hrm-auth/get-fenlu-token` — 一致\n- 契约 B：✅ `POST /api/menu-proxy/get-list-by-role` — 一致\n- 契约 C：✅ SaltRequest 格式 `{Data: {Username, Password, Source: null}}` — 一致\n- 契约 D：✅ 请求格式 `{platformId: 1}` 经源码确认正确\n\n#### 📐 架构一致性\n- ✅ 符合 Decision #009（渐进混合方案）\n- ✅ Token 桥接 + 菜单代理模式正确\n- ✅ 线程安全（static + lock）\n\n### 备注\n- Task 1+2+3（Round 1 Developer 部分）审查通过\n- Developer1 的 Task 4/6/7 尚未提交审查\n- Task 5a/5b/5c/8 需等 Task 1+2 完成后由 Developer1 执行"
+  }
+}

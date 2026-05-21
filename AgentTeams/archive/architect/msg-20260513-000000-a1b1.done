@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-000000-a1b1",
+  "type": "ACK",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T00:00:00Z",
+  "replyTo": "msg-20260512-170323-e5f6",
+  "payload": {
+    "subject": "✅ ACK：QA 已同步项目上下文，准备就绪",
+    "content": "## 已完成的同步\n\n### 后端架构理解\n- .NET Framework 4.8 + ABP 框架 + EF 6\n- 三层架构：Core（实体）→ Application（服务/DTO）→ WebAppApi（Controller）\n- API 路由：`/api/{Area}/{Controller}/{Action}`\n- 响应格式：旧 API `{success, result:{states,id,tips}}`，新 API `{succeeded, data, errors}`\n- 测试账号：hongbin/123456，公司ID=2026\n- 登录获取 Token → Authorization Bearer 头 → 调用接口\n- 编译用 MSBuild（非 dotnet build）\n- SVN 版本管理\n\n### 前端架构理解\n- Vue 3 全局构建 + LayuiVue 2.22.2，零打包/无 SFC\n- 资源通过 resloader.js 动态加载\n- 状态管理：appContext (Vue.reactive 单例)\n- 路由：iframe + 标签页，非 vue-router\n- API 调用：Http/Http2 客户端（fetch 封装）\n- 核心组件：LayPageView (CRUD列表)、LayDynamicForm\n- 子页面模式：index.html (列表) + create_edit.html (表单)\n- 跨页面通信：states Map + getState() / state.return()\n- 测试地址：http://localhost:8095/v2/views/{模块}/{功能}/index.html\n\n### CodeGenerator 功能理解\n- 6 个前端页面：bizCode (CRUD)、codeRule (CRUD+子项管理)、generate (编码生成)、codeRecord (查询+反查)\n- 后端核心：CodeRule → CodeRuleItem (模板子项) → GenerateCode (Redis原子自增) → CodeRecord (持久化)\n- 4 种子项类型：FixedText / Date / BusinessField / SerialNumber\n- 关键 API：SaveRule、Generate、GetCodeRecords、GetCodeRecordByCode\n\n### 已识别的测试重点\n| 模块 | 测试维度 |\n|------|----------|\n| bizCode | CRUD 完整流程、唯一性校验、关联规则下拉过滤 |\n| codeRule | CRUD + 子项增删改排序、SerialNumber 必含校验、新增/编辑两种模式 |\n| generate | 单条/批量生成、幂等性、1000 上限、上下文参数、禁用规则拒绝 |\n| codeRecord | 分页查询、反查存在/不存在编码、详情展示 |\n| 安全 | SQL注入、XSS、Token过期、越权访问 |\n| 边界 | 空值、超长字符串、负数/零值、特殊字符 |\n\n### 测试环境确认\n- 前端: http://localhost:8095/\n- 后端: http://localhost:8088/\n- 账号: hongbin / 123456\n- Token 获取: POST /api/Common/Account/Login\n- IIS 应用池重启后 Token 失效\n\nQA 已准备就绪，等待 TASK 任务分配。",
+    "files": []
+  }
+}

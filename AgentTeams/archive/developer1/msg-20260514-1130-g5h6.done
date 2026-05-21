@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260514-1130-g5h6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:30:00+08:00",
+  "payload": {
+    "subject": "查询编码弹框 data-url 改为与编码记录页面一致",
+    "context": "#001",
+    "content": "## 问题\n已完成编码 Tab 中「查询编码」弹框（codeList.html）调用的是编码底层接口（GetCodeRecordsByObject），只返回 Objects[] 基础信息，缺少工单编号、商品名称等业务字段。\n\n## 要求\n将 codeList.html 的 data-url 改为与 index.html Tab3 编码记录页面相同的接口，使弹框能显示完整的工单编号、商品名称等业务信息。\n\n## 涉及文件\n- codeList.html: data-url 和对应的 filters/staticFilter 参数\n- 可能需要参照 index.html Tab3 的 lay-page 配置",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "参照 index.html Tab3 编码记录页面的接口和数据格式",
+      "修改 codeList.html 的 data-url 为同一接口",
+      "调整 filters/staticFilter 参数对齐接口要求",
+      "确保弹框列定义与接口返回字段匹配"
+    ]
+  }
+}

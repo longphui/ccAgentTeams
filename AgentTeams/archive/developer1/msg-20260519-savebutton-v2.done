@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-savebutton-v2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T18:45:00+08:00",
+  "payload": {
+    "subject": "补充：编辑弹框的保存按钮也无反应 — 疑似系统性保存失效",
+    "context": "#004",
+    "content": "## 补充信息\n\n不仅是入职登记（新增），员工信息编辑弹框点击「确定保存」同样无反应。\n\n推测是 iframe 嵌入模式下，弹框中共用的保存/提交机制（表单提交、API 调用、或按钮事件绑定）系统性失效。\n\n请一并排查和修复，覆盖新增和编辑两种场景。",
+    "files": [],
+    "actions": [],
+    "deadline": null
+  }
+}

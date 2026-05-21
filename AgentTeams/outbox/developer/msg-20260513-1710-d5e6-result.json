@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-1847-b2c3",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T18:47:00+08:00",
+  "replyTo": "msg-20260513-1710-d5e6",
+  "payload": {
+    "subject": "✅ 编码记录列数据空白 — 修复完成",
+    "content": "## 根因\n\n前端 `row.id` 被 lay-table 污染。`type: \"number\"` 序号列未指定 key，lay-table 可能默认 key=\"id\"，将行号(1)写入 row.id，导致 GenerateCode 传入的 ObjectId 始终为 1。\n\n后端 GetCodeRecords 按 ObjectId=1 JOIN ProduceWorkOrder 查不到对应工单 → 4 个新列（WorkOrderNo、ProductId、ProductName、ProductSpec）全为空。\n\n## 修复\n\n### 后端\n- GetCodeRecords：直接用 context.CodeRecordObjects 批量查询 (此前已完成)\n- GetPageListForCodeGen 重构 (msg-20260513-1720-e7f8)：手动 new DTO 赋值，不再依赖 Adapt\n\n### 前端\n- 序号列加 `key: \"rowNo\"` 防止 key 冲突\n- Tab1/Tab2 新增 `id`/`productId` 列可观测验证\n- showConfirm 深克隆 row 去除响应式代理\n- 添加 console.log 调试",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

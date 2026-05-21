@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260518-2020-e2e",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T20:20:00+08:00",
+  "payload": {
+    "subject": "Task 10: E2E 验证 — #004 HRM集成到鸿冠ERP阶段1",
+    "context": "#004",
+    "content": "## E2E 验证清单\n\nTask 1-9 全部完成（后端+前端+DB菜单数据），现在进行端到端集成验证。\n\n### 验证项（12项）\n\n| # | 验证项 | 操作 | 通过标准 |\n|---|--------|------|---------|\n| 1 | 菜单加载 | 登录鸿冠，观察左侧菜单 | 菜单树包含鸿冠模块（产品/采购等）+ HRM 模块（员工/考勤等） |\n| 2 | HRM 页面加载 | 点击 HRM 菜单节点（如"员工管理"） | 标签页打开，iframe 内显示 HRM 页面 |\n| 3 | HRM 列表查询 | 在 HRM 页面内操作查询 | 数据正常加载，分页正常 |\n| 4 | HRM 新增 | 点击新增按钮 | 弹窗正常打开，字段完整 |\n| 5 | HRM 保存 | 填写表单后保存 | 保存成功，列表刷新 |\n| 6 | HRM 编辑 | 点击编辑按钮 | 弹窗加载已有数据 |\n| 7 | HRM 删除 | 点击删除按钮并确认 | 删除成功，列表刷新 |\n| 8 | 按钮权限 | 用不同角色登录 | 有权限角色看到按钮，无权限角色看不到 |\n| 9 | Token 过期恢复 | 手动 `localStorage.removeItem(\"token\")` 后操作 HRM 页面 | 页面自动恢复，不跳到分路登录页 |\n| 10 | 鸿冠原生模块 | 点击鸿冠模块菜单（产品管理/采购管理等） | 正常打开，功能不受影响 |\n| 11 | 鸿冠原生按钮权限 | 检查 `checkTabPermissions` 对鸿冠模块页面的控制 | 按钮按权限显示/隐藏 |\n| 12 | 菜单降级 | 停掉分路后端，刷新鸿冠首页 | 菜单回退到静态 menu.json |\n\n### 环境要求\n- 鸿冠后端运行 (localhost:5000)\n- 分路后端运行 (localhost:8088)\n- 鸿冠前端运行 (localhost:5021)\n\n### 参考\n- 实施计划: `D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-plan-HRM集成到鸿冠ERP-阶段1.md`\n- 需求文档: `D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-HRM集成到鸿冠ERP-阶段1.md`",
+    "actions": [
+      "执行12项E2E验证清单",
+      "Playwright 自动化测试回归（确保无回归）",
+      "浏览器实机验证",
+      "将测试结果写入 outbox/qa/ 发送给 architect"
+    ],
+    "deadline": null
+  }
+}

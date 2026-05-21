@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260513-1620-f1e2",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T16:20:00+08:00",
+  "replyTo": "msg-20260513-1550-b1c2",
+  "payload": {
+    "subject": "❌ Tab 切换修复未生效，用户实测仍然堆叠显示",
+    "content": "## 用户反馈\n\n修改 `id`/`label` → `name`/`title` 后，页面仍然三个 Tab 面板全部堆叠显示在同一页面，无切换效果。\n\n## 需要\n\n1. 重新排查根因 — 仅改 prop 名不够，可能还涉及其他原因（CSS 缺失、组件版本差异、`v-model` 绑定方式等）\n2. 浏览器实测验证修复效果\n3. 如果 `lay-tabs` 方案确实不兼容当前 LayuiVue 版本，考虑降级为手动 Tab 切换（v-if/v-show + 按钮）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "深入排查 lay-tabs 失效原因",
+      "浏览器实测验证",
+      "如无法解决则用手动 v-if 方案替代"
+    ],
+    "deadline": null
+  }
+}

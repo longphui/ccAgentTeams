@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0000-a1b2",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-18T00:00:00+08:00",
+  "replyTo": "msg-20260517-1440-d5e6",
+  "payload": {
+    "subject": "✅ 审查通过：[fl] baseService.js ?embedded=true Token过期防控",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（仅修改 baseService.js，M 状态）\n- csproj 注册：N/A（纯前端 JS 文件）\n- 编译：N/A（纯前端 JS 文件）\n\n### 审查详情\n\n#### 🔒 安全检查\n- ✅ 无 SQL / 租户 / XSS / 敏感信息打印（纯前端 JS，无用户输入拼接）\n- ✅ postMessage 仅发送（不接收），使用 `*` target origin 符合契约 E\n\n#### 📐 前端规范检查 (fl-html-dev)\n- ✅ 区块注释：`// ===== 嵌入模式检测（iframe 内运行时使用） =====`\n- ✅ 方法注释：`// 嵌入模式` `// 非嵌入模式` 清晰标注\n- ✅ 5 处 `getRootWindow().location.href` 全部替换为 `onTokenExpired()`（第6处在 onTokenExpired fallback 中，属预期行为）\n- ✅ `isEmbedded` 检测逻辑正确：正则 `/[?&]embedded=true/` 精确匹配 URL 参数\n- ✅ 非嵌入模式行为与改前完全一致\n\n#### 🐛 Bug 风险检查\n- ✅ 无 LINQ / Http.invoke 解包 / LayuiVue 组件 / lay-table 等已知 Bug 模式\n- ✅ 启动时 Token 检查已改为 `onTokenExpired()`（第455行）\n- ✅ Http.errorHandler 401（success=false 分支）→ `onTokenExpired()`（第50行）\n- ✅ Http.errorHandler case 401 → `onTokenExpired()`（第64行）\n- ✅ HttpE 两处 401 → `onTokenExpired()`（第193、208行）\n- ✅ Http2 case 401 → `onTokenExpired()`（第332行）\n\n#### ⚡ 性能 / 架构\n- ✅ 无 N+1 / 全表扫描 / 架构偏离\n\n### 建议（低优先级，无需修改）\n- `isEmbedded` 和 `onTokenExpired` 使用 `var` 声明（与文件内旧风格一致，无问题）"
+  }
+}

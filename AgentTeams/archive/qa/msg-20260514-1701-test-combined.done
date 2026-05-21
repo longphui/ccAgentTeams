@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1701-test-combined",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:01:00+08:00",
+  "payload": {
+    "subject": "测试请求：Update 编辑 + Keywords 搜索 + CheckCodeRule 校验",
+    "context": "#001/#002/#007",
+    "content": "## 测试重点\n请验证以下功能：\n\n### Update 编辑功能\n- [ ] 更新不存在的记录返回「记录不存在」\n- [ ] 编码重复检测排除自身记录\n- [ ] 更新后旧编码被软删除，新编码正确插入\n- [ ] ProductId、ProductCode 正确更新\n- [ ] LastModificationTime/UserId/UserName 正确记录\n\n### GetPageList Keywords 模糊搜索\n- [ ] 搜索成品名称（ProductName）能匹配到对应记录\n- [ ] 搜索组件名称（ComponentProductName）能匹配到对应记录\n- [ ] 搜索 ProductCode 能匹配\n- [ ] 搜索 CodeValue 能匹配\n- [ ] 分页 count 在过滤后正确计算\n\n### CheckCodeRule 编码规则校验\n- [ ] 传入已配置的 codeSign 返回 States=true\n- [ ] 传入未配置的 codeSign 返回 States=false，「请先配置编码规则」\n- [ ] BizCodeIdentifier 禁用状态返回 false\n\n### GetDetails 数据完整性\n- [ ] 返回的 Codes 包含 ComponentProductName\n- [ ] 返回的 ProductName 正确\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ]
+  }
+}

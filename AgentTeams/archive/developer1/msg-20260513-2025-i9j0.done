@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260513-2025-i9j0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T20:25:00+08:00",
+  "payload": {
+    "subject": "调整弹窗和 Tab3 筛选条件 — 需求纠正",
+    "context": "#001",
+    "content": "## 需求纠正\n筛选条件搞反了：弹窗（单工单）条件太多，Tab3（全部工单）条件太少。需求和计划已更新。\n\n## 改 1：codeList.html 弹窗（简化）\n弹窗只显示某一个工单的编码，筛选从简：\n- 保留筛选字段：编码值（input）\n- 移除筛选字段：工单编号、商品名称、生成时间范围\n- 列改为：编码值、生成时间\n- 移除列：赋码对象\n\n## 改 2：index.html Tab3（丰富筛选）\nTab3 显示全部工单编码，需要多条件筛选：\n- 筛选字段改为：工单编号（input）、商品名称（input）、编码值（input）、生成时间起（date）、生成时间止（date）\n- 字段名参考后端接口入参（需和 Developer 对齐）\n- 列保持不变",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html"
+    ],
+    "actions": ["简化 codeList.html 筛选和列", "丰富 index.html Tab3 筛选条件", "与 Developer 确认 Tab3 接口入参字段名"],
+    "deadline": null
+  }
+}

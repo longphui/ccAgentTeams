@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1500-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T15:00:00+08:00",
+  "replyTo": "msg-20260516-1450-sortOrder",
+  "payload": {
+    "subject": "✅ 收到任务：GetRuleDetails 子项列表未按 SortOrder 排序",
+    "content": "收到，预计 10 分钟内完成。"
+  }
+}

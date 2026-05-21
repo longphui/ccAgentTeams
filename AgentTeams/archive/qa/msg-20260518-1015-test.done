@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260518-1015-k3l4",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T10:15:00+08:00",
+  "payload": {
+    "subject": "测试请求：#004 HrmAuthService DI 注册修复 — MenuProxyService 500 已修复",
+    "context": "#004",
+    "content": "## 修复内容\n\n`MenuProxyService` 构造函数依赖 `HrmAuthService`，但 `HrmAuthService` 未注册 DI 导致 500 Error。\n已在 `Startup.cs` 添加 `services.AddTransient<HrmAuthService>()`。\n\n## 测试重点\n\n请重新验证菜单代理 API：\n\n```bash\ncurl -s -X POST \"http://localhost:5000/api/menu-proxy/get-list-by-role\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"platformId\":2}'\n# 预期: {\"succeeded\":true,\"data\":{\"children\":[...],\"startup\":{...}}}\n```\n\n## 审查状态\n✅ 已通过 Reviewer 审查（DI 注册，0 Error 0 Warning）",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Web.Core\\Startup.cs"
+    ]
+  }
+}

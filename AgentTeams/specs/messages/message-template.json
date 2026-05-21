@@ -1,0 +1,17 @@
+{
+  "id": "msg-TIMESTAMP-RANDOM",
+  "type": "TASK",
+  "from": "YOUR_ROLE",
+  "to": "TARGET_ROLE",
+  "priority": "normal",
+  "timestamp": "ISO8601_TIMESTAMP",
+  "replyTo": null,
+  "payload": {
+    "subject": "简短主题",
+    "context": "一句话背景",
+    "content": "## 详细说明\n\n用 Markdown 描述任务内容。",
+    "files": [],
+    "actions": ["行动项1", "行动项2"],
+    "deadline": null
+  }
+}

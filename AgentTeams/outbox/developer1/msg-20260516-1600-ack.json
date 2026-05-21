@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1601-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T16:01:00+08:00",
+  "replyTo": "msg-20260516-1600-bizCode",
+  "payload": {
+    "subject": "✅ 收到任务：bizCode Domain/规则顺序 + 过滤 + 联动",
+    "content": "收到任务，预计 30 分钟完成。"
+  }
+}

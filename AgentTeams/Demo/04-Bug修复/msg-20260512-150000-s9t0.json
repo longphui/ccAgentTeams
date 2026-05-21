@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260512-150000-s9t0",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "critical",
+  "timestamp": "2026-05-12T15:00:00+08:00",
+  "replyTo": "msg-20260512-140000-q7r8",
+  "payload": {
+    "subject": "✅ Token 刷新 500 错误已修复",
+    "content": "## 根因\n`service.go:142` 在 refresh_token 已被撤销时，数据库查询返回 nil，代码未判空直接访问导致 panic。\n\n## 修复内容\n\n### 1. 添加 nil 检查\n```go\noldToken, err := s.repo.FindByTokenHash(ctx, hash)\nif err != nil || oldToken == nil {\n    // token 不存在或已撤销 → 401\n    return nil, ErrInvalidToken\n}\n```\n\n### 2. 添加重放攻击检测\n```go\nif oldToken.Revoked {\n    // token 已被使用过 → 撤销该用户所有 token\n    _ = s.repo.RevokeAllUserTokens(ctx, oldToken.UserID)\n    return nil, ErrTokenReused\n}\n```\n\n### 3. 新增单元测试\n- `TestRefreshWithRevokedToken` — 已撤销 token 返回 401\n- `TestRefreshWithReusedToken` — 重用 token 触发全局撤销\n- `TestRefreshWithNilToken` — nil token 边界测试\n\n### 修改文件\n- `src/auth/service.go` — 添加 nil 检查 + 重放检测\n- `src/auth/service_test.go` — 新增 3 个测试用例\n\n请重新测试验证。",
+    "files": [
+      "src/auth/service.go",
+      "src/auth/service_test.go"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0910-l7m8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:10:00+08:00",
+  "replyTo": "msg-20260514-0905-s9t0",
+  "payload": {
+    "subject": "✅ 组件模块样式优化完成",
+    "content": "## 改动\n1. **布局改为两行**：第一行 半成品(span14) + 数量(span3) + 单位(span3) + 删除(span4)；第二行 编码选择整行\n2. **单位自动填充**：`onComponentChange` 根据选中的半成品 `minUnit` 自动填单位；单位 input 改为 `disabled`\n3. **样式优化**：边框颜色变淡、加浅灰背景、label 统一灰色小字、select/input 全宽",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

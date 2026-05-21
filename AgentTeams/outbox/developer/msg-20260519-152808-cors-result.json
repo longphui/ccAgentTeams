@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-1635-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T16:35:00+08:00",
+  "replyTo": "msg-20260519-152808-cors",
+  "payload": {
+    "subject": "✅ CORS 跨域修复已完成",
+    "content": "## 完成情况\n- 根因：CORS 仅在 Web API 层配置，OPTIONS 预检被 OWIN/ABP 中间件拦截\n- 修复：Startup.cs 添加 `app.UseCors(CorsOptions.AllowAll)` 在 `app.UseAbp()` 之前\n- 清理：移除 SaltWebAppApiModule.cs 中冗余的 `EnableCorsAttribute`（避免双 Access-Control-Allow-Origin 头）\n- 编译：0 Error\n- 验证：curl OPTIONS 预检返回 `Access-Control-Allow-Origin: http://localhost:8095`\n- 审查：✅ Reviewer 审查通过",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/App_Start/Startup.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/App_Start/SaltWebAppApiModule.cs"
+    ]
+  }
+}

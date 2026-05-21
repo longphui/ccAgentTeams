@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260519-1725-menu404-test",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T17:25:00+08:00",
+  "payload": {
+    "subject": "测试请求：人事审批4个菜单项URL修复",
+    "context": "#004",
+    "content": "## 测试重点\n请验证以下功能：\n\n1. **菜单加载**：登录后，人事审批目录下 4 个菜单项（审批管理、转账申请、离职申请、审批人设置）点击后能正常打开，不再 404\n2. **iframe 加载**：页面通过 hrm-proxy iframe 正确加载分路系统的对应页面（需确保分路 API localhost:8088 正常运行）\n3. **Token 传递**：检查 hrmToken 是否正确通过 iframe URL 参数传递给分路页面\n4. **legacy 模式**：确认 URL 中包含 `type=legacy` 参数，且 iframe 加载的地址不包含 `/v2/views/manpowerManage/` 前缀\n\n## 测试环境\n- 鸿冠 ERP 前端: http://localhost:5021\n- 分路 API: http://localhost:8088\n- 确保两个服务均在运行\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs",
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"
+    ]
+  }
+}

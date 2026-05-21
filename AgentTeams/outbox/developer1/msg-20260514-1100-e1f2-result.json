@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1130-r1s2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:30:00+08:00",
+  "replyTo": "msg-20260514-1100-e1f2",
+  "payload": {
+    "subject": "✅ 编码查询弹框列信息已对齐编码记录页面",
+    "content": "## 完成情况\n- 已将 codeList.html 列定义扩展为 Tab3 完整 7 列：序号、工单号、商品Id、商品名称、商品规格、编码值、生成时间\n- 筛选条件从单一编码值扩展为 4 个：商品名称、编码值、开始时间、结束时间（不含工单编号，因为弹窗已限定单工单）\n- 补充了所有缺失的 JS data 注释\n- 更新了文件头注释\n\n## 文件\n- `generatorProductCodes/codeList.html`",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html"]
+  }
+}

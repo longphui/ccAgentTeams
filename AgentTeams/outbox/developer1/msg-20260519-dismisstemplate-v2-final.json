@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-dismisstemplate-v2-final",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T21:35:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-feedback",
+  "payload": {
+    "subject": "✅ 已完成：离职模板按钮无响应（v2，已通过审查）",
+    "content": "## 修复方案\n`util.js` 中嵌入模式 stub 的 `openRouteInTab` 方法：\n- 使用 `document.referrer` 获取 HRM 根路径解析相对 URL\n- 通过 `parent.postMessage({type: \"HRM_OPEN_TAB\"})` 通知父窗口打开 Tab\n- 附带 stateKey 机制支持目标页面 `getState()` 获取数据\n\n## 审查状态\n✅ 已通过 Reviewer 审查\n\n## 上游依赖\nHRM 父窗口需实现 `HRM_OPEN_TAB` message listener",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

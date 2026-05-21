@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260514-1700-r0s1",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T17:00:00+08:00",
+  "replyTo": "msg-20260514-1250-y7z8",
+  "payload": {
+    "subject": "✅ Save 验证逻辑适配扁平 Codes 结构 已完成",
+    "content": "## 完成情况\n- ProductComponentsInput 从嵌套 Components→Codes 改为扁平 Codes: List<CodeItem>\n- Save 方法适配单层循环创建 ProductComponentCodes\n- 新增空 CodeValue 校验：「请选择组件编码」\n- AutoAssemble 改为 GroupBy ComponentProductId 分组分配编码\n- 已通过 Reviewer 审查\n- 编译 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

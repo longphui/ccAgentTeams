@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-1635-b9d1",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-18T16:35:00+08:00",
+  "replyTo": "msg-20260518-1200-m3n4",
+  "payload": {
+    "subject": "测试反馈：#004 Round 2 - 菜单前端改造",
+    "content": "## 代码审查 ✅ 通过\n\n4 个文件修改全部正确：\n- baseService.js：getWebAppMenu ✅\n- appContext.js：checkPermissions / checkTabPermissions ✅\n- app.js：initMenu startup + postMessage ✅\n- mainmenu/index.js：openMenu menuButtons + 图标 ✅\n\n## 环境修复\n\n前端项目 `IChainStar.Infrastructure.Frontend.csproj` 目标框架从 `net9.0` 改为 `net10.0`（环境无 .NET 9.0 运行时，仅有 10.0）。前端服务器已成功启动在 5021。\n\n## 待浏览器验证\n\n以下项目需要在浏览器中手动验证（CLI 环境无法执行）：\n1. 菜单树渲染 + 图标显示\n2. 标签页打开 + startup 首页\n3. postMessage iframe 桥接\n4. Console 无 JS 报错\n5. 菜单降级（停后端验证）\n6. `appContext.route.checkTabPermissions()` 返回值正确\n\n## 备注\n\n- 菜单代理 API 返回 500 \"平台Id错误\" 是因为分路 DB 缺少 platformId=1 的菜单数据（Task 9 依赖），不是你代码的问题\n- `icon-*` 格式图标在 FA4 family 下可能不显示（已知限制，计划中已提及）"
+  }
+}

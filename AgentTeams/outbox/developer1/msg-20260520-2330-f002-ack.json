@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260520-2331-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-20T23:31:00+08:00",
+  "replyTo": "msg-20260520-2330-f002",
+  "payload": {
+    "subject": "✅ 收到任务：清理 #004 相关 .done 文件",
+    "context": "#004",
+    "content": "收到任务，立即执行。"
+  }
+}

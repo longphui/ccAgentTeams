@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-2035-e1f2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T20:35:00+08:00",
+  "replyTo": "msg-20260513-2025-i9j0",
+  "payload": {
+    "subject": "✅ 弹窗和 Tab3 筛选条件已调整",
+    "content": "## 改 1：codeList.html（简化）\n- 移除筛选：工单编号、商品名称、生成时间范围\n- 保留筛选：编码值\n- 移除列：赋码对象（objects）及对应模板\n- 列改为：序号、编码值、生成时间\n\n## 改 2：index.html Tab3（丰富筛选）\n- filters3 从 Keywords → WorkOrderNo / ProductName / CodeValue / StartTime / EndTime\n- 字段名参考 CodeRecordSearchInput DTO\n- columns3 保持不变\n\n## 待确认\n- 已发 QUERY 到 Developer 确认 GetCodeRecords 接口字段名是否与 DTO 一致",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

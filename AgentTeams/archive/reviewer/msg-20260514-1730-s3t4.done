@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260514-1730-s3t4",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:30:00+08:00",
+  "replyTo": "msg-20260514-1715-q1r2",
+  "payload": {
+    "subject": "审查请求（更新）：编辑数据回填 — PascalCase 字段名修复",
+    "context": "#002",
+    "content": "## 根因定位\n\n`create_edit.html` 的 `loadDetail` 原本用 **camelCase** 读取 `GetDetails` API 响应，但 API 实际返回 **PascalCase**（与 `doSave` 提交的字段名一致）。导致 `d.productId` 等全部读到 `undefined`，表单无法回填。\n\n### 证据\n| 边界 | 字段名风格 | 示例 |\n|------|-----------|------|\n| `doSave` 提交 | PascalCase | `ProductId`, `Codes[].ComponentProductId` |\n| `loadDetail` 读取（旧） | camelCase | `d.productId`, `d.codes[].componentProductId` |\n| `loadDetail` 读取（新） | PascalCase | `d.ProductId`, `d.Codes[].ComponentProductId` |\n\n后端同一控制器序列化配置一致，出和入字段名不可能一边 PascalCase 一边 camelCase。\n\n## 变更清单\n### create_edit.html\n1. **`loadDetail` 字段名修改**（L121-131）：全部改为 PascalCase\n   - `d.productId` → `d.ProductId`\n   - `d.productCode` → `d.ProductCode`\n   - `d.codes` → `d.Codes`\n   - `c.componentProductId` → `c.ComponentProductId`\n   - `c.componentUnit` → `c.ComponentUnit`\n   - `c.codeValue` → `c.CodeValue`\n2. **`doSave` Save/Update 分流**（L242-244）：`editId` 有值调 Update 并传 `Id`\n3. **`created` 串行加载**（L94-102）：`loadProducts().then(() => loadDetail())`\n\n### index.html\n未修改 — GetPageList 正常返回 camelCase（DTO 序列化方式不同），列表展示与编辑按钮均正常。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

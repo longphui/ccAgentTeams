@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260513-1930-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:30:00+08:00",
+  "payload": {
+    "subject": "修改工单状态筛选字段名 Statuss → Status",
+    "context": "#001",
+    "content": "## 改动\n\n将 Tab1 筛选器中工单状态字段名从 `Statuss` 改为 `Status`（去掉一个 s，与后端 ProduceWorkOrder.Status 一致）。\n\n## 文件\n\n- `index.html` — `filters1` 中的 `Statuss` → `Status`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "filters1 中 Statuss 改为 Status",
+      "如其他地方也有 Statuss 引用一并修改"
+    ]
+  }
+}

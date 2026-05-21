@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260519-1420-i1j2.msg.json",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T14:20:00+08:00",
+  "payload": {
+    "subject": "修复 getAppContext() stub 每次创建新 Map 导致弹窗 getState() 返回 undefined",
+    "context": "#004",
+    "content": "## 问题\n\n员工入职登记弹窗打开后内容空白，什么也没有。\n\n## 根因\n\n`util.js` 的 `getAppContext()` stub **每次调用都创建新的 `states: new Map()`**：\n\n```javascript\ngetAppContext = function () {\n    // ...\n    return {\n        states: new Map(),  // ← 每次调用都是新 Map!\n        // ...\n    };\n}\n```\n\n调用链：\n1. 主页面：`openPage()` → `that.states.set(stateKey, state)` → 存入 Map-A\n2. 弹窗页面：`getState()` → `getAppContext()` → 创建新 Map-B → `states.get(stateKey)` → **undefined**\n3. `create_edit.html:121`：`state.value?.type` → TypeError → Vue 初始化失败 → 空白\n\n## 修复\n\n将 `states` 提升为模块级变量（闭包外），确保跨 `getAppContext()` 调用共享：\n\n```javascript\n// 在 getAppContext 函数外部声明\nvar _embeddedStates = new Map();\n\ngetAppContext = function () {\n    const ctx = getRootWindow()?.appContext;\n    if (ctx) return ctx;\n    // ...\n    return {\n        states: _embeddedStates,  // ← 共享同一个 Map\n        // ...\n    };\n}\n```\n\n同时 `openPage` stub 中 `if (!that.states) that.states = new Map()` 需同步删除（states 已在外部初始化）。",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ],
+    "actions": [
+      "util.js 声明 var _embeddedStates = new Map() 在 getAppContext 外部",
+      "stub 中 states: _embeddedStates（共享引用）",
+      "openPage stub 去掉 if(!that.states) 判断，直接用 that.states.set()",
+      "验证弹窗页面正常加载、state 传递正常",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

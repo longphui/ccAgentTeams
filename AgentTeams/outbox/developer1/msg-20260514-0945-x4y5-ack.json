@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0950-ack-x4y5",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:50:00+08:00",
+  "replyTo": "msg-20260514-0945-x4y5",
+  "payload": {
+    "subject": "✅ 收到任务：编码选择弹框添加搜索功能",
+    "content": "收到任务，预计 20 分钟完成。"
+  }
+}

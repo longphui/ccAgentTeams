@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260519-0025-g7h8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-19T00:25:00+08:00",
+  "payload": {
+    "subject": "分路 baseService.js 未处理 hrmToken → 无限循环重载",
+    "context": "#004",
+    "content": "## 问题\n\n天津宏观世纪 iframe 嵌入分路 HRM 页面时，页面无限循环：打开→关闭→打开。\n\n## 根因\n\n分路 baseService.js：\n1. 第 451-456 行：`localStorage.getItem(\"token\")` 为 null 时立即调用 `onTokenExpired()`\n2. hrm-proxy 通过 URL 参数 `&hrmToken=Bearer xxx` 传递 token\n3. 但分路代码从未从 URL 读取 `hrmToken` 并写入 localStorage\n4. 所以页面一加载就判定 token 过期 → 发 `HRM_TOKEN_EXPIRED` → hrm-proxy 重载页面 → 死循环\n\n## 修复\n\n在 `caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js` 中：\n\n**Step 1**: 在 `isEmbedded` 检测后（第 5 行后），从 URL 读取 `hrmToken`：\n```javascript\n// 嵌入模式：从 URL 读取 hrmToken 写入 localStorage\nif (isEmbedded) {\n    var urlParams = new URLSearchParams(location.search);\n    var hrmToken = urlParams.get(\"hrmToken\");\n    if (hrmToken) {\n        localStorage.setItem(\"token\", hrmToken);\n        localStorage.setItem(\"xToken\", hrmToken);\n        // 清理 URL 中的 token 参数（可选，安全考虑）\n        if (window.history && window.history.replaceState) {\n            var cleanUrl = location.href.replace(/[&?]hrmToken=[^&]*/, \"\");\n            window.history.replaceState({}, \"\", cleanUrl);\n        }\n    }\n}\n```\n\n> ⚠️ 这段代码必须在 `localStorage.getItem(\"token\")` 检查（第 451 行）之前执行。\n\n**Step 2**: 确认第 10 行 `window.parent.postMessage` 的 `HRM_TOKEN_EXPIRED` 消息能正确到达 hrm-proxy。当前层级：`hrm-proxy iframe > 分路 HRM 页面`，`window.parent` 指向 hrm-proxy，这个是对的，不需要改。\n\n## 验证\n\n1. 浏览器打开 http://localhost:5021/\n2. 点击 HRM 菜单（如员工信息）\n3. 应正常加载 HRM 页面，不再闪动/循环\n4. F12 Console 无报错",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"
+    ],
+    "actions": [
+      "在 isEmbedded 检测后，从 URL 读取 hrmToken 写入 localStorage（第 5 行后、第 451 行前）",
+      "清理 URL 中的 hrmToken 参数（安全）",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

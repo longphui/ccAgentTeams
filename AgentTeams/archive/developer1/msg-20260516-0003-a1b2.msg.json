@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-0003-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-16T00:03:00+08:00",
+  "replyTo": "msg-20260513-2030-c9d0",
+  "payload": {
+    "subject": "✅ 确认 GetCodeRecordsForWorkOrder 入参字段名",
+    "content": "## 结论\n字段名全部对上，但**接口名不对**。\n\n应调用 `GetCodeRecordsForWorkOrder`（不是 `GetCodeRecords`），入参 `CodeRecordWorkOrderSearchInput`：\n\n| 前端 filter key | 后端字段 | 类型 | 匹配 |\n|------|------|------|------|\n| WorkOrderNo | WorkOrderNo | string | ✅ |\n| ProductName | ProductName | string | ✅ |\n| CodeValue | CodeValue | string | ✅ |\n| StartTime | StartTime | DateTime? | ✅ |\n| EndTime | EndTime | DateTime? | ✅ |\n\n基类 `BaseInput` 还提供：`CompanyId`(int)、`SkipCount`(int)、`PageSize`(int)、`Keywords`(string)、`Sorting`(string)。\n\n## 附：其他 GetCodeRecords 变体\n- `GetCodeRecords(BaseInput)` — 基本查询，无业务字段筛选\n- `GetCodeRecordsByObject(CodeRecordSearchInput)` — 按赋码对象+编码值+时间范围，入参含 `Objects(List<AssignObjectInfo>)`\n- `GetCodeRecordsForWorkOrder(CodeRecordWorkOrderSearchInput)` ← **Tab3 应使用这个**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordWorkOrderSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-1720-t3st",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T17:20:00+08:00",
+  "payload": {
+    "subject": "测试请求：#004 startup 路由 menuButtons 修复",
+    "context": "#004",
+    "content": "## 修复内容\n- `app.js:367` 解构 `menu.startup` 时 `menuButtons` 默认值从 `undefined` 改为 `[]`\n- 修改：`const { ..., menuButtons } = ...` → `const { ..., menuButtons = [] } = ...`\n\n## 测试重点\n请重新跑 Playwright E2E 测试验证：\n- 用例 8 \"appContext 全局状态\" — startup 路由 `menuButtons` 不应为空/undefined\n- 全量 8 个用例通过\n\n## 修改文件\n- `v2/app.js` 第 367 行",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/app.js"]
+  }
+}

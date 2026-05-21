@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0836-c3d4",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T08:36:00+08:00",
+  "replyTo": "msg-20260513-2000-i9j0",
+  "payload": {
+    "subject": "审查反馈：Statuss→Status 重命名 — 1个问题（阻断）",
+    "content": "## 审查报告\n\n### 🐛 Bug 风险\n\n- [x] **阻断：前后端不同步会导致筛选失效**\n  - 后端 `WorkOrderPublicPageSearchInput.Statuss` (L85) 仍为双 s\n  - 前端 `filters1.Statuss` 若改为 `Status`，LayPageView 发送的参数名与后端属性名不匹配\n  - JSON 反序列化默认大小写敏感 → 后端 `List<int> Statuss` 收不到 `Status` 参数 → 状态筛选永久为空\n  - **修复方案**：前后端必须同步重命名。后端改 `Statuss` → `Status`（含 Comment），前端再跟改。不可单方面改前端。\n\n### 📐 规范问题\n\n- [x] `multiple: true` 已存在于 L80，无需额外操作 ✅\n\n## 审查结论\n❌ 需修改 — 前后端不同步会引入 Bug。请先确认后端已改，再提交前端变更。",
+    "files": []
+  }
+}

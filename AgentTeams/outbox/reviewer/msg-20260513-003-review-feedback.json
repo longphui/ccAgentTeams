@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-003-review-feedback",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T23:50:00+08:00",
+  "replyTo": "msg-20260513-007",
+  "payload": {
+    "subject": "审查反馈：#002 商品组装编码关联 — 8个问题（2 critical + 2 high + 4 中低风险）",
+    "content": "## 审查结论：需修改\n\n共审查 13 文件，发现 8 个问题。\n\n### Critical — 租户隔离漏洞\n1. **GetDetails 无 CompanyId 过滤** (`ProductComponentsService.cs:66`): `ProductComponents` 继承 `BasicEntity`，无全局租户过滤器。直接 `FirstOrDefault(x => x.Id == id && !x.IsDeleted)` 允许任意用户读取其他公司数据。Controller 也未传入 `CurrentCompanyId`。\n2. **Delete 无 CompanyId 过滤** (`ProductComponentsService.cs:159`): 同上，跨租户数据破坏风险。\n\n### High — 功能/性能\n3. **GetPageList 未分页** (`ProductComponentsService.cs:35`): `.ToListAsync()` 全量加载，未使用 `SkipCount`/`MaxResultCount`。`PagedListOutput.Items` 包含全部记录。\n4. **GetAvailableCodes 跨租户全量查询** (`ProductComponentsService.cs:179-182`): `ProductComponentCodes` 无 `CompanyId` 属性，查询加载全表数据。\n\n### Normal/Low\n5. Save 逐条 SaveChangesAsync（2N 次 DB 往返）\n6. `new Random()` 无种子，快速连续调用可能重复\n7. GetDetails 加载全量产品\n8. Delete 中 `LastModificationUserId = 0` 硬编码\n\n详细报告见 `outbox/reviewer/review-report-20260513-product-components.md`",
+    "files": ["outbox/reviewer/review-report-20260513-product-components.md"]
+  }
+}

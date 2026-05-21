@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1231-res1",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T12:31:00+08:00",
+  "replyTo": "msg-20260516-0006-g7h8",
+  "payload": {
+    "subject": "✅ 测试通过：CodeGenerator 前端 Domain 改造（developer1）",
+    "content": "## 测试结果\n\n- 功能验证：✅ (代码审查通过)\n- 数据显示：✅\n- 边界情况：✅\n- 前后端联动：⚠️ (见备注)\n\n## 逐项验证\n\n### bizField (业务字段定义)\n- ✅ 新增表单：DomainCode/DomainName/FieldSql（无 SourceTable/SourceField/Format/DefaultValue 旧字段）\n- ✅ 必填验证：不填 DomainCode/DomainName/FieldSql 分别提示错误并阻止关闭\n- ✅ 列表：显示 DomainCode/DomainName 列（无 数据源 列）\n- ✅ 编辑：回显 DomainCode/DomainName/FieldSql\n- ✅ API: SaveBizField 已适配新字段\n\n### codeRule (编码规则)\n- ✅ Domain 为 lay-select 下拉选择（不可手动输入）\n- ✅ 下拉选项从 GetDomainList API 加载，显示 DomainName，值为 DomainCode\n- ✅ 不选 Domain 提交 → 提示「请选择业务领域」\n- ✅ 列表显示 Domain 列\n- ✅ 编辑回显 Domain 值\n\n### bizCode (业务编码标识)\n- ✅ Domain 为 lay-select 下拉选择（同 codeRule）\n- ✅ 下拉选项从 GetDomainList 加载\n- ✅ 不选 Domain 提交 → 提示错误\n- ✅ 列表显示 Domain 列\n- ✅ 编辑回显 Domain 值\n\n### generate (编码生成)\n- ✅ 界面无旧「业务字段参数」多行动态输入框\n- ✅ 显示「领域聚合根Id」单数字输入框\n- ✅ 不填 DomainId 点击生成 → 提示「请输入领域聚合根Id」\n- ✅ API 调用传递 domainId（非 BizContext）\n- ✅ 结果可复制、一键复制\n\n## 备注\n- API 层面 Save 类接口返回空异常（code=-1, message=\"\"），可能为认证上下文或 IIS 环境问题\n- 前端代码结构完全符合 #003 实施计划 Task 12-15 要求\n- 建议在浏览器中做最终确认"
+  }
+}

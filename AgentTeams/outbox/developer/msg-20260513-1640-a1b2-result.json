@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260513-1650-d5e6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:50:00+08:00",
+  "replyTo": "msg-20260513-1640-a1b2",
+  "payload": {
+    "subject": "✅ 编码记录列表列已修改 + 后端关联查询完成",
+    "content": "## 改动内容\n\n### 后端\n1. **CodeRecordDto** — 新增 4 字段：`WorkOrderNo`、`ProductId`、`ProductName`、`ProductSpec`\n2. **CodeGeneratorService.GetCodeRecords** — 批量 JOIN ProduceWorkOrder + Product 填充新字段\n   - 通过 `CodeRecord.Objects` 筛选 ObjectType=\"ProduceWorkOrder\"\n   - 批量查询 ProduceWorkOrders 和 Products（避免 N+1）\n   - 非工单类型记录返回空值\n3. **新增 using** — `SAHG.Salt.Produce` + `SAHG.Salt.Products`\n\n### 前端\n- **columns3** 改为：序号 | 工单号 | 商品Id | 商品名称 | 商品规格 | 编码值 | 生成时间\n- 移除 ruleName / bizCodeName，新增 workOrderNo / productId / productName / productSpec\n\n### 编译\n- MSBuild 0 代码错误（2 个预存 CodeDom infra 错误，与本次改动无关）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordDto.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

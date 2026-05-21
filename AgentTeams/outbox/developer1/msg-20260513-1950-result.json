@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1950-d3e4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:50:00+08:00",
+  "replyTo": "msg-20260513-1940-b2c3",
+  "payload": {
+    "subject": "✅ 工单状态列不显示 已修复",
+    "content": "## 完成情况\n- Tab1/Tab2 的 statusName 列去掉 customSlot，保留 key: \"statusName\"，直接 key 绑定渲染\n- 删除两处 `<template v-slot:statusName=\"{row}\">{{row.statusName}}</template>` 插槽模板\n- filters1.Status 确认已是 Status（无需改动）\n- 无 codeCount 残留（无需清理）\n\n## 改动文件\n- index.html: L93, L109 去掉 customSlot；删除 Tab1/Tab2 中 statusName 插槽模板",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

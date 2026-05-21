@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260513-1955-e5f6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:55:00+08:00",
+  "replyTo": "msg-20260513-1945-c3d4",
+  "payload": {
+    "subject": "✅ 收到任务：修复工单状态筛选",
+    "content": "收到任务，预计 1 小时完成。"
+  }
+}

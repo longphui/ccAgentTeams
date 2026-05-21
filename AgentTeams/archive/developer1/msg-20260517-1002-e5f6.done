@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260517-1002-e5f6",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-17T10:02:00+08:00",
+  "payload": {
+    "subject": "#004 [honguan] 鸿冠前端：hrm-proxy代理页 + app.js postMessage监听",
+    "context": "#004",
+    "content": "## 概述\n在鸿冠前端新增 hrm-proxy 代理页面，并在 app.js 添加 postMessage 监听，实现 iframe 内 HRM 页面的上下文注入。\n\n## 📋 参考契约（强制）\n- **契约 A**: `POST /api/hrm-auth/get-fenlu-token` → `Http.invoke` 返回 `res.data` = `{token:\"...\"}`\n- **契约 E**: postMessage 上下文协议 — 字段名必须与契约一致\n\n## 🧪 Mock 独立开发\n**无需等待后端就绪！** 契约 E 的 Mock 片段可替代真实 postMessage，在浏览器直接打开代理页调试。\n详见计划「契约 E → Mock」小节。\n\n## 实施计划\n详细步骤见：`D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-plan-HRM集成到鸿冠ERP-阶段1.md` 的 Task 6、Task 7 节 + API 契约章节。\n\n## Task 6: 新建 hrm-proxy 代理页面（honguan）\n\n**新建文件：** `D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\views\\hrm-proxy\\index.html`\n\n功能：\n1. 解析 URL 参数 `page`（目标 HRM 页面路径，如 `staffManagement/staffInfo/index.html`）\n2. 解析 URL 参数 `stateKey`（表单编辑时的数据主键，透传）\n3. 通过 `window.parent.postMessage({type: \"HRM_GET_CONTEXT\"}, \"*\")` 请求上下文\n4. 接收父窗口 `HRM_CONTEXT` 消息（字段见契约 E），写入 iframe localStorage 后加载分路页面\n5. 监听 `HRM_TOKEN_EXPIRED` → 重新获取 token 并刷新\n6. 5 秒超时处理\n7. 加载分路页面 URL 带 `?embedded=true`\n\n参考代码见实施计划。独立开发时用契约 E Mock 替代 `postMessage`，可直接浏览器打开调试。\n\n## Task 7: app.js postMessage 监听（honguan）\n\n**修改文件：** `D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\app.js`\n\n在 `mounted()` 或 DOM ready 后追加约 25 行，postMessage 字段名严格按契约 E：\n```javascript\nwindow.addEventListener(\"message\", async function(e) {\n    if (e.data?.type === \"HRM_GET_CONTEXT\") {\n        // Http.invoke 自动解包 Furion UnifyResult → res.data = {token:\"...\"}\n        var hrmResp = await Http.invoke(\"/api/hrm-auth/get-fenlu-token\", \"POST\");\n        var hrmToken = hrmResp.token;\n        e.source.postMessage({\n            type: \"HRM_CONTEXT\",\n            token: \"Bearer \" + hrmToken,\n            xToken: \"Bearer \" + hrmToken,\n            userInfo: appContext.userInfo,\n            companyId: appContext.userInfo?.companyId,\n            baseUrl1: \"http://localhost:8088\",\n            baseUrl2: \"http://localhost:8088\",\n            newFenluApiBase: \"http://localhost:8088\"\n        }, \"*\");\n    }\n});\n```\n\n## 验证\n1. 鸿冠启动后无 console 报错\n2. 访问 `/views/hrm-proxy/index.html?page=staffManagement/staffInfo/index.html` → HRM 页面正常加载（非登录页）\n3. `svn add` 新建文件，`svn st` 确认变更",
+    "files": [
+      "D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-HRM集成到鸿冠ERP-阶段1.md",
+      "D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-plan-HRM集成到鸿冠ERP-阶段1.md",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\views\\",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\app.js"
+    ],
+    "actions": [
+      "创建 wwwroot/views/hrm-proxy/index.html（代理页面，约 60 行）",
+      "修改 app.js 添加 postMessage 监听（约 25 行）",
+      "svn add 新建文件",
+      "svn st 确认变更"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-0030-c3d4",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T00:30:00+08:00",
+  "payload": {
+    "subject": "审查请求：baseService.js hrmToken 无限循环修复",
+    "context": "#004",
+    "content": "## 审查重点\n\n### 问题\n天津宏观世纪 iframe 嵌入分路 HRM 页面时，hrm-proxy 通过 URL 参数 `&hrmToken=Bearer xxx` 传递 token，但分路代码从未读取该参数写入 localStorage，导致页面加载时检查 token 为 null → 触发 `onTokenExpired()` → `HRM_TOKEN_EXPIRED` → hrm-proxy 重载页面 → 死循环。\n\n### 修改\n在 `baseService.js` 第 5 行后（isEmbedded 检测完成、token 检查执行前）添加：\n1. 从 URL 读取 `hrmToken` 参数\n2. 写入 `localStorage.setItem(\"token\")` 和 `localStorage.setItem(\"xToken\")`\n3. 清理 URL 中的 token 参数（安全考虑）\n\n### 审查要点\n- 代码位置是否正确（isEmbedded 检测后、token 检查前）\n- URL 清理正则是否妥善处理各种参数位置（开头、中间、末尾）\n- `URLSearchParams` 浏览器兼容性（该代码库已使用 fetch/async/await 等现代特性）",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

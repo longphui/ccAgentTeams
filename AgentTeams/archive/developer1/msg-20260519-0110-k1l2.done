@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260519-0110-k1l2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T01:10:00+08:00",
+  "payload": {
+    "subject": "修复 getAppContext() 跨域返回 undefined 导致 HRM 页面崩溃",
+    "context": "#004",
+    "content": "## 问题\n\n修复 config.js 的 parent.tab 后，HRM 页面仍报错：\n```\nTypeError: Cannot read properties of undefined (reading 'route')\n```\n\n## 根因\n\n`util.js` 的 `getRootWindow()` 试图向上遍历窗口层级找 `appContext`：\n1. 分路页面(8095) → parent = hrm-proxy(5021) → 跨域\n2. `tryGetHostName(win)` 访问 `win.location.hostname` 抛 SecurityError → 返回 null\n3. `null == \"localhost\"` → break，根窗口停留在 8095 自身\n4. 8095 页面没有 `appContext` → `getAppContext()` 返回 undefined\n5. 页面 `appContext.route.checkTabPermissions(...)` → TypeError\n\n## 修复\n\n`util.js` 第 53-55 行，`getAppContext()` 加降级：\n\n```javascript\ngetAppContext = function () {\n    const ctx = getRootWindow()?.appContext;\n    if (ctx) return ctx;\n    // 嵌入模式降级：跨域时无法获取主窗口 appContext\n    return {\n        route: {\n            checkTabPermissions: function() { return true; },\n            items: [],\n            currentRoute: {}\n        },\n        getShareStateKey: function() { return 'stateKey'; },\n        states: new Map(),\n        menu: { items: [], selectedKeys: [], openKeys: [] },\n        layout: { applyLayout: function(){} },\n        theme: { applyTheme: function(){} }\n    };\n}\n```\n\n> 嵌入模式下权限由天津宏观世纪菜单系统控制，降级 stub 返回 true 不影响安全。",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ],
+    "actions": [
+      "util.js getAppContext() 加降级：appContext 为 undefined 时返回安全 stub",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

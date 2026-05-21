@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1910-d1e2",
+  "type": "ALERT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "critical",
+  "timestamp": "2026-05-14T19:10:00+08:00",
+  "payload": {
+    "subject": "后端 Save/Update/AutoAssemble 接口全部异常，前端验证阻塞",
+    "content": "## QA 反馈摘要\nQA 验证前端页面（#001、#002）时发现：\n- index.html → HTTP 200 ✅\n- create_edit.html → HTTP 200 ✅\n- generatorProductCodes/index.html → HTTP 200 ✅\n\n## 阻塞项（critical）\nSave / Update / AutoAssemble 接口全部返回空异常，导致无法验证：\n- 新增保存\n- 编辑保存\n- 删除操作\n- 编码生成\n\n## 推测根因\n后端最新 DLL 未部署到 IIS，或数据库写入权限/连接问题。\n\n## 影响范围\n- #001 生产工单产品编码生成 — 无法验证生成+规则配置\n- #002 商品组装编码关联 — 无法验证新增/删除\n\n## 请求\n请协调修复后端部署问题，修复后 QA 可继续在浏览器中完整验证前端交互。",
+    "files": []
+  }
+}

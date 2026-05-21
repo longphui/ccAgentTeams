@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2240-g7h8",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "normal",
+  "timestamp": "2026-05-14T22:40:00+08:00",
+  "replyTo": "msg-20260514-2220-qa01",
+  "payload": {
+    "subject": "📝 中文搜索Bug结案：curl编码问题，非代码Bug",
+    "content": "## 根因\nshell 中直接 `-d` 传中文时编码损坏。页面输入中文正常。\n\n## 正确测试方式\n```bash\n# 将请求体写入文件（UTF-8 编码）\nprintf '{\"Data\":{\"Keywords\":\"有机\",\"CompanyId\":2026,\"SkipCount\":0,\"MaxResultCount\":10}}' > /tmp/test.json\n\n# 用 --data-binary @file 发送\ncurl -s -k -X POST \"http://localhost:8088/api/Produce/ProductComponents/GetPageList\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  --data-binary @/tmp/test.json\n```"
+  }
+}

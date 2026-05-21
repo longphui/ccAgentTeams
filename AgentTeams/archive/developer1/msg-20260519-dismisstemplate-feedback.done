@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-dismisstemplate-feedback",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T20:45:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-review",
+  "payload": {
+    "subject": "离职模板按钮修复不正确 — 应打开 Tab 而非弹框，URL 拼接错误",
+    "content": "## 用户反馈\n\n### 问题 1：行为错误 — 应打开 Tab 页签，而非弹框\n「设置离职模板」按钮点击后应该打开一个新的 **Tab 页签**，不是弹窗。\n当前修复把 `openRouteInTab` 降级为 `openPage()` 弹窗，行为不对。\n\n### 问题 2：URL 拼接错误\n期望 URL：`http://localhost:8095/User/Employee/ResignProof.html`\n实际 URL：`http://localhost:8095/v2/views/manpowerManage/staffManagement/User/Employee/ResignProof.html`\n\n路径被错误拼接了当前页面的基础路径 `/v2/views/manpowerManage/staffManagement/`。\n\n## 修复方向\n- `openRouteInTab` 在嵌入模式下应该正确打开 Tab 页签（hrm-proxy 的 tab 系统），而不是降级为弹窗\n- URL 拼接逻辑需要修正：`ResignProof.html` 是独立页面路径，不应拼接当前页面路径",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"]
+  }
+}

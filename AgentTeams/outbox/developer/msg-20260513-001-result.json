@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-110000-d4e5",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T11:15:00Z",
+  "replyTo": "msg-20260513-001",
+  "payload": {
+    "subject": "✅ 生产工单产品编码生成 已完成",
+    "content": "## 完成情况\n\n### 新建文件（4个）\n- `SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs` — 工单+编码数量 DTO\n- `SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs` — 多维度编码查询入参\n- `v2/views/productionManage/commonProductionStages/index.html` — 三 Tab 主页面\n- `v2/views/productionManage/commonProductionStages/codeList.html` — 编码查询弹窗\n\n### 修改文件（6个）\n- `ICodeGeneratorService.cs:55` — 新增 GetCodeRecordsByObject 方法声明\n- `CodeGeneratorService.cs:646` — 实现多维度查询 + BuildCodeRecordPagedResult 私有方法\n- `CodeGeneratorController.cs:217` — 新增 [HttpPost] [CommonLog] Action\n- `IProduceWorkOrderService.cs:191` — 新增 GetPageListForCodeGen 方法声明\n- `ProduceWorkOrderService.cs:1611` — 实现工单分页+联查编码数量\n- `ProduceWorkOrderController.cs:333` — 新增 [HttpPost] [PPMLog] Action\n\n### 编译验证\n- MSBuild 编译通过，0 Error（新增/修改文件）\n- 唯一错误来自 `GenerateSalesFixedProductionService.cs` 的预存 SVN 合并冲突（未动此文件）\n\n### 注意\n- Tab1/Tab2 使用同一 API 无 codeGenStatus 参数区分，前端目前按现有 plan 实现",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/codeList.html",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProduceWorkOrderController.cs"
+    ]
+  }
+}

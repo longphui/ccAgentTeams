@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-1320-g9h0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T13:20:00+08:00",
+  "payload": {
+    "subject": "GetPageList 增加 Keywords 模糊查询",
+    "context": "#002",
+    "content": "## 问题\n编码组合列表查询接口 GetPageList 未使用 Keywords 参数进行模糊匹配，搜索功能失效。\n\n## 要求\n- 在 GetPageList 的 LINQ 查询中添加 Keywords 过滤\n- 建议匹配字段：ProductCode（成品编码）、ComponentProductName（半成品名称）\n- Keywords 为空时不追加过滤条件\n- 注意 EF6 LINQ 兼容性（不用 string.IsNullOrWhiteSpace 等不兼容方法）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ],
+    "actions": [
+      "添加 Keywords 模糊查询逻辑",
+      "编译通过 0 Error"
+    ]
+  }
+}

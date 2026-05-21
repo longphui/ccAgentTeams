@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260518-1015-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T10:15:00+08:00",
+  "payload": {
+    "subject": "#004 Round 2 Task 9: 分路 DB — 鸿冠模块菜单数据",
+    "context": "#004",
+    "content": "## 背景\n\nRound 1 已完成：Token桥接API + 菜单代理API + CORS 全部通过 QA 测试。\n\n菜单代理 API (`/api/menu-proxy/get-list-by-role`) 调用分路 `POST /api/HRM/MenuRoute/GetListByRole` 获取菜单树，然后做字段映射（parentId→parent，HRM path→hrm-proxy path）。\n\n**当前状态**：分路 `AbpMenuRoute` 表中只有 HRM 模块的菜单（员工管理、考勤管理等），缺少鸿冠自有模块（采购管理、产品管理等）。需要插入鸿冠模块菜单数据。\n\n## 任务内容\n\n### 1. 确认 AbpMenuRoute 表结构\n\n排查分路后端 `AbpMenuRoute` Entity 的完整字段定义，确认：\n- 是否有 `MenuButtons` 字段（JSON 字符串或关联表）\n- 按钮权限的存储方式（`AbpMenuButton` 表 or `MenuButtons` JSON 列）\n- `GetListByRole` 的过滤逻辑（角色-菜单关联表）\n\n### 2. 编写 SQL 插入鸿冠模块菜单\n\n```sql\n-- 一级菜单（ParentId = 0, PlatformId = 1）\nINSERT INTO AbpMenuRoute (Title, Icon, Path, ParentId, PlatformId, IsDeleted, CreationTime)\nVALUES (N'产品管理', N'fa fa-cubes', 'views/product_management/index.html', 0, 1, 0, GETDATE());\n\nINSERT INTO AbpMenuRoute (Title, Icon, Path, ParentId, PlatformId, IsDeleted, CreationTime)\nVALUES (N'采购管理', N'fa fa-shopping-cart', 'views/purchase_management/index.html', 0, 1, 0, GETDATE());\n\nINSERT INTO AbpMenuRoute (Title, Icon, Path, ParentId, PlatformId, IsDeleted, CreationTime)\nVALUES (N'生产管理', N'fa fa-industry', 'views/production_management/index.html', 0, 1, 0, GETDATE());\n\n-- 继续补充其他鸿冠模块...\n```\n\n**关键约定**：\n- `Path` 填鸿冠本地 views 路径（不带 `/v2/` 前缀），因为 MenuProxyService 对非 HRM 路径原样保留\n- `Icon` 用 Font Awesome 4 命名（`fa fa-xxx`）\n- `PlatformId` = 1（鸿冠 Web 端）\n\n### 3. 角色关联\n\n新插入的菜单需要关联到角色，才能通过 `GetListByRole` 返回。排查分路的角色-菜单关联机制并补充数据。\n\n### 4. 按钮权限（如有 menuButtons 机制）\n\n如果 `AbpMenuRoute` 支持按钮权限，为各菜单节点配置对应的 `menuButtons`（如 search/add/edit/delete）。\n\n## 验证\n\n```bash\n# 调用菜单代理 API，确认 children 包含鸿冠模块节点\ncurl -X POST http://localhost:5000/api/menu-proxy/get-list-by-role \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"platformId\":1}'\n```\n\n预期：\n- `data.children` 包含鸿冠模块（path 以 `views/` 开头，无 `/v2/` 前缀）\n- `data.children` 包含 HRM 模块（path 以 `/views/hrm-proxy/` 开头）\n- 有角色权限的用户登录后菜单正常\n\n## 参考\n\n- 实施计划：`AgentTeams/shared/requirements/004-plan-HRM集成到鸿冠ERP-阶段1.md`（Task 9 节）\n- 决策 #009：HRM 集成方案选型（方案D 渐进混合）\n- 契约 D：分路菜单 API 响应格式\n\n## 注意事项\n\n- 这是数据库层面的操作，不涉及 .cs 代码修改\n- 如果 `AbpMenuRoute` 使用 EF Code First，注意不要与已有 Migration 冲突\n- SQL 脚本保留在项目目录下，方便后续环境部署",
+    "files": [
+      "D:\\work\\cc\\AgentTeams\\shared\\requirements\\004-plan-HRM集成到鸿冠ERP-阶段1.md"
+    ],
+    "actions": [
+      "排查 AbpMenuRoute Entity 完整字段 + GetListByRole 过滤逻辑 + 角色关联机制",
+      "编写 SQL INSERT 鸿冠模块菜单（产品/采购/生产等）到分路 DB",
+      "配置角色-菜单关联，确保 GetListByRole 返回新菜单",
+      "如有按钮权限机制，配置 menuButtons",
+      "验证：curl 菜单代理 API 确认返回鸿冠模块节点"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2230-ack01",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T22:30:00+08:00",
+  "replyTo": "msg-20260514-2225-c3d4",
+  "payload": {
+    "subject": "✅ 收到任务：排除法定位中文搜索根因",
+    "content": "收到。执行排除法：Step 1 查 DB 列类型 → Step 2 raw SQL 验证。预计 30 分钟。"
+  }
+}

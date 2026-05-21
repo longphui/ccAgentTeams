@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1030-f9g0",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T10:30:00+08:00",
+  "payload": {
+    "subject": "半成品 select 添加 searchable",
+    "context": "#002",
+    "content": "## 问题\n添加组件模块中，半成品 select 无法搜索。需添加 `:show-search=\"true\"` 属性。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["半成品 select 添加 searchable"],
+    "deadline": null
+  }
+}

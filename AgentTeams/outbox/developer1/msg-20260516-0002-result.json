@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260516-0005-e5f6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-16T15:01:00+08:00",
+  "replyTo": "msg-20260516-0002",
+  "payload": {
+    "subject": "✅ CodeGenerator 前端 4 页面改造 已完成",
+    "content": "## 完成情况\n\n根据 #003 实施计划 Task 12-15，完成 CodeGenerator 前端 4 页面改造，已通过 Reviewer 审查。\n\n### Task 12: bizField 页面 (r2645, r2649)\n- 表单：去掉 SourceTable/SourceField/Format/DefaultValue，新增 DomainCode/DomainName/FieldSql\n- 列表：去数据源列，新增 DomainCode/DomainName 列\n- 修复 saveEntry 结果校验\n\n### Task 13: codeRule 页面 (r2646)\n- 表单：新增 Domain 下拉选择（调 GetDomainList，不可手输）\n- 列表：新增 Domain 列\n\n### Task 14: bizCode 页面 (r2647, r2649)\n- 表单：新增 Domain 下拉选择（同 Task 13）\n- 列表：新增 Domain 列\n- 修复 saveEntry 结果校验\n\n### Task 15: generate 页面 (r2648)\n- BizContext 字典 → DomainId 单值参数\n- 简化 onCodeSignChange，去掉 BusinessField 子项加载\n- Grep 确认全仓库 0 处 BizContext 残留",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizField/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/bizCode/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/generate/index.html"
+    ]
+  }
+}

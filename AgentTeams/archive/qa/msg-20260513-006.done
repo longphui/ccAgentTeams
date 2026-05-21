@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260513-006",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-13T13:30:00+08:00",
+  "payload": {
+    "subject": "#001 编码生成 — 重新执行测试（EF 已修复）",
+    "context": "数据库已迁移，EF 模型变更错误已解决，继续之前阻塞的测试",
+    "content": "## 状态\n之前测试 3/34 通过，31 例被 EF migration 阻塞。现在数据库已更新。\n\n## 任务\n1. 重启 IIS 应用池: `C:/Windows/System32/inetsrv/appcmd.exe stop apppool /apppool.name:\"8088_fenluapi\"` → start\n2. 继续执行之前阻塞的 31 个用例\n3. Developer 已修复 codeList.html staticFilter 缺失问题\n4. 输出完整测试报告\n\n## 已知情况\n- Reviewer 反馈 4 个问题，其中 1 critical 已修复\n- Tab1/Tab2 无区分逻辑（high 问题）已知，待后续处理",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-cases-20260513.md",
+      "D:/work/cc/AgentTeams/outbox/qa/test-report-20260513-v2.md"
+    ],
+    "actions": ["重启 IIS", "执行剩余 31 用例", "输出测试报告"],
+    "deadline": null
+  }
+}

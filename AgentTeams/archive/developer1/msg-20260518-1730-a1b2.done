@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260518-1730-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-18T17:30:00+08:00",
+  "payload": {
+    "subject": "鸿冠端 startup 路由缺少 menuButtons（同步修复）",
+    "context": "#004",
+    "content": "## 背景\n\nQA 在验证分路 v2/app.js 的 startup menuButtons 修复时，发现鸿冠前端 `wwwroot/js/app.js:146` 存在同样问题：startupRoute 缺少 `menuButtons`。\n\n分路端已修复（`v2/app.js:367-401`，解构默认值 + 三个分支覆盖），鸿冠端需同步修复。\n\n## 排查方向\n\n在鸿冠前端 `wwwroot/js/app.js` 的 `initMenu()` 中，为 startupRoute 补充 `menuButtons`，参照分路 v2/app.js 的修复方式。\n\n## 验收标准\n\n- startupRoute 含 `menuButtons` 字段（默认值 `[]`）\n- Playwright 测试可扩展覆盖鸿冠端\n\n## 来源\n\nQA 测试报告 `msg-20260518-1725-y7z8`",
+    "files": [
+      "AgentTeams/inbox/architect/msg-20260518-1725-y7z8.processing"
+    ],
+    "actions": [
+      "定位 wwwroot/js/app.js:146 startupRoute",
+      "参照 v2/app.js 修复方式补充 menuButtons",
+      "完成后发 TEST 给 QA 验证"
+    ],
+    "deadline": null
+  }
+}

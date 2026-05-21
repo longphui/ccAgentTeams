@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1110-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:10:00+08:00",
+  "payload": {
+    "subject": "重命名 WorkOrderPublicPageSearchInput.Statuss → Status（双s修正）",
+    "context": "#001",
+    "content": "## 问题\nReviewer 审查发现：前端已改 `filters1.Statuss` → `filters1.Status`，但后端 `WorkOrderPublicPageSearchInput.Statuss` 属性名仍是双 s。JSON 反序列化大小写敏感，`Status` 参数无法匹配 `Statuss` → 状态筛选永久失效。\n\n## 要求\n- 将 `WorkOrderPublicPageSearchInput.Statuss` 重命名为 `Status`\n- 同步更新所有引用该属性的 Service 代码\n- 编译通过 0 Error\n\n## 涉及文件\n- `WorkOrderPublicPageSearchInput.cs` — 属性重命名 + Comment\n- 所有使用 `.Statuss` 的 Service 文件",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderPublicSearchInput.cs"
+    ],
+    "actions": [
+      "重命名 Statuss → Status",
+      "更新所有 .Statuss 引用",
+      "编译验证 0 Error",
+      "完成后发送 REVIEW 给 Reviewer"
+    ]
+  }
+}

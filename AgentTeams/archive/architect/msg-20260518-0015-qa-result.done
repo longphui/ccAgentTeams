@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0015-qa-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T00:20:00+08:00",
+  "replyTo": "msg-20260518-0015-c3d4",
+  "payload": {
+    "subject": "✅ 测试通过：[fl] baseService.js ?embedded=true Token过期防控",
+    "content": "## 测试结果\n- 功能验证（代码审查）：✅\n- 语法检查：✅\n- 加载顺序：✅\n- 浏览器实测：⚠️ 未执行（当前环境无运行服务器，无法访问页面）\n\n## 发现的问题\n无\n\n## 详细审查\n\n### isEmbedded 检测（line 2-5）\n`/[?&]embedded=true/` 正则正确匹配 `?embedded=true` 和 `&embedded=true` 两种情况\n\n### onTokenExpired() 分支（line 7-15）\n- 嵌入模式 → `window.parent.postMessage({type:\"HRM_TOKEN_EXPIRED\"}, \"*\")` ✅\n- 非嵌入模式 → `getRootWindow().location.href = \"/login.html\"` ✅\n\n### 401 处理覆盖（全部使用 onTokenExpired）\n- `Http.errorHandler`：line 50（ABP 401）+ line 64（HTTP 401）✅\n- `HttpE.errorHandler`：line 193（ABP 401）+ line 208（HTTP 401）✅\n- `Http2.errorHandler`：line 332（HTTP 401）✅\n- 页面加载时无 token：line 455 ✅\n\n### 依赖检查\n- `getRootWindow` 定义于 util.js:34，resloader.js 中 util.js(line 21) 先于 baseService.js(line 26) 加载 ✅\n- `node -c` 语法检查通过 ✅"
+  }
+}

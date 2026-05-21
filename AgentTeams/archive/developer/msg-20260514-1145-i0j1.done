@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260514-1145-i0j1",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:45:00+08:00",
+  "payload": {
+    "subject": "排查 ProductComponents 列表接口 ProductName/ComponentProductName 是否正常返回",
+    "context": "#002",
+    "content": "## 问题\n编码组装列表页成品名称和半成品名称为空。请排查后端 `GetPageList` 接口。\n\n## 排查方向\n- `ProductComponentsService.GetPageList` 中 ProductName / ComponentProductName 赋值逻辑（L53-54）\n- products 列表是否正确加载\n- ProductId / ComponentProductId 与 ProductInfo 的 Id 匹配是否正常\n- DTO 中 ProductName / ComponentProductName 属性是否存在\n\n## 要求\n- 确认接口返回的 JSON 中是否包含 ProductName 和 ComponentProductName 且有值\n- 如无值，修复数据加载逻辑\n- 编译通过 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProductComponentsDto.cs"
+    ],
+    "actions": [
+      "检查 DTO 定义是否有 ProductName / ComponentProductName 属性",
+      "检查 GetPageList 中 products 查询和名称赋值逻辑",
+      "修复后编译验证 0 Error"
+    ]
+  }
+}

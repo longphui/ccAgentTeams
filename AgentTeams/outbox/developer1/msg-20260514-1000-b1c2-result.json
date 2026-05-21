@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1120-reply-b1c2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:20:00+08:00",
+  "replyTo": "msg-20260514-1000-b1c2",
+  "payload": {
+    "subject": "✅ 编码弹窗搜索功能修复完成",
+    "content": "## 修改\n1. **computed → data + watch**: filteredCodeList 改为 data 属性，watch codeSearchText 触发 doFilterCodes()\n2. **doFilterCodes() 方法**: 空搜索恢复全部，有文本时 includes 过滤\n3. **双重触发机制**: watch 监听 v-model + @input/@clear 事件 + 搜索按钮 @click\n4. **打开弹窗初始化**: addCode 中 filteredCodeList = availableCodeList\n5. **模板**: 搜索框 + 搜索按钮 flex 布局\n\n## 根因\ncomputed 在 lay-layer teleported 上下文中可能未正确触发重新计算。改用 data + watch 显式赋值更可靠。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

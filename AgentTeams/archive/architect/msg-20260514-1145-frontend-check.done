@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1145-x1y2",
+  "type": "QUERY",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-14T11:45:00+08:00",
+  "replyTo": "msg-20260514-1140-h7i8",
+  "payload": {
+    "subject": "确认：GetPageList 接口返回的 JSON 字段名大小写",
+    "content": "## 问题\nindex.html 中成品名称和半成品名称列显示为空。当前前端配置：\n- 成品名称列：`key: \"productName\"`, `customSlot: \"productName\"` → `{{row.productName}}`\n- 半成品名称列：`key: \"componentProductName\"`, `customSlot: \"componentProductName\"` → `{{row.componentProductName}}`\n\n## 需要确认\n1. `GetPageList` 接口返回的 JSON 中，这两个字段的确切属性名是什么？（PascalCase 还是 camelCase？）\n2. 实际响应示例中这两个字段是否有值（非 null/空字符串）？\n3. 其他正常显示的列如 `productCode`，JSON 中是 `productCode` 还是 `ProductCode`？\n\n我需要知道确切的 JSON 属性名才能确定是前端 key 大小写问题，还是后端数据未填充。"
+  }
+}

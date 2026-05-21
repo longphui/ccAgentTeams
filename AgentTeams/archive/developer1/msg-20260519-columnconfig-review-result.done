@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-columnconfig-review-result",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T16:20:00+08:00",
+  "replyTo": "msg-20260519-columnconfig-review",
+  "payload": {
+    "subject": "✅ 审查通过：TableColumnConfig loading + null key 修复",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无需新建文件（已有文件，状态 M）\n- csproj 注册：N/A（JS 文件）\n- 编译：N/A（JS 文件）\n\n### 审查详情\n\n#### 🔒 安全检查\n- ✅ SQL 注入：N/A（前端 JS）\n- ✅ 租户隔离：`key()` 使用 CompanyID 区分租户，嵌入模式回退 `'0'` 可接受（嵌入模式在单租户上下文中运行，列配置为 UI 偏好非敏感数据）\n- ✅ 权限控制：N/A（组件非页面）\n- ✅ XSS：`location.pathname` 非用户输入，无风险\n- ✅ 敏感信息：`console.warn` 仅输出通用提示，无密码/Token\n\n#### 📐 后端规范检查\n- N/A（前端 JS 文件）\n\n#### 🖥️ 前端规范检查\n- ✅ 资源引入：N/A（组件文件，非独立页面）\n- ✅ 按钮规范：`lay-button` + `@click` 使用正确\n- ✅ 权限控制：N/A\n- ✅ layer.confirm：未使用\n- ✅ SVN：文件已跟踪（状态 M）\n\n#### 🐛 高频 Bug 模式\n- ✅ LINQ 不兼容：N/A\n- ✅ Http.invoke 响应解包：`Http2.get` 返回 `res.data`（已验证 baseService.js:446），`.value` 访问正确\n- ✅ LayuiVue 不存在组件：未使用 `<lay-tab>`/`<lay-row>`/`<lay-col>`\n- ✅ lay-table 序号列：N/A\n\n#### ⚡ 性能检查\n- ✅ N+1 查询：N/A\n- ✅ 批量查询：N/A\n- ✅ 全表扫描：N/A\n\n#### 📐 架构一致性\n- ✅ 与决策 #009（iframe 集成）一致：嵌入模式下 CompanyID 不可用时安全降级\n- ✅ 实体继承：N/A\n\n#### 🔗 API 契约一致性\n- ✅ 无新增 API 端点，不涉及契约变更\n- ✅ 与契约 E（postMessage 协议）兼容：嵌入模式下 localStorage 无 CompanyID 时正常降级\n\n### 变更评估\n\n| 变更 | 评估 |\n|------|------|\n| `CompanyID \\|\\| '0'` (line 42) | ✅ 合理。防止 key 中出现 `null` 字符串（`columnConfig-null-/v2/views/...`），使用 `'0'` 作为嵌入模式默认值 |\n| `try-catch` 包裹 restore() (line 62-85) | ✅ 正确。API 不可用时静默降级到默认列配置，`console.warn` 便于排查。try-catch 范围覆盖整个 restore body，不会遗漏异常路径 |\n\n### 备注（预存问题，非本次引入）\n- `<lay-dropd>` 疑似 `<lay-dropdown>` 拼写错误，如为自定义别名则无问题\n- 方法名 `persit` 应为 `persist`（typo）\n- 文件头缺少注释（fl-html-dev 规范要求）"
+  }
+}

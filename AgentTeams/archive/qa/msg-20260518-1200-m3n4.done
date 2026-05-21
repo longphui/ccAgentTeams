@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260518-1200-m3n4",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T12:00:00+08:00",
+  "payload": {
+    "subject": "测试请求：#004 Round 2 - 菜单前端改造",
+    "context": "#004",
+    "content": "## 测试重点\n请在浏览器验证以下功能：\n\n### 1. 菜单动态加载\n- 启动鸿冠前端 (http://localhost:5021)\n- 检查 Network 面板有 POST `/api/menu-proxy/get-list-by-role` 请求\n- 菜单树正常渲染（含 HRM 模块 + 鸿冠模块）\n\n### 2. 图标显示\n- 检查菜单中 HRM 模块图标（可能是 `icon-*` 格式）和鸿冠模块图标（`fa fa-*` 格式）是否正常显示\n\n### 3. 标签页打开\n- 点击菜单节点，标签页正常打开\n- startup 首页正确加载\n\n### 4. 按钮权限检查\n- Console 执行 `appContext.route.checkTabPermissions('views/xxx/index.html', 'add')` 验证返回正确结果\n- 注意：path 不匹配时（前导 / 差异）也能正确查找\n\n### 5. 菜单降级（可选）\n- 停止后端验证：菜单 API 不可用时自动降级到静态 menu.json\n\n### 6. 代码规范\n- Console 无 JS 报错\n\n## 审查状态\n✅ 已通过 Reviewer 审查（2轮）",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\baseService.js",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\appContext.js",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\libs\\mainmenu\\index.js",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Frontend\\wwwroot\\js\\app.js"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1620-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T16:20:00+08:00",
+  "replyTo": "msg-20260513-1610-d3e4",
+  "payload": {
+    "subject": "✅ 确认弹窗已简化为 layer.confirm",
+    "content": "## 改动内容\n\n1. **移除 `<lay-layer>` 模板** — 删除了整个 confirmVisible 绑定的弹窗模板（约 12 行）\n2. **移除 data 字段** — 删除 `confirmVisible` 和 `confirmData`\n3. **重写 `showConfirm()`** — 改用 `layer.confirm()` 弹窗，确认后直接执行编码生成\n4. **移除 `doGenerateCode()`** — 逻辑已内联到 layer.confirm 的 yes 回调中\n5. **保留刷新逻辑** — 成功生成后通过 `self.$refs` 刷新三个 Tab 的列表\n\n## 改动对比\n\n```javascript\n// 修复前：showConfirm 存 data → 打开 lay-layer → doGenerateCode 读 this.confirmData\n// 修复后：showConfirm → layer.confirm → 确认直接发起请求\n```",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

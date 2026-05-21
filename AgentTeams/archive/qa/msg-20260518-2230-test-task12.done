@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-2230-test12",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T22:30:00+08:00",
+  "payload": {
+    "subject": "测试请求：验证 P6 49 个反斜杠路径已修复",
+    "context": "#004",
+    "content": "## 测试重点\n请验证以下功能：\n- 登录分路 PlatformId=6 菜单系统\n- 抽查以下模块菜单能否正常加载（之前反斜杠导致 404）：\n  - 财务管理 > 发票管理 > 待开发票v2\n  - 生产管理 > 领料管理v2\n  - 销售管理 > 预定单管理 > 任务完成情况\n  - 产品管理 > 产品配置 > 内置功能启停\n  - 协同办公 > 问卷统计\n  - 考勤管理 > 考勤设置v2\n- 确认所有 49 个已修复菜单加载正常，无 404\n\n## 审查状态\n✅ Developer 已验证 API 层面：P6 GetListByRole 零反斜杠 (0/49)\n## 修复详情\n共 49 个菜单 path 从反斜杠修复为正斜杠，修复脚本: AgentTeams/logs/fix_p6_backslash_paths.sh",
+    "files": ["D:/work/cc/AgentTeams/logs/fix_p6_backslash_paths.sh"]
+  }
+}

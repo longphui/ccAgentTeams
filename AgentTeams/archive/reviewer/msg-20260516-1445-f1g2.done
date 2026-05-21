@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-1445-f1g2",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:45:00+08:00",
+  "replyTo": "msg-20260516-review-0001",
+  "payload": {
+    "subject": "审查请求（修订）：CodeGenerator 后端优化 — 3 项反馈已修复",
+    "context": "#003",
+    "content": "## 修复内容（r4562）\n\n### #1 SaveBizCode 编辑模式保存 Domain\n`CodeGeneratorService.cs` SaveBizCode 编辑分支新增 `entity.Domain = input.Domain;`\n\n### #2 SaveRule 编辑模式保存 Domain\n`CodeGeneratorService.cs` SaveRule 编辑分支新增 `entity.Domain = input.Domain;`\n\n### #3 GetDomainList EF6 兼容\n`!string.IsNullOrWhiteSpace(f.DomainCode)` → `f.DomainCode != null && f.DomainCode != \"\"`\n\n编译验证通过（0 新增 Error）。请复审。",
+    "files": [
+      "SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ]
+  }
+}

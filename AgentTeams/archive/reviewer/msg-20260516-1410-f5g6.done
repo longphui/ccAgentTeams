@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260516-1410-f5g6",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-16T14:10:00+08:00",
+  "payload": {
+    "subject": "审查请求：codeRule Domain 前置检查 + 业务字段过滤",
+    "context": "#003",
+    "content": "## 变更范围\n\n2 个文件（SVN r2650）：\n\n### 1. `views/CodeGenerator/codeRule/create_edit.html`\n- `showItemDialog()` 开头新增 Domain 前置检查：未选 Domain 时 `layer.msg(\"请先选择业务领域\")` 并 return，不打开子项弹框\n- 传递 `model._domain = this.entry.data.domain` 给子项弹窗\n\n### 2. `views/CodeGenerator/codeRule/item_form.html`\n- `loadBizFieldList()` 加载后过滤：仅保留 `f.domainCode === domain || f.domainCode === 'General'`\n- 若无 domain（兜底），显示全量列表\n\n## 审查重点\n- Domain 前置检查是否正确阻止弹框\n- 过滤逻辑是否遗漏边界：`General` 通用领域字段是否正常显示\n- 编辑已有子项时 Domain 检查是否合理（打开弹窗仍需 Domain）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/CodeGenerator/codeRule/item_form.html"
+    ]
+  }
+}

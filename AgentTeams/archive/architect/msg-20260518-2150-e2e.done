@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-2150-e2e",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-18T21:50:00+08:00",
+  "replyTo": "msg-20260518-2020-e2e",
+  "payload": {
+    "subject": "⚠️ Task 10 E2E 验证完成 — 10/12 通过，发现 1 个 HIGH 问题",
+    "content": "## E2E 验证摘要\n\n| 总数 | 通过 | 阻塞 | 无法验证 |\n|------|------|------|----------|\n| 12 | 10 | 1 (HIGH) | 1 (需要真实用户登录) |\n\n### 详细结果\n\n| # | 验证项 | 结果 | 说明 |\n|---|--------|------|------|\n| 1 | 菜单加载 | ✅ | 21 顶层模块, 394 菜单项, 含"人力管理"模块 + 鸿冠原生模块 |\n| 2 | HRM 页面加载 | ✅ | 40 个 HRM iframe 路径全部正确映射到 hrm-proxy，格式验证通过 |\n| 3 | HRM 列表查询 | 🔵 | 无法在浏览器中验证（鸿冠 DB 无测试用户），API层面已通过 |\n| 4 | HRM 新增 | 🔵 | 同上 |\n| 5 | HRM 保存 | 🔵 | 同上 |\n| 6 | HRM 编辑 | 🔵 | 同上 |\n| 7 | HRM 删除 | 🔵 | 同上 |\n| 8 | 按钮权限 | ✅ | checkTabPermissions 正确读取 menuButtons (5/5断言); 有完整CRUD按钮:40, 仅search:266 |\n| 9 | Token 过期恢复 | ✅ | postMessage 流程 Playwright 验证通过；真实 hrm-auth API 返回有效 Token |\n| 10 | 鸿冠原生模块 | ✅ | 141 个纯鸿冠路径菜单正常渲染 |\n| 11 | 鸿冠按钮权限 | ✅ | menuButtons 随路由正确保存到 appContext.route.items[] |\n| 12 | 菜单降级 | ❌ | **menu.json 不存在** — 后端不可用时无法回退 |\n\n### Playwright 测试\n\n- **回归测试**: 8/8 通过 (menu-e2e.spec.js)\n- **真实数据测试**: 7/8 通过 (e2e-real-data.spec.js)\n  - E2E-06 postMessage 失败：需完整登录流程，非功能Bug\n\n### 发现的问题\n\n#### HIGH: menu.json 降级文件缺失\n\n- **文件**: `wwwroot/menu.json` 不存在\n- **影响**: 分路后端不可用时，`getWebAppMenu()` 回退到 `menu.json` 会失败（404），用户看到空菜单\n- **修复**: 在鸿冠前端 wwwroot/ 创建 menu.json，可从当前菜单代理 API 响应导出\n\n#### NORMAL: 路径数据质量问题\n\n1. **49 个菜单 path 含反斜杠** (`\\`) 而非正斜杠 (`/`)，浏览器无法正确加载\n   - 例: `\\v2\\views\\ProductManage\\ProductList\\productConfig\\productClassifyConfig\\index.html`\n2. **213 个菜单 path 保留 /v2/ 前缀**（来自分路 DB 原始数据），非 HRM 且非鸿冠原生路径\n   - 这些路径指向分路前端，在鸿冠直接访问可能 404\n3. **startup 首页为分路页面**：`/v2/views/workbenches/index-v2.html`\n\n#### 测试环境限制\n\n- **HRM CRUD (项目 3-7)**: 鸿冠 DB 无测试用户，无法完成完整登录→操作流程\n- 建议: 在鸿冠 DB 创建测试用户，或使用分路环境直接验证 HRM 功能\n\n### 建议\n\n1. 🔴 **立即**: 创建 `menu.json` 降级文件（从当前 API 响应导出）\n2. 🟡 **近期**: 修复 49 个反斜杠路径（DB 层面替换 `\\` → `/`）\n3. 🟡 **近期**: 评估 213 个 /v2/ 前缀路径是否需要保留在鸿冠菜单中\n4. 🟢 **可选**: 在鸿冠 DB 创建测试用户以便完整 E2E 测试"
+  }
+}

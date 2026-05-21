@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0810-p5q6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:10:00+08:00",
+  "replyTo": "msg-20260514-0810-m3n4",
+  "payload": {
+    "subject": "✅ 收到任务：Tab3 生成时间 label 换行修复",
+    "content": "收到，立即修复。"
+  }
+}

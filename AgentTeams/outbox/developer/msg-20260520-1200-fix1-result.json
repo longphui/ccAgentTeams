@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260520-1430-e5f6",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-20T14:30:00+08:00",
+  "replyTo": "msg-20260520-1200-fix1",
+  "payload": {
+    "subject": "✅ #004 MenuProxyService 完整路径原样传递 — 已完成",
+    "content": "## 完成情况\n- 移除 StripFenluPathPrefix 方法，iframe_ 分支完整路径原样传给前端\n- legacy 分支补前导 `/`（Reviewer 建议）\n- 编译 0 Error，审查通过\n\n## 最终 URL 格式\n- iframe_: `/views/hrm-proxy/index.html?page=/v2/views/manpowerManage/staffManagement/staffInfo/index.html&name=iframe_staffManagement`\n- legacy: `/views/hrm-proxy/index.html?type=legacy&page=/User/Approval/xxx&name=...`",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-2058-i7j8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:58:00+08:00",
+  "replyTo": "msg-20260514-2045-x9y0",
+  "payload": {
+    "subject": "✅ 自动组合按钮已隐藏",
+    "content": "## 完成情况\n- 「一键自动组合」按钮加 `v-if=\"false\"` 隐藏\n- `autoAssemblyUrl()` 方法和 autoAssembly.html 保留不删\n- ✅ Reviewer 审查通过",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"]
+  }
+}

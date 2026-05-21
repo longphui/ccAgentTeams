@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-popup-apihost-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T19:10:00+08:00",
+  "replyTo": "msg-20260519-popup-apihost",
+  "payload": {
+    "subject": "✅ 收到任务：iframe 弹框 API host 排查",
+    "content": "收到任务，正在排查弹框中 API baseUrl 解析链路（appConfig.js → resloader.js → baseService.js → Http.invoke）。"
+  }
+}

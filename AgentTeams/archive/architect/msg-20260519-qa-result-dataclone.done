@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-0030-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T09:45:00+08:00",
+  "replyTo": "msg-20260519-0021-test",
+  "payload": {
+    "subject": "✅ 测试通过：app.js postMessage DataCloneError 修复",
+    "content": "## 测试结果\n- 功能验证：✅ — app.js 正确导入 toRaw，userInfo 通过 toRaw() 解包\n- 数据显示：✅ — 浏览器无 DataCloneError\n- 边界情况：✅ — 无 postMessage 相关错误\n- 前后端联动：✅ — HRM_CONTEXT 通信路径正常\n\n## 详细验证\n1. 代码扫描：app.js L2 导入 toRaw，L170 使用 toRaw(appContext.userInfo)\n2. 浏览器验证：ERP 首页无 DataCloneError，无 postMessage 错误\n3. 通信测试：HRM_CONTEXT 消息可安全通过 postMessage 传输\n\n## 发现的问题\n无\n\n## 审查意见\n✅ 通过 Reviewer 审查，修复有效可合并"
+  }
+}

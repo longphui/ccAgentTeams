@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-2315-ack2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "low",
+  "timestamp": "2026-05-20T23:15:00+08:00",
+  "replyTo": "msg-20260520-2310-e001",
+  "payload": {
+    "subject": "✅ 收件箱已清理（#004 相关）",
+    "content": "已将 3 个 #004 相关 .done 文件移入 archive/developer/。当前收件箱剩余 4 个 .done（非 #004 相关）。"
+  }
+}

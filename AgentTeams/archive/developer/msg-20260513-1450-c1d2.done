@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260513-1450-c1d2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T14:50:00+08:00",
+  "payload": {
+    "subject": "修复 #001 Tab1/Tab2 分类展示 — 新增 CodeGenStatus 参数",
+    "context": "Reviewer 发现 Tab1「未生成编码」和 Tab2「已生成编码」调用同一个 API 且无区分参数，两个 Tab 显示完全相同数据，失去分类意义。",
+    "content": "## 架构决策\n\n采用 **方案A（后端过滤）**：新增可选参数 `CodeGenStatus`，服务端 Linq 过滤，保证分页准确性。\n\n## 修改内容\n\n### 1. 入参 DTO 新增字段\n在调用 `GetPageListForCodeGen` 的输入类中新增：\n```csharp\n/// <summary>\n/// 编码生成状态：null=全部, 0=未生成, 1=已生成\n/// </summary>\npublic int? CodeGenStatus { get; set; }\n```\n\n### 2. Service 增加过滤逻辑\n在 `ProduceWorkOrderService.GetPageListForCodeGen()` 中，`Contains` 批量查询编码计数后，按 `CodeGenStatus` 过滤：\n- `CodeGenStatus == 0` → 保留 `generatedCodeCount == 0` 的项\n- `CodeGenStatus == 1` → 保留 `generatedCodeCount > 0` 的项\n- `CodeGenStatus == null` → 不过滤（向后兼容）\n\n### 3. 前端 index.html\n- Tab1 的 `staticFilter` / `filters` 中传入 `CodeGenStatus: 0`\n- Tab2 的 `staticFilter` / `filters` 中传入 `CodeGenStatus: 1`\n\n## 涉及文件\n- `SAHG.Salt.Application/Produce/Dto/` — 入参 DTO（找到 GetPageListForCodeGen 使用的 Input 类）\n- `SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs` — 添加过滤逻辑\n- `v2/views/productionManage/commonProductionStages/index.html` — Tab1/Tab2 传不同参数\n\n## 注意\n- 过滤必须在内存中完成（因为 `generatedCodeCount` 是计算字段，不是 DB 列）\n- 过滤后再做 Skip/Take 分页，保证分页正确",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/index.html"
+    ],
+    "actions": [
+      "找到 GetPageListForCodeGen 使用的 Input DTO，新增 int? CodeGenStatus 字段",
+      "Service 中在 Contains 批量查询后、分页前，按 CodeGenStatus 过滤内存列表",
+      "前端 Tab1 传 CodeGenStatus=0，Tab2 传 CodeGenStatus=1",
+      "MSBuild 编译通过",
+      "svn add 新文件（如有）"
+    ],
+    "deadline": null
+  }
+}

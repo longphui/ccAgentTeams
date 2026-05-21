@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-0010-r1f2",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:15:00+08:00",
+  "replyTo": "msg-20260518-0005-a1b2",
+  "payload": {
+    "subject": "审查反馈：#004 Task 1+2+3 — 2个HIGH + 2个NORMAL 问题",
+    "content": "## 审查报告\n\n### 🔒 安全问题\n\n- [ ] **密码明文存储**（NORMAL）：`appsettings.json:49` 明文存储密码 `\"Password\": \"123456\"`，`HrmAuthService.cs:36` 有硬编码 fallback `?? \"123456\"`。生产环境建议改用 Secret Manager 或环境变量。当前开发阶段可接受，但需关注。\n\n### 📐 规范问题\n\n- [ ] **注释不完整**（NORMAL）：\n  - `HrmAuthService.cs:27` `GetFenluTokenAsync()` 缺少 `<returns>说明</returns>`\n  - `MenuProxyService.cs:26` `GetListByRoleAsync([FromBody] MenuRequestDto request)` 缺少 `<param name=\"request\">说明</param>` 和 `<returns>说明</returns>`\n\n### 🐛 Bug 风险\n\n- [x] **HIGH — MenuProxyService 缺少 success 检查，NRE 风险**：`MenuProxyService.cs:52` 直接访问 `jObject[\"result\"][\"menuList\"]`，未先检查 `jObject[\"success\"]?.Value<bool>()`。如果分路返回 `{\"success\": false, \"result\": null, \"error\": {...}}`，会抛出 NullReferenceException。\n\n  **修复建议**：在 52 行之前添加：\n  ```csharp\n  if (jObject[\"success\"]?.Value<bool>() != true)\n  {\n      var errorMsg = jObject[\"error\"]?[\"message\"]?.ToString() ?? \"未知错误\";\n      throw new InvalidOperationException($\"分路菜单接口调用失败: {errorMsg}\");\n  }\n  ```\n\n- [x] **HIGH — SaltRequest 包装格式未确认**：`MenuProxyService.cs:34-36` 传 `{platformId: request.PlatformId}` 直接格式给分路 `/api/HRM/MenuRoute/GetListByRole`。计划实施文档（line 310）明确标记「⚠️ 待 Developer 确认」。若分路该端点使用 `[FromBody] SaltRequest<T>` 包装，则需要改为 `{Data: {platformId: 1}}` 格式，否则运行时调用必定失败。\n\n  **行动**：请检查分路源码中 `GetListByRole` 的 Controller Action 签名，确认入参格式后修正或回复确认。\n\n### ⚡ 性能检查\n\n- ✅ 无问题（无数据库查询，HTTP 调用外部服务）\n\n### 📐 架构一致性\n\n- ✅ 实现符合 Decision #009（渐进混合方案）\n- ✅ Token 桥接 + 菜单代理 模式正确\n- ✅ HrmAuthService 线程安全（static + lock）优于计划代码\n\n### 🔗 API 契约一致性\n\n- ✅ 契约 A：端点 `POST /api/hrm-auth/get-fenlu-token`，响应 `{data: {token}}` 一致\n- ✅ 契约 B：端点 `POST /api/menu-proxy/get-list-by-role`，字段映射 parentId→parent、path 映射 一致\n- ✅ 契约 C：SaltRequest 格式 `{Data: {Username, Password, Source: null}}` 正确\n- ⚠️ 契约 D：请求体格式待确认（见上方 Bug 风险）\n\n## 审查结论\n\n**需修改** — 2 个 HIGH 问题需解决后重新提交审查。NORMAL 问题建议一并处理。",
+    "files": []
+  }
+}

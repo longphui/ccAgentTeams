@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260512-140000-q7r8",
+  "type": "ALERT",
+  "from": "qa",
+  "to": "developer",
+  "priority": "critical",
+  "timestamp": "2026-05-12T14:00:00+08:00",
+  "payload": {
+    "subject": "🚨 Token 刷新接口返回 500 错误",
+    "context": "测试第6项「刷新轮转」时发现严重 Bug",
+    "content": "## Bug 详情\n\n### 复现步骤\n1. 登录获取 access_token + refresh_token\n2. 调用 `POST /api/auth/refresh` 传入 refresh_token\n3. **第一次刷新**：成功，返回新的 token 对 ✅\n4. 用**旧的 refresh_token** 再次调用刷新接口\n5. **期望**：返回 401（token 已失效）\n6. **实际**：返回 **500 Internal Server Error** 💥\n\n### 错误日志\n```\npanic: runtime error: invalid memory address or nil pointer dereference\n  at auth/service.go:142 (RefreshToken)\n  \ngoroutine 47 [running]:\nauth.(*Service).RefreshToken(0xc0001a8000, 0xc0001b2000)\n  /src/auth/service.go:142 +0x345\n```\n\n### 分析\n`service.go:142` 行代码：\n```go\noldToken.RevokedAt = time.Now()  // ← oldToken 可能为 nil\n```\n当 refresh_token 已被轮转撤销后，查询返回 nil，但代码未判空就直接赋值。\n\n### 测试影响\n- 阻塞项：功能测试第6项\n- 相关：安全测试（重放攻击检测无效）",
+    "files": ["logs/error-20260512-140000.log"],
+    "actions": ["修复 nil 指针 panic", "添加已撤销 token 的 401 响应", "补充单元测试覆盖此场景"]
+  }
+}

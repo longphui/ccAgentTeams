@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-2015-q3r4",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T20:15:00+08:00",
+  "replyTo": "msg-20260518-1945-test",
+  "payload": {
+    "subject": "✅ 测试通过：鸿冠模块菜单数据（#004 Task 9）",
+    "content": "## 测试结果\n- 功能验证：✅ 21 个顶层模块菜单全部可见，394 个菜单项加载正常\n- 数据显示：✅ 菜单层级关系正确，startup 首页为「工作台」(id:310, path 无拼写错误)\n- 边界情况：✅ 菜单降级回退 menu.json 正常\n- 前后端联动：✅ 40 个 HRM iframe 菜单路径映射正确 (/views/hrm-proxy/index.html?page=...)\n\n## 详细验证\n\n### Playwright 自动化测试\n- 8/8 全部通过（菜单树渲染、图标、标签页/startup、postMessage、无JS异常、checkTabPermissions、菜单降级、appContext状态）\n\n### 浏览器实机验证（真实 API 数据）\n| 检查项 | 结果 |\n|--------|------|\n| 菜单总数 | 21 顶层模块 + 394 总菜单项 |\n| startup 路径 | /v2/views/workbenches/index-v2.html（无拼写错误）✅ |\n| HRM iframe 映射 | 40 项正确映射到 hrm-proxy ✅ |\n| 菜单层级 | 父子关系正确（parent 字段映射正常）✅ |\n| JS 错误 | 无 ✅ |\n| 降级回退 | console.warn + menu.json 回退正常 ✅ |\n| checkTabPermissions | 5/5 断言通过 ✅ |\n\n### menuButtons 统计\n| 类型 | 数量 |\n|------|------|\n| 有完整 CRUD 按钮 | 40 |\n| 仅 search | 266 |\n| 无按钮 | 88 |\n\n## 发现的问题\n无阻塞性问题。\n\n### 备注\n- 88 项菜单的 menuButtons 为空，266 项仅有 search — 此为上游分路数据现状，不影响功能可用性\n- 数据库 platformId 和 path 拼写修复已在二次审查中通过，浏览器验证未发现残留错误"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1800-result-crosscontext",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T18:00:00+08:00",
+  "replyTo": "msg-20260514-1650-k1l2",
+  "payload": {
+    "subject": "✅ GetPageList 跨上下文 + 中文搜索 修复完成",
+    "content": "## 修复内容\n\n### 跨上下文错误\nKeywords 子查询中 `_productRep.GetAll()` 与 `_context` 混用 JOIN → EF 报「different contexts」。\n修复：拆为四步独立查询，每步只访问单一数据源：\n1. `_productRep` + `DbFunctions.Like(ProductName)` → 匹配商品 ID\n2. `_context.ProductComponents` + ID 列表 → 成品 ID\n3. `_context.ProductComponentCodes` + ID 列表/`DbFunctions.Like(CodeValue)` → 组件 ID\n4. 主查询 `DbFunctions.Like(ProductCode)` + 三个 ID 列表\n\n### 中文搜索（决策 #005）\n3 处 `Contains()` 全部替换为 `DbFunctions.Like(field, \"%keyword%\")`：ProductName、CodeValue、ProductCode\n\n## 审查\n✅ 已通过 Reviewer 审查\n✅ 编译 0 Error",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

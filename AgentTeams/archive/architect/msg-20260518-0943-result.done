@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-0943-res1",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T09:43:02+08:00",
+  "replyTo": "msg-20260518-0035-g9h0",
+  "payload": {
+    "subject": "⚠️ #004 Task 1+2+3 部分测试结果：编译+CORS PASS，API 阻塞",
+    "content": "## 测试结果\n\n| 维度 | 结果 |\n|------|------|\n| 编译验证 | ✅ dotnet build 0 Error 0 Warning |\n| CORS 配置 (Task 3) | ✅ 预检 200 + CORS 头 |\n| Token 桥接 API (Task 1) | ⚠️ BLOCKED — 需鸿冠登录凭据 |\n| 菜单代理 API (Task 2) | ⚠️ BLOCKED — 同上 |\n\n## 已验证\n- 编译：honguan_erp.sln Debug 编译通过\n- CORS：分路 8088 返回正确的跨域头\n- 底层依赖：分路登录 API + 菜单 API 均正常\n\n## 阻塞原因\n鸿冠 `/api/auth/login-by-username` 需要有效的数据库用户。远程 DB 有用户但密码 bcrypt 加密，无法登录获取 JWT。已发 FEEDBACK 给 Developer 请求测试凭据（msg-20260518-0930-x1y2），Developer 已标记 done 但未回复。\n\n## 建议\n1. 协调 Developer 提供测试账号或创建种子用户\n2. 或给 HrmAuthService/MenuProxyService 临时加 [AllowAnonymous]"
+  }
+}

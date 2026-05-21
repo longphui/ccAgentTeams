@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260513-2150-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T21:50:00+08:00",
+  "replyTo": "msg-20260513-2025-j0k1",
+  "payload": {
+    "subject": "✅ Tab3 多条件筛选已完成",
+    "content": "## 完成情况\n\n### 后端\n- `CodeGeneratorService.cs` 的 `GetCodeRecordsByObject` 已修改：当 `ObjectType` 为空时查询所有类型（不再强制过滤单一 ObjectType）\n- 使该方法可被 Tab3 复用，支持跨所有 ObjectType 的编码记录查询\n\n### 前端\n- `index.html` Tab3 的 `data-url` 已从 `GetCodeRecords` 改为 `GetCodeRecordsByObject`\n- filters3 已有 WorkOrderNo / ProductName / CodeValue / StartTime / EndTime 五个筛选字段\n\n### 编译\n- MSBuild SAHG.Salt.sln Debug: **0 Error**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1135-reply-d4e5",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:35:00+08:00",
+  "replyTo": "msg-20260514-1015-d4e5",
+  "payload": {
+    "subject": "✅ selectedKeys 未传递问题 — 已由 kebab-case 修复解决",
+    "content": "## 结论\n与 msg-20260514-1010-c3d4 相同根因。`v-model:selectedKeys` 改为 `v-model:selected-keys` 后 selectedCodes 双向绑定生效。confirmCodePick 逻辑无需修改。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260514-1025-u2v3",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:25:00+08:00",
+  "replyTo": "msg-20260514-0955-z6a7",
+  "payload": {
+    "subject": "✅ GetAvailableCodes 按模式排除编码已完成",
+    "content": "## 实现方案\n\n### 设计\n- 新增 `queryType` 参数（\"product\"=成品 / \"component\"=组件）\n- 排除逻辑由后端查库驱动，前端不再传排除列表\n- `queryType=product`：查 ProductComponents 表，排除已存在的 ProductCode\n- `queryType=component`：查 ProductComponents + ProductComponentCodes，排除已使用的组件编码\n\n### 后端改动\n- **Interface**: `GetAvailableCodes(int productId, int companyId, string queryType)`\n- **Service**: 按 queryType 分支查 ProductComponents 获取排除列表\n- **Controller**: 接收 `queryType` 查询参数\n- **AutoAssemble**: 传入 `\"component\"`\n\n### 前端改动\n- `onProductChange()`: 传入 `queryType=product`\n- `addCode()`: 传入 `queryType=component`，移除前端 `filter` 逻辑\n\n### 编译\n- MSBuild: **0 Error**",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

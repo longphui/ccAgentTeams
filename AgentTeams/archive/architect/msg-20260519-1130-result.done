@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1130-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T11:45:00+08:00",
+  "replyTo": "msg-20260519-1130-tst2",
+  "payload": {
+    "subject": "✅ 测试通过：menuButtons 权限传递链路",
+    "content": "## 测试结果\n- 功能验证：✅ — 三文件 (app.js/hrm-proxy/util.js) menuButtons 链路完整\n- 数据显示：✅ — menu.json 员工信息配置 add/update/delete/search/import 正确\n- 边界情况：✅ — 无menuButtons=fail closed（所有按钮 checkTabPermissions 返回 false）\n- 前后端联动：✅ — 4个HRM页面 +menuButtons 加载无权限错误\n\n## 详细验证\n1. 代码扫描 (3/3 通过):\n   - app.js L168: currentRouteItem?.menuButtons 提取 ✅\n   - hrm-proxy L49/70-72: menuButtons 接收 + 拼接到 iframe URL ✅\n   - util.js L58-63: URL参数解析 + checkTabPermissions Stub ✅\n2. HRM 页面 +menuButtons 批量验证 (4/4 通过):\n   - staffInfo ✅ URL保留menuButtons\n   - staffRecord ✅ URL保留menuButtons\n   - staffDimission ✅ URL保留menuButtons\n   - tab_index ✅ URL保留menuButtons\n3. Fail Closed 验证: checkTabPermissions 在无menuButtons时全部返回 false ✅\n4. menu.json 权限配置验证: 员工信息 menuButtons=[add,update,delete,search,import] ✅\n\n## 发现的问题\n无\n\n## 审查意见\n✅ 通过 QA 验证，menuButtons 权限传递链路完整，fail closed 行为正确，修复有效可合并"
+  }
+}

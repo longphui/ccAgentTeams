@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260518-0005-a1b2",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T00:05:00+08:00",
+  "payload": {
+    "subject": "审查请求：#004 Task 1+2+3 — Token桥接API + 菜单代理API + CORS",
+    "context": "#004",
+    "content": "## 审查重点\n\n### Task 1: HrmAuthService.cs（Token 桥接 API）\n- 端点：POST /api/hrm-auth/get-fenlu-token\n- 使用预设账号调分路 Login API，SaltRequest 格式 `{Data: {Username, Password, Source: null}}`\n- Token 内存缓存（过期前 5 分钟刷新），线程安全（lock）\n- 返回 `HrmTokenDto`，Furion UnifyResult 自动包装为契约 A 格式\n\n### Task 2: MenuProxyService.cs（菜单代理 API）\n- 端点：POST /api/menu-proxy/get-list-by-role\n- 字段映射：parentId → parent，HRM path → hrm-proxy path\n- 递归处理菜单树，保留 menuButtons 数组\n- ⚠️ 待确认：分路 GetListByRole 的请求体格式。当前代码传 `{platformId: 1}`，若分路使用 `[FromBody] SaltRequest<T>` 则需改为 `{Data: {platformId: 1}}`\n\n### Task 3: CORS 配置（分路）\n- Web.config `<httpProtocol><customHeaders>` 已添加 CORS 头（Access-Control-Allow-Origin: http://localhost:5021）\n- Global.asax Application_BeginRequest 已处理 OPTIONS 预检\n\n### 验证情况\n- `dotnet build honguan_erp.sln -c Debug` → 0 Error ✅\n- SVN st 确认所有新增文件已 `svn add`（HrmAuthService.cs, MenuProxyService.cs, hrm-proxy/index.html）\n- 现有文件修改已追踪（Startup.cs, appsettings.json, Web.config, Global.asax）\n\n请重点检查 SaltRequest 包装问题和字段映射逻辑。",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Web.Core\\Startup.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Web.Entry\\appsettings.json",
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\Web.config",
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\Global.asax"
+    ]
+  }
+}

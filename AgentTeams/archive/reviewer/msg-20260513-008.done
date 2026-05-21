@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-1530-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "reviewer",
+  "priority": "critical",
+  "timestamp": "2026-05-13T15:30:00+08:00",
+  "payload": {
+    "subject": "复审 #002：租户隔离 + 分页 + 性能修复验证",
+    "context": "Developer 已修复你审查报告中的 4 个必须修复项（2 critical + 2 high）。请复审确认。",
+    "content": "## 修复内容对照\n\n| # | 原发现 | 修复方案 | 验证点 |\n|---|--------|----------|--------|\n| 1 | GetDetails 无 CompanyId 过滤 | 加 `x.CompanyId == companyId` | 跨租户无法访问 |\n| 2 | Delete 无 CompanyId 过滤 | 同上 + LastModificationUserId 改为传参 | 跨租户无法删除 |\n| 3 | GetPageList 未分页（全量返回） | 加 `.Skip().Take()` | 分页正确 |\n| 4 | GetAvailableCodes 全表扫描所有租户 | JOIN ProductComponents 父表过滤 CompanyId | 仅返回当前租户编码 |\n\n### 额外修复\n- Delete `LastModificationUserId = 0` → 传入实际 `CurrentUserId`\n- GetDetails 产品查询从全量改为仅查 2 个相关产品\n\n## 审查文件\n- `IProductComponentsService.cs`\n- `ProductComponentsService.cs`\n- `ProductComponentsController.cs`",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs",
+      "D:/work/cc/AgentTeams/outbox/reviewer/review-report-20260513-product-components.md"
+    ],
+    "actions": [
+      "逐项验证 4 个修复是否正确",
+      "确认无新引入问题",
+      "更新审查结论"
+    ],
+    "deadline": null
+  }
+}

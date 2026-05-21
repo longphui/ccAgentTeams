@@ -1,0 +1,15 @@
+{
+  "id": "msg-20260519-all-iframe-network-error",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T21:00:00+08:00",
+  "payload": {
+    "subject": "🚨 所有 iframe 嵌入分路页面接口报「网络错误」",
+    "context": "#004",
+    "content": "## 问题描述\niframe 嵌入的**所有**分路页面接口均报错：「网络错误」。\n\n这是一个大范围回归问题，可能由近期某次修复引入。\n\n## 排查方向\n- 最近修改的文件：baseService.js（popup-apihost 修复）、util.js（离职模板按钮修复 + 人事审批 host 修复）\n- 重点检查 base-path / baseUrl 相关逻辑是否有回归\n- 对比修复前后的代码变更，确认哪次改动导致全局网络错误\n\n## 补充诊断\n用户确认：所有接口地址的 host 被错误改成了分路**前端**的 host（localhost:8095），而不是分路 **API** 的 host（localhost:8088）。\n说明 base-path / baseUrl 被错误设置为了前端地址，而非 API 地址。\n\n## 优先级\n⚠️ critical — 影响所有 iframe 嵌入页面，需立即修复。",
+    "files": [],
+    "actions": ["排查根因（大概率是近期修复引入的回归）", "回滚或修复", "验证所有 iframe 页面恢复正常", "发 REVIEW"]
+  }
+}

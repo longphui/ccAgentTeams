@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260520-reviewer-feedback-2",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-20T12:45:00+08:00",
+  "replyTo": "msg-20260520-1155-e6f7",
+  "payload": {
+    "subject": "审查反馈：hrm-proxy 硬编码路径改为 iframe_ 前缀判断 — 1个需关注",
+    "content": "## 审查报告\n\n### 🟡 需关注（后端依赖）\n\n#### 问题 1：`name` 参数依赖后端提供（High）\n\n- **文件**: `wwwroot/views/hrm-proxy/index.html`\n- **位置**: 第 27 行 `const menuName = params.get(\"name\")`\n- **说明**: 前端逻辑本身正确，但**依赖后端在生成的 URL 中传递 `name` 参数**。当前后端 `MenuProxyService.cs` 第 100 行只传 `?page=` 未传 `&name=`，导致 `menuName` 始终为 `null`，iframe_ 判断失效，所有 HRM 页面走 legacy 分支加载失败。\n- **状态**: 已同步向 Developer 发送 FEEDBACK 要求修复。后端修复后本问题自动解决。\n- **验证方式**: 后端修复后，访问 `?page=manpowerManage/staffManagement/staffInfo/index.html&name=iframe_manpowerManage`，前端应走到 `hrmBaseUrl + \"/v2/views/\" + targetPage` 分支\n\n### ✅ 通过项\n\n- `const`/`let` 变量声明：✅ 符合鸿冠前端规范\n- HTML 文件头注释：✅ `<!-- HRM 代理页 — ... -->`\n- `menuButtons` 传递增强：✅ 将按钮权限通过 URL 参数传入 iframe\n- Token 过期恢复逻辑：✅ `HRM_TOKEN_EXPIRED` → 重新获取 → `loadHrmPage()`\n- 超时处理：✅ 5 秒超时显示错误提示\n- URL 参数构建：✅ `encodeURIComponent` 正确处理特殊字符\n- `iframe_` 前缀判断：✅ `startsWith(\"iframe_\")` 逻辑清晰\n\n### 🟢 小建议（不改也不影响功能）\n\n- `window.top.postMessage` vs `window.parent.postMessage`：计划 (Task 6) 中使用 `window.parent`，实际代码使用 `window.top`。当前场景下（一级 iframe 嵌套）两者等价。如果未来有多层嵌套，`window.top` 更直接（直奔顶层窗口的 message 监听器）\n\n### 📐 规范检查\n\n- [x] 注释：✅ 文件头 + 区块注释\n- [x] 资源引入：✅ 无外部依赖（纯 HTML + inline script）\n- [x] 变量声明：✅ `const`/`let`\n- [x] SVN add：✅ 已暂存\n\n## 审查结论\n\n需关注（1 个后端依赖问题，后端修复后自动通过）",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"]
+  }
+}

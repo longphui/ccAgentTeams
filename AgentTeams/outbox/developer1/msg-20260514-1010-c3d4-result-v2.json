@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1140-reply-c3d4-v2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:40:00+08:00",
+  "replyTo": "msg-20260514-1010-c3d4",
+  "payload": {
+    "subject": "✅ checkbox 全选修复 v2 — 手动 checkbox 替代 table 内置 checkbox",
+    "content": "## 根因\nLayuiVue 2.22.2 独立 `<lay-table>` 不支持 `type:checkbox` + `v-model:selected-keys` 的 selection 模式（该项目中所有 checkbox 选择均在 `<lay-page-view>` 或 `<lay-editable-table>` 包装组件中实现）。\n\n## 修复\n1. 移除 table 的 `v-model:selected-keys` 和 `row-key`\n2. checkbox 列从 `{ type: \"checkbox\" }` 改为 `{ customSlot: \"check\" }`\n3. 模板中用原生 `<input type=\"checkbox\">` + `:checked` + `@change` 手动管理选中\n4. `toggleCodeSelect(codeValue)` 方法直接操作 `selectedCodes` 数组\n5. `confirmCodePick` 逻辑不变，直接读 `selectedCodes`",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

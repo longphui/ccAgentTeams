@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1050-k7l8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:50:00+08:00",
+  "payload": {
+    "subject": "GetAvailableCodes — queryType 硬编码改为枚举",
+    "context": "#002",
+    "content": "## 改动\n`GetAvailableCodes` 的 `queryType` 参数当前是字符串（\"product\"/\"component\"），改为枚举类型。",
+    "files": ["D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"],
+    "actions": ["定义 queryType 枚举", "替换硬编码字符串"],
+    "deadline": null
+  }
+}

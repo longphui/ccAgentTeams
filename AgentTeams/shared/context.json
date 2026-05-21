@@ -1,0 +1,45 @@
+{
+  "project": "分路系统（HRM + 多业务模块）",
+  "projectCode": "fl",
+  "language": "C# / JavaScript",
+  "framework": ".NET Framework 4.8 + ABP / Vue 3 + LayuiVue",
+  "database": "SQL Server (EF6 Code First)",
+  "currentBranch": "main",
+  "activeTasks": ["#006: 报工审核批次生成修复"],
+  "features": {
+    "#006": {
+      "title": "报工审核批次生成修复",
+      "status": "实施中",
+      "date": "2026-05-21",
+      "summary": "修复 Approval() 方法批次 ProductionNum 计算错误，恢复 r4539 的 Min 逻辑 + 不限工序触发。Developer 修复中，QA 编写测试用例。",
+      "reqDoc": "shared/requirements/006-报工审核批次生成修复.md",
+      "planDoc": "shared/requirements/006-plan-报工审核批次生成修复.md",
+      "analysis": "shared/006-analysis-batch-generation.md"
+    }
+  },
+  "notes": "#001~#004 全部可交付，详细历史已归档至 archive/features-001-004-history.md。#003 Task 3 数据库迁移需手动执行。 #005 已交付 → archive/features-005-history.md",
+  "team": {
+    "architect": "就绪",
+    "developer": "空闲 (#006 修复完成，已发 TEST)",
+    "developer1": "空闲",
+    "reviewer": "空闲 (#006 审查通过，1 项 FEEDBACK 已修正)",
+    "qa": "执行中 (#006 测试验证中)"
+  },
+  "decisions": [
+    {"id": "008", "title": "CodeGenerator Domain 重构", "choice": "BizFieldDefinition 加 DomainCode/DomainName/FieldSql，BizContext→DomainId", "detail": "BizFieldDefinition 是 Domain 唯一数据源。CodeRule 和 BizCodeIdentifier 通过下拉选择 Domain，不可手输。"},
+    {"id": "009", "title": "HRM 集成方案选型", "choice": "方案D 渐进混合（iframe 先行 + 逐步迁移）", "detail": "阶段1: iframe全量嵌入(4.5天); 阶段2+: 高频模块代码迁移。菜单统一用HRM API，Token过期用?embedded=true"},
+    {"id": "010", "title": "E2E 数据质量问题处理策略", "choice": "用户确认: /v2/路径保留+反斜杠不修(已删除数据)+startup改天津宏观世纪首页", "detail": "详见 shared/decisions/010-menu-data-quality.md"},
+    {"id": "011", "title": "#004 iframe嵌入页面识别方式改造", "choice": "name字段iframe_前缀判断，替代/v2/views/manpowerManage/硬编码", "detail": "⚠️ 测试数据无iframe_前缀节点，需实际添加菜单项后方可端到端验证。"}
+  ],
+  "conventions": [
+    "新 .cs 文件必须注册到 .csproj 的 <Compile Include>",
+    "新 .html 文件必须 svn add",
+    "新 .cs 文件必须 svn add",
+    "前端功能页面放在独立子目录下（如 generatorProductCodes/、ProductComponents/）",
+    "outbox 只放 JSON 消息，代码通过 payload.files 指向实际路径",
+    "收件箱清理：任务走完完整流水线后各角色自行清理相关 .done 到 archive；任一 inbox 超 20 个 .done 时强制清理兜底。保持收件箱只留 .msg.json 和 .processing",
+    "各角色完成工作后写 trigger 文件到 AgentTeams/watcher/trigger-{下游角色}.txt，由 /loop + /agent-trigger 自动检测接力，无需用户手动触发",
+    "分派任务前必须参考 shared/conventions/frontend-tech-stack.md：.js/.html/CSS/localStorage/postMessage/DOM → Developer1；.cs/.csproj/SQL → Developer",
+    "用户确认可交付的功能 → 详细历史移入 archive/features-XXX-history.md，context.json 仅保留一句话摘要 + 归档指针"
+  ]
+}

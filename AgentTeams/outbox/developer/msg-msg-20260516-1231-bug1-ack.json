@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1235-a1b2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-16T12:35:00+08:00",
+  "replyTo": "msg-20260516-1231-bug1",
+  "payload": {
+    "subject": "✅ 收到 Bug 报告：SaveBizField/SaveBizCode/SaveRule API 返回空异常",
+    "content": "收到，开始排查。优先检查 Save 相关 Service 代码、DTO CheckData、AutoMapper 映射。排查后修复并回复。"
+  }
+}

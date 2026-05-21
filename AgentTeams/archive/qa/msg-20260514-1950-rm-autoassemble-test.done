@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260514-1950-rm-autoassemble-test",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:50:00+08:00",
+  "payload": {
+    "subject": "测试请求：AutoAssemble 已移除，验证其他功能无回归",
+    "context": "#002",
+    "content": "## 变更\nAutoAssemble 一键自动组合功能已移除。\n\n## 回归测试重点\n- [ ] Save 手动组装正常\n- [ ] Update 编辑正常\n- [ ] GetPageList 列表查询正常\n- [ ] GetDetails 详情查询正常\n- [ ] Delete 删除正常\n- [ ] GetAvailableCodes 可用编码查询正常\n- [ ] AutoAssemble 接口已不可用（预期 404 或不返回）\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProductComponentsController.cs"
+    ]
+  }
+}

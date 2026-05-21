@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0820-t9u0",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:20:00+08:00",
+  "replyTo": "msg-20260514-0820-n4o5",
+  "payload": {
+    "subject": "✅ 收到任务：手动组装弹框下拉无选项",
+    "content": "收到，正在排查。"
+  }
+}

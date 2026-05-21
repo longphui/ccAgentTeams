@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260518-2200-d1e2-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T22:00:00+08:00",
+  "replyTo": "msg-20260518-2155-d1e2",
+  "payload": {
+    "subject": "✅ 收到任务：创建 menu.json 菜单降级文件",
+    "content": "收到任务，预计 0.5 小时完成。将先定位菜单 API 端点，通过 curl 导出数据，保存为 wwwroot/menu.json。"
+  }
+}

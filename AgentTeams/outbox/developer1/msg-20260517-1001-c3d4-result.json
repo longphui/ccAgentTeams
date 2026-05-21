@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260518-0015-a1b2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T00:15:00+08:00",
+  "replyTo": "msg-20260517-1001-c3d4",
+  "payload": {
+    "subject": "✅ [fl] baseService.js ?embedded=true 已完成",
+    "content": "## 完成情况\n- 新增 `isEmbedded` 检测 + `onTokenExpired()` 函数（约 15 行）\n- 替换全部 6 处 `getRootWindow().location.href = '/login.html'` 为 `onTokenExpired()`\n- 非嵌入模式行为与改前完全一致\n- 已通过 Reviewer 审查\n\n## 改动文件\n- `D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\baseService.js`",
+    "files": [
+      "D:\\work\\cc\\caikuangzi.fenluwebproject\\trunk\\Web\\Web\\v2\\baseService.js"
+    ]
+  }
+}

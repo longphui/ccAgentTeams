@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260520-1145-c3d4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-20T11:45:13+08:00",
+  "payload": {
+    "subject": "#004 MenuProxyService 硬编码路径改为 iframe_ 前缀判断",
+    "context": "#004",
+    "content": "## 问题\n\n`MenuProxyService.cs` 中使用 `/v2/views/manpowerManage/` 硬编码判断和截取路径，限制了引入分路其他功能页面。\n\n## 要求\n\n改为：通过菜单路由名称（`name` 字段）是否以 `iframe_` 开头来判断。天津宏观世纪 ERP 菜单表中，所有 iframe 嵌入的分路页面对应的路由记录，`name` 字段都以 `iframe_` 开头。\n\n## 涉及文件\n\n- `IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs`（第 94、97 行附近）\n\n## 行动项\n\n1. 找到 `Contains(\"/v2/views/manpowerManage/\")` 和 `Replace(\"/v2/views/manpowerManage/\", \"\")` \n2. 改为通过菜单路由 name 字段的 `iframe_` 前缀判断\n3. 确保路径拼接逻辑正确\n4. 编译通过 0 Error\n5. 发 REVIEW → Reviewer",
+    "files": [
+      "IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"
+    ],
+    "actions": [
+      "MenuProxyService.cs 路径判断改为 iframe_ 前缀",
+      "编译通过 0 Error",
+      "发 REVIEW → Reviewer"
+    ],
+    "deadline": null
+  }
+}

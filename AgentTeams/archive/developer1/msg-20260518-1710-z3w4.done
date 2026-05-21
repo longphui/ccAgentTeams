@@ -1,0 +1,22 @@
+{
+  "id": "msg-20260518-1710-z3w4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-18T17:10:00+08:00",
+  "payload": {
+    "subject": "修复 startup 路由缺少 menuButtons",
+    "context": "#004",
+    "content": "## Bug 描述\n\nPlaywright E2E 测试发现：`initMenu()` 中创建 startup 路由时未传递 `menuButtons`，导致 startup 标签页无按钮权限数据。\n\n对比 `openMenu()` 函数——它正确传递了 `menuButtons`。\n\n## 排查方向\n\n在 `initMenu()` 中为 startup 路由补充 `menuButtons` 字段，与 `openMenu()` 保持一致。\n\n## 验收标准\n\n- startup 路由对象的 `menuButtons` 字段不为空/undefined\n- Playwright 测试用例 \"appContext 全局状态\" 不再报告缺失（QA 可重新跑验证）\n\n## 来源\n\nQA 测试报告 `msg-20260518-1705-x1y2`（Playwright E2E 验证）",
+    "files": [
+      "AgentTeams/inbox/architect/msg-20260518-1705-x1y2.processing"
+    ],
+    "actions": [
+      "定位 initMenu() 中 startup 路由创建代码",
+      "补充 menuButtons 字段",
+      "完成后发 TEST 给 QA 重新跑 Playwright 验证"
+    ],
+    "deadline": null
+  }
+}

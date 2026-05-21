@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260519-0001-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-19T00:01:00+08:00",
+  "payload": {
+    "subject": "修复 hrm-proxy postMessage 断裂导致 HRM 页面超时",
+    "context": "#004",
+    "content": "## 问题\n\nHRM 代理页面打开后 5 秒显示「HRM 认证超时，请刷新重试」。\n/api/hrm-auth/get-fenlu-token 接口正常返回 token，说明后端 OK。\n\n## 根因\n\nTab 内容通过 iframe 渲染（bundle.js:160），DOM 层级为：\n```\n主窗口 (app.js, HRM_GET_CONTEXT 监听器在这里)\n  └── Tab iframe\n      └── hrm-proxy/index.html (window.parent = Tab iframe，不是主窗口)\n```\n\n`hrm-proxy/index.html` 用 `window.parent.postMessage` 发送 HRM_GET_CONTEXT，消息到达 Tab iframe 而非主窗口。主窗口 app.js 收不到消息，5 秒超时。\n\n## 修复\n\n`hrm-proxy/index.html` 中两处 `window.parent.postMessage` 改为 `window.top.postMessage`：\n- 第 39 行：初始上下文请求\n- 第 78 行：Token 过期重试\n\n## 验证\n\n1. 打开天津宏观世纪 ERP（http://localhost:5021/）\n2. 点击任意 HRM 菜单项（如员工信息）\n3. 应正常加载 HRM 页面，不再出现「HRM 认证超时」\n4. 浏览器 F12 Console 无报错",
+    "files": ["caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"],
+    "actions": [
+      "将 hrm-proxy/index.html 第 39 行 window.parent.postMessage 改为 window.top.postMessage",
+      "将第 78 行 window.parent.postMessage 改为 window.top.postMessage",
+      "用户验证 HRM 页面能正常打开"
+    ],
+    "deadline": null
+  }
+}

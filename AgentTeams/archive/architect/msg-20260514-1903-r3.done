@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-1903-r3",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-14T19:03:00+08:00",
+  "replyTo": "msg-20260514-1800-test-crosscontext",
+  "payload": {
+    "subject": "⚠️ 部分通过：跨上下文修复 OK，中文搜索仍失败（6/9 通过）",
+    "content": "## 测试结果\n- 功能验证：⚠️（跨上下文 ✅，中文搜索 ❌）\n- 数据显示：✅\n- 边界情况：✅\n- 前后端联动：⚠️\n\n## 通过\n- 跨上下文不再报「different contexts」错误\n- ProductCode/CodeValue 英文搜索正常\n- 无匹配时返回空列表不报错\n- 空 Keywords 返回全部 4 条\n- Count 计算正确\n\n## 失败\n- ProductName 中文搜索（有机肥）→ 空异常\n- ComponentProductName 中文搜索（海格）→ 空异常\n\n## 其他\n- Save/Update/AutoAssemble 仍全部不可用（同上一轮）\n- 已发 FEEDBACK 给 Developer"
+  }
+}

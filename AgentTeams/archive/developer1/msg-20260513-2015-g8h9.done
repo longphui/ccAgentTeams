@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2015-g8h9",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-13T20:15:00+08:00",
+  "payload": {
+    "subject": "接口成功返回编码但页面提示「编码生成失败」",
+    "context": "#001",
+    "content": "## 问题\n生成编码时，接口请求成功（实际已返回编码），但页面弹出提示「编码生成失败」而非「编码生成成功」。\n\n## 排查方向\n`showConfirm` 方法中 `Http.post` 的 `.then(res)` 判断了 `res.success`，检查接口实际返回的字段名是否为 `success`。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"],
+    "actions": ["排查接口返回结构与 res.success 判断是否匹配", "修复后验证成功和失败提示均正确"],
+    "deadline": null
+  }
+}

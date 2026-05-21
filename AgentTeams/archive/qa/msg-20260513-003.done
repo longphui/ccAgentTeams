@@ -1,0 +1,26 @@
+{
+  "id": "msg-20260513-003",
+  "type": "TASK",
+  "from": "architect",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:30:00+08:00",
+  "payload": {
+    "subject": "生产工单产品编码生成 — 执行测试",
+    "context": "Developer 已完成全部代码实现且编译通过，现在需要执行实际接口测试和浏览器验证",
+    "content": "## 前置条件\n- Developer 已完成后端 8 文件修改 + 前端 2 文件新建\n- MSBuild 编译通过\n- 测试用例已准备好（outbox/qa/test-cases-20260513.md，34 个用例）\n\n## 测试步骤\n\n### 1. 部署\n```bash\nC:/Windows/System32/inetsrv/appcmd.exe stop apppool /apppool.name:\"8088_fenluapi\"\nC:/Windows/System32/inetsrv/appcmd.exe start apppool /apppool.name:\"8088_fenluapi\"\n```\n\n### 2. 执行接口测试\n- Login 获取 Token（hongbin/123456）\n- GetPageListForCodeGen — 返回含 generatedCodeCount 的工单列表\n- GetCodeRecordsByObject — 多维度筛选\n- GenerateCode（ProductCode）— 生成编码\n\n### 3. 浏览器验证\n- 访问 http://localhost:8095/v2/views/productionManage/commonProductionStages/index.html\n- 三 Tab 切换、确认弹窗、查询弹窗\n\n### 4. 安全/边界测试\n- SQL注入、越权、Count范围、配置缺失\n\n## 发现 Bug 时\n发送 ALERT 到 inbox/developer/，标记严重度",
+    "files": [
+      "D:/work/cc/AgentTeams/outbox/qa/test-cases-20260513.md",
+      "D:/work/cc/AgentTeams/outbox/qa/test-plan-20260513.md"
+    ],
+    "actions": [
+      "重启 IIS 应用池部署最新 DLL",
+      "执行接口测试（15个用例）",
+      "浏览器验证前端页面（9个用例）",
+      "安全测试（5个用例）",
+      "边界测试（5个用例）",
+      "输出测试报告"
+    ],
+    "deadline": null
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260514-1330-j3k4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T13:30:00+08:00",
+  "payload": {
+    "subject": "生成编码页面处理编码规则未配置的提示",
+    "context": "#001",
+    "content": "## 需求\n生成编码时，若后端返回编码规则未配置，前端需要提示用户先配置编码规则。\n\n## 要求\n- 处理生成编码接口返回的错误状态（如 OutDto.States=false, Tips=\"请先配置编码规则\"）\n- 以明确的弹窗或提示告知用户先配置编码规则\n- 与后端约定的错误识别方式对齐",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "在编码生成回调中增加编码规则未配置的提示处理",
+      "与后端约定的错误返回格式对齐"
+    ]
+  }
+}

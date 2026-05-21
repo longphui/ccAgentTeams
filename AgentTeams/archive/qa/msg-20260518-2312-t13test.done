@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-2312-t13test",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T23:12:00+08:00",
+  "payload": {
+    "subject": "测试请求：startup 首页路径修复",
+    "context": "#004",
+    "content": "## 测试重点\n请验证以下功能：\n- 用户登录天津宏观世纪后，默认打开的首页应为 `views/dashbord/index.html`（天津宏观世纪首页）\n- 不应再跳转到分路的 `/v2/views/workbenches/index-v2.html`\n\n## 审查状态\n✅ 已通过编译 0 Error",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"]
+  }
+}

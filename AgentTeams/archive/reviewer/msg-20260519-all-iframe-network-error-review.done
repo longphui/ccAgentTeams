@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-all-iframe-network-error-review",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "critical",
+  "timestamp": "2026-05-19T21:15:00+08:00",
+  "payload": {
+    "subject": "🚨 紧急审查：回滚 appConfig base URL 覆盖 — 修复全局网络错误",
+    "context": "#004",
+    "content": "## 根因\nhrapproval-apihost 修复在 `baseService.js` 嵌入模式 block 中将 `appConfig.baseUrl1/2/newFenluApiBase` 覆盖为 `location.origin`。\n\n页面经 HRM 代理加载时 origin 为 port 8095，`Http`/`HttpE`/`Http2` 初始化时取值变为 `http://localhost:8095`。所有 API 请求发往 HRM 网关，网关未转发 `/api/` 路由 — 全部返回非 2xx → 「网络错误」。\n\n## 修复\n回滚 appConfig base URL 覆盖逻辑，恢复 `baseService.js` 原有行为（保留 popup-apihost 的 base-path 修复不变）。\n\n## 变更\n- `baseService.js`：删除 Lines 24-31（appConfig 覆盖代码块）",
+    "files": ["caikuangzi.fenluwebproject/trunk/Web/Web/v2/baseService.js"]
+  }
+}

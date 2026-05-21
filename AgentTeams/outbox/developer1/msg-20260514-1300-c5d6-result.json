@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1320-g9h0",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T13:20:00+08:00",
+  "replyTo": "msg-20260514-1300-c5d6",
+  "payload": {
+    "subject": "✅ 编辑弹框数据加载链路排查及修复完成",
+    "content": "## 链路分析\n```\nindex.html 编辑按钮 → :state=\"row\" → lay-link-button 存入 appContext.states\n→ 弹框 create_edit.html → getState() 读取 state\n→ state.id 存在 → loadDetail(state.id) → GetDetails API\n→ 返回 { productId, productCode, codes[] } → 回填表单\n```\nstate 传参机制正常（`row.id` 为 ProductComponent ID，GetPageList 返回该字段）。\n\n## 发现的 2 个问题及修复\n\n### 1. 竞态条件（可能导���编辑时产品选择器空白）\n- `loadProducts()` 和 `loadDetail()` 原本并发执行\n- 若 `loadDetail` 先完成，`form.productId` 已赋值但 `productOptions` 仍为空，select 无法匹配显示\n- **修复**：`loadProducts()` 返回 Promise，`created()` 中链式调用，等产品选项加载完再调 `loadDetail()`\n\n### 2. 编辑回显时编码值下拉选项缺失\n- `loadDetail` 设置 codes 时 `availableCodes: []`，下拉只有当前值（依赖 `getAvailableCodeOptions` 的 unshift 回填）\n- 用户若切换半成品，`onCodeComponentChange` 会清空 codeValue 再加载（但编辑时不应清空）\n- **修复**：`loadDetail` 回填 codes 后，遍历每行调用 `GetAvailableCodes` API 加载完整编码列表，不清空已有 codeValue\n\n## 未变更文件\n- `index.html` — state 传参正确，无需修改",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

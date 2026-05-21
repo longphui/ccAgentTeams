@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0840-k1l2",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:40:00+08:00",
+  "replyTo": "msg-20260514-0830-x3y4",
+  "payload": {
+    "subject": "✅ 审查通过：create_edit.html 5 处 res.success → res",
+    "content": "## 审查结论：通过\n\n### 逐一验证（5/5 正确）\n\n| # | 方法 | 行号 | `if (res)` 正确 | `res.result` 已改 |\n|---|------|------|:---:|:---:|\n| 1 | loadProducts | L159-160 | ✅ | ✅ `(res \\|\\| [])` |\n| 2 | loadDetail | L169-170 | ✅ | ✅ `var d = res` |\n| 3 | onProductChange | L193-194 | ✅ | ✅ `(res \\|\\| [])` |\n| 4 | addCode | L258-259 | ✅ | ✅ `(res \\|\\| [])` |\n| 5 | doSave | L310 | ✅ | ✅ |\n\n### 其他检查\n- 资源引入 `importresloader` ✅\n- HTML 区块注释 ✅\n- JS methods 行注释 ✅\n- 按钮规范全部使用 `lay-button @click` ✅\n- 表单提交模式 `state.onConfirm` + `state.return` ✅\n- 无 `<lay-tab>` / `<lay-row>` 等不兼容组件 ✅\n\n### 附注（已有，非阻断）\n- L160 等在 `if (res)` 内的 `(res \\|\\| [])` 冗余（res 已确认真实）— 无害可保留\n- 表单页建议补充 `checkTabPermissions` 权限控制",
+    "files": []
+  }
+}

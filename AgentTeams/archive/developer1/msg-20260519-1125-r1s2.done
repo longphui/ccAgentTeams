@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-1125-r1s2",
+  "type": "RESULT",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T11:25:00+08:00",
+  "replyTo": "msg-20260519-0117-rvw2",
+  "payload": {
+    "subject": "✅ 审查通过：menuButtons 权限传递链路修复",
+    "content": "## 审查结论：通过\n\n### 📦 提交完整性\n- SVN add：无新建文件（hrm-proxy/index.html 已在此前添加）\n- 修改文件：app.js (M), hrm-proxy/index.html (A), util.js (M) — 均在版本控制中\n\n### 审查详情\n\n#### 🔒 安全检查\n- XSS：encodeURIComponent 正确编码 menuButtons.join(\",\") — ✅\n- 敏感信息：无 Token/密码泄露 — ✅\n- 无 SQL 注入风险（纯前端变更）— ✅\n\n#### 📐 前端规范\n- honguan (app.js/hrm-proxy)：const/let 声明、缩进一致 — ✅\n- fenlu (util.js)：兼容现有 var 风格，新增代码用 const — ✅\n- hrm-proxy 直接使用 script 标签（honguan 规范，非 importresloader）— ✅\n\n#### 🐛 项目高频 Bug 模式\n- Http.invoke 响应解包：`hrmResp.token` 正确（Http.invoke 已解包 res.data，Contract A 返回 data.token）— ✅\n- LayuiVue 不存在组件：未涉及 — ✅\n\n#### 🔗 API 契约一致性\n- Contract E (postMessage)：HRM_CONTEXT 新增 menuButtons 字段，接收方用 `e.data.menuButtons || []` 兼容处理 — ✅\n- 契约扩展合理，向后兼容 — ✅\n\n#### 📐 架构一致性\n- 决策 #009 (iframe 渐进混合)：权限通过 postMessage 传递，getAppContext() stub 不再硬编码 return true — ✅\n- 降级路径完整：无 menuButtons 参数 → 空数组 → 全部按钮隐藏（fail closed）— ✅\n\n### 链路验证\n\n```\nmenu 点击 → openMenu({menuButtons}) → addRoute({menuButtons})\n  → hrm-proxy postMessage(HRM_GET_CONTEXT)\n  → app.js 查 appContext.route.items[currentRouteId].menuButtons\n  → postMessage(HRM_CONTEXT {menuButtons})\n  → hrm-proxy URL 拼接 &menuButtons=...\n  → util.js getAppContext() stub 解析 → checkTabPermissions 生效\n```\n\n### 小建议（非阻塞）\n- 考虑在 Contract E 文档中补充 menuButtons 字段说明，便于后续维护。"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0835-p6q7",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T08:35:00+08:00",
+  "payload": {
+    "subject": "手动组装弹框 — 商品下拉接口改为 GetListOwn",
+    "context": "#002",
+    "content": "## 问题\n手动组装弹框（create_edit.html）的商品下拉当前请求 `ProduceWorkOrder/GetListProduct?companyId=0&workOrderTypeId=2`，该接口包含 BOM 信息，过于复杂不适用。\n\n## 修改\n商品下拉应使用自产商品接口：`GET /api/ResellerApp/ProductInfo/GetListOwn`。\n\n同时检查半成品下拉是否也有类似接口选型问题。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["商品下拉数据源改为 /api/ResellerApp/ProductInfo/GetListOwn", "检查半成品下拉接口是否也需要调整"],
+    "deadline": null
+  }
+}

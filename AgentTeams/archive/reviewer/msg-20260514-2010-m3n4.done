@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-2010-m3n4",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-14T20:10:00+08:00",
+  "payload": {
+    "subject": "审查请求：工单状态查询参数 Statuss → Status",
+    "context": "#001",
+    "content": "## 变更内容\ngeneratorProductCodes/index.html:79 — 筛选参数 `Statuss` 改为 `Status`，匹配后端字段名变更。\n\n## 审查重点\n- 确认只有一处修改（grep 验证仅 L79）\n- 筛选下拉选项值不变（0-4,6）",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"]
+  }
+}

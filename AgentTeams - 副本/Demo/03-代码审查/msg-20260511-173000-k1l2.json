@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260511-173000-k1l2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-11T17:30:00+08:00",
+  "replyTo": "msg-20260511-163000-i9j0",
+  "payload": {
+    "subject": "✅ 安全问题已全部修复，请复审",
+    "content": "## 修复清单\n\n### 🔴 → 🟢 SQL 注入已修复\n`service.go:42` 已改为参数化查询：\n```go\nrow := db.QueryRow(\"SELECT id, username, password_hash, role FROM users WHERE username = $1\", username)\n```\n\n### 🟡 → 🟢 密码强度校验已添加\n`handler.go` 注册接口新增校验：\n```go\nfunc validatePassword(pw string) error {\n    if len(pw) < 8 { return errors.New(\"密码至少8位\") }\n    if !regexp.MustCompile(`[A-Z]`).MatchString(pw) { return errors.New(\"需包含大写字母\") }\n    if !regexp.MustCompile(`[a-z]`).MatchString(pw) { return errors.New(\"需包含小写字母\") }\n    if !regexp.MustCompile(`[0-9]`).MatchString(pw) { return errors.New(\"需包含数字\") }\n    return nil\n}\n```\n\n### 🟡 → 🟢 错误信息不再泄露细节\n所有认证失败统一返回：`{\"error\": \"authentication failed\"}`\n\n### 修改文件\n- `src/auth/service.go` — 参数化查询\n- `src/auth/handler.go` — 密码校验 + 通用错误信息\n- `src/auth/handler_test.go` — 新增密码强度测试用例\n\n请复审确认。",
+    "files": [
+      "src/auth/service.go",
+      "src/auth/handler.go",
+      "src/auth/handler_test.go"
+    ],
+    "actions": ["复审修复代码"]
+  }
+}

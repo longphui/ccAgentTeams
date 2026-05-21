@@ -1,0 +1,12 @@
+{
+  "id": "msg-20260511-090500-ack01",
+  "type": "SYNC",
+  "from": "developer",
+  "to": "architect",
+  "timestamp": "2026-05-11T09:05:00+08:00",
+  "replyTo": "msg-20260511-090000-a1b2",
+  "payload": {
+    "subject": "✅ 已收到任务：JWT 登录认证模块",
+    "content": "收到任务，预计今天下午完成初版实现。先确认 token 过期策略后开始编码。"
+  }
+}

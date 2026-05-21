@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-002-alert-critical",
+  "type": "ALERT",
+  "from": "reviewer",
+  "to": "all",
+  "priority": "critical",
+  "timestamp": "2026-05-13T23:00:00+08:00",
+  "replyTo": "msg-20260513-004",
+  "payload": {
+    "subject": "🚨 严重功能缺陷：codeList.html 弹窗永远返回空结果",
+    "content": "## 漏洞详情\n\n**文件**: `v2/views/productionManage/commonProductionStages/codeList.html`  \n**根因**: `staticFilter`（含 `ObjectType` 和 `ObjectId`）已在 Vue data 中定义，但 `<lay-page-view>` 组件未绑定 `:static-filter=\"staticFilter\"` prop。\n\n**影响**: \n- `ObjectType` 未发送到后端 `GetCodeRecordsByObject` API\n- 后端 Linq 生成 `WHERE ObjectType IS NULL`，永远匹配不到任何编码记录\n- 从 Tab2 点击「查询编码」打开的弹窗**永远显示空列表**\n- 该功能对用户完全不可用\n\n**修复方案**:\n在 `<lay-page-view>` 标签上增加 `:static-filter=\"staticFilter\"`：\n```html\n<lay-page-view ref=\"page\" :page=\"page\" :columns=\"columns\" :filters=\"filters\"\n    :static-filter=\"staticFilter\"\n    :page-maper=\"PageMaper\" method=\"post\" data-url=\"...\">\n```\n\n详细审查报告: `outbox/reviewer/review-report-20260513-produce.md`",
+    "files": ["outbox/reviewer/review-report-20260513-produce.md"]
+  }
+}

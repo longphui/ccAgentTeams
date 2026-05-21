@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260518-1845-d9e1",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-18T18:45:00+08:00",
+  "payload": {
+    "subject": "审查请求：#004 Task 9 — 鸿冠模块菜单数据",
+    "context": "#004",
+    "content": "## 审查重点\n\n已将鸿冠 ERP 完整菜单树（14 个一级模块 + ~133 个子菜单）通过 Save API 插入分路 `HRM_MenuRoute` 表。\n\n### 关键检查项\n1. **命名规范**: 所有菜单 `name` 字段包含鸿冠原始 ID（如 `menu_7`=采购管理, `menu_3_31`=商品列表）\n2. **层级关系**: parentId 正确引用分路 DB 主键，GetListByRole 返回完整树形结构\n3. **platformId=12**: 所有菜单统一使用 platformId=12\n4. **账户**: 使用 aowei/123456 (companyId=17047, 海南傲为智慧产业有限公司)\n\n### 菜单覆盖范围\n- 首页 (1)\n- 产品管理 (3): 物料/商品/分类/品牌/计量单位/产品档案/价格调整 + 子级\n- 工艺管理 (9): 工序/工艺路线/BOM/产品设计/工艺工序设计 + 子级\n- 营销管理 (5): 销售计划/订单/发货/销售业绩/客户/销售订单/基础设置/纸箱报价/运费 + 子级\n- 生产管理 (10): 工单/基础数据/订单排程/派工/报工/设备信息 + 子级\n- 采购管理 (7): 采购计划/订单/供应商/供货清单/采购申请单/生产需求 + 子级\n- 设备管理 (11): 设备台账/类型/巡检/维保\n- 仓储物流管理 (6): 仓储管理(含14个子菜单)/物流管理/售后管理 + 子级\n- 项目管理 (7 dup), 计划管理 (11 dup), 权限管理 (3 dup)\n- 人力资源 (8): 组织架构/人员账号/考勤/薪资/招聘/培训/绩效/员工自助/离职/报表/员工管理/权限 + 子级\n- 协同办公 (12): 审批流设置/我发起的/待我/我参与的\n- 基础设置 (4): 自定义属性\n\n### 已知限制\n1. menuButtons 统一为 [\"search\"]（Save API 未保存额外按钮）\n2. 最深 4 级嵌套菜单的部分 Level-3/4 子级（如 入库管理的5个子类型、盘点管理子级、仓库设置子级）尚未创建\n3. 鸿冠 menu.json 中重复 ID 的菜单已用后缀区分（如 menu_7 vs menu_7_project）\n\n### 验证方式\n```bash\n# 调用分路 API 查看菜单树\ncurl -X POST http://localhost:8088/api/HRM/MenuRoute/GetListByRole \\\n  -H \"Authorization: Bearer <token>\" \\\n  -H \"Content-Type: application/json\" \\\n  -H \"companyId: 17047\" \\\n  -d '{\"platformId\":12}'\n```\n\n完整菜单数据已保存至 `AgentTeams/logs/final_tree.json`",
+    "files": [
+      "D:\\work\\cc\\AgentTeams\\logs\\final_tree.json",
+      "D:\\work\\cc\\AgentTeams\\logs\\create-menus.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_level1_children.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_all_children.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_children_batch2.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_children_batch3.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_level2_batch1.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_level2_batch2.sh",
+      "D:\\work\\cc\\AgentTeams\\logs\\create_level2_batch3.sh"
+    ]
+  }
+}

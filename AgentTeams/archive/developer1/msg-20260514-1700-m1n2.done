@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260514-1700-m1n2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:00:00+08:00",
+  "payload": {
+    "subject": "编辑页面加载已有数据",
+    "context": "#002",
+    "content": "## 问题\n编码组合编辑页面点击编辑后，表单没有带出原有数据。\n\n## 背景\n- 后端 GetDetails 接口已确认返回完整数据（含 ComponentProductName）\n- 后端 Update 接口已实现并审查通过\n- Decision #007：ProductComponent 取消了两级分组，改为扁平 Codes 列表\n\n## 行动项\n- 检查编辑按钮打开的弹窗是否正确调用 GetDetails 接口\n- 确认返回的 Codes 数据（含 ComponentProductId、ComponentUnit、CodeValue）正确回填到表单\n- 保存时调用 Update 接口（不是 Create）\n- 修改后 svn add（如有新文件），发 REVIEW 给 Reviewer",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html"
+    ],
+    "actions": [
+      "排查编辑弹窗数据加载流程",
+      "修复数据回填",
+      "保存时走 Update 接口",
+      "svn add（如有新文件）"
+    ],
+    "deadline": null
+  }
+}

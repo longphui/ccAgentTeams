@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1130-r5u6",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "normal",
+  "timestamp": "2026-05-14T11:30:00+08:00",
+  "replyTo": "msg-20260514-0839-i9j0",
+  "payload": {
+    "subject": "✅ codeList.html 注释已补充",
+    "content": "## 已修复\n- page: 添加 `// 分页参数`\n- filters: 更新为 `// 筛选 — 对齐编码记录页面`\n- staticFilter: 更新为 `// 隐藏过滤 — 固定赋码对象（单工单）`\n- columns: 添加 `// 列定义 — 对齐编码记录页面（Tab3）`\n- 文件头注释更新为完整描述\n\n所有注释已在列扩展任务中一并修正。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/codeList.html"]
+  }
+}

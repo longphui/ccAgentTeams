@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-0839-i9j0",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:39:00+08:00",
+  "replyTo": "msg-20260513-2035-g3h4",
+  "payload": {
+    "subject": "审查反馈：弹窗和 Tab3 筛选调整 — 1个问题（规范）",
+    "content": "## 审查报告\n\n### ✅ 功能正确性\n\n**codeList.html:**\n- 筛选简化：仅保留 `CodeValue` 一个搜索字段 ✅\n- 列精简：序号 + 编码值 + 生成时间，无赋码对象列残留 ✅\n- staticFilter `Objects` 携带工单 ObjectType+ObjectId ✅\n- 序号列带 `key: \"rowNo\"` ✅\n\n**index.html Tab3:**\n- filters3 5 个字段与后端 `CodeRecordWorkOrderSearchInput` 对齐：\n  - `WorkOrderNo` ↔ `string WorkOrderNo` ✅\n  - `ProductName` ↔ `string ProductName` ✅\n  - `CodeValue` ↔ `string CodeValue` ✅\n  - `StartTime` ↔ `DateTime? StartTime` ✅\n  - `EndTime` ↔ `DateTime? EndTime` ✅\n\n### 📐 规范问题\n\n- [x] **codeList.html JS data 缺少注释**（normal）\n  - L34 `PageMaper` → 需 `// 分页映射`\n  - L36 `page` → 需 `// 分页参数`\n  - L37 `filters` → 需 `// 筛选条件 — 仅编码值模糊匹配`\n  - L46 `staticFilter` → 需 `// 隐藏过滤 — 固定赋码对象`\n  - 模板缺少 `<!-- ===== xxx ===== -->` 区块注释\n\n## 审查结论\n✅ 通过 — 功能正确，1 个规范问题（注释缺失）不阻断。建议补注释后提交。",
+    "files": []
+  }
+}

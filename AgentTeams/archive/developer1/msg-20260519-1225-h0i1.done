@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260519-1225-h0i1.msg.json",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T12:25:00+08:00",
+  "payload": {
+    "subject": "修复 lay-link-button 渲染空白（授权按钮样式失效）",
+    "context": "#004",
+    "content": "## 问题\n\n员工信息页面的授权按钮（员工入职登记、编辑、离职）渲染为空白，其他按钮（导入、下载模板、同步考勤机）样式正常。\n\n## 分析\n\n两类按钮都使用 `<lay-button>` 组件，区别是：\n- **授权按钮**：`<lay-link-button>` → 模板 `<a class=\"lay-link\"><lay-button>...</lay-button></a>`\n- **其他按钮**：`<lay-button>` 直接使用\n\n`<lay-link-button>` 定义在 `components.js:180-262`（LayA 插件内），通过 `app.use(LayuiVueAll)` 注册。`LayuiVueAll.install` 在 `components.js:5632` 调用 `getAppContext()` 获取 stub。\n\n## 排查方向\n\n1. 检查浏览器 Console 是否有 Vue 警告（如 unresolved component）\n2. 检查 `<lay-link-button>` 的 `data()` 中 `LayuiVue.layer` 是否正常访问\n3. 检查渲染出的 DOM：`<lay-button>` 是否被正确替换为实际按钮 HTML\n4. 对比 `<lay-link-button>` 和 `<lay-button>` 的 computed class/style 差异\n5. 检查 `v-if=\"addType\"` 等条件渲染是否导致组件初始化时机问题\n\n## 文件\n\n- `caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components.js` (L180-262 LayLinkButton, L5632 LayuiVueAll)\n- `caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js` (stub getAppContext)\n- `caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/manpowerManage/staffManagement/staffInfo/index.html`",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components.js",
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ],
+    "actions": [
+      "排查 lay-link-button 在嵌入模式下渲染空白的根因",
+      "修复并验证按钮样式正常显示",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

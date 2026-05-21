@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1635-c3d4",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-19T16:35:00+08:00",
+  "payload": {
+    "subject": "测试请求：CORS 跨域修复验证",
+    "context": "#004",
+    "content": "## 测试重点\n请验证以下功能：\n- 从 http://localhost:8095 (HRM) 调用 http://localhost:8088 (分路) API 无 CORS 错误\n- OPTIONS 预检返回正确的 CORS 头\n- 实际 POST/GET 请求返回 `Access-Control-Allow-Origin: http://localhost:8095`\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/App_Start/Startup.cs"
+    ]
+  }
+}

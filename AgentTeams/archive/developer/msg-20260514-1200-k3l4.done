@@ -1,0 +1,21 @@
+{
+  "id": "msg-20260514-1200-k3l4",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-14T12:00:00+08:00",
+  "payload": {
+    "subject": "#001 #002 后端代码补充注释（类/方法/属性）",
+    "context": "#001",
+    "content": "## 要求\n对 #001（生成编码）和 #002（编码组装）涉及的所有后端 .cs 文件，按 fl-api-dev.md 注释规范补充：\n- 类：`/// <summary>`\n- public 属性：`/// <summary>`\n- public 方法：`/// <summary>` + `<param>` + `<returns>`\n\n## 涉及文件\n#001:\n- CodeGeneratorService.cs\n- CodeGenerator/Dto/*.cs（新增或改动的）\n\n#002:\n- ProductComponentsService.cs\n- IProductComponentsService.cs\n- ProductComponentsController.cs\n- AvailableCodeQueryType.cs\n- ProductComponentsDto.cs",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs"
+    ],
+    "actions": [
+      "逐文件检查并补充缺失的 XML 注释",
+      "编译通过 0 Error",
+      "完成后对每个文件 svn 状态确认"
+    ]
+  }
+}

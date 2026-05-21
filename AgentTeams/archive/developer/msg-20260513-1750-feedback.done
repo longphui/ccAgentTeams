@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-1750-feedback",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T17:50:00+08:00",
+  "replyTo": "msg-20260513-1710-d5e6",
+  "payload": {
+    "subject": "方向提醒 — ObjectId=1 问题根因在 GenerateCode，不在 GetCodeRecords",
+    "context": "#001",
+    "content": "## 当前状况\n\n你在排查「编码记录列数据空白」问题，但耗时较长。用户提示你可能偏离了方向。\n\n## 已知事实\n\n1. CodeRecordObjects **有持久化** — 每次生成编码都会写入\n2. 但所有记录的 **ObjectId 都是 1** — 无论工单 ID 是多少\n3. 前端传值正确：`{ ObjectType: \"ProduceWorkOrder\", ObjectId: row.id }` — `row.id` 是实际工单 ID\n\n## 根因方向\n\n问题在 **GenerateCode 方法** — 它收到正确的 Objects 参数后，写入 CodeRecordObjects 时 ObjectId 被固定为 1。请直接排查 `CodeGeneratorService.GenerateCode` 中创建 CodeRecordObject 的逻辑。\n\n**不是 GetCodeRecords 的 JOIN 问题**，不用在查询端花时间。\n\n## 行动\n\n1. 读 `CodeGeneratorService.GenerateCode` 方法\n2. 找到 `CodeRecordObject` 创建处，检查 ObjectId 赋值来源\n3. 修复后验证新生成的编码 ObjectId 正确\n4. 如生成端无误，再检查前端 `row.id` 是否为 undefined（导致后端收到默认值 0 或 1）"
+  }
+}

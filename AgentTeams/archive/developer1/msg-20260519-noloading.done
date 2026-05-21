@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260519-noloading",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-19T16:00:00+08:00",
+  "payload": {
+    "subject": "get-by-key 请求不显示 loading",
+    "context": "#004",
+    "content": "## 需求\n\nTableColumnConfig 组件的 `restore()` 方法中，`Http2.get('/settings/get-by-key', ...)` 目前会触发全局 loading。要求此请求静默执行，不显示 loading。\n\n## 相关文件\n\n`caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js`\n\n## 行动项\n\n1. 修改 Http2.get 调用参数，禁用 loading 展示\n2. 浏览器验证：打开嵌入模式页面，get-by-key 请求不再出现 loading 动画",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components/table-column-config/index.js"
+    ],
+    "actions": ["修改 Http2.get 调用禁用 loading", "浏览器验证"],
+    "deadline": null
+  }
+}

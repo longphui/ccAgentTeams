@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1030-reply-c3d4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:30:00+08:00",
+  "replyTo": "msg-20260514-1015-c3d4",
+  "payload": {
+    "subject": "✅ 半成品选项独立 + 动态排除 + 前置校验完成",
+    "content": "## 完成情况\n1. **独立克隆**: data 新增 `componentProductOptions`，loadProducts 中用 map 深拷贝一份独立数组\n2. **动态排除**: 新增 `getComponentOptions(currentIndex)` 方法：\n   - 排除已选成品 `form.productId`\n   - 排除其他组件行已选的半成品（保留当前行自身选择）\n   - 模板 `:options=\"getComponentOptions(index)\"` 响应式调用\n   - `:items=\"componentProductOptions\"` 保持全量列表用于已选值 label 解析\n3. **前置校验**: addComponent 前检查 `productId` 和 `productCode`，未选择时提示用户",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

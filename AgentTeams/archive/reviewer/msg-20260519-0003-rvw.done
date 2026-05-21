@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260519-0003-rvw",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T00:03:00+08:00",
+  "payload": {
+    "subject": "审查请求：修复 hrm-proxy postMessage 断裂",
+    "context": "#004",
+    "content": "## 审查重点\n请检查两处 window.parent → window.top 修改是否正确：\n1. 第 39 行：初始上下文请求\n2. 第 78 行：Token 过期重试\n\n## 修改原因\nhrm-proxy/index.html 嵌套在两层 iframe 中（Tab iframe → hrm-proxy），window.parent 只到 Tab iframe，消息无法到达主窗口 app.js。改为 window.top 穿透两层。\n\n## 测试建议\n打开天津宏观世纪 ERP，点击 HRM 菜单，不应再出现「HRM 认证超时」。",
+    "files": ["caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/views/hrm-proxy/index.html"]
+  }
+}

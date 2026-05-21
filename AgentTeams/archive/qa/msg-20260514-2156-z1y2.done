@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-2156-z1y2",
+  "type": "TEST",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-14T21:56:00+08:00",
+  "payload": {
+    "subject": "测试请求：ProductComponentsService DbFunctions.Like → Contains",
+    "context": "#002",
+    "content": "## 变更\n`GetPageList` 中三处 `DbFunctions.Like` 已改回 `Contains`，移除 `%` 通配符拼接。\n\n## 审查状态\n✅ 已通过 Reviewer 审查\n\n## 测试重点\n- GetPageList 中文关键词搜索（如\"有机肥\"、\"海格\"）\n- GetPageList 英文关键词搜索\n- GetPageList 空关键词\n- Save/Update 写入是否正常",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProductComponentsService.cs"
+    ]
+  }
+}

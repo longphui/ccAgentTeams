@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260513-001-review-feedback",
+  "type": "FEEDBACK",
+  "from": "reviewer",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T23:00:00+08:00",
+  "replyTo": "msg-20260513-004",
+  "payload": {
+    "subject": "审查反馈：生产工单产品编码生成 — 4个问题（含1个critical + 1个high）",
+    "content": "## 审查结论：需修改\n\n共审查 10 个文件（4 new + 6 modified），发现 4 个问题。\n\n### Critical — codeList.html 弹窗永远返回空结果\n`codeList.html` 在 data 中定义了 `staticFilter`（含 `ObjectType` 和 `ObjectId`），但 `<lay-page-view>` 标签上缺少 `:static-filter=\"staticFilter\"` prop 绑定。`ObjectType` 未随请求发送到后端 → 后端生成 `WHERE ObjectType IS NULL` → 永远无匹配记录。\n\n**Fix**: 在 `<lay-page-view>` 上添加 `:static-filter=\"staticFilter\"`。\n\n### High — Tab1/Tab2 无区分逻辑\nTab1「未生成编码」和 Tab2「已生成编码」调用完全相同的 API，无参数区分。后端不按 codeGenStatus 过滤，两个 Tab 展示相同数据。需确认前端是否需要 client-side filter 还是后端加 `CodeGenStatus` 参数。\n\n### Low — URL 参数未编码\n`index.html:181` 行 `codeListUrl` 方法中 `row.workOrderNo` 未使用 `encodeURIComponent`。\n\n### Low — 缺少 null 检查\n`ProduceWorkOrderController.cs:341` 行未对 `input.Data` 做 null 检查（同类 Action 均有此模式，可统一处理）。\n\n详细报告见 `outbox/reviewer/review-report-20260513-produce.md`",
+    "files": ["outbox/reviewer/review-report-20260513-produce.md"]
+  }
+}

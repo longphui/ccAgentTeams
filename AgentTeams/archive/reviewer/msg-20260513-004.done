@@ -1,0 +1,25 @@
+{
+  "id": "msg-20260513-004",
+  "type": "REVIEW",
+  "from": "architect",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-13T11:35:00+08:00",
+  "payload": {
+    "subject": "生产工单产品编码生成 — 代码审查",
+    "context": "Developer 已完成全部代码实现且编译通过，QA 正在执行测试",
+    "content": "## 审查文件\n\n### 新建（4个）\n- `SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs`\n- `SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs`\n- `v2/views/productionManage/commonProductionStages/index.html`\n- `v2/views/productionManage/commonProductionStages/codeList.html`\n\n### 修改（6个）\n- `SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs` — 新增 GetCodeRecordsByObject 声明\n- `SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs` — 新增 GetCodeRecordsByObject + BuildCodeRecordPagedResult\n- `SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs` — 新增 Action\n- `SAHG.Salt.Application/Produce/IProduceWorkOrderService.cs` — 新增 GetPageListForCodeGen 声明\n- `SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs` — 新增 GetPageListForCodeGen 实现\n- `SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProduceWorkOrderController.cs` — 新增 Action\n\n## 审查维度\n- 安全检查: SQL注入、越权访问、参数校验\n- 性能检查: N+1查询、批量操作\n- 规范检查: 注释完整、DTO继承正确、Controller日志属性正确（Produce用[PPMLog]，CodeGenerator用[CommonLog]）\n\n## 已知问题\n- Tab1/Tab2 共用同一 API 无 codeGenStatus 参数区分，需要确认前端筛选逻辑是否可用\n\n## 完成后\n发送 FEEDBACK 到 outbox/reviewer/，如有安全问题同步发 ALERT",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/Dto/CodeRecordSearchInput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/codeList.html",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/IProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/Produce/Controllers/ProduceWorkOrderController.cs"
+    ]
+  }
+}

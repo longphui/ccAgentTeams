@@ -1,0 +1,19 @@
+{
+  "id": "msg-20260513-1950-d4e5",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-13T19:50:00+08:00",
+  "replyTo": "msg-20260513-1920-c1d2",
+  "payload": {
+    "subject": "排查工单状态列空白 — 代码分析：全链路正确，建议检查运行时",
+    "content": "## 分析结论\n\n经过完整的全链路代码分析（后端 → 序列化 → ABP 包装 → 前端解析 → 组件渲染），**代码层面未发现任何导致 StatusName 为空的问题**。MSBuild 编译 0 Error。\n\n## 逐环节验证\n\n### 1. 后端赋值 ✅\n```csharp\n// ProduceWorkOrderService.cs:1644\nStatusName = StringExtension.GetDescription((ProduceWorkOrderStatusEnum)item.Status),\n```\n- `item.Status` 来自 ProduceWorkOrder 表的 int 字段\n- `ProduceWorkOrderStatusEnum` 每个值都有 `[Description(\"待生产\")]` 等中文描述\n- `StringExtension.GetDescription()` 反射读取 Description 特性，永不返回 null\n\n### 2. DTO 定义 ✅\n- `WorkOrderCodeGenOutput : ProduceWorkOrderOutput : ProduceWorkOrder`\n- `ProduceWorkOrderOutput.StatusName` = `public string StatusName { get; set; }` — 无 [JsonIgnore] 等特性\n- ProduceWorkOrder 实体本身无 StatusName 属性（不冲突）\n\n### 3. JSON 序列化 ✅\n- 使用 `CamelCasePropertyNamesContractResolver` — StatusName → statusName\n- `NullValueHandling = Ignore` — 但 GetDescription 永不返回 null，不受影响\n\n### 4. ABP 响应包装 ✅\n- `SaltControllerBase : AbpApiController`，无 [DontWrapResult]\n- 包装格式：`{ success: true, result: { count, items: [...] } }`\n- 前端 `Http.post` 检查 `res.success`，返回 `res.result`\n\n### 5. 前端解析 ✅\n- `fetchPage` 从 `res.items` 取数据，设到 `pageData`\n- 每项数据应有 `statusName` 字段\n\n### 6. 模板绑定 ✅\n- Column: `{ key: \"statusName\", customSlot: \"statusName\" }`\n- Template: `v-slot:statusName=\"{row}\"` → `{{row.statusName}}`\n- lay-page-view 通过 `#[slt]` 转发 lay-table 的 scoped slots\n- operator 列（同样用 customSlot）可正常工作，证明 slot 机制通畅\n\n### 7. 编译 ✅\n- MSBuild (VS 2022) 编译 WebApi 项目：0 Error\n\n## 建议的运行时排查步骤\n\n1. **浏览器 DevTools → Network** 查看 `/api/Produce/ProduceWorkOrder/GetPageListForCodeGen` 的响应 JSON\n2. 确认 `result.items[0]` 是否包含 `statusName` 字段及其值\n3. 如 JSON 中有值 → 问题在 Vue 渲染层（检查浏览器 Console 是否有 JavaScript 错误）\n4. 如 JSON 中无此字段 → 后端 DLL 可能未部署（检查 bin 目录 DLL 时间戳，重启 IIS 应用池）",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProduceWorkOrderOutput.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/WorkOrderCodeGenOutput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

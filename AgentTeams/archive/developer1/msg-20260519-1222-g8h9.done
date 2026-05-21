@@ -1,0 +1,24 @@
+{
+  "id": "msg-20260519-1222-g8h9.msg.json",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "critical",
+  "timestamp": "2026-05-19T12:22:00+08:00",
+  "payload": {
+    "subject": "修复 getAppContext() stub 缺少 openPage 导致弹窗变新页签",
+    "context": "#004",
+    "content": "## 问题\n\n点击「员工入职登记」按钮，应弹出弹窗，实际打开了新浏览器页签。\n\n## 根因\n\n`lay-link-button` 的 `target=\"_popup\"` 处理（components.js:143-150）：\n```javascript\ncase '_popup': {\n    (window.appContext || option.appContext || getAppContext()).openPage(...);\n    e.preventDefault();\n    break;\n}\n```\n\n`getAppContext()` stub 没有 `openPage` 方法 → `undefined(...)` 抛 TypeError → `e.preventDefault()` 永远不执行 → `<a>` 默认导航行为触发 → 新页签打开。\n\n## 修复\n\n在 `util.js` 的 `getAppContext()` stub 中补充 `openPage` 方法，直接用 `LayuiVue.layer` 打开弹窗：\n\n```javascript\nopenPage: function(formPageUrl, data, dialogOptions, opts) {\n    opts = opts || {};\n    var myLayer = opts.innerLayer || LayuiVue.layer;\n    var stateKey = 'stub_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);\n    var layerId = 0;\n    var state = {\n        value: data === undefined ? null : data,\n        return: function(val) {\n            myLayer.close(layerId);\n            if (opts.ok && typeof opts.ok === 'function') opts.ok(val);\n        },\n        extraBtns: []\n    };\n    if (!this.states) this.states = new Map();\n    this.states.set(stateKey, state);\n    formPageUrl = formPageUrl + (formPageUrl.indexOf('?') >= 0 ? '&' : '?') + 'stateKey=' + stateKey + '&_=' + Date.now();\n    layerId = myLayer.open({\n        type: opts.type || 'iframe',\n        title: (dialogOptions && dialogOptions.title) || '弹窗',\n        area: (dialogOptions && dialogOptions.area) || ['100%', '100%'],\n        shadeClose: dialogOptions && dialogOptions.shadeClose,\n        maxmin: true,\n        content: formPageUrl,\n        btn: (opts.noBtn) ? [] : [{ text: (dialogOptions && dialogOptions.yesText) || '确定' }]\n    });\n}\n```\n\n同时补充 `openRouteInTab`（target 默认值时调用）和 `openWindow`（target=\"_top\" 时调用）的空实现或简单实现。",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/util.js"
+    ],
+    "actions": [
+      "util.js getAppContext() stub 补充 openPage 方法（调用 LayuiVue.layer.open）",
+      "补充 openRouteInTab 和 openWindow 方法",
+      "合并之前的 theme stub 修复（Bug #11 #12）",
+      "SVN 暂存",
+      "发送 REVIEW 给 Reviewer"
+    ],
+    "deadline": null
+  }
+}

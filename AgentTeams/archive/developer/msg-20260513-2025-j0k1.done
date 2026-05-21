@@ -1,0 +1,20 @@
+{
+  "id": "msg-20260513-2025-j0k1",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T20:25:00+08:00",
+  "payload": {
+    "subject": "Tab3 编码记录需支持多条件筛选",
+    "context": "#001",
+    "content": "## 需求纠正\nTab3（编码记录）现在只有「关键字」一个筛选条件，但用户需求是面向全部工单编码的多条件筛选。\n\n## 要求\nTab3 的 API（`GetCodeRecords`）需支持以下筛选参数：\n- WorkOrderNo（工单编号，模糊）\n- ProductName（商品名称，模糊）\n- CodeValue（编码值，模糊）\n- StartTime / EndTime（生成时间范围）\n\n如果现有 GetCodeRecords 不支持这些参数，需扩展或让 Tab3 改用 GetCodeRecordsByObject（不传 ObjectType 表示查全部类型）。\n\n## 注意\n不要改 GetCodeRecordsByObject 的现有逻辑（弹窗 codeList.html 还在用），确保弹窗功能不受影响。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/CodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/CodeGenerator/ICodeGeneratorService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.WebAppApi/Areas/CodeGenerator/Controllers/CodeGeneratorController.cs"
+    ],
+    "actions": ["扩展 GetCodeRecords 支持多条件筛选，或让 Tab3 改用 GetCodeRecordsByObject", "确保 codeList.html 弹窗现有功能不受影响"],
+    "deadline": null
+  }
+}

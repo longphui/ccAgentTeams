@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260516-1231-bug1",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-16T12:31:00+08:00",
+  "replyTo": "msg-20260516-1505-t1u2",
+  "payload": {
+    "subject": "Bug: SaveBizField/SaveBizCode/SaveRule API 返回空异常",
+    "content": "## 复现步骤\n\n1. 登录获取 Token\n2. POST /api/CodeGenerator/CodeGenerator/SaveBizField 传入完整数据：\n   `{\"data\":{\"fieldName\":\"test\",\"domainCode\":\"Product\",\"domainName\":\"商品\",\"fieldSql\":\"SELECT 1\",\"description\":\"test\"}}`\n3. 返回 `{\"success\":false,\"error\":{\"code\":-1,\"message\":\"\"}}`\n\n## 期望行为\n- 新建成功：`{\"success\":true,\"result\":{\"states\":true,...}}`\n\n## 实际行为\n- 返回空错误消息，code=-1 表示 UserFriendlyException\n- 缺少必填字段时能正确返回验证错误（如「业务领域标识不能为空」）\n- 说明 CheckData 之后、EF Insert/Update 阶段异常\n\n## 影响范围\n- SaveBizField / SaveBizCode / SaveRule 全部受影响\n- GenerateCode / GetDomainList / 查询类接口正常\n\n## 分析\n- 代码审查层面未发现明显问题\n- 可能原因：\n  1. IIS 应用池 DLL 未更新到最新编译版本\n  2. AutoMapper 映射异常（新建路径用 ObjectMapper.Map）\n  3. EF DbContext 配置或连接问题\n- 建议：重新编译解决方案 + 重启 IIS 应用池后重测"
+  }
+}

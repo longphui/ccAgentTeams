@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-0935-r3s4",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T09:35:00+08:00",
+  "replyTo": "msg-20260514-0935-v2w3",
+  "payload": {
+    "subject": "✅ 收到任务：单位改为 span 显示",
+    "content": "收到，立即处理。"
+  }
+}

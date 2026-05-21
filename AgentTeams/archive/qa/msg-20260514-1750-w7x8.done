@@ -1,0 +1,18 @@
+{
+  "id": "msg-20260514-1750-w7x8",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-14T17:50:00+08:00",
+  "payload": {
+    "subject": "测试请求：编辑页面数据回填 + Update 接口",
+    "context": "#002",
+    "content": "## 测试重点\n请在浏览器验证以下功能：\n\n### 1. 编辑回填\n- 在编码组合列表页点击「编辑」按钮\n- 确认弹框中成品、成品编码、所有编码行（半成品/单位/编码值）正确回填\n- 确认编码值下拉包含完整可选列表（不仅是当前值）\n\n### 2. 新增保存\n- 点击「手动组装」→ 选择成品 → 选择成品编码 → 添加编码行 → 选择半成品和编码值 → 确认\n- 确认提示「保存成功」且列表刷新\n\n### 3. 编辑保存\n- 编辑已有记录 → 修改任意字段 → 确认\n- 确认提示「修改成功」且列表刷新\n\n### 4. 删除\n- 点击「删除」按钮 → 确认弹窗 → 确认删除成功\n\n### 5. 异常处理\n- 不选成品直接点添加编码 → 应提示「请先选择成品」\n- 不选编码值直接保存 → 应提示选择编码值\n- 编码规则未配置时生成编码 → 应提示「请先配置编码规则」\n\n## 审查状态\n✅ 已通过 Reviewer 审查",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/index.html",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "msg-20260511-090000-a1b2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-11T09:00:00+08:00",
+  "payload": {
+    "subject": "实现 JWT 登录认证模块",
+    "context": "用户系统需要安全的登录认证机制，已确定使用 JWT 方案，需在2天内完成",
+    "content": "## 任务描述\n\n实现完整的 JWT 登录认证模块，包含以下功能：\n\n### 1. 登录接口 `POST /api/auth/login`\n- 接收 `{username, password}`\n- 验证用户名密码（bcrypt 比对）\n- 返回 `{access_token, refresh_token, expires_in}`\n\n### 2. Token 刷新接口 `POST /api/auth/refresh`\n- 接收 `{refresh_token}`\n- 验证 refresh_token 有效性\n- 签发新的 access_token 和 refresh_token\n\n### 3. 认证中间件\n- 从 `Authorization: Bearer <token>` 中提取 token\n- 验证签名和过期时间\n- 将 `user_id` 和 `role` 注入 request context\n\n### 4. 登出接口 `POST /api/auth/logout`\n- 将 refresh_token 加入黑名单（Redis）\n\n## 技术要求\n- Go 1.22 + Gin 框架\n- 使用 `golang-jwt/jwt/v5`\n- 密码使用 bcrypt (cost=12)\n- access_token 有效期需与 Architect 确认\n\n## 验收标准\n- [ ] 所有接口有单元测试（覆盖率 > 80%）\n- [ ] 中间件有集成测试\n- [ ] 通过安全审查\n- [ ] 更新 API 文档",
+    "files": [
+      "src/auth/handler.go",
+      "src/auth/middleware.go",
+      "src/auth/service.go",
+      "src/auth/model.go"
+    ],
+    "actions": [
+      "实现 model 定义 User/Token 结构体",
+      "实现 service 层：登录/刷新/登出逻辑",
+      "实现 handler 层：4个API接口",
+      "实现 middleware：JWT认证中间件",
+      "编写单元测试和集成测试"
+    ],
+    "deadline": "2026-05-13T18:00:00+08:00"
+  }
+}

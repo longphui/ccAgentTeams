@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-2310-fixes-v3-result",
+  "type": "RESULT",
+  "from": "qa",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T23:10:00+08:00",
+  "replyTo": "msg-20260519-fixes-v3-test",
+  "payload": {
+    "subject": "✅ 测试通过：v3 修复 — openRouteInTab window.open + base-path 无条件覆盖",
+    "content": "## 测试结果\n- V3-01 openRouteInTab 改用 window.open：✅\n- V3-02 不再发送 HRM_OPEN_TAB：✅\n- V3-03 state 数据传递 + return 回调：✅\n- V3-04 base-path 无条件覆盖旧值 (8095→8088)：✅\n- V3-05 base-path 首次加载设置：✅\n- V3-06 appConfig 不被嵌入模式覆盖 (回归)：✅\n\n## 关键验证点\n1. `openRouteInTab` 现在调用 `window.open(resolvedUrl, '_blank')` 打开新标签页，URL 正确解析（../ 已被 new URL() 消除）\n2. 不再发送 HRM_OPEN_TAB postMessage（V3-02 确认 hrmMessages 为空）\n3. `states` Map + `state.return()` 回调机制在 window.open 路径下仍正常工作\n4. `baseService.js` 嵌入模式无条件覆盖 `base-path`，即使 localStorage 残留旧值 8095 也会被纠正为 8088\n5. `appConfig.baseUrl1/newFenluApiBase` 未被覆盖，保持原始 API 地址\n\n## 发现的 Bug\n无"
+  }
+}

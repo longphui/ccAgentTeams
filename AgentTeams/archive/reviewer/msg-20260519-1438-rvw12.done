@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1438-rvw12",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T14:38:00+08:00",
+  "payload": {
+    "subject": "审查请求：newFenluApiBase 5001→8088 端口修正",
+    "context": "#004",
+    "content": "## 变更\n- `appConfig.js:19` `newFenluApiBase` 从 `http://localhost:5001/api` 改为 `http://localhost:8088/api`\n\n## 说明\n- 5001 是天津宏观世纪端口，8088 是分路后端端口\n- `newFenluApiBase` 用于分路自身的 Furion API 调用\n- Bug #9 只改了 https→http，未纠正错误的端口\n\n## 审查重点\n1. 与同文件 baseUrl: `http://localhost:8088/api` (L12) 端口一致\n2. 不改动其他 baseUrl 配置",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/appConfig.js"
+    ]
+  }
+}

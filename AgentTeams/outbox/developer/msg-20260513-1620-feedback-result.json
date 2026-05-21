@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-1630-c3d4",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "high",
+  "timestamp": "2026-05-13T16:30:00+08:00",
+  "replyTo": "msg-20260513-1620-f1e2",
+  "payload": {
+    "subject": "✅ Tab 切换已修复 — 改用 layui 原生 tab 组件",
+    "content": "## 根因\nLayuiVue 2.22.2 不包含 `lay-tabs`/`lay-tab-pane` 组件。在 `index@2.22.2.js` 中搜索 `lay-tabs`、`lay-tab-pane`、`LayTabs` 均为 0 匹配。之前的 prop 名修改（id→name, label→title）无法解决根本问题。\n\n## 解决方案\n改用 **layui 原生 CSS tab**（`layui-tab` + `layui-tab-card`）+ Vue `v-show` 手动切换：\n- `<div class=\"layui-tab layui-tab-card\">` 替代 `<lay-tabs>`\n- `<ul class=\"layui-tab-title\">` + `:class=\"layui-this\"` 替代 lay-tab-pane title\n- `<div class=\"layui-tab-item\" v-show=\"activeTab === 'X'\">` 替代 `<lay-tab-pane>`\n- `@click=\"activeTab = 'X'\"` 驱动切换\n\nlayui-tab CSS 由 `/v2/libs/layui/css/layui.css` 提供（已加载），无需额外依赖。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ]
+  }
+}

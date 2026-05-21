@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260513-2140-l2m3",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T21:40:00+08:00",
+  "payload": {
+    "subject": "补充：业务封装层需反查 Objects 填充业务字段",
+    "context": "#001",
+    "content": "## 补充要求\n配套 msg-20260513-2130-k1l2（GetCodeRecordsByObject 重构）。\n\nGetCodeRecordsByObject 返回分页结果后，业务封装层必须用分页结果中的 Objects[] 反查对应业务表，填充以下字段：\n\n| 字段 | 来源 |\n|------|------|\n| WorkOrderNo | ObjectType=\"ProduceWorkOrder\" → 查 ProduceWorkOrder 表 |\n| ProductId | ObjectType=\"Product\" → 取 ObjectId |\n| ProductName | ObjectType=\"Product\" → 查 Product 表 |\n| ProductSpec | ObjectType=\"Product\" → 查 Product 表 |\n\n注意：在一次分页结果中批量查询，避免逐条 N+1。",
+    "files": [],
+    "actions": ["业务封装层反查 ProduceWorkOrder + Product 表填充业务字段", "批量查询避免 N+1"],
+    "deadline": null
+  }
+}

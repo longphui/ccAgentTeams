@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260514-1040-reply-e7f8",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:40:00+08:00",
+  "replyTo": "msg-20260514-1025-e7f8",
+  "payload": {
+    "subject": "✅ 成品切换冲突清除完成",
+    "content": "## 完成情况\n- `onProductChange` 中新增：\n  - 清空 `productCode`（不同成品的编码不同，切换后旧编码无效）\n  - 过滤 `form.components`，移除 `componentProductId === productId` 的冲突行\n- 使用 `.bind(this)` 确保 filter 回调中 this 指向 Vue 实例",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"]
+  }
+}

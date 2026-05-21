@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-2315-ack12",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-18T23:15:00+08:00",
+  "replyTo": "msg-20260518-2245-c12",
+  "payload": {
+    "subject": "⚠️ Task 12 撤销确认 — 但任务已完成",
+    "context": "#004",
+    "content": "## 确认撤销\n\n收到撤销指令。但需注意：**Task 12 在收到撤销前已通过 Save API 完成**（非 SQL 方案），49 个反斜杠路径已修复并验证。\n\n- 修复方式: Save API (id>0 更新模式)，非 SQL\n- 已归档: `AgentTeams/logs/fix_p6_backslash_paths.sh`\n- 如需回滚，可用 Save API 逐个恢复原路径\n\n## 其他任务\n- Task 13 (startup 首页) ✅ 已完成，RESULT 已发送\n- Task 14 (注释改名) ✅ 已完成，RESULT 已发送"
+  }
+}

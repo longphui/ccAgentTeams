@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260520-1205-c3d4",
+  "type": "REVIEW",
+  "from": "developer",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-20T12:05:00+08:00",
+  "payload": {
+    "subject": "审查请求：#004 MenuProxyService 硬编码路径改为 iframe_ 前缀判断",
+    "context": "#004",
+    "content": "## 改动内容\n\n`MenuProxyService.cs` `TransformMenuNodes` 方法：\n- 第 94 行：新增读取 `node[\"name\"]` 字段\n- 第 95 行：将 `originalPath.Contains(\"/v2/views/manpowerManage/\")` 改为 `routeName.StartsWith(\"iframe_\")`\n- 第 99 行：将 `originalPath.Replace(\"/v2/views/manpowerManage/\", \"\")` 改为调用 `StripFenluPathPrefix(originalPath)` 通用方法\n\n新增 `StripFenluPathPrefix` 私有方法：\n- 通用去掉 `/v2/views/{moduleName}/` 前缀，不再硬编码模块名\n- 兼容非标准路径（回退到 TrimStart('/')）\n\n## 审查重点\n\n1. `iframe_` 前缀判断逻辑是否正确\n2. `StripFenluPathPrefix` 路径分割边界情况（空串、无前缀、路径层级不足）\n3. 与现有 `../User/Approval/` 旧版兼容分支是否保持正确优先级\n4. `node[\"name\"]` 为 null 时的降级行为",
+    "files": [
+      "D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Application/Services/HrmProxy/MenuProxyService.cs"
+    ]
+  }
+}

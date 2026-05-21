@@ -1,0 +1,23 @@
+{
+  "id": "msg-20260513-1920-c1d2",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer",
+  "priority": "high",
+  "timestamp": "2026-05-13T19:20:00+08:00",
+  "payload": {
+    "subject": "排查工单状态列仍空白 — 疑似字段名不匹配",
+    "context": "#001",
+    "content": "## 问题\n\nGetPageListForCodeGen 重构后，前端工单状态列仍然空白。后端代码已手动赋值 `StatusName = StringExtension.GetDescription(...)`，但前端未显示。\n\n## 怀疑方向\n\n可能是字段名大小写不匹配：\n- 后端 C# 属性名：`StatusName`\n- ASP.NET JSON 序列化后：`statusName`（camelCase）\n- 前端 column key：`statusName`\n- 前端 slot 模板：`{{row.statusName}}`\n\n## 排查步骤\n\n1. 用浏览器 DevTools 或 curl 查看 `/api/Produce/ProduceWorkOrder/GetPageListForCodeGen` 实际返回的 JSON，确认 items[0] 中是否有 `statusName` 字段及值\n2. 如 JSON 中有值 → 前端绑定问题（key/slot 名称不一致）\n3. 如 JSON 中无此字段或为 null → 后端序列化问题（属性未正确设置或被忽略）\n4. 也检查 `ProduceWorkOrderOutput` 基类中 StatusName 是否有 `[JsonIgnore]` 等特性",
+    "files": [
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/ProduceWorkOrderService.cs",
+      "D:/work/cc/caikuangzi.fenlu/trunk/SAHG.Salt.Application/Produce/Dto/ProduceWorkOrderOutput.cs",
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/generatorProductCodes/index.html"
+    ],
+    "actions": [
+      "验证 API 返回 JSON 中 statusName 是否存在且有值",
+      "如有值 → 修前端绑定；如无值 → 修后端序列化/赋值",
+      "修复后编译 0 Error"
+    ]
+  }
+}

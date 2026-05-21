@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260514-2005-k1l2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T20:05:00+08:00",
+  "replyTo": "msg-20260514-1945-s3t4",
+  "payload": {
+    "subject": "✅ 收到任务：Statuss → Status 参数修正",
+    "content": "收到，预计 10 分钟完成。"
+  }
+}

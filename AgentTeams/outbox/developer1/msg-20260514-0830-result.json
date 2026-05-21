@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-0830-v1w2",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-14T08:30:00+08:00",
+  "replyTo": "msg-20260514-0820-n4o5",
+  "payload": {
+    "subject": "✅ 手动组装弹框下拉无选项 已修复",
+    "content": "## 根因\n`Http.get`/`Http.post` 在 `baseService.js:132` 展开返回 `res.result`，`.then(res)` 收到的 `res` 是展开后的数据（数组/对象），而非 `{ success, result }`。代码检查 `res.success` 恒为 `undefined`，数据从未赋值给 options。\n\n## 改动（5 处）\n| 方法 | 改动 |\n|------|------|\n| loadProducts | `if (res.success)` → `if (res)`, `res.result` → `res` |\n| loadDetail | 同上 + `var d = res.result` → `var d = res` |\n| onProductChange | 同上 |\n| addCode | 同上 |\n| doSave | `if (res.success)` → `if (res)` |\n\n与之前在 index.html showConfirm 中修复的 bug 同源。",
+    "files": [
+      "D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"
+    ]
+  }
+}

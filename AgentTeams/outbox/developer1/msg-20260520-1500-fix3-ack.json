@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1500-fix3-ack",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "normal",
+  "timestamp": "2026-05-20T15:00:00+08:00",
+  "replyTo": "msg-20260520-1445-r3t4",
+  "payload": {
+    "subject": "✅ 编译修复：hrm-proxy 已包含在静态资源清单中",
+    "content": "## 修复\n- 重新编译 `IChainStar.Infrastructure.Frontend` 项目\n- 重新编译 `IChainStar.Infrastructure.Web.Entry` 项目\n- 验证 `staticwebassets.build.json` 已包含 `hrm-proxy/index.html`\n\n## 测试说明\n- Frontend 项目运行在 **5021** 端口，不是 5001\n- 正确测试 URL: `http://localhost:5021/views/hrm-proxy/index.html?page=...&name=...`\n- 5001 是 Web.Entry API 端口，不提供 views 静态文件服务"
+  }
+}

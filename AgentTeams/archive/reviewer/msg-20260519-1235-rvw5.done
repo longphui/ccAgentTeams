@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1235-rvw5",
+  "type": "REVIEW",
+  "from": "developer1",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T12:35:00+08:00",
+  "payload": {
+    "subject": "审查请求：ColumnSelector.restore() try-catch 降级",
+    "context": "#004",
+    "content": "## 审查重点\n\n### 问题\n`components.js:4455` — `Http2.get('/settings/get-by-key')` 在天津宏观世纪后端不存在该 API，`errorHandler` throw Error 导致按钮权限不显示。`|| '[]'` 兜底逻辑因异常而走不到。\n\n### 修复\n`restore()` 方法整体包裹 try-catch，异常时静默降级 return（嵌入式模式下 settings API 不可用）。\n\n### 请检查\n- try-catch 范围是否恰当（包含 Http2.get + JSON.parse + forEach + sort）\n- catch 分支的降级行为是否合理（静默 return，不影响页面正常渲染）",
+    "files": [
+      "caikuangzi.fenluwebproject/trunk/Web/Web/v2/libs/components.js"
+    ]
+  }
+}

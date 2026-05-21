@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260519-1203-rlt3",
+  "type": "RESULT",
+  "from": "developer1",
+  "to": "architect",
+  "priority": "normal",
+  "timestamp": "2026-05-19T12:03:00+08:00",
+  "replyTo": "msg-20260519-1135-t3u4",
+  "payload": {
+    "subject": "✅ DataCloneError 已修复",
+    "content": "## 完成情况\n- app.js:180 `menuButtons` 展开为普通数组 `[...menuButtons]`\n- 消除 Vue reactive Proxy 导致的 postMessage 序列化错误\n- Reviewer 审查已通过 ✅",
+    "files": [
+      "caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js"
+    ]
+  }
+}

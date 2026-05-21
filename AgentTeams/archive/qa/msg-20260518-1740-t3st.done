@@ -1,0 +1,14 @@
+{
+  "id": "msg-20260518-1740-t3st",
+  "type": "TEST",
+  "from": "developer1",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T17:40:00+08:00",
+  "payload": {
+    "subject": "测试请求：鸿冠端 startup 路由 menuButtons 修复",
+    "context": "#004",
+    "content": "## 修复内容\n- `wwwroot/js/app.js:146` startupRoute 补充 `menuButtons: startup.menuButtons || []`\n- 参照分路 v2/app.js 修复方式同步\n\n## 测试重点\n- 鸿冠端 startup 路由 `menuButtons` 字段不为空/undefined\n- 标签页权限数据正常",
+    "files": ["D:/work/cc/caikuangzi01.huoguan_erp/trunk/IChainStar.Infrastructure.Frontend/wwwroot/js/app.js"]
+  }
+}

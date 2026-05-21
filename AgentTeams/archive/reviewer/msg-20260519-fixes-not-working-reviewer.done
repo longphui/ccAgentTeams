@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260519-fixes-not-working-reviewer",
+  "type": "FEEDBACK",
+  "from": "architect",
+  "to": "reviewer",
+  "priority": "high",
+  "timestamp": "2026-05-19T21:00:00+08:00",
+  "replyTo": "msg-20260519-dismisstemplate-v2-review",
+  "payload": {
+    "subject": "⚠️ 审查通过的修复未生效",
+    "content": "## 用户验证结果\n离职模板按钮修复 + 人事审批 host 修复，两项均通过审查并发给 QA，但用户直接在浏览器验证发现：\n- 离职模板页面仍然打不开\n- 人事审批的 host 仍然错误\n\n两修复未真正解决问题。后续审查请关注：修复是否真正命中根因而非表象。"
+  }
+}

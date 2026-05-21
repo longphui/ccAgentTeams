@@ -1,0 +1,16 @@
+{
+  "id": "msg-20260514-1025-e7f8",
+  "type": "TASK",
+  "from": "architect",
+  "to": "developer1",
+  "priority": "normal",
+  "timestamp": "2026-05-14T10:25:00+08:00",
+  "payload": {
+    "subject": "切换成品时校验并清除半成品中冲突项",
+    "context": "#002",
+    "content": "## 改动\n用户切换成品时，检查新选的成品是否已在半成品列表中存在，若存在则从半成品列表中移除。\n\n## 要点\n在 `onProductChange` 或成品 select 的 change 事件中处理。",
+    "files": ["D:/work/cc/caikuangzi.fenluwebproject/trunk/Web/Web/v2/views/productionManage/commonProductionStages/ProductComponents/create_edit.html"],
+    "actions": ["成品切换时检查半成品列表", "冲突则清除半成品中的对应行"],
+    "deadline": null
+  }
+}

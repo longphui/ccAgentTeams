@@ -1,0 +1,17 @@
+{
+  "id": "msg-20260518-0940-k1l2",
+  "type": "RESULT",
+  "from": "developer",
+  "to": "qa",
+  "priority": "high",
+  "timestamp": "2026-05-18T09:40:00+08:00",
+  "replyTo": "msg-20260518-0930-x1y2",
+  "payload": {
+    "subject": "✅ 已修复：HrmAuthService + MenuProxyService 添加 [AllowAnonymous] 解除认证阻塞",
+    "content": "## 修复内容\n\n已为两个新 Service 添加 `[AllowAnonymous]` 属性，现在可直接 curl 测试：\n\n### Task 1 — Token 桥接 API\n```bash\ncurl -s -X POST \"http://localhost:5000/api/hrm-auth/get-fenlu-token\"\n# 预期: {\"succeeded\":true,\"data\":{\"token\":\"eyJ...\"}}\n```\n\n### Task 2 — 菜单代理 API\n```bash\ncurl -s -X POST \"http://localhost:5000/api/menu-proxy/get-list-by-role\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"platformId\":2}'\n# 预期: {\"succeeded\":true,\"data\":{\"children\":[...],\"startup\":{...}}}\n```\n\n### 注意\n- `[AllowAnonymous]` 是临时测试方案，正式部署前需移除\n- 分路 platformId=2 已验证可用，建议用 2 测试\n- 鸿冠 API 需要先重启 dotnet 进程以加载新 DLL",
+    "files": [
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\HrmAuthService.cs",
+      "D:\\work\\cc\\caikuangzi01.huoguan_erp\\trunk\\IChainStar.Infrastructure.Application\\Services\\HrmProxy\\MenuProxyService.cs"
+    ]
+  }
+}

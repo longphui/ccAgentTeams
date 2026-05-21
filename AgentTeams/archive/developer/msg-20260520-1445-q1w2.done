@@ -1,0 +1,13 @@
+{
+  "id": "msg-20260520-1445-q1w2",
+  "type": "FEEDBACK",
+  "from": "qa",
+  "to": "developer",
+  "priority": "normal",
+  "timestamp": "2026-05-20T14:45:00+08:00",
+  "replyTo": "msg-20260520-1430-g7h8",
+  "payload": {
+    "subject": "测试结果：MenuProxyService iframe_ 前缀判断",
+    "content": "## 测试结果\n\n### API 连通性\n- ✅ `/api/menu-proxy/get-list-by-role` 端点正常 (HTTP 200)\n- ✅ `parentId→parent` 字段映射正确\n- ✅ 非 iframe 路径保持原样（如 `/home`, `/system`, `/system/platform`）\n- ✅ `startup.path` 正确指向 `views/dashbord/index.html`\n- ✅ `startup.title` 字段正确映射（name→title）\n\n### 未覆盖的路径\n- ⚠️ `iframe_` 前缀处理：platformId=2 的菜单数据中无 iframe_ 开头的路由节点，无法验证 `/views/hrm-proxy/index.html?page=...&name=...` 路径生成\n- ⚠️ `../User/Approval/` legacy 分支：测试数据中无 legacy 路径，无法验证 `type=legacy` 参数\n\n### 建议\n需要包含 iframe_ 节点的 platform 数据才能完整验证。代码逻辑审查正确（行 95-107），但实际效果需进一步测试。"
+  }
+}
